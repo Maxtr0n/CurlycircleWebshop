@@ -23,7 +23,9 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "glob-parent": "^6.0.1",
     "rxjs": "~6.6.0",
+    "set-value": "^4.1.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
