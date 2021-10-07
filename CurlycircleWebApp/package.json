@@ -23,6 +23,8 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@popperjs/core": "^2.10.2",
+    "bootstrap": "^5.1.2",
     "glob-parent": "^6.0.1",
     "rxjs": "~6.6.0",
     "set-value": "^4.1.0",
