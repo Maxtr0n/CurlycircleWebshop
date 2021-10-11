@@ -1,30 +1,38 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Curlycircle Handmade</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark background-primary">
+    <div class="container-xl">
+        <a class="navbar-brand" routerLink="/" routerLinkActive="active">
+            <img src="/assets/curly_logo.jpg" alt="" width="30" height="30" class="d-inline-block align-text-top">
+            Curlycircle Handmade
+        </a>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-        </ul>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" [attr.aria-expanded]="isExpanded" aria-label="Toggle navigation"
+            (click)="toggle()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{ show: isExpanded }">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" routerLink="/termekek" routerLinkActive="active">Termékek</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/kapcsolat" routerLinkActive="active">Kapcsolat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/informaciok" routerLinkActive="active">Információk</a>
+                </li>
+            </ul>
+            <a href="https://www.instagram.com/curlycircle.handmade/" target="_blank">
+                <fa-icon [icon]="faInstagram" class="text-light mx-1"></fa-icon>
+            </a>
+            <a href="https://www.facebook.com/CurlyCircle.handmade/" target="_blank">
+                <fa-icon [icon]="faFacebook" class="text-light mx-1"></fa-icon>
+            </a>
+            <a href="https://www.youtube.com/channel/UCkOE0VFiBrKsTX1yV83sL4g" target="_blank">
+                <fa-icon [icon]="faYoutube" class="text-light mx-1"></fa-icon>
+            </a>
+        </div>
     </div>
+
 </nav>
