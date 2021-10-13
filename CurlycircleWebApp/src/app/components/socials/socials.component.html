@@ -1,1 +1,73 @@
-<p>socials works!</p>
+<main>
+    <div class="container px-5 my-5">
+        <header class="row text-center mb-5">
+            <h1 class="fw-bolder">Lépj velünk kapcsolatba!</h1>
+            <p class="lead fw-normal text-muted mb-0">Kíváncsiak vagyunk a véleményedre</p>
+        </header>
+
+        <section id="contact-form-section">
+            <form id="contactForm" class="row" action="">
+                <div class="row justify-content-center mb-3 ">
+                    <div class="col-md-8 col-lg-6">
+                        <label class="form-label" for="name">Név</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="">
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-3 ">
+                    <div class="col-md-8 col-lg-6">
+                        <label class="form-label" for="email">Email cím</label>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="">
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-3 ">
+                    <div class="col-md-8 col-lg-6">
+                        <label class="form-label" for="subject">Tárgy</label>
+                        <input type="text" name="subject" class="form-control" id="subject" placeholder="">
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-5 ">
+                    <div class="col-md-8 col-lg-6">
+                        <label class="form-label" for="message">Üzenet</label>
+                        <textarea class="form-control" name="message" id="message" placeholder=""></textarea>
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-5">
+                    <div class="col text-center">
+                        <button type="submit" class="btn background-primary text-light">Küldés</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <header class="row text-center mb-5">
+            <h1 class="fw-bolder">Vagy kövess minket</h1>
+            <p class="lead fw-normal text-muted mb-0">És tájékozódj elsőként a legújabb termékeinkről</p>
+        </header>
+        <section id="socials-section">
+            <div class="card-group">
+                <div class="card bg-light">
+                    <p class="card-text">Instagram</p>
+                    <a href="https://www.instagram.com/curlycircle.handmade/" target="_blank" class="fs-5 link-dark">
+                        <fa-icon [icon]="faInstagram" class="mx-1"></fa-icon>
+                    </a>
+
+
+                </div>
+                <div class="card">
+                    <p class="card-text">Facebook</p>
+                    <a href="https://www.facebook.com/CurlyCircle.handmade/" target="_blank" class="fs-5 link-dark">
+                        <fa-icon [icon]="faFacebook" class="mx-1"></fa-icon>
+                    </a>
+                </div>
+                <div class="card">
+                    <p class="card-text">Youtube</p>
+                    <a href="https://www.youtube.com/channel/UCkOE0VFiBrKsTX1yV83sL4g" target="_blank"
+                        class="fs-5 link-dark">
+                        <fa-icon [icon]="faYoutube" class="mx-1"></fa-icon>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>

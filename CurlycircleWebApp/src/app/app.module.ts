@@ -11,6 +11,7 @@ import { SocialsComponent } from './components/socials/socials.component';
 import { InformationComponent } from './components/information/information.component';
 import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { UserDataFormComponent } from './components/user-data-form/user-data-form.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     SocialsComponent,
     InformationComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    UserDataFormComponent
   ],
   imports: [
     BrowserModule,

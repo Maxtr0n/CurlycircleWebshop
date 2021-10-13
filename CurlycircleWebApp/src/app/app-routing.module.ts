@@ -5,12 +5,14 @@ import { InformationComponent } from './components/information/information.compo
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ProductsComponent } from './components/products/products.component';
 import { SocialsComponent } from './components/socials/socials.component';
+import { UserDataFormComponent } from './components/user-data-form/user-data-form.component';
 
 const routes: Routes = [
   { path: 'fooldal', component: HomeComponent },
   { path: 'termekek', component: ProductsComponent },
   { path: 'kapcsolat', component: SocialsComponent },
   { path: 'informaciok', component: InformationComponent },
+  { path: 'adatok', component: UserDataFormComponent },
   { path: '', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
