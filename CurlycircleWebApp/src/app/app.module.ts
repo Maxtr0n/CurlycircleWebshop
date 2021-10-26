@@ -12,6 +12,12 @@ import { InformationComponent } from './components/information/information.compo
 import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { UserDataFormComponent } from './components/user-data-form/user-data-form.component';
+import { PrivacyPolicyComponent } from './components/policies/privacy-policy/privacy-policy.component';
+import { TermsOfServiceComponent } from './components/policies/terms-of-service/terms-of-service.component';
+import { ShippingPolicyComponent } from './components/policies/shipping-policy/shipping-policy.component';
+import { RefundPolicyComponent } from './components/policies/refund-policy/refund-policy.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -23,12 +29,18 @@ import { UserDataFormComponent } from './components/user-data-form/user-data-for
     InformationComponent,
     HomeComponent,
     PageNotFoundComponent,
-    UserDataFormComponent
+    UserDataFormComponent,
+    PrivacyPolicyComponent,
+    TermsOfServiceComponent,
+    ShippingPolicyComponent,
+    RefundPolicyComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    BrowserAnimationsModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
