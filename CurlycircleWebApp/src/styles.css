@@ -11,8 +11,12 @@
     background-color: #273D27;
 }
 
-.background-dark {
-    background-color: #1b291b;
+.background-darker {
+    background-color: #1D341D;
+}
+
+.background-normal {
+    background-color: #425F43;
 }
 
 .background-secondary {
@@ -22,5 +26,14 @@
 .background-secondary-dark {
     background-color: #f1bc81;
 }
+
+.color-primary {
+    color: #6A8F6B;
+}
+
+.social-btn:hover {
+    background-color: lightgray;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

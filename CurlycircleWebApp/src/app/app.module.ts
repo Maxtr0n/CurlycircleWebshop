@@ -18,31 +18,38 @@ import { ShippingPolicyComponent } from './components/policies/shipping-policy/s
 import { RefundPolicyComponent } from './components/policies/refund-policy/refund-policy.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FooterComponent,
-    NavBarComponent,
-    ProductsComponent,
-    SocialsComponent,
-    InformationComponent,
-    HomeComponent,
-    PageNotFoundComponent,
-    UserDataFormComponent,
-    PrivacyPolicyComponent,
-    TermsOfServiceComponent,
-    ShippingPolicyComponent,
-    RefundPolicyComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FontAwesomeModule,
-    BrowserAnimationsModule,
-    MatExpansionModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        FooterComponent,
+        NavBarComponent,
+        ProductsComponent,
+        SocialsComponent,
+        InformationComponent,
+        HomeComponent,
+        PageNotFoundComponent,
+        UserDataFormComponent,
+        PrivacyPolicyComponent,
+        TermsOfServiceComponent,
+        ShippingPolicyComponent,
+        RefundPolicyComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FontAwesomeModule,
+        BrowserAnimationsModule,
+        MatExpansionModule,
+        MatStepperModule,
+        MatFormFieldModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

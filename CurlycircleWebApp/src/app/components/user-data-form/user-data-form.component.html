@@ -4,41 +4,82 @@
             <h1 class="fw-bolder">Adatok megadása</h1>
         </header>
 
-        <section id="data-form-section">
-            <form id="dataForm" action="">
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label" for="name">Vezetéknév</label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="name">Utónév</label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="">
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label" for="email">E-mail cím</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label" for="subject">Irányítószám</label>
-                        <input type="text" name="subject" class="form-control" id="subject" placeholder="">
-                    </div>
-                    <div class="col-md-8">
-                        <label class="form-label" for="subject">Város</label>
-                        <input type="text" name="subject" class="form-control" id="subject" placeholder="">
-                    </div>
 
-                    <hr class="my-4">
-                    <div class="row justify-content-end">
-                        <div class="col-4 ">
-                            <button type="submit" class="w-100 btn background-primary text-light btn-lg mx-0">Tovább a
-                                fizetési
-                                módokhoz</button>
+        <div class="row g-5">
+            <div class="col-md-5 col-lg-4 order-md-last">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="color-primary">Kosár</span>
+                    <span class="badge background-primary rounded-pill">3</span>
+                </h4>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0">Product name</h6>
+                            <small class="text-muted">Brief description</small>
                         </div>
-                    </div>
-                </div>
+                        <span class="text-muted">$12</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0">Second product</h6>
+                            <small class="text-muted">Brief description</small>
+                        </div>
+                        <span class="text-muted">$8</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0">Third item</h6>
+                            <small class="text-muted">Brief description</small>
+                        </div>
+                        <span class="text-muted">$5</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total (USD)</span>
+                        <strong>$20</strong>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-7 col-lg-8">
 
-            </form>
-        </section>
+                <section id="data-form-section">
+                    <form id="dataForm" action="">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="name">Vezetéknév</label>
+                                <input type="text" name="name" class="form-control" id="name" placeholder="">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="name">Utónév</label>
+                                <input type="text" name="name" class="form-control" id="name" placeholder="">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="email">E-mail cím</label>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="subject">Irányítószám</label>
+                                <input type="text" name="subject" class="form-control" id="subject" placeholder="">
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-label" for="subject">Város</label>
+                                <input type="text" name="subject" class="form-control" id="subject" placeholder="">
+                            </div>
+
+                            <hr class="my-4">
+                            <div class="row justify-content-end">
+                                <div class="col-4 ">
+                                    <button type="submit"
+                                        class="w-100 btn background-primary text-light btn-lg mx-0">Tovább a
+                                        fizetési
+                                        módokhoz</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </section>
+            </div>
+        </div>
+
     </div>
 </main>

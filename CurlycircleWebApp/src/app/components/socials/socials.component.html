@@ -1,62 +1,83 @@
 <main>
     <div class="container px-5 my-5">
+        <header class="row  text-center mb-4">
+            <h1 class="fw-bolder">Kövess minket!</h1>
+            <p class="lead fw-normal text-muted mb-0">Tájékozódj elsőként a legújabb termékeinkről!</p>
+        </header>
+        <section id="socials-section" class="row justify-content-center text-center mb-4 gx-0">
+            <div class="col-auto">
+                <a href="https://www.instagram.com/curlycircle.handmade/" target="_blank" class="fs-1 btn social-btn">
+                    <fa-icon [icon]="faInstagram" class="mx-1"></fa-icon>
+                </a>
+            </div>
+            <div class="col-auto">
+                <a href="https://www.facebook.com/CurlyCircle.handmade/" target="_blank" class="fs-1 btn social-btn">
+                    <fa-icon [icon]="faFacebook" class="mx-1"></fa-icon>
+                </a>
+            </div>
+            <div class="col-auto">
+                <a href="https://www.youtube.com/channel/UCkOE0VFiBrKsTX1yV83sL4g" target="_blank"
+                    class="fs-1 btn social-btn">
+                    <fa-icon [icon]="faYoutube" class="mx-1"></fa-icon>
+                </a>
+            </div>
+        </section>
+
         <header class="row text-center mb-5">
-            <h1 class="fw-bolder">Lépj velünk kapcsolatba!</h1>
+            <h2 class="fw-bolder">Lépj velünk kapcsolatba!</h2>
             <p class="lead fw-normal text-muted mb-0">Kíváncsiak vagyunk a véleményedre.</p>
         </header>
 
         <section id="contact-form-section">
-            <form id="contactForm" class="row" action="">
-                <div class="row justify-content-center mb-3 ">
-                    <div class="col-md-8 col-lg-6">
-                        <label class="form-label" for="name">Név</label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="">
+            <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
+                <div class="form-group">
+                    <div class="row justify-content-center mb-3 ">
+                        <div class="col-md-8 col-lg-6">
+                            <label class="form-label" for="name">Név</label>
+                            <input required ngModel type="text" #name="ngModel" name="name" class="form-control"
+                                id="name" placeholder="" [class.is-invalid]="name.invalid && name.touched">
+                            <div class="alert alert-danger" *ngIf="name.touched && !name.valid">Nem adtál meg nevet!
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row justify-content-center mb-3 ">
-                    <div class="col-md-8 col-lg-6">
-                        <label class="form-label" for="email">Email cím</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="">
+                    <div class="row justify-content-center mb-3 ">
+                        <div class="col-md-8 col-lg-6">
+                            <label class="form-label" for="email">Email cím</label>
+                            <input required ngModel type="email" #email="ngModel" name="email" class="form-control"
+                                id="email" placeholder="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                [class.is-invalid]="email.invalid && email.touched">
+                            <div class="alert alert-danger" *ngIf="email.touched && !email.valid">
+                                <div *ngIf="email.errors?.required">Nem adtál meg e-mail címet.</div>
+                                <div *ngIf="email.errors?.pattern">A megadott e-mail cím nem érvényes.</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row justify-content-center mb-3 ">
-                    <div class="col-md-8 col-lg-6">
-                        <label class="form-label" for="subject">Tárgy</label>
-                        <input type="text" name="subject" class="form-control" id="subject" placeholder="">
+                    <div class="row justify-content-center mb-3 ">
+                        <div class="col-md-8 col-lg-6">
+                            <label class="form-label" for="subject">Tárgy <span class="text-muted">(Nem
+                                    kötelező)</span></label>
+                            <input ngModel type="text" name="subject" class="form-control" id="subject" placeholder="">
+                        </div>
                     </div>
-                </div>
-                <div class="row justify-content-center mb-5 ">
-                    <div class="col-md-8 col-lg-6">
-                        <label class="form-label" for="message">Üzenet</label>
-                        <textarea class="form-control" name="message" id="message" placeholder=""></textarea>
+                    <div class="row justify-content-center mb-5 ">
+                        <div class="col-md-8 col-lg-6">
+                            <label class="form-label" for="message">Üzenet</label>
+                            <textarea required ngModel #message="ngModel" class="form-control" name="message"
+                                id="message" placeholder=""
+                                [class.is-invalid]="message.invalid && message.touched"></textarea>
+                            <div class="alert alert-danger" *ngIf="message.touched && !message.valid">Nem adtál meg
+                                üzenetet!</div>
+                        </div>
                     </div>
-                </div>
-                <div class="row justify-content-center mb-5">
-                    <div class="col text-center">
-                        <button type="submit" class="btn background-primary text-light">Küldés</button>
+                    <div class="row justify-content-center">
+                        <div class="col text-center">
+                            <button type="submit" class="btn background-primary text-light"
+                                [disabled]="!contactForm.form.valid">Küldés</button>
+                        </div>
                     </div>
                 </div>
             </form>
         </section>
 
-        <header class="row  text-center mb-5">
-            <h1 class="fw-bolder">Vagy kövess minket!</h1>
-            <p class="lead fw-normal text-muted mb-0">Tájékozódj elsőként a legújabb termékeinkről!</p>
-        </header>
-        <section id="socials-section" class="row justify-content-center text-center">
-            <div class="col-auto">
-                <a href="https://www.instagram.com/curlycircle.handmade/" target="_blank" class="fs-1 link-dark">
-                    <fa-icon [icon]="faInstagram" class="mx-1"></fa-icon>
-                </a>
-            </div>
-            <div class="col-auto"> <a href="https://www.facebook.com/CurlyCircle.handmade/" target="_blank"
-                    class="fs-1 link-dark">
-                    <fa-icon [icon]="faFacebook" class="mx-1"></fa-icon>
-                </a></div>
-            <div class="col-auto"> <a href="https://www.youtube.com/channel/UCkOE0VFiBrKsTX1yV83sL4g" target="_blank"
-                    class="fs-1 link-dark">
-                    <fa-icon [icon]="faYoutube" class="mx-1"></fa-icon>
-                </a></div>
-        </section>
     </div>
 </main>
