@@ -1,12 +1,11 @@
 <main>
     <div class="container px-5 my-5">
         <header class="text-center mb-5">
-            <h1 class="fw-bolder">Adatok megadása</h1>
+            <h1 class="fw-bolder">Rendelési adatok megadása</h1>
         </header>
 
-
         <div class="row g-5">
-            <div class="col-md-5 col-lg-4 order-md-last">
+            <section class="col-lg-5 col-xl-4 order-lg-last">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="color-primary">Kosár</span>
                     <span class="badge background-primary rounded-pill">3</span>
@@ -38,48 +37,157 @@
                         <strong>$20</strong>
                     </li>
                 </ul>
-            </div>
-            <div class="col-md-7 col-lg-8">
-
-                <section id="data-form-section">
-                    <form id="dataForm" action="">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label" for="name">Vezetéknév</label>
-                                <input type="text" name="name" class="form-control" id="name" placeholder="">
+            </section>
+            <section class="col-lg-7 col-xl-8">
+                <mat-stepper>
+                    <mat-step [stepControl]="userDataFormGroup" errorMessage="Hibás kitöltés.">
+                        <form [formGroup]="userDataFormGroup">
+                            <ng-template matStepLabel>Adatok</ng-template>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="name">Vezetéknév</label>
+                                    <input type="text" class="form-control" id="name" formControlName="lastName"
+                                        [ngClass]="{ 'is-invalid': lastName?.invalid && (lastName?.dirty || lastName?.touched)}"
+                                        required>
+                                    <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)"
+                                        class="invalid-feedback">
+                                        Add meg a vezetékneved!
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="name">Utónév</label>
+                                    <input type="text" class="form-control" id="name" formControlName="firstName"
+                                        [ngClass]="{ 'is-invalid': firstName?.invalid && (firstName?.dirty || firstName?.touched)}"
+                                        required>
+                                    <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)"
+                                        class="invalid-feedback">
+                                        Add meg a keresztneved!
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" for="email">E-mail cím</label>
+                                    <input type="email" class="form-control" id="email" formControlName="email"
+                                        [ngClass]="{ 'is-invalid': email?.invalid && (email?.dirty || email?.touched)}"
+                                        required>
+                                    <div *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+                                        class="invalid-feedback">
+                                        <div *ngIf="email?.errors?.required">Add meg az e-mail címed!</div>
+                                        <div *ngIf="email?.errors?.email">Hibás email cím.</div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" for="emailConfirm">E-mail cím megerősítése</label>
+                                    <input type="email" class="form-control" id="emailConfirm"
+                                        formControlName="emailConfirm"
+                                        [ngClass]="{ 'is-invalid': (userDataFormGroup?.errors?.emailsDiffer || emailConfirm?.invalid) && (emailConfirm?.dirty || emailConfirm?.touched) }"
+                                        required>
+                                    <div *ngIf="emailConfirm?.invalid && (emailConfirm?.dirty || emailConfirm?.touched)"
+                                        class="invalid-feedback">
+                                        Erősítsd meg az e-mail címed!
+                                    </div>
+                                    <div *ngIf="userDataFormGroup?.errors?.emailsDiffer && (emailConfirm?.dirty || emailConfirm?.touched)"
+                                        class="invalid-feedback">
+                                        Nem azonosak a megadott e-mail
+                                        címek.
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label" for="zipcode">Irányítószám</label>
+                                    <input type="text" class="form-control" id="zipcode" formControlName="zipcode"
+                                        required>
+                                </div>
+                                <div class="col-md-9">
+                                    <label class="form-label" for="city">Város</label>
+                                    <input type="text" class="form-control" id="city" formControlName="city" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" for="address">Cím</label>
+                                    <input type="text" class="form-control" id="address" formControlName="address"
+                                        required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" for="addressOptions">Épület, emelet, ajtó stb. (nem
+                                        kötelező)</label>
+                                    <input type="text" class="form-control" id="addressOptions"
+                                        formControlName="addressOptions">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" for="comment">Megjegyzés (nem
+                                        kötelező)</label>
+                                    <textarea type="text" class="form-control" id="comment" rows="3"
+                                        formControlName="comment"></textarea>
+                                </div>
+                                <hr class="my-4">
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="name">Utónév</label>
-                                <input type="text" name="name" class="form-control" id="name" placeholder="">
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label" for="email">E-mail cím</label>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="subject">Irányítószám</label>
-                                <input type="text" name="subject" class="form-control" id="subject" placeholder="">
-                            </div>
-                            <div class="col-md-8">
-                                <label class="form-label" for="subject">Város</label>
-                                <input type="text" name="subject" class="form-control" id="subject" placeholder="">
-                            </div>
-
-                            <hr class="my-4">
                             <div class="row justify-content-end">
-                                <div class="col-4 ">
-                                    <button type="submit"
-                                        class="w-100 btn background-primary text-light btn-lg mx-0">Tovább a
-                                        fizetési
-                                        módokhoz</button>
+                                <div class="col-auto">
+                                    <button mat-button color="primary" matStepperNext>Következő</button>
                                 </div>
                             </div>
-                        </div>
-
-                    </form>
-                </section>
-            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="shippingFormGroup" errorMessage="Válassz szállítási módot.">
+                        <form [formGroup]="shippingFormGroup">
+                            <ng-template matStepLabel>Szállítási mód</ng-template>
+                            <div class="row g-2">
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="shippingMethod1"
+                                        formControlName="shippingMethod" value="shipping1">
+                                    <label class="form-check-label" for="shippingMethod1">Szállítási mód1</label>
+                                </div>
+                                <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi
+                                    harum fugit quo necessitatibus consequuntur. Sunt aliquam saepe minima sint quas?
+                                </p>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="shippingMethod2"
+                                        formControlName="shippingMethod" value="shipping2">
+                                    <label class="form-check-label" for="shippingMethod2">Szállítási mód2</label>
+                                </div>
+                                <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi
+                                    harum fugit quo necessitatibus consequuntur. Sunt aliquam saepe minima sint quas?
+                                </p>
+                                <hr class="my-4">
+                            </div>
+                            <div class="row justify-content-end">
+                                <div class="col-auto">
+                                    <button mat-button color="primary" matStepperPrevious>Vissza</button>
+                                    <button mat-button color="primary" matStepperNext>Következő</button>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="paymentFormGroup" errorMessage="Válassz fizetési módot.">
+                        <form [formGroup]="paymentFormGroup">
+                            <ng-template matStepLabel>Fizetési mód</ng-template>
+                            <div class="row g-2">
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="paymentMethod1"
+                                        formControlName="paymentMethod" value="payment1">
+                                    <label class="form-check-label" for="paymentMethod1">Fizetési mód1</label>
+                                </div>
+                                <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi
+                                    harum fugit quo necessitatibus consequuntur. Sunt aliquam saepe minima sint quas?
+                                </p>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="paymentMethod2"
+                                        formControlName="paymentMethod" value="shipping2">
+                                    <label class="form-check-label" for="paymentMethod2">Fizetési mód2</label>
+                                </div>
+                                <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi
+                                    harum fugit quo necessitatibus consequuntur. Sunt aliquam saepe minima sint quas?
+                                </p>
+                                <hr class="my-4">
+                            </div>
+                            <div class="row justify-content-end">
+                                <div class="col-auto">
+                                    <button mat-button color="primary" matStepperPrevious>Vissza</button>
+                                    <button mat-button color="primary" matStepperNext>Rendelés leadása</button>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-step>
+                </mat-stepper>
+            </section>
         </div>
-
     </div>
 </main>

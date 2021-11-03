@@ -19,6 +19,7 @@ import { RefundPolicyComponent } from './components/policies/refund-policy/refun
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -46,6 +47,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         MatExpansionModule,
         MatStepperModule,
         MatFormFieldModule,
+        MatButtonModule,
         FormsModule,
         ReactiveFormsModule
     ],
