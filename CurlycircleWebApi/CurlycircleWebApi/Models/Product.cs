@@ -23,6 +23,8 @@ namespace CurlycircleWebApi.Models
 
     public string Description { get; set; }
 
+    public string ImageUrl { get; set; }
+
     public string Color { get; set; }
 
     public string Pattern { get; set; }
