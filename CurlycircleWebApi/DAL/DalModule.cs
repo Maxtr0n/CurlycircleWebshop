@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace CurlycircleWebApi.Models
+namespace DAL
 {
-  public enum PaymentMethod
+  class DalModule : Autofac.Module
   {
-    MoneyTransfer,
-    CashOnDelivery
   }
 }

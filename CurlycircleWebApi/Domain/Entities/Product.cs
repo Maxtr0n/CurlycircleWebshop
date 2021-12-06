@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using Domain.Entities.Abstractions;
 
-namespace CurlycircleWebApi.Models
+namespace Domain.Entities
 {
-  public class Product
+  public class Product : EntityBase
   {
-    [Key]
-    public int Id { get; set; }
-
     [Required]
     public double Price { get; set; }
 

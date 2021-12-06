@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using Domain.Entities.Abstractions;
+using Domain.Enums;
 
-namespace CurlycircleWebApi.Models
+namespace Domain.Entities
 {
-  public class Order
+  public class Order : EntityBase
   {
-    [Key]
-    public int Id { get; set; }
-
     [Required]
     public DateTime OrderDateTime { get; set; }
 
