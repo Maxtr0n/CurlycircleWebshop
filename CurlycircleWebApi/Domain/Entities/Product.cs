@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using Domain.Entities.Abstractions;
 
 namespace Domain.Entities
@@ -25,5 +26,14 @@ namespace Domain.Entities
 
     public string Material { get; set; }
 
+    public void Update(Product updateProduct)
+    {
+      Name = updateProduct.Name;
+      Price = updateProduct.Price;
+      Description = updateProduct.Description;
+      Color = updateProduct.Color;
+      Pattern = updateProduct.Pattern;
+      Material = updateProduct.Material;
+    }
   }
 }

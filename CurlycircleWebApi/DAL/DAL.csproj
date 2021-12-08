@@ -17,8 +17,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CurlycircleWebApi\CurlycircleWebApi.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="EntityConfigurations\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

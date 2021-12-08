@@ -12,5 +12,10 @@ namespace Domain.Entities
     public string Description { get; set; }
 
     public List<Product> Products { get; set; }
+
+    public void AddProduct(Product product)
+    {
+      Products.Add(product);
+    }
   }
 }

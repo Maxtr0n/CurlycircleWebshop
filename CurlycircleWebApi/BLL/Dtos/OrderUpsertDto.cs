@@ -1,49 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Domain.Entities.Abstractions;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Domain.Enums;
 
-namespace Domain.Entities
+namespace BLL.Dtos
 {
-  public class Order : EntityBase
+  public class OrderUpsertDto
   {
-    [Required]
     public DateTime OrderDateTime { get; set; }
 
-    public List<OrderItem> OrderItems { get; set; }
+    public List<OrderItemUpsertDto> OrderItems { get; set; }
 
-    [Required]
     public string Name { get; set; }
 
-    [Required]
     public string Email { get; set; }
 
-    [Required]
     public string City { get; set; }
 
-    [Required]
     public int ZipCode { get; set; }
 
-    [Required]
     public string Address { get; set; }
 
-    [Required]
     public double Total { get; set; }
 
-    [Required]
     public ShippingMethod ShippingMethod { get; set; }
 
-    [Required]
     public PaymentMethod PaymentMethod { get; set; }
 
     public string PhoneNumber { get; set; }
 
     public string Note { get; set; }
-
-    public void AddOrderItem(OrderItem orderItem)
-    {
-      OrderItems.Add(orderItem);
-    }
   }
 }
