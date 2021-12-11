@@ -2,107 +2,69 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL.Dtos;
+using BLL.Interfaces;
+using BLL.Services;
+using BLL.ViewModels;
+using CurlycircleWebApi.Common;
 using DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CurlycircleWebApi.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController : ApiController
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IIdentityHelper _identityHelper;
+        private readonly IProductCategoryService _productCategoryService;
+        private readonly IProductService _productService;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(IIdentityHelper identityHelper, IProductCategoryService productCategoryService, IProductService productService)
         {
-            _context = context;
+            _identityHelper = identityHelper;
+            _productCategoryService = productCategoryService;
+            _productService = productService;
         }
 
-        // GET: api/Products
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
-        {
-            return await _context.Products.ToListAsync();
-        }
-
-        // GET: api/Products/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
-        {
-            var product = await _context.Products.FindAsync(id);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return product;
-        }
-
-        // PUT: api/Products/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
-        {
-            if (id != product.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(product).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Products
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public Task<EntityCreatedViewModel> CreateProduct([FromBody] ProductUpsertDto productCreateDto)
         {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            HttpContext.Response.StatusCode = StatusCodes.Status201Created;
+            return _productService.CreateProductAsync(productCreateDto);
         }
 
-        // DELETE: api/Products/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        [HttpGet]
+        public Task<ProductsViewModel> GetProducts()
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return _productService.GetAllProductsAsync();
         }
 
-        private bool ProductExists(int id)
+        [HttpGet("{productId}")]
+        public Task<ProductViewModel> GetProductById([FromRoute] int productId)
         {
-            return _context.Products.Any(e => e.Id == id);
+            return _productService.FindProductByIdAsync(productId);
+        }
+
+        [HttpPut("{productId}")]
+        [Authorize(Roles = "Admin")]
+        public Task UpdateProduct([FromRoute] int productId, [FromBody] ProductUpsertDto productUpdateDto)
+        {
+            return _productService.UpdateProductAsync(productId, productUpdateDto);
+        }
+
+        [HttpDelete("{productId}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public Task DeleteProduct([FromRoute] int productId)
+        {
+            HttpContext.Response.StatusCode = StatusCodes.Status204NoContent;
+            return _productService.DeleteProductAsync(productId);
         }
     }
 }
