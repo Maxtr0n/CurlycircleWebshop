@@ -14,7 +14,7 @@ namespace BLL.ViewModels
 
     public string Name { get; set; }
 
-    public string ProductCategory { get; set; }
+    public string ProductCategoryId { get; set; }
 
     public string Description { get; set; }
 

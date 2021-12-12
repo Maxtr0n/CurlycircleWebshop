@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CurlycircleWebApi.Controllers
 {
+    [Route("api/[controller]")]
     public class OrderItemsController : ApiController
     {
         private readonly IIdentityHelper _identityHelper;

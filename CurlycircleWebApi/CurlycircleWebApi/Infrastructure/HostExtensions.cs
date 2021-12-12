@@ -20,20 +20,19 @@ namespace CurlycircleWebApi.Infrastructure
         return host;
       }
 
-      using (var scope = host.Services.CreateScope())
-      using (var appContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
+      using var scope = host.Services.CreateScope();
+      using var appContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+      try
       {
-        try
-        {
           appContext.Database.Migrate();
-        }
-        catch (Exception e)
-        {
+      }
+      catch (Exception e)
+      {
           var services = scope.ServiceProvider;
           var logger = services.GetRequiredService<ILogger>();
           logger.LogError(e, "An error occured during running migrations.");
-        }
       }
+
       return host;
     }
   }
