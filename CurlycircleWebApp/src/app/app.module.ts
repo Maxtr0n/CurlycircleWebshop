@@ -22,6 +22,11 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { TokenInterceptor } from './core/token.interceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { ProductCategoriesComponent } from './components/product-categories/product-categories.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +42,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         PrivacyPolicyComponent,
         TermsOfServiceComponent,
         ShippingPolicyComponent,
-        RefundPolicyComponent
+        RefundPolicyComponent,
+        ProductDetailsComponent,
+        ProductCategoriesComponent
     ],
     imports: [
         BrowserModule,
@@ -49,9 +56,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         MatFormFieldModule,
         MatButtonModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatCardModule,
+        HttpClientModule
     ],
-    providers: [],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

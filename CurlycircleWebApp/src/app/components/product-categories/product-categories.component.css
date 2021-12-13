@@ -1,8 +1,8 @@
-.product-card {
+.product-category-card {
     cursor: pointer;
 }
 
-.product-card:hover {
+.product-category-card:hover {
     background-color: lightgray;
 }
 

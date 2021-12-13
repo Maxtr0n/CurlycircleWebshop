@@ -1,0 +1,15 @@
+<div class="container px-5 my-5">
+    <div class="row justify-content-center">
+        <ng-container *ngFor="let productCategory of productCategories">
+            <div class="card product-category-card col-md-3 mx-2 my-2 py-1"
+                (click)="onProductCategoryClicked(productCategory.id)" style="width: 18rem;">
+                <img src="http://localhost:5000/images/placeholder.jpg" alt="Picture of product category"
+                    class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{productCategory.name}}</h5>
+                    <p class="card-text">{{productCategory.description}}</p>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
