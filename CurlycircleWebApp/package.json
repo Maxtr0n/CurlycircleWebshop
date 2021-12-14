@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~12.2.0",
+    "@angular/animations": "^12.2.14",
     "@angular/cdk": "^12.2.11",
     "@angular/common": "~12.2.0",
     "@angular/compiler": "~12.2.0",
@@ -28,6 +28,7 @@
     "@popperjs/core": "^2.10.2",
     "bootstrap": "^5.1.2",
     "glob-parent": "^6.0.1",
+    "ngx-toastr": "^14.2.1",
     "rxjs": "~6.6.0",
     "set-value": "^4.1.0",
     "tslib": "^2.3.0",

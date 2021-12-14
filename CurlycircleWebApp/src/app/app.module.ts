@@ -21,12 +21,18 @@ import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { TokenInterceptor } from './core/token.interceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductCategoriesComponent } from './components/product-categories/product-categories.component';
+import { ToastrModule } from 'ngx-toastr';
+import { MatIconModule } from '@angular/material/icon';
+import { CartComponent } from './components/cart/cart.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 @NgModule({
     declarations: [
@@ -44,21 +50,30 @@ import { ProductCategoriesComponent } from './components/product-categories/prod
         ShippingPolicyComponent,
         RefundPolicyComponent,
         ProductDetailsComponent,
-        ProductCategoriesComponent
+        ProductCategoriesComponent,
+        CartComponent,
+        AdminComponent,
+        OrdersComponent
     ],
     imports: [
         BrowserModule,
+        ToastrModule.forRoot({
+            positionClass: 'toast-top-center',
+            closeButton: true
+        }),
         AppRoutingModule,
         FontAwesomeModule,
         BrowserAnimationsModule,
         MatExpansionModule,
         MatStepperModule,
         MatFormFieldModule,
+        MatInputModule,
         MatButtonModule,
         FormsModule,
         ReactiveFormsModule,
         MatCardModule,
-        HttpClientModule
+        HttpClientModule,
+        MatIconModule,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

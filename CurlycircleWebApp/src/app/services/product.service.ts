@@ -16,6 +16,7 @@ export class ProductService {
     }
 
     getProduct(productId: number): Observable<ProductViewModel> {
+        console.log("getproduct called")
         return this.httpClient.get<ProductViewModel>(`${this.productsApiUrl}/${productId}`);
     }
 

@@ -1,1 +1,22 @@
-<p>product-details works!</p>
+<div class="container px-5 py-4">
+    <div class="row justify-content-center">
+        <div class="card product-card">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="http://localhost:5000/images/placeholder.jpg" class="img-fluid rounded-start"
+                        alt="Picture of product category" class="card-img-top">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body" *ngIf="product">
+                        <h5 class="card-title">{{product.name}}</h5>
+                        <p class="card-text">{{product.description}}</p>
+                        <h5 class="card-text mb-3">{{product.price}} Ft</h5>
+                        <button class="me-2" mat-raised-button color="primary"
+                            (click)="addProductToCart(product)">Kosárba</button>
+                        <button mat-stroked-button color="primary">Vásárlás</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

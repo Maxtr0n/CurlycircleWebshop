@@ -8,34 +8,17 @@
             <section class="col-lg-5 col-xl-4 order-lg-last">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="color-primary">Kosár</span>
-                    <span class="badge background-primary rounded-pill">3</span>
+                    <span class="badge background-primary rounded-pill">{{items.length}}</span>
                 </h4>
                 <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">Product name</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">$12</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">Second product</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">$8</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">Third item</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">$5</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (USD)</span>
-                        <strong>$20</strong>
-                    </li>
+                    <ng-container *ngFor="let product of products">
+                        <li class="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <h6 class="my-0">{{product.name}}</h6>
+                            </div>
+                            <span class="text-muted">{{product.price}} Ft</span>
+                        </li>
+                    </ng-container>
                 </ul>
             </section>
             <section class="col-lg-7 col-xl-8">
@@ -91,6 +74,17 @@
                                         címek.
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <label class="form-label" for="phoneNumber">Telefonszám</label>
+                                    <input type="text" class="form-control" id="phoneNumber"
+                                        formControlName="phoneNumber"
+                                        [ngClass]="{ 'is-invalid': phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)}"
+                                        required>
+                                    <div *ngIf="phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)"
+                                        class="invalid-feedback">
+                                        Add meg a telefonszámod!
+                                    </div>
+                                </div>
                                 <div class="col-md-3">
                                     <label class="form-label" for="zipcode">Irányítószám</label>
                                     <input type="text" class="form-control" id="zipcode" formControlName="zipcode"
@@ -131,17 +125,42 @@
                             <ng-template matStepLabel>Szállítási mód</ng-template>
                             <div class="row g-2">
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" id="shippingMethod1"
-                                        formControlName="shippingMethod" value="shipping1">
-                                    <label class="form-check-label" for="shippingMethod1">Szállítási mód1</label>
+                                    <input type="radio" class="form-check-input" id="Foxpost"
+                                        formControlName="shippingMethod" value="Foxpost">
+                                    <label class="form-check-label" for="Foxpost">Foxpost</label>
                                 </div>
                                 <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi
                                     harum fugit quo necessitatibus consequuntur. Sunt aliquam saepe minima sint quas?
                                 </p>
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" id="shippingMethod2"
-                                        formControlName="shippingMethod" value="shipping2">
-                                    <label class="form-check-label" for="shippingMethod2">Szállítási mód2</label>
+                                    <input type="radio" class="form-check-input" id="MagyarPostaPont"
+                                        formControlName="shippingMethod" value="MagyarPostaPont">
+                                    <label class="form-check-label" for="MagyarPostaPont">MagyarPostaPont</label>
+                                </div>
+                                <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi
+                                    harum fugit quo necessitatibus consequuntur. Sunt aliquam saepe minima sint quas?
+                                </p>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="MagyarPostaCsomagPont"
+                                        formControlName="shippingMethod" value="MagyarPostaCsomagPont">
+                                    <label class="form-check-label"
+                                        for="MagyarPostaCsomagPont">MagyarPostaCsomagPont</label>
+                                </div>
+                                <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi
+                                    harum fugit quo necessitatibus consequuntur. Sunt aliquam saepe minima sint quas?
+                                </p>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="HomeDelivery"
+                                        formControlName="shippingMethod" value="HomeDelivery">
+                                    <label class="form-check-label" for="HomeDelivery">Házhoz szállítás</label>
+                                </div>
+                                <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi
+                                    harum fugit quo necessitatibus consequuntur. Sunt aliquam saepe minima sint quas?
+                                </p>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="PersonalDelivery"
+                                        formControlName="shippingMethod" value="PersonalDelivery">
+                                    <label class="form-check-label" for="PersonalDelivery">Személyes átvétel</label>
                                 </div>
                                 <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi
                                     harum fugit quo necessitatibus consequuntur. Sunt aliquam saepe minima sint quas?
@@ -161,17 +180,17 @@
                             <ng-template matStepLabel>Fizetési mód</ng-template>
                             <div class="row g-2">
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" id="paymentMethod1"
-                                        formControlName="paymentMethod" value="payment1">
-                                    <label class="form-check-label" for="paymentMethod1">Fizetési mód1</label>
+                                    <input type="radio" class="form-check-input" id="MoneyTransfer"
+                                        formControlName="paymentMethod" value="MoneyTransfer">
+                                    <label class="form-check-label" for="MoneyTransfer">Átutalás</label>
                                 </div>
                                 <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi
                                     harum fugit quo necessitatibus consequuntur. Sunt aliquam saepe minima sint quas?
                                 </p>
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" id="paymentMethod2"
-                                        formControlName="paymentMethod" value="shipping2">
-                                    <label class="form-check-label" for="paymentMethod2">Fizetési mód2</label>
+                                    <input type="radio" class="form-check-input" id="CashOnDelivery"
+                                        formControlName="paymentMethod" value="CashOnDelivery">
+                                    <label class="form-check-label" for="CashOnDelivery">Készpénz</label>
                                 </div>
                                 <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi
                                     harum fugit quo necessitatibus consequuntur. Sunt aliquam saepe minima sint quas?

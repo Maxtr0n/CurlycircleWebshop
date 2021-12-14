@@ -1,29 +1,47 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { faFacebook, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { tap } from 'rxjs/operators';
+import { AuthService } from 'src/app/core/auth.service';
+import { UnsubscribeOnDestroy } from 'src/app/core/UnsubscribeOnDestroy';
 
 @Component({
-  selector: 'app-nav-bar',
-  templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.css']
+    selector: 'app-nav-bar',
+    templateUrl: './nav-bar.component.html',
+    styleUrls: ['./nav-bar.component.css']
 })
-export class NavBarComponent implements OnInit {
-  isExpanded = false;
+export class NavBarComponent extends UnsubscribeOnDestroy implements OnInit {
+    isExpanded = false;
 
-  faFacebook = faFacebook;
-  faInstagram = faInstagram;
-  faYoutube = faYoutube;
+    currentUser: boolean | null = null;
 
-  constructor() { }
+    faFacebook = faFacebook;
+    faInstagram = faInstagram;
+    faYoutube = faYoutube;
 
-  ngOnInit(): void { }
+    constructor(
+        private readonly authService: AuthService,
+        private readonly router: Router
+    ) {
+        super();
+        this.subscribe(this.authService.currentUser.pipe(
+            tap(x => this.currentUser = x)
+        ));
+    }
 
-  collapse() {
-    this.isExpanded = false;
-  }
+    ngOnInit(): void { }
 
-  toggle() {
-    this.isExpanded = !this.isExpanded;
-  }
+    collapse() {
+        this.isExpanded = false;
+    }
+
+    toggle() {
+        this.isExpanded = !this.isExpanded;
+    }
+
+    logout() {
+        this.authService.logout();
+    }
 
 }

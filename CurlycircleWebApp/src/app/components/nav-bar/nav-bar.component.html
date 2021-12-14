@@ -22,11 +22,14 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/informaciok" routerLinkActive="active">GYIK</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/adatok" routerLinkActive="active">adatok(toDelete)</a>
+                <li class="nav-item" *ngIf="currentUser">
+                    <a class="nav-link" routerLink="/orders" routerLinkActive="active">Rendelések</a>
+                </li>
+                <li class="nav-item" *ngIf="currentUser">
+                    <a class="nav-link" (click)="logout()">Kijelentkezés</a>
                 </li>
             </ul>
-            <a href="https://www.instagram.com/curlycircle.handmade/" target="_blank" class="fs-5">
+            <!--<a href="https://www.instagram.com/curlycircle.handmade/" target="_blank" class="fs-5">
                 <fa-icon [icon]="faInstagram" class="text-light mx-1"></fa-icon>
             </a>
             <a href="https://www.facebook.com/CurlyCircle.handmade/" target="_blank" class="fs-5">
@@ -34,7 +37,11 @@
             </a>
             <a href="https://www.youtube.com/channel/UCkOE0VFiBrKsTX1yV83sL4g" target="_blank" class="fs-5">
                 <fa-icon [icon]="faYoutube" class="text-light mx-1"></fa-icon>
-            </a>
+            </a>-->
+            <button mat-icon-button class="cart-icon" aria-label="Cart icon-button" routerLink="/shopping-cart"
+                routerLinkActive="active">
+                <mat-icon>shopping_cart</mat-icon>
+            </button>
         </div>
     </div>
 
