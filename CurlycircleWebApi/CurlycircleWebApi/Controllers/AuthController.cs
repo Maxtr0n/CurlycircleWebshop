@@ -23,7 +23,7 @@ namespace CurlycircleWebApi.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public Task<TokenViewModel> Login([FromBody] LoginDto loginDto)
+        public Task<UserViewModel> Login([FromBody] LoginDto loginDto)
         {
             return authService.LoginAsync(loginDto);
         }

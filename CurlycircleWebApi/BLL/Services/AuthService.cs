@@ -11,6 +11,7 @@ using BLL.Exceptions;
 using BLL.Interfaces;
 using BLL.ViewModels;
 using Domain.Entities;
+using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -35,7 +36,7 @@ namespace BLL.Services
             Configuration = configuration;
         }
 
-        public async Task<TokenViewModel> LoginAsync(LoginDto loginDto)
+        public async Task<UserViewModel> LoginAsync(LoginDto loginDto)
         {
             try
             {
@@ -45,9 +46,26 @@ namespace BLL.Services
                 {
                     throw new Exception();
                 }
-                return new TokenViewModel
+                var token = new TokenViewModel
                 {
                     AccessToken = await CreateAccessTokenAsync(user)
+                };
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var role = Role.User;
+                foreach (var userRole in userRoles)
+                {
+                    if (userRole.Equals("Admin"))
+                    {
+                        role = Role.Admin;
+                    }
+                }
+
+                return new UserViewModel
+                {
+                    Id = user.Id,
+                    Username = user.UserName,
+                    Role = role,
+                    Token = token
                 };
             }
             catch (Exception)

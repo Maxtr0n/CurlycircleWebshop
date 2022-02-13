@@ -1,59 +1,6 @@
-<div class="container content">
+<div class="container">
     <div class="row justify-content-center">
-        <div *ngIf="orders.length === 0">
-            Nincs rendelés.
-        </div>
-        <ng-container *ngFor="let order of orders">
-            <div class="card product-card col-12 mx-2 my-2">
-                <div class="row g-0">
-                    <div class="col">
-                        <div class="card-body">
-                            <div class="row mb-1">
-                                <div class="col-6">
-                                    <p class="card-text"><strong>Dátum:</strong> {{order.orderDateTime}}</p>
-                                </div>
-                                <div class="col-6">
-                                    <p class="card-title"><strong>Név:</strong> {{order.name}}</p>
-                                </div>
-                            </div>
-                            <div class="row mb-1">
-                                <div class="col-6">
-                                    <p class="card-text"><strong>Irányítószám:</strong> {{order.zipCode}}</p>
-                                </div>
-                                <div class="col-6">
-                                    <p class="card-text"><strong>Város:</strong> {{order.city}}</p>
-                                </div>
-                            </div>
-                            <div class="row mb-1">
-                                <div class="col-6">
-                                    <p class="card-text"><strong>Cím:</strong> {{order.address}}</p>
-                                </div>
-                                <div class="col-6">
-                                    <p class="card-text"><strong>Email:</strong> {{order.email}}</p>
-                                </div>
-                            </div>
-                            <div class="row mb-1">
-
-                                <div class="col-6">
-                                    <p class="card-text"><strong>Telefonszám:</strong> {{order.phoneNumber}}</p>
-                                </div>
-                                <div class="col-6">
-                                    <p class="card-text"><strong>Szállítás:</strong> {{order.shippingMethod}}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-
-                                <div class="col-6">
-                                    <p class="card-text"><strong>Fizetés:</strong> {{order.paymentMethod}}</p>
-                                </div>
-                                <div class="col-6">
-                                    <p class="card-text"><strong>Megjegyzés:</strong> {{order.note}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ng-container>
+        <h2>Rendelések</h2>
     </div>
+    <app-table [columns]="columns" [dataSource]="orders" (rowClicked)="onRowClicked($event)"></app-table>
 </div>

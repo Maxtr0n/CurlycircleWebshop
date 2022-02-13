@@ -35,8 +35,7 @@ export class AdminComponent extends UnsubscribeOnDestroy implements OnInit {
 
     login(): void {
         this.subscribe(this.authService.login(this.form.value).pipe(
-            tap((token) => {
-                console.log(token);
+            tap((user) => {
                 this.toast.success('Sikeres bejelentkezés.');
                 this.router.navigate(['']);
             })

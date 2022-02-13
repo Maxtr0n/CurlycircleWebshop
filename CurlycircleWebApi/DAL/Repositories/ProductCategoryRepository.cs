@@ -45,7 +45,7 @@ namespace DAL.Repositories
             return productCategory;
         }
 
-        public async void UpdateProductCategory(ProductCategory productCategory)
+        public void UpdateProductCategory(ProductCategory productCategory)
         {
             dbContext.ProductCategories.Update(productCategory);
         }

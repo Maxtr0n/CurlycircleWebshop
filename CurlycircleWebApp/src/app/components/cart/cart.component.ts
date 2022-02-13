@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { UnsubscribeOnDestroy } from 'src/app/core/UnsubscribeOnDestroy';
-import { OrderItemUpsertDto, ProductViewModel } from 'src/app/models/models';
+import { OrderItem, OrderItemUpsertDto, ProductViewModel } from 'src/app/models/models';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -11,8 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
     styleUrls: ['./cart.component.css']
 })
 export class CartComponent extends UnsubscribeOnDestroy implements OnInit {
-    items: OrderItemUpsertDto[] = [];
-    products: ProductViewModel[] = []
+    items: OrderItem[] = [];
 
     constructor(
         private readonly cartService: CartService,
@@ -22,15 +21,15 @@ export class CartComponent extends UnsubscribeOnDestroy implements OnInit {
     }
 
     ngOnInit(): void {
-        this.items = this.cartService.getItems();
-        this.items.forEach(item => {
-            this.subscribe(this.productService.getProduct(item.productId).pipe(
-                tap((product) => this.products.push(product))
-            ))
-        });
+        this.getData();
     }
 
-    removeProduct(product: ProductViewModel) {
+    private getData() {
+        this.items = this.cartService.getItems();
+    }
 
+    removeItem(orderItem: OrderItem) {
+        this.cartService.removeItem(orderItem);
+        this.getData();
     }
 }

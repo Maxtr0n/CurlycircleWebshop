@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { UnsubscribeOnDestroy } from 'src/app/core/UnsubscribeOnDestroy';
-import { OrderItemUpsertDto, OrderItemViewModel, ProductViewModel } from 'src/app/models/models';
+import { OrderItem, OrderItemUpsertDto, OrderItemViewModel, ProductViewModel } from 'src/app/models/models';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -42,9 +42,10 @@ export class ProductDetailsComponent extends UnsubscribeOnDestroy implements OnI
     }
 
     addProductToCart(product: ProductViewModel) {
-        const orderItem: OrderItemUpsertDto = {
+        const orderItem: OrderItem = {
             orderId: 0,
             productId: product.id,
+            product: product,
             price: product.price,
             quantity: 1
         }

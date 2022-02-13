@@ -20,7 +20,7 @@ export class OrderService {
     }
 
     getOrderOrderItems(orderId: number): Observable<OrderItemsViewModel> {
-        return this.httpClient.get<OrderItemsViewModel>(`${this.ordersApiUrl}/${orderId}/orderitems`);
+        return this.httpClient.get<OrderItemsViewModel>(`${this.ordersApiUrl}/${orderId}/orderItems`);
     }
 
     updateOrder(orderId: number, dto: OrderUpsertDto): Observable<void> {
@@ -32,7 +32,7 @@ export class OrderService {
     }
 
     addOrderOrderItem(orderId: number, dto: OrderItemUpsertDto): Observable<EntityCreatedViewModel> {
-        return this.httpClient.post<EntityCreatedViewModel>(`${this.ordersApiUrl}/${orderId}/orderitems`, dto);
+        return this.httpClient.post<EntityCreatedViewModel>(`${this.ordersApiUrl}/${orderId}/orderItems`, dto);
     }
 
     deleteOrder(orderId: number): Observable<void> {

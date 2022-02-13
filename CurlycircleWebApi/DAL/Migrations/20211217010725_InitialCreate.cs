@@ -260,7 +260,7 @@ namespace DAL.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { 1, "dc474f89-2d61-4067-a094-47abec6a167c", "Admin", "ADMIN" });
+                values: new object[] { 1, "7595668b-b5f0-4837-ba69-d0977913941a", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "Orders",
@@ -268,8 +268,8 @@ namespace DAL.Migrations
                 values: new object[,]
                 {
                     { 1, "Example utca 15.", "Göd", "kovacs.janos@example.com", "Kovács János", "Nem kérek csípőset.", new DateTime(2021, 11, 21, 21, 21, 21, 0, DateTimeKind.Unspecified), "MoneyTransfer", "+36 30 111 1111", "MagyarPostaPont", 0.0, 2131 },
-                    { 2, "Example utca 20.", "Budapest", "kedves.bela@example.com", "Kedves Béla", null, new DateTime(2021, 2, 1, 2, 21, 31, 0, DateTimeKind.Unspecified), "MoneyTransfer", "+36 30 333 3333", "HomeDelivery", 0.0, 1037 },
-                    { 3, "Example utca 15.", "Szentendre", "asztalos.andras@example.com", "Asztalos András", null, new DateTime(2020, 9, 21, 15, 12, 45, 0, DateTimeKind.Unspecified), "MoneyTransfer", "+36 30 222 2222", "Foxpost", 0.0, 2222 }
+                    { 2, "Example utca 20.", "Budapest", "kedves.bela@example.com", "Kedves Béla", null, new DateTime(2021, 2, 1, 2, 21, 31, 0, DateTimeKind.Unspecified), "CashOnDelivery", "+36 30 333 6666", "HomeDelivery", 0.0, 1037 },
+                    { 3, "Example utca 15.", "Szentendre", "asztalos.andras@example.com", "Asztalos András", null, new DateTime(2020, 9, 21, 15, 12, 45, 0, DateTimeKind.Unspecified), "CashOnDelivery", "+36 30 222 2222", "Foxpost", 0.0, 2222 }
                 });
 
             migrationBuilder.InsertData(
@@ -285,7 +285,7 @@ namespace DAL.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "0e33c2d8-051f-4e00-9b4a-292cf5eb596c", null, false, false, null, null, "ADMIN", "AQAAAAEAACcQAAAAEPe+LfRZBkqXYxHsEV/A57ieYPBhrh+20YRjli89IeatMx1UOxnBrkHqUPqVqcm+Vg==", null, false, "86c49fc8-891e-4b3d-81fb-6bfb6c9f967a", false, "admin" });
+                values: new object[] { 1, 0, "c16668e4-feb9-4ec7-ac53-e99c3ff41017", null, false, false, null, null, "ADMIN", "AQAAAAEAACcQAAAAEL2qs6uvho2uzyEHVtBvSOYk+qACkoOjTAilDws7ozkou5Bg1MFRbFSe1hCpJt8nzQ==", null, false, "e7d75775-8bb1-4420-852c-c1e4afe9d738", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

@@ -5,6 +5,7 @@ import { faFacebook, faInstagram, faYoutube } from '@fortawesome/free-brands-svg
 import { tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/auth.service';
 import { UnsubscribeOnDestroy } from 'src/app/core/UnsubscribeOnDestroy';
+import { UserViewModel } from 'src/app/models/models';
 
 @Component({
     selector: 'app-nav-bar',
@@ -14,7 +15,7 @@ import { UnsubscribeOnDestroy } from 'src/app/core/UnsubscribeOnDestroy';
 export class NavBarComponent extends UnsubscribeOnDestroy implements OnInit {
     isExpanded = false;
 
-    currentUser: boolean | null = null;
+    currentUser: UserViewModel | null = null;
 
     faFacebook = faFacebook;
     faInstagram = faInstagram;
@@ -26,7 +27,7 @@ export class NavBarComponent extends UnsubscribeOnDestroy implements OnInit {
     ) {
         super();
         this.subscribe(this.authService.currentUser.pipe(
-            tap(x => this.currentUser = x)
+            tap(user => this.currentUser = user)
         ));
     }
 
@@ -42,6 +43,7 @@ export class NavBarComponent extends UnsubscribeOnDestroy implements OnInit {
 
     logout() {
         this.authService.logout();
+        this.router.navigate(['']);
     }
 
 }

@@ -10,7 +10,7 @@ namespace BLL.Interfaces
 {
     public interface IAuthService
     {
-        Task<TokenViewModel> LoginAsync(LoginDto loginDto);
+        Task<UserViewModel> LoginAsync(LoginDto loginDto);
 
         //Task<EntityCreatedViewModel> CreateUserAsync(CreateUserDto createUserDto);
     }

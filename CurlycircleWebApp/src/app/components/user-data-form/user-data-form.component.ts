@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { emailsMatchValidator } from 'src/app/validators/emailsMatchValidator';
-import { OrderItemUpsertDto, OrderUpsertDto, ProductViewModel } from 'src/app/models/models';
+import { OrderItem, OrderItemUpsertDto, OrderUpsertDto, PaymentMethod, ProductViewModel, ShippingMethod } from 'src/app/models/models';
 import { OrderItemService } from 'src/app/services/order-item.service';
 import { CartService } from 'src/app/services/cart.service';
 import { OrderService } from 'src/app/services/order.service';
@@ -21,8 +21,8 @@ import { Router } from '@angular/router';
     }]
 })
 export class UserDataFormComponent extends UnsubscribeOnDestroy implements OnInit {
-    items: OrderItemUpsertDto[] = [];
-    products: ProductViewModel[] = [];
+    items: OrderItem[] = [];
+    total: number = 0;
 
     userDataFormGroup = this.fb.group({
         firstName: ['', Validators.required],
@@ -34,7 +34,7 @@ export class UserDataFormComponent extends UnsubscribeOnDestroy implements OnIni
         city: ['', [Validators.required, Validators.max(4), Validators.min(4)]],
         address: ['', Validators.required],
         addressOptions: [''],
-        comment: [''],
+        note: [''],
     }, { validators: emailsMatchValidator });
 
     shippingFormGroup = this.fb.group({
@@ -60,32 +60,89 @@ export class UserDataFormComponent extends UnsubscribeOnDestroy implements OnIni
     ngOnInit(): void {
         this.items = this.cartService.getItems();
         this.items.forEach(item => {
-            this.subscribe(this.productService.getProduct(item.productId).pipe(
-                tap((product) => this.products.push(product))
-            ))
+            this.total += item.price * item.quantity;
         });
     }
 
     onSubmit() {
         const dateOfOrder = new Date();
+        const orderItemUpsertDtos: OrderItemUpsertDto[] = [];
+        let shippingMethod: ShippingMethod;
+        let paymentMethod: PaymentMethod;
+
+        switch (this.shippingFormGroup.controls.shippingMethod.value) {
+            case "Foxpost": {
+                shippingMethod = ShippingMethod.Foxpost;
+                break;
+            }
+            case "MagyarPostaPont": {
+                shippingMethod = ShippingMethod.MagyarPostaPont;
+                break;
+            }
+            case "MagyarPostaCsomagPont": {
+                shippingMethod = ShippingMethod.MagyarPostaCsomagPont;
+                break;
+            }
+            case "HomeDelivery": {
+                shippingMethod = ShippingMethod.HomeDelivery;
+                break;
+            }
+            case "PersonalDelivery": {
+                shippingMethod = ShippingMethod.PersonalDelivery;
+                break;
+            }
+            default: {
+                shippingMethod = ShippingMethod.Foxpost;
+                break;
+            }
+        }
+
+        switch (this.paymentFormGroup.controls.paymentMethod.value) {
+            case "MoneyTransfer": {
+                paymentMethod = PaymentMethod.MoneyTransfer;
+                break;
+            }
+            case "CashOnDelivery": {
+                paymentMethod = PaymentMethod.CashOnDelivery;
+                break;
+            }
+            default: {
+                paymentMethod = PaymentMethod.MoneyTransfer;
+                break;
+            }
+        }
+
+        this.items.forEach(item => {
+            const orderItemUpsertDto: OrderItemUpsertDto = {
+                orderId: item.orderId,
+                productId: item.productId,
+                price: item.price,
+                quantity: item.quantity
+            };
+            orderItemUpsertDtos.push(orderItemUpsertDto);
+        });
+
         const orderDto: OrderUpsertDto = {
             orderDateTime: dateOfOrder,
-            orderItems: this.items,
-            name: this.userDataFormGroup.controls.firstName.value + this.userDataFormGroup.controls.lastName.value,
+            orderItems: orderItemUpsertDtos,
+            name: this.userDataFormGroup.controls.lastName.value + ' ' + this.userDataFormGroup.controls.firstName.value,
             email: this.userDataFormGroup.controls.email.value,
             city: this.userDataFormGroup.controls.city.value,
             zipCode: this.userDataFormGroup.controls.zipcode.value,
             address: this.userDataFormGroup.controls.address.value,
-            total: 0,
-            shippingMethod: this.shippingFormGroup.controls.shippingMethod.value,
-            paymentMethod: this.paymentFormGroup.controls.paymentMethod.value,
+            total: this.total,
+            shippingMethod: shippingMethod,
+            paymentMethod: paymentMethod,
             phoneNumber: this.userDataFormGroup.controls.phoneNumber.value,
             note: this.userDataFormGroup.controls.note.value
         }
+        console.log(paymentMethod);
         this.subscribe(this.orderService.addOrder(orderDto).pipe(
             tap((response) => {
                 this.toast.success("Sikeres rendelés.");
+                this.cartService.clearCart();
                 this.router.navigate(['/fooldal']);
+                console.log('rendeles leadva');
             })
         ));
     }

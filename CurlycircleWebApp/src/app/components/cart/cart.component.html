@@ -1,9 +1,9 @@
 <div class="container px-5 my-5">
     <div class="row justify-content-center">
-        <div *ngIf="products.length === 0">
+        <div *ngIf="items.length === 0">
             A kosarad üres.
         </div>
-        <ng-container *ngFor="let product of products">
+        <ng-container *ngFor="let item of items">
             <div class="card product-card mb-2">
                 <div class="row g-0">
                     <div class="col-md-4">
@@ -12,18 +12,19 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">{{product.name}}</h5>
-                            <p class="card-text">{{product.description}}</p>
-                            <h5 class="card-text mb-3">{{product.price}} Ft</h5>
+                            <h5 class="card-title">{{item.product.name}}</h5>
+                            <p class="card-text">{{item.product.description}}</p>
+                            <h5 class="card-text mb-3">{{item.product.price}} Ft</h5>
+                            <h5 class="card-text mb-3">Mennyiség: {{item.quantity}} db</h5>
                             <button class="me-2" mat-raised-button color="warn"
-                                (click)="removeProduct(product)">Törlés</button>
+                                (click)="removeItem(item)">Törlés</button>
                         </div>
                     </div>
                 </div>
             </div>
         </ng-container>
     </div>
-    <div class="row justify-content-end" *ngIf="products.length !== 0">
+    <div class="row justify-content-end" *ngIf="items.length !== 0">
         <div class="col-auto">
             <button routerLink="/order" routerLinkActive="true" mat-raised-button color="primary">Rendelés</button>
         </div>

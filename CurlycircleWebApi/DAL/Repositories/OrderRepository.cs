@@ -37,6 +37,7 @@ namespace DAL.Repositories
         {
             var order = await dbContext.Orders
                 .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
                 .FirstOrDefaultAsync(o => o.Id == orderId);
 
             if (order == null)

@@ -11,6 +11,18 @@ export interface TokenViewModel {
     accessToken: string;
 }
 
+export interface UserViewModel {
+    id: number;
+    username: string;
+    role: Role;
+    token: TokenViewModel;
+}
+
+export enum Role {
+    User = "User",
+    Admin = "Admin",
+}
+
 export interface OrderItemsViewModel {
     orderItems: OrderItemViewModel[];
 }
@@ -22,10 +34,19 @@ export interface OrderItemUpsertDto {
     quantity: number;
 }
 
+export interface OrderItem {
+    orderId: number;
+    productId: number;
+    product: ProductViewModel;
+    price: number;
+    quantity: number;
+}
+
 export interface OrderItemViewModel {
     id: number;
     orderId: number;
     productId: number;
+    product: ProductViewModel;
     price: number;
     quantity: number;
 }

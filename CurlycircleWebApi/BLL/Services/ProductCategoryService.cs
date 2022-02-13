@@ -51,7 +51,7 @@ namespace BLL.Services
       return productCategoryViewModel;
     }
 
-    public async Task UpdateProductCategoryAsync(int productCategoryId, ProductCategoryUpsertDto productCategoryUpdateDto)
+    public Task UpdateProductCategoryAsync(int productCategoryId, ProductCategoryUpsertDto productCategoryUpdateDto)
     {
       throw new NotImplementedException();
     }

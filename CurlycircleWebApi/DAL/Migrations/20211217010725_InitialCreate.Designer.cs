@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211212104332_InitialCreate")]
+    [Migration("20211217010725_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,7 +65,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "dc474f89-2d61-4067-a094-47abec6a167c",
+                            ConcurrencyStamp = "7595668b-b5f0-4837-ba69-d0977913941a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -142,13 +142,13 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0e33c2d8-051f-4e00-9b4a-292cf5eb596c",
+                            ConcurrencyStamp = "c16668e4-feb9-4ec7-ac53-e99c3ff41017",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPe+LfRZBkqXYxHsEV/A57ieYPBhrh+20YRjli89IeatMx1UOxnBrkHqUPqVqcm+Vg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL2qs6uvho2uzyEHVtBvSOYk+qACkoOjTAilDws7ozkou5Bg1MFRbFSe1hCpJt8nzQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "86c49fc8-891e-4b3d-81fb-6bfb6c9f967a",
+                            SecurityStamp = "e7d75775-8bb1-4420-852c-c1e4afe9d738",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -229,8 +229,8 @@ namespace DAL.Migrations
                             Email = "kedves.bela@example.com",
                             Name = "Kedves Béla",
                             OrderDateTime = new DateTime(2021, 2, 1, 2, 21, 31, 0, DateTimeKind.Unspecified),
-                            PaymentMethod = "MoneyTransfer",
-                            PhoneNumber = "+36 30 333 3333",
+                            PaymentMethod = "CashOnDelivery",
+                            PhoneNumber = "+36 30 333 6666",
                             ShippingMethod = "HomeDelivery",
                             Total = 0.0,
                             ZipCode = 1037
@@ -243,7 +243,7 @@ namespace DAL.Migrations
                             Email = "asztalos.andras@example.com",
                             Name = "Asztalos András",
                             OrderDateTime = new DateTime(2020, 9, 21, 15, 12, 45, 0, DateTimeKind.Unspecified),
-                            PaymentMethod = "MoneyTransfer",
+                            PaymentMethod = "CashOnDelivery",
                             PhoneNumber = "+36 30 222 2222",
                             ShippingMethod = "Foxpost",
                             Total = 0.0,

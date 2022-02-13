@@ -28,7 +28,7 @@
                         ],
                         "styles": [
                             "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-                            "src/styles.css",
+                            "src/styles.scss",
                             "src/theme.scss",
                             "node_modules/ngx-toastr/toastr.css"
                         ],
@@ -100,13 +100,18 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.css",
+                            "src/styles.scss",
                             "src/theme.scss"
                         ],
                         "scripts": []
                     }
                 }
             }
+        }
+    },
+    "schematics": {
+        "@schematics/angular:component": {
+            "style": "scss"
         }
     },
     "defaultProject": "CurlycircleWebApp"

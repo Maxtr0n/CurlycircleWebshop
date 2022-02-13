@@ -4,17 +4,19 @@ import { AdminComponent } from './components/admin/admin.component';
 import { CartComponent } from './components/cart/cart.component';
 import { HomeComponent } from './components/home/home.component';
 import { InformationComponent } from './components/information/information.component';
+import { OrderDetailsComponent } from './components/orders/order-details/order-details.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PrivacyPolicyComponent } from './components/policies/privacy-policy/privacy-policy.component';
 import { RefundPolicyComponent } from './components/policies/refund-policy/refund-policy.component';
 import { ShippingPolicyComponent } from './components/policies/shipping-policy/shipping-policy.component';
 import { TermsOfServiceComponent } from './components/policies/terms-of-service/terms-of-service.component';
-import { ProductCategoriesComponent } from './components/product-categories/product-categories.component';
-import { ProductDetailsComponent } from './components/product-details/product-details.component';
-import { ProductsComponent } from './components/products/products.component';
+import { ProductCategoriesComponent } from './components/product/product-categories/product-categories.component';
+import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
+import { ProductsComponent } from './components/product/products/products.component';
 import { SocialsComponent } from './components/socials/socials.component';
 import { UserDataFormComponent } from './components/user-data-form/user-data-form.component';
+import { AdminAuthGuard } from './guards/admin-auth.guard';
 
 const routes: Routes = [
     { path: 'fooldal', component: HomeComponent },
@@ -46,8 +48,18 @@ const routes: Routes = [
             }
         ]
     },
+    {
+        path: 'order-details',
+        canActivate: [AdminAuthGuard],
+        children: [
+            {
+                path: ':id',
+                component: OrderDetailsComponent,
+            }
+        ]
+    },
     { path: 'admin', component: AdminComponent },
-    { path: 'orders', component: OrdersComponent },
+    { path: 'orders', component: OrdersComponent, canActivate: [AdminAuthGuard] },
     { path: 'shopping-cart', component: CartComponent },
     { path: '', component: HomeComponent },
     { path: '**', component: PageNotFoundComponent },

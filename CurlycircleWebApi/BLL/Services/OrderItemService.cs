@@ -32,7 +32,7 @@ namespace BLL.Services
       throw new NotImplementedException();
     }
 
-    public async Task<OrderItemViewModel> FindOrderItemByIdAsync(int orderItemId)
+    public Task<OrderItemViewModel> FindOrderItemByIdAsync(int orderItemId)
     {
       throw new NotImplementedException();
     }

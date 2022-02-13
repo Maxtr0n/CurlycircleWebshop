@@ -194,6 +194,7 @@ namespace DAL.Extensions
                 PhoneNumber = "+36 30 111 1111",
                 Note = "Nem kérek csípőset.",
                 ShippingMethod = ShippingMethod.MagyarPostaPont,
+                PaymentMethod = PaymentMethod.MoneyTransfer,
             };
             var order2 = new Order
             {
@@ -204,8 +205,9 @@ namespace DAL.Extensions
                 City = "Budapest",
                 ZipCode = 1037,
                 Address = "Example utca 20.",
-                PhoneNumber = "+36 30 333 3333",
+                PhoneNumber = "+36 30 333 6666",
                 ShippingMethod = ShippingMethod.HomeDelivery,
+                PaymentMethod = PaymentMethod.CashOnDelivery,
             };
             var order3 = new Order
             {
@@ -218,6 +220,7 @@ namespace DAL.Extensions
                 Address = "Example utca 15.",
                 PhoneNumber = "+36 30 222 2222",
                 ShippingMethod = ShippingMethod.Foxpost,
+                PaymentMethod = PaymentMethod.CashOnDelivery,
             };
             modelBuilder.Entity<Order>()
                 .HasData(

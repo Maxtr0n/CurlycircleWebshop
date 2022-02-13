@@ -1,16 +1,26 @@
 import { Injectable } from '@angular/core';
-import { OrderItemUpsertDto, OrderItemViewModel, ProductViewModel } from '../models/models';
+import { OrderItem, OrderItemUpsertDto, OrderItemViewModel, ProductViewModel } from '../models/models';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CartService {
-    items: OrderItemUpsertDto[] = [];
+    items: OrderItem[] = [];
 
     constructor() { }
 
-    addToCart(item: OrderItemUpsertDto) {
-        this.items.push(item);
+    addToCart(newItem: OrderItem): void {
+        let itemAlreadyExists = false;
+        this.items.forEach(item => {
+            if (item.productId === newItem.productId) {
+                item.quantity++;
+                itemAlreadyExists = true;
+            }
+        });
+
+        if (!itemAlreadyExists) {
+            this.items.push(newItem);
+        }
     }
 
     getItems() {
@@ -22,7 +32,7 @@ export class CartService {
         return this.items;
     }
 
-    removeItem(item: OrderItemUpsertDto) {
+    removeItem(item: OrderItem) {
         this.items = this.items.filter(obj => obj !== item);
     }
 }

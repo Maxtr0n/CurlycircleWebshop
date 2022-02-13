@@ -1,0 +1,40 @@
+.mat-table {
+    width: 100%;
+    border-collapse: separate;
+    
+    .mat-header-row {
+        .mat-header-cell {
+            padding: 0 16px;
+            font-size: 14px;
+            border-bottom-width: 2px;
+        }
+    }
+
+    .mat-row { 
+        .mat-cell{
+            padding: 0 16px;
+            font-size: 12px;
+            border-bottom: 2px solid transparent;
+            border-top: 2px solid transparent;
+
+            &:first-child {
+                border-left: 2px solid transparent;
+            }
+
+            &:last-child {
+                border-right: 2px solid transparent;
+            }
+        }
+
+        &:hover {
+            .mat-cell {
+                border-color: #6A8F6B;
+            }
+        }
+
+        &.clickable {
+            cursor: pointer;            
+        }
+        
+    }
+}
