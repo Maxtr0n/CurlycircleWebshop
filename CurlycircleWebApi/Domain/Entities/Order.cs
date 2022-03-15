@@ -1,36 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Domain.Entities.Abstractions;
+﻿using Domain.Entities.Abstractions;
 using Domain.Enums;
+using System;
+using System.Collections.Generic;
 
 namespace Domain.Entities
 {
     public class Order : EntityBase
     {
-        [Required] public DateTime OrderDateTime { get; set; }
+        public DateTime OrderDateTime { get; set; }
 
         public List<OrderItem> OrderItems { get; set; }
 
-        [Required] public string Name { get; set; }
+        public string Name { get; set; }
 
-        [Required] public string Email { get; set; }
+        public string Email { get; set; }
 
-        [Required] public string City { get; set; }
+        public string City { get; set; }
 
-        [Required] public int ZipCode { get; set; }
+        public int ZipCode { get; set; }
 
-        [Required] public string Address { get; set; }
+        public string Address { get; set; }
 
-        [Required] public double Total { get; set; }
+        public double Total { get; set; }
 
-        [Required] public ShippingMethod ShippingMethod { get; set; }
+        public ShippingMethod ShippingMethod { get; set; }
 
-        [Required] public PaymentMethod PaymentMethod { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
 
         public string PhoneNumber { get; set; }
 
-        public string Note { get; set; }
+        public string? Note { get; set; }
+
+        public Order()
+        {
+            OrderDateTime = DateTime.Now;
+            OrderItems = new List<OrderItem>();
+            Name = string.Empty;
+        }
 
         public void AddOrderItem(OrderItem orderItem)
         {

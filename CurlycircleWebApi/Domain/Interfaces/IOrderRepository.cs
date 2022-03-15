@@ -1,22 +1,22 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Entities;
 
 namespace Domain.Interfaces
 {
-  public interface IOrderRepository
-  {
-    int AddOrder(Order order);
+    public interface IOrderRepository
+    {
+        int AddOrder(Order order);
 
-    Task<IEnumerable<Order>> GetAllAsync();
+        Task<IEnumerable<Order>> GetAllAsync();
 
-    Task<Order> GetOrderByIdAsync(int orderId);
+        Task<Order> GetOrderByIdAsync(int orderId);
 
-    void UpdateOrder(Order order);
+        void UpdateOrder(Order order);
 
-    Task DeleteOrderAsync(int orderId);
-  }
+        Task DeleteOrderAsync(int orderId);
+    }
 }

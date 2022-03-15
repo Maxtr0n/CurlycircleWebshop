@@ -1,8 +1,8 @@
 ﻿namespace Domain.Enums
 {
-  public enum PaymentMethod
-  {
-    MoneyTransfer,
-    CashOnDelivery
-  }
+    public enum PaymentMethod
+    {
+        MoneyTransfer,
+        CashOnDelivery
+    }
 }

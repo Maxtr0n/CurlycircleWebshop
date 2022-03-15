@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Exceptions
 {
-  public class EntityNotFoundException : Exception
-  {
-    public EntityNotFoundException(string message) : base(message)
+    public class EntityNotFoundException : Exception
     {
+        public EntityNotFoundException(string message) : base(message)
+        {
+        }
     }
-  }
 }
