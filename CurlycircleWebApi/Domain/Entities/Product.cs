@@ -1,30 +1,44 @@
 ﻿using Domain.Entities.Abstractions;
-using System.ComponentModel.DataAnnotations;
-using System.Drawing;
+using Domain.Enums;
+using System;
 
 namespace Domain.Entities
 {
     public class Product : EntityBase
     {
-        [Required]
         public double Price { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
-        public ProductCategory ProductCategory { get; set; }
+        private ProductCategory? _productCategory;
 
-        public int ProductCategoryId { get; set; }
+        public ProductCategory ProductCategory
+        {
+            get => _productCategory
+                    ?? throw new InvalidOperationException("Uninitialized property: " + nameof(ProductCategory));
+            set => _productCategory = value;
+        }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
-        public string Color { get; set; }
+        public Color? Color { get; set; }
 
-        public string Pattern { get; set; }
+        public Pattern? Pattern { get; set; }
 
-        public string Material { get; set; }
+        public Material? Material { get; set; }
+
+        public Product(double price, string name, string? description = null, string? imageUrl = null, Color? color = null, Pattern? pattern = null, Material? material = null)
+        {
+            Price = price;
+            Name = name;
+            Description = description;
+            ImageUrl = imageUrl;
+            Color = color;
+            Pattern = pattern;
+            Material = material;
+        }
 
         public void Update(Product updateProduct)
         {

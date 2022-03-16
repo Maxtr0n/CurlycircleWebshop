@@ -11,7 +11,9 @@ namespace Domain.Entities
 
         public List<OrderItem> OrderItems { get; set; }
 
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
 
         public string Email { get; set; }
 
@@ -31,11 +33,21 @@ namespace Domain.Entities
 
         public string? Note { get; set; }
 
-        public Order()
+        public Order(string firstName, string lastName, string email, string city, int zipCode, string address, double total, ShippingMethod shippingMethod, PaymentMethod paymentMethod, string phoneNumber, string? note = null)
         {
             OrderDateTime = DateTime.Now;
             OrderItems = new List<OrderItem>();
-            Name = string.Empty;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            City = city;
+            ZipCode = zipCode;
+            Address = address;
+            Total = total;
+            ShippingMethod = shippingMethod;
+            PaymentMethod = paymentMethod;
+            PhoneNumber = phoneNumber;
+            Note = note;
         }
 
         public void AddOrderItem(OrderItem orderItem)

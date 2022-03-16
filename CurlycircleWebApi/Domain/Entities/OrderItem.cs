@@ -1,26 +1,36 @@
 ﻿using Domain.Entities.Abstractions;
-using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace Domain.Entities
 {
     public class OrderItem : EntityBase
     {
-        [Required]
-        public Order Order { get; set; }
+        private Order? _order;
 
-        [Required]
-        public int OrderId { get; set; }
+        private Product? _product;
 
-        [Required]
-        public Product Product { get; set; }
+        public Order Order
+        {
+            get => _order
+                    ?? throw new InvalidOperationException("Uninitialized property: " + nameof(Order));
+            set => _order = value;
+        }
 
-        [Required]
-        public int ProductId { get; set; }
+        public Product Product
+        {
+            get => _product
+                ?? throw new InvalidOperationException("Uninitialized property: " + nameof(Product));
+            set => _product = value;
+        }
 
-        [Required]
         public double Price { get; set; }
 
-        [Required]
         public int Quantity { get; set; }
+
+        public OrderItem(double price, int quantity)
+        {
+            Price = price;
+            Quantity = quantity;
+        }
     }
 }
