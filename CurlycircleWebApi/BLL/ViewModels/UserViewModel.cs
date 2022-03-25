@@ -1,20 +1,20 @@
-﻿using System;
+﻿using Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Enums;
 
 namespace BLL.ViewModels
 {
     public class UserViewModel
     {
-        public int Id { get; set; }
+        public int Id { get; set; } = default!;
 
-        public string Username { get; set; }
+        public string Email { get; set; } = default!;
 
-        public Role Role { get; set; }
+        public Role Role { get; set; } = default!;
 
-        public TokenViewModel Token { get; set; }
+        public TokenViewModel Token { get; set; } = default!;
     }
 }

@@ -19,17 +19,26 @@ namespace Domain.Entities
             set => _productCategory = value;
         }
 
+        private int? _productCategoryId;
+
+        public int ProductCategoryId
+        {
+            get => _productCategoryId
+                    ?? throw new InvalidOperationException("Uninitialized property: " + nameof(ProductCategoryId));
+            set => _productCategoryId = value;
+        }
+
         public string? Description { get; set; }
 
         public string? ImageUrl { get; set; }
 
-        public Color? Color { get; set; }
+        public Color Color { get; set; }
 
-        public Pattern? Pattern { get; set; }
+        public Pattern Pattern { get; set; }
 
-        public Material? Material { get; set; }
+        public Material Material { get; set; }
 
-        public Product(double price, string name, string? description = null, string? imageUrl = null, Color? color = null, Pattern? pattern = null, Material? material = null)
+        public Product(double price, string name, string? description = null, string? imageUrl = null, Color color = Enums.Color.Other, Pattern pattern = Enums.Pattern.Other, Material material = Enums.Material.Other)
         {
             Price = price;
             Name = name;

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace BLL.Dtos
 {
-  public class OrderItemUpsertDto
-  {
-    public int OrderId { get; set; }
+    public class OrderItemUpsertDto
+    {
+        public int OrderId { get; set; } = default!;
 
-    public int ProductId { get; set; }
+        public int ProductId { get; set; } = default!;
 
-    public double Price { get; set; }
+        public double Price { get; set; } = default!;
 
-    public int Quantity { get; set; }
-  }
+        public int Quantity { get; set; } = default!;
+    }
 }

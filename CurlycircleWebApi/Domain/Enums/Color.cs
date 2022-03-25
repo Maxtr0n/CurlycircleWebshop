@@ -9,6 +9,7 @@
         White,
         Black,
         Orange,
-        Pink
+        Pink,
+        Other
     }
 }

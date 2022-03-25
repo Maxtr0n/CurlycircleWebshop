@@ -1,6 +1,3 @@
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
 using Autofac;
 using BLL;
 using CurlycircleWebApi.Common;
@@ -21,6 +18,9 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Serilog;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 namespace CurlycircleWebApi
 {
@@ -43,7 +43,7 @@ namespace CurlycircleWebApi
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "CurlycircleWebApi", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CurlycircleWebApi", Version = "v1" });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -105,6 +105,7 @@ namespace CurlycircleWebApi
                     options.Password.RequireDigit = true;
                     options.Password.RequireUppercase = false;
                     options.Password.RequireNonAlphanumeric = false;
+                    options.User.RequireUniqueEmail = true;
                 })
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

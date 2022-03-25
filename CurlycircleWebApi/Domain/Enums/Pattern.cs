@@ -5,6 +5,7 @@
         Blank,
         Dotted,
         Striped,
-        Checkered
+        Checkered,
+        Other
     }
 }

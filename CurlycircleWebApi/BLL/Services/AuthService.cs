@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using BLL.Dtos;
 using BLL.Exceptions;
 using BLL.Interfaces;
@@ -17,6 +10,13 @@ using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
@@ -40,7 +40,7 @@ namespace BLL.Services
         {
             try
             {
-                var user = await FindUserAsync(loginDto.Username);
+                var user = await FindUserAsync(loginDto.Email);
                 var passwordMatches = await _userManager.CheckPasswordAsync(user, loginDto.Password);
                 if (!passwordMatches)
                 {
@@ -63,7 +63,7 @@ namespace BLL.Services
                 return new UserViewModel
                 {
                     Id = user.Id,
-                    Username = user.UserName,
+                    Email = user.Email,
                     Role = role,
                     Token = token
                 };
@@ -77,12 +77,12 @@ namespace BLL.Services
             }
         }
 
-        private async Task<ApplicationUser> FindUserAsync(string username)
+        private async Task<ApplicationUser> FindUserAsync(string email)
         {
-            var user = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                throw new EntityNotFoundException($"User with username '{username}' not found.");
+                throw new EntityNotFoundException($"User with email '{email}' not found.");
             }
             return user;
         }

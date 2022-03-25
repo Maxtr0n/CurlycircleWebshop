@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BLL.ViewModels
 {
-  public class ProductsViewModel
-  {
-    public IEnumerable<ProductViewModel> Products { get; set; }
-  }
+    public class ProductsViewModel
+    {
+        public IEnumerable<ProductViewModel> Products { get; set; } = default!;
+    }
 }

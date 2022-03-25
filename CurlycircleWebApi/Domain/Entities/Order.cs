@@ -17,11 +17,7 @@ namespace Domain.Entities
 
         public string Email { get; set; }
 
-        public string City { get; set; }
-
-        public int ZipCode { get; set; }
-
-        public string Address { get; set; }
+        public Address Address { get; set; }
 
         public double Total { get; set; }
 
@@ -33,15 +29,13 @@ namespace Domain.Entities
 
         public string? Note { get; set; }
 
-        public Order(string firstName, string lastName, string email, string city, int zipCode, string address, double total, ShippingMethod shippingMethod, PaymentMethod paymentMethod, string phoneNumber, string? note = null)
+        public Order(string firstName, string lastName, string email, Address address, double total, ShippingMethod shippingMethod, PaymentMethod paymentMethod, string phoneNumber, DateTime orderDateTime, string? note = null)
         {
-            OrderDateTime = DateTime.Now;
+            OrderDateTime = orderDateTime;
             OrderItems = new List<OrderItem>();
             FirstName = firstName;
             LastName = lastName;
             Email = email;
-            City = city;
-            ZipCode = zipCode;
             Address = address;
             Total = total;
             ShippingMethod = shippingMethod;

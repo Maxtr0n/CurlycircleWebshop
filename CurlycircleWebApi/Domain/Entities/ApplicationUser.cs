@@ -9,14 +9,30 @@ namespace Domain.Entities
 {
     public class ApplicationUser : IdentityUser<int>
     {
-        public Cart Cart { get; set; }
+        private Cart? _cart;
+
+        public Cart Cart
+        {
+            get => _cart
+                     ?? throw new InvalidOperationException("Uninitialized property: " + nameof(Cart));
+            set => _cart = value;
+        }
 
         public List<Order> Orders { get; set; }
 
-        public ApplicationUser()
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public Address Address { get; set; }
+
+        public ApplicationUser(string firstName, string lastName, Address address)
         {
-            this.Cart = new Cart();
-            this.Orders = new List<Order>();
+
+            Orders = new List<Order>();
+            FirstName = firstName;
+            LastName = lastName;
+            Address = address;
         }
     }
 }

@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace BLL.ViewModels
 {
-  public class ProductCategoryViewModel
-  {
-    public int Id { get; set; }
+    public class ProductCategoryViewModel
+    {
+        public int Id { get; set; } = default!;
 
-    public string Name { get; set; }
+        public string Name { get; set; } = default!;
 
-    public string Description { get; set; }
-    
-  }
+        public string Description { get; set; } = default!;
+    }
 }

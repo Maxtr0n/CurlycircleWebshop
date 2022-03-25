@@ -4,6 +4,7 @@
     {
         Fabric,
         Plastic,
-        Metal
+        Metal,
+        Other
     }
 }

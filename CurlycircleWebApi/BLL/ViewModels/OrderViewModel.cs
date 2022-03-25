@@ -1,38 +1,37 @@
-﻿using System;
+﻿using Domain.Entities;
+using Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Enums;
 
 namespace BLL.ViewModels
 {
-  public class OrderViewModel
-  {
-    public int Id { get; set; }
+    public class OrderViewModel
+    {
+        public int Id { get; set; } = default!;
 
-    public DateTime OrderDateTime { get; set; }
+        public DateTime OrderDateTime { get; set; } = default!;
 
-    public List<OrderItemViewModel> OrderItems { get; set; }
+        public IEnumerable<OrderItemViewModel> OrderItems { get; set; } = default!;
 
-    public string Name { get; set; }
+        public string FirstName { get; set; } = default!;
 
-    public string Email { get; set; }
+        public string LastName { get; set; } = default!;
 
-    public string City { get; set; }
+        public string Email { get; set; } = default!;
 
-    public int ZipCode { get; set; }
+        public Address Address { get; set; } = default!;
 
-    public string Address { get; set; }
+        public double Total { get; set; } = default!;
 
-    public double Total { get; set; }
+        public ShippingMethod ShippingMethod { get; set; } = default!;
 
-    public ShippingMethod ShippingMethod { get; set; }
+        public PaymentMethod PaymentMethod { get; set; } = default!;
 
-    public PaymentMethod PaymentMethod { get; set; }
+        public string PhoneNumber { get; set; } = default!;
 
-    public string PhoneNumber { get; set; }
-
-    public string Note { get; set; }
-  }
+        public string? Note { get; set; } = default!;
+    }
 }
