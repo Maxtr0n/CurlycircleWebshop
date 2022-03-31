@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using BLL.Dtos;
 using BLL.ViewModels;
 using Domain.Entities;
 using Domain.Entities.Abstractions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BLL
 {
@@ -16,6 +16,8 @@ namespace BLL
         public AutoMapperProfile()
         {
             CreateMap<EntityBase, EntityCreatedViewModel>();
+
+            CreateMap<ApplicationUser, EntityCreatedViewModel>();
 
             CreateMap<Product, ProductViewModel>();
             CreateMap<ProductUpsertDto, Product>();

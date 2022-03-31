@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL.DtoValidators
 {
-    public class RegisterDtoValidator : AbstractValidator<RegisterDto>
+    public class RegisterDtoValidator : AbstractValidator<UserUpsertDto>
     {
         public RegisterDtoValidator()
         {

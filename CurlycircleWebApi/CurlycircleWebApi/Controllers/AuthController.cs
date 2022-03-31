@@ -30,7 +30,7 @@ namespace CurlycircleWebApi.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public Task Register([FromBody] RegisterDto registerDto)
+        public Task Register([FromBody] UserUpsertDto registerDto)
         {
             return authService.RegisterAsync(registerDto);
         }
@@ -38,14 +38,14 @@ namespace CurlycircleWebApi.Controllers
         [HttpPost("refresh")]
         public Task<TokenViewModel> Refresh(RefreshDto refreshDto)
         {
-            return authService.Refresh(refreshDto);
+            return authService.RefreshAsync(refreshDto);
         }
 
         [HttpPost("revoke")]
         [Authorize]
         public Task Revoke(RevokeDto revokeDto)
         {
-            return authService.Revoke(revokeDto);
+            return authService.RevokeAsync(revokeDto);
         }
     }
 }

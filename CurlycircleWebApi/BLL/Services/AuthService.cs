@@ -79,7 +79,7 @@ namespace BLL.Services
             }
         }
 
-        public async Task RegisterAsync(RegisterDto registerDto)
+        public async Task RegisterAsync(UserUpsertDto registerDto)
         {
             var userExists = await FindUserAsync(registerDto.Email);
             if (userExists != null)
@@ -100,7 +100,7 @@ namespace BLL.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<TokenViewModel> Refresh(RefreshDto refreshDto)
+        public async Task<TokenViewModel> RefreshAsync(RefreshDto refreshDto)
         {
             var principal = GetPrincipalFromExpiredtoken(refreshDto.AccessToken);
             var user = await FindUserAsync(refreshDto.Email);
@@ -142,7 +142,7 @@ namespace BLL.Services
             };
         }
 
-        public async Task Revoke(RevokeDto revokeDto)
+        public async Task RevokeAsync(RevokeDto revokeDto)
         {
             var user = await FindUserAsync(revokeDto.Email);
 
@@ -157,6 +157,34 @@ namespace BLL.Services
             user.RefreshToken = null;
 
             await _unitOfWork.SaveChangesAsync();
+        }
+
+        public Task UpdateUserAsync(UserUpsertDto updateDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ChangePasswordAsync(ChangePasswordDto changePasswordDto)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public async Task<EntityCreatedViewModel> CreateAnonymousUserAsync()
+        {
+            var user = new ApplicationUser();
+            var result = await _userManager.CreateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                throw new ValidationAppException("Anonymous user registration failed.", new[]
+               {
+                    "Could not register anonymous user."
+                });
+            }
+            await _unitOfWork.SaveChangesAsync();
+
+            return _mapper.Map<EntityCreatedViewModel>(user);
         }
 
         private async Task<ApplicationUser> FindUserAsync(string email)

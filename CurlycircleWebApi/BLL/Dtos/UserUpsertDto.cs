@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Dtos
 {
-    public class RegisterDto
+    public class UserUpsertDto
     {
         public string Email { get; set; } = default!;
 
@@ -20,7 +20,7 @@ namespace BLL.Dtos
 
         public string Line1 { get; private set; } = default!;
 
-        public string? Line2 { get; private set; };
+        public string? Line2 { get; private set; }
 
         public string PhoneNumber { get; set; } = default!;
 
