@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class ApplicationUser : IdentityUser<int>
+    public class ApplicationUser : IdentityUser
     {
         private Cart? _cart;
 
@@ -20,16 +20,25 @@ namespace Domain.Entities
 
         public List<Order> Orders { get; set; }
 
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
-        public Address Address { get; set; }
+        public Address? Address { get; set; }
 
-        public ApplicationUser(string firstName, string lastName, Address address)
+        public string? RefreshToken { get; set; }
+
+        public DateTime? RefreshTokenExpiryTime { get; set; }
+
+        public ApplicationUser()
         {
-
             Orders = new List<Order>();
+        }
+
+        public ApplicationUser(string email, string firstName, string lastName, Address address)
+        {
+            Orders = new List<Order>();
+            Email = email;
             FirstName = firstName;
             LastName = lastName;
             Address = address;

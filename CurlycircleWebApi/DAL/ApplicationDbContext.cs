@@ -1,12 +1,13 @@
 ﻿using DAL.EntityConfigurations;
 using DAL.Extensions;
 using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
     {
         public DbSet<Product> Products => Set<Product>();
         public DbSet<ProductCategory> ProductCategories => Set<ProductCategory>();

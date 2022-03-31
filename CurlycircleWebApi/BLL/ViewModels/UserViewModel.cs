@@ -9,7 +9,7 @@ namespace BLL.ViewModels
 {
     public class UserViewModel
     {
-        public int Id { get; set; } = default!;
+        public string Id { get; set; } = default!;
 
         public string Email { get; set; } = default!;
 

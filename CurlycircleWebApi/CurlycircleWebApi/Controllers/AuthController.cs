@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BLL.Dtos;
+﻿using BLL.Dtos;
 using BLL.Interfaces;
 using BLL.ViewModels;
 using CurlycircleWebApi.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CurlycircleWebApi.Controllers
 {
@@ -26,6 +26,26 @@ namespace CurlycircleWebApi.Controllers
         public Task<UserViewModel> Login([FromBody] LoginDto loginDto)
         {
             return authService.LoginAsync(loginDto);
+        }
+
+        [HttpPost("register")]
+        [AllowAnonymous]
+        public Task Register([FromBody] RegisterDto registerDto)
+        {
+            return authService.RegisterAsync(registerDto);
+        }
+
+        [HttpPost("refresh")]
+        public Task<TokenViewModel> Refresh(RefreshDto refreshDto)
+        {
+            return authService.Refresh(refreshDto);
+        }
+
+        [HttpPost("revoke")]
+        [Authorize]
+        public Task Revoke(RevokeDto revokeDto)
+        {
+            return authService.Revoke(revokeDto);
         }
     }
 }

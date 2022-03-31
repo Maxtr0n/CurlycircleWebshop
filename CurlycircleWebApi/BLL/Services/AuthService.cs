@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,7 +49,8 @@ namespace BLL.Services
                 }
                 var token = new TokenViewModel
                 {
-                    AccessToken = await CreateAccessTokenAsync(user)
+                    AccessToken = await CreateAccessTokenAsync(user),
+                    RefreshToken = CreateRefreshToken()
                 };
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var role = Role.User;
@@ -75,6 +77,86 @@ namespace BLL.Services
                     "Invalid user credentials."
                 });
             }
+        }
+
+        public async Task RegisterAsync(RegisterDto registerDto)
+        {
+            var userExists = await FindUserAsync(registerDto.Email);
+            if (userExists != null)
+            {
+                throw new ValidationAppException("Register attempt failed.", new[]
+                {
+                    "User with given email already exists."
+                });
+            }
+            Address userAddress = new Address(registerDto.City, registerDto.ZipCode, registerDto.Line1, registerDto.Line2);
+            ApplicationUser user = new ApplicationUser(registerDto.Email, registerDto.FirstName, registerDto.LastName, userAddress);
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
+            if (!result.Succeeded)
+            {
+                throw new ValidationAppException("User registration failed.", result.Errors.Select(ent => ent.Description));
+            }
+
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task<TokenViewModel> Refresh(RefreshDto refreshDto)
+        {
+            var principal = GetPrincipalFromExpiredtoken(refreshDto.AccessToken);
+            var user = await FindUserAsync(refreshDto.Email);
+            var refreshToken = refreshDto.RefreshToken;
+            var accessToken = refreshDto.AccessToken;
+
+            if (user == null)
+            {
+                throw new ValidationAppException("Refresh attempt failed.", new[]
+                {
+                    "User does not exist."
+                });
+            }
+            else if (user.RefreshToken != refreshToken)
+            {
+                throw new ValidationAppException("Refresh attempt failed.", new[]
+                {
+                    "Refresh tokens do not match."
+                });
+            }
+            else if (user.RefreshTokenExpiryTime <= DateTime.Now)
+            {
+                throw new ValidationAppException("Refresh attempt failed.", new[]
+                {
+                    "Refresh token is expired."
+                });
+            }
+
+            var newAccessToken = await CreateAccessTokenAsync(user);
+            var newRefreshToken = CreateRefreshToken();
+
+            user.RefreshToken = newRefreshToken;
+            await _unitOfWork.SaveChangesAsync();
+
+            return new TokenViewModel()
+            {
+                AccessToken = newAccessToken,
+                RefreshToken = newRefreshToken
+            };
+        }
+
+        public async Task Revoke(RevokeDto revokeDto)
+        {
+            var user = await FindUserAsync(revokeDto.Email);
+
+            if (user == null)
+            {
+                throw new ValidationAppException("Revoke attempt failed.", new[]
+                {
+                    "User does not exist."
+                });
+            }
+
+            user.RefreshToken = null;
+
+            await _unitOfWork.SaveChangesAsync();
         }
 
         private async Task<ApplicationUser> FindUserAsync(string email)
@@ -112,6 +194,36 @@ namespace BLL.Services
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private string CreateRefreshToken()
+        {
+            var randomNumber = new byte[64];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
+        }
+
+        private ClaimsPrincipal? GetPrincipalFromExpiredtoken(string? token)
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = true,
+                ValidateIssuer = true,
+                ValidIssuer = Configuration["Jwt:Issuer"],
+                ValidAudience = Configuration["Jwt:Audience"],
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"])),
+                ValidateLifetime = false,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+            if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("Invalid token");
+
+            return principal;
         }
     }
 }

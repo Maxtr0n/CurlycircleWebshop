@@ -17,7 +17,7 @@ namespace Domain.Entities
 
         public string? Line2 { get; private set; }
 
-        public Address(string line1, string city, string zipCode, string? line2 = null)
+        public Address(string city, string zipCode, string line1, string? line2)
         {
             City = city;
             ZipCode = zipCode;

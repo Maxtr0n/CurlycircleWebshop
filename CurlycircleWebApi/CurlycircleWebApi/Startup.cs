@@ -21,6 +21,7 @@ using Serilog;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CurlycircleWebApi
 {
@@ -107,7 +108,6 @@ namespace CurlycircleWebApi
                     options.Password.RequireNonAlphanumeric = false;
                     options.User.RequireUniqueEmail = true;
                 })
-                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -125,7 +125,19 @@ namespace CurlycircleWebApi
                         ValidIssuer = Configuration["Jwt:Issuer"],
                         ValidAudience = Configuration["Jwt:Audience"],
                         IssuerSigningKey =
-                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SigningKey"]))
+                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SigningKey"])),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnAuthenticationFailed = context =>
+                        {
+                            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                            {
+                                context.Response.Headers.Add("IS-TOKEN-EXPIRED", "true");
+                            }
+                            return Task.CompletedTask;
+                        }
                     };
                 });
 
