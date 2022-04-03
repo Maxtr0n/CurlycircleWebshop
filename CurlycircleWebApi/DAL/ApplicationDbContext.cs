@@ -38,6 +38,7 @@ namespace DAL
             modelBuilder.ApplyConfiguration(new ProductCategoryEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ProductEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CartEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CartItemEntityTypeConfiguration());
 
             modelBuilder.Seed();
         }

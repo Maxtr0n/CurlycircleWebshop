@@ -1,11 +1,13 @@
 ﻿using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace DAL.Repositories
 {
@@ -18,14 +20,19 @@ namespace DAL.Repositories
             this.dbContext = dbContext;
         }
 
-        public int AddOrderItem(OrderItem orderItem)
+        public int CreateCartAsync(Cart cart)
         {
-            throw new NotImplementedException();
+            dbContext.Carts.Add(cart);
+            return cart.Id;
         }
 
-        public Task DeleteOrderItem(int orderItemId)
+        public async Task DeleteCartAsync(int cartId)
         {
-            throw new NotImplementedException();
+            var cart = await dbContext.Carts.FindAsync(cartId);
+            if (cart != null)
+            {
+                dbContext.Carts.Remove(cart);
+            }
         }
 
         public async Task<Cart> GetCartByIdAsync(int cartId)
@@ -40,15 +47,9 @@ namespace DAL.Repositories
             return cart;
         }
 
-        public async Task<IEnumerable<OrderItem>> GetCartOrderItemsAsync(int cartId)
+        public void UpdateCart(Cart cart)
         {
-            throw new NotImplementedException();
-
-        }
-
-        public void UpdateOrderItem(OrderItem orderItem)
-        {
-            throw new NotImplementedException();
+            dbContext.Carts.Update(cart);
         }
     }
 }

@@ -9,16 +9,16 @@ namespace BLL.ViewModels
 {
     public class OrderItemViewModel
     {
-        public int Id { get; set; } = default!;
+        public int Id { get; set; }
 
-        public int OrderId { get; set; } = default!;
+        public int OrderId { get; set; }
 
-        public int ProductId { get; set; } = default!;
+        public int ProductId { get; set; }
 
-        public Product Product { get; set; } = default!;
+        public Product Product { get; set; } = null!;
 
-        public double Price { get; set; } = default!;
+        public double Price { get; set; }
 
-        public int Quantity { get; set; } = default!;
+        public int Quantity { get; set; }
     }
 }

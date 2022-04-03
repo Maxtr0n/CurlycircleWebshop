@@ -21,7 +21,7 @@ namespace CurlycircleWebApi.Controllers
         private readonly IIdentityHelper _identityHelper;
         private readonly IOrderService _orderService;
 
-        public OrdersController(IIdentityHelper identityHelper, IOrderService orderService, IOrderItemService orderItemService)
+        public OrdersController(IIdentityHelper identityHelper, IOrderService orderService)
         {
             _identityHelper = identityHelper;
             _orderService = orderService;

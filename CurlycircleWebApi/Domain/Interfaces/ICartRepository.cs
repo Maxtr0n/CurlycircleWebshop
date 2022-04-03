@@ -9,14 +9,12 @@ namespace Domain.Interfaces
 {
     public interface ICartRepository
     {
+        int CreateCartAsync(Cart cart);
+
         Task<Cart> GetCartByIdAsync(int cartId);
 
-        Task<IEnumerable<OrderItem>> GetCartOrderItemsAsync(int cartId);
+        void UpdateCart(Cart cart);
 
-        int AddOrderItem(OrderItem orderItem);
-
-        void UpdateOrderItem(OrderItem orderItem);
-
-        Task DeleteOrderItem(int orderItemId);
+        Task DeleteCartAsync(int cartId);
     }
 }

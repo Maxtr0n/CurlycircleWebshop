@@ -1,27 +1,31 @@
 ﻿using Domain.Entities.Abstractions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class OrderItem : EntityBase
+    public class CartItem : EntityBase
     {
-        private Order? _order;
-        private int? _orderId;
+        private Cart? _cart;
+        private int? _cartId;
         private Product? _product;
         private int? _productId;
 
-        public Order Order
+        public Cart Cart
         {
-            get => _order
-                    ?? throw new InvalidOperationException("Uninitialized property: " + nameof(Order));
-            set => _order = value;
+            get => _cart
+                    ?? throw new InvalidOperationException("Uninitialized property: " + nameof(Cart));
+            set => _cart = value;
         }
 
-        public int OrderId
+        public int CartId
         {
-            get => _orderId
-                   ?? throw new InvalidOperationException("Uninitialized property: " + nameof(OrderId));
-            set => _orderId = value;
+            get => _cartId
+                   ?? throw new InvalidOperationException("Uninitialized property: " + nameof(CartId));
+            set => _cartId = value;
         }
 
         public Product Product

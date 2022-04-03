@@ -1,4 +1,5 @@
-﻿using BLL.ViewModels;
+﻿using BLL.Dtos;
+using BLL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,18 @@ namespace BLL.Interfaces
     {
         Task<EntityCreatedViewModel> CreateCartForAnonymousUserAsync();
 
-        Task<OrderItemsViewModel> GetAllOrderItemsAsync(int cartId);
+        Task<CartViewModel> FindCartByIdAsync(int cartId);
 
         Task DeleteCartAsync(int cartId);
 
-        Task<EntityCreatedViewModel> AddOrderItemAsync(int orderItemId);
+        Task<CartItemsViewModel> GetAllCartItemsAsync(int cartId);
 
+        Task<EntityCreatedViewModel> AddCartItemAsync(int cartId, CartItemUpsertDto cartItemCreateDto);
 
+        Task RemoveCartItemAsync(int cartId, int cartItemId);
+
+        Task ClearCartAsync(int cartId);
+
+        Task UpdateCartItemAsync(int cartId, int cartItemId, int quantity);
     }
 }

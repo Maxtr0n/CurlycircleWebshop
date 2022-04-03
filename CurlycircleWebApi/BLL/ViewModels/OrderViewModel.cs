@@ -10,7 +10,7 @@ namespace BLL.ViewModels
 {
     public class OrderViewModel
     {
-        public int Id { get; set; } = default!;
+        public int Id { get; set; }
 
         public DateTime OrderDateTime { get; set; } = default!;
 

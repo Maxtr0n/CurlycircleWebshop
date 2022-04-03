@@ -39,6 +39,15 @@ namespace BLL
             CreateMap<OrderItemUpsertDto, OrderItem>();
             CreateMap<IEnumerable<OrderItem>, OrderItemsViewModel>()
                 .ForMember(ovm => ovm.OrderItems, options => options.MapFrom(x => x));
+
+            CreateMap<Cart, CartViewModel>();
+
+            CreateMap<CartItemUpsertDto, CartItem>();
+
+            CreateMap<CartItemViewModel, CartItemUpsertDto>();
+
+            CreateMap<IEnumerable<CartItem>, CartItemsViewModel>()
+                .ForMember(civm => civm.CartItems, options => options.MapFrom(x => x));
         }
     }
 }

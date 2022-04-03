@@ -24,17 +24,19 @@ namespace BLL.Services
     public class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ICartService _cartService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         private IConfiguration Configuration { get; }
 
-        public AuthService(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration)
+        public AuthService(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, ICartService cartService)
         {
             _userManager = userManager;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             Configuration = configuration;
+            _cartService = cartService;
         }
 
         public async Task<UserViewModel> LoginAsync(LoginDto loginDto)
@@ -67,6 +69,17 @@ namespace BLL.Services
                 //compare with user cartid
                 //if they are the same -> its fine
                 //if they are not, add the contents of the old cart to the user cart, then delete old cart
+                if (loginDto.CartId.HasValue && loginDto.CartId != user.Cart.Id)
+                {
+                    var cartBeforeLogin = await _cartService.FindCartByIdAsync(loginDto.CartId.GetValueOrDefault());
+                    foreach (var oldCartItem in cartBeforeLogin.CartItems)
+                    {
+                        var cartItemCreateDto = _mapper.Map<CartItemUpsertDto>(oldCartItem);
+                        await _cartService.AddCartItemAsync(user.Cart.Id, cartItemCreateDto);
+                    }
+
+                    await _cartService.DeleteCartAsync(cartBeforeLogin.Id);
+                }
 
                 return new UserViewModel
                 {
@@ -196,24 +209,6 @@ namespace BLL.Services
             {
                 throw new ValidationAppException("Change password failed.", result.Errors.Select(ent => ent.Description));
             }
-        }
-
-
-        public async Task<EntityCreatedViewModel> CreateAnonymousUserAsync()
-        {
-            var user = new ApplicationUser();
-            var result = await _userManager.CreateAsync(user);
-
-            if (!result.Succeeded)
-            {
-                throw new ValidationAppException("Anonymous user registration failed.", new[]
-               {
-                    "Could not register anonymous user."
-                });
-            }
-            await _unitOfWork.SaveChangesAsync();
-
-            return _mapper.Map<EntityCreatedViewModel>(user);
         }
 
         private async Task<ApplicationUser> FindUserByEmail(string email)

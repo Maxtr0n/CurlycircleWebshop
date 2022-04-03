@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BLL.Dtos
 {
-    public class OrderItemUpsertDto
+    public class CartItemUpsertDto
     {
-        public int OrderId { get; set; }
+        public int CartId { get; set; }
 
         public int ProductId { get; set; }
 

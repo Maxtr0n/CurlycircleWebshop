@@ -1,5 +1,9 @@
-﻿using BLL.Interfaces;
+﻿using AutoMapper;
+using BLL.Dtos;
+using BLL.Interfaces;
 using BLL.ViewModels;
+using Domain.Entities;
+using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,24 +14,77 @@ namespace BLL.Services
 {
     public class CartService : ICartService
     {
-        public Task<EntityCreatedViewModel> AddOrderItemAsync(int orderItemId)
+        private readonly ICartRepository _cartRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
+        public CartService(
+            ICartRepository cartRepository,
+            IUnitOfWork unitOfWork,
+            IMapper mapper)
         {
-            throw new NotImplementedException();
+            _cartRepository = cartRepository;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public Task<EntityCreatedViewModel> CreateCartForAnonymousUserAsync()
+        public async Task<EntityCreatedViewModel> AddCartItemAsync(int cartId, CartItemUpsertDto cartItemCreateDto)
         {
-            throw new NotImplementedException();
+            var cart = await _cartRepository.GetCartByIdAsync(cartId);
+            var cartItem = _mapper.Map<CartItem>(cartItemCreateDto);
+            cart.AddCartItem(cartItem);
+
+            await _unitOfWork.SaveChangesAsync();
+            return new EntityCreatedViewModel(cartItem.Id);
         }
 
-        public Task DeleteCartAsync(int cartId)
+        public async Task ClearCartAsync(int cartId)
         {
-            throw new NotImplementedException();
+            var cart = await _cartRepository.GetCartByIdAsync(cartId);
+            cart.ClearCart();
+            await _unitOfWork.SaveChangesAsync();
         }
 
-        public Task<OrderItemsViewModel> GetAllOrderItemsAsync(int cartId)
+        public async Task<EntityCreatedViewModel> CreateCartForAnonymousUserAsync()
         {
-            throw new NotImplementedException();
+            Cart cart = new Cart();
+            var id = _cartRepository.CreateCartAsync(cart);
+            await _unitOfWork.SaveChangesAsync();
+            return new EntityCreatedViewModel(id);
+        }
+
+        public async Task DeleteCartAsync(int cartId)
+        {
+            await _cartRepository.DeleteCartAsync(cartId);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task<CartViewModel> FindCartByIdAsync(int cartId)
+        {
+            var cart = await _cartRepository.GetCartByIdAsync(cartId);
+            var cartViewModel = _mapper.Map<CartViewModel>(cart);
+            return cartViewModel;
+        }
+
+        public async Task<CartItemsViewModel> GetAllCartItemsAsync(int cartId)
+        {
+            var cart = await _cartRepository.GetCartByIdAsync(cartId);
+            var cartItemsViewModel = _mapper.Map<CartItemsViewModel>(cart.CartItems);
+            return cartItemsViewModel;
+        }
+
+        public async Task RemoveCartItemAsync(int cartId, int cartItemId)
+        {
+            var cart = await _cartRepository.GetCartByIdAsync(cartId);
+            cart.RemoveCartItem(cartItemId);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task UpdateCartItemAsync(int cartId, int cartItemId, int quantity)
+        {
+            var cart = await _cartRepository.GetCartByIdAsync(cartId);
+            cart.UpdateQuantity(cartItemId, quantity);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

@@ -10,6 +10,6 @@ namespace BLL.Dtos
     {
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
-        public string? CartId { get; set; }
+        public int? CartId { get; set; }
     }
 }
