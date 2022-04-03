@@ -13,7 +13,14 @@ namespace DAL.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Cart> cartConfiguration)
         {
+            cartConfiguration.ToTable("Carts");
 
+            cartConfiguration.HasKey(c => c.Id);
+
+            cartConfiguration.Property(c => c.Id)
+                .UseHiLo("cartseq");
+
+            cartConfiguration.OwnsMany(c => c.OrderItems);
         }
     }
 }

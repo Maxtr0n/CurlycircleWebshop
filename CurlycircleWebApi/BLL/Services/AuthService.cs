@@ -41,7 +41,7 @@ namespace BLL.Services
         {
             try
             {
-                var user = await FindUserAsync(loginDto.Email);
+                var user = await FindUserByEmail(loginDto.Email);
                 var passwordMatches = await _userManager.CheckPasswordAsync(user, loginDto.Password);
                 if (!passwordMatches)
                 {
@@ -62,9 +62,16 @@ namespace BLL.Services
                     }
                 }
 
+                //var cartBeforeLogin = get cart from cartservice based on logindto.cartid
+                //check if not null
+                //compare with user cartid
+                //if they are the same -> its fine
+                //if they are not, add the contents of the old cart to the user cart, then delete old cart
+
                 return new UserViewModel
                 {
                     Id = user.Id,
+                    CartId = user.Cart.Id,
                     Email = user.Email,
                     Role = role,
                     Token = token
@@ -79,9 +86,9 @@ namespace BLL.Services
             }
         }
 
-        public async Task RegisterAsync(UserUpsertDto registerDto)
+        public async Task RegisterAsync(RegisterDto registerDto)
         {
-            var userExists = await FindUserAsync(registerDto.Email);
+            var userExists = await FindUserByEmail(registerDto.Email);
             if (userExists != null)
             {
                 throw new ValidationAppException("Register attempt failed.", new[]
@@ -103,7 +110,7 @@ namespace BLL.Services
         public async Task<TokenViewModel> RefreshAsync(RefreshDto refreshDto)
         {
             var principal = GetPrincipalFromExpiredtoken(refreshDto.AccessToken);
-            var user = await FindUserAsync(refreshDto.Email);
+            var user = await FindUserByEmail(refreshDto.Email);
             var refreshToken = refreshDto.RefreshToken;
             var accessToken = refreshDto.AccessToken;
 
@@ -144,7 +151,7 @@ namespace BLL.Services
 
         public async Task RevokeAsync(RevokeDto revokeDto)
         {
-            var user = await FindUserAsync(revokeDto.Email);
+            var user = await FindUserByEmail(revokeDto.Email);
 
             if (user == null)
             {
@@ -159,14 +166,36 @@ namespace BLL.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public Task UpdateUserAsync(UserUpsertDto updateDto)
+        public async Task UpdateUserAsync(UserUpdateDto userUpdateDto)
         {
-            throw new NotImplementedException();
+            var user = await FindUserByIdAsync(userUpdateDto.UserId);
+
+            user.Email = userUpdateDto.NewEmail;
+            user.FirstName = userUpdateDto.FirstName;
+            user.LastName = userUpdateDto.LastName;
+            user.PhoneNumber = userUpdateDto.PhoneNumber;
+            user.Address.City = userUpdateDto.City;
+            user.Address.ZipCode = userUpdateDto.ZipCode;
+            user.Address.Line1 = userUpdateDto.Line1;
+            user.Address.Line2 = userUpdateDto.Line2;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                throw new ValidationAppException("Update user failed.", result.Errors.Select(ent => ent.Description));
+            }
         }
 
-        public Task ChangePasswordAsync(ChangePasswordDto changePasswordDto)
+        public async Task ChangePasswordAsync(ChangePasswordDto changePasswordDto)
         {
-            throw new NotImplementedException();
+            var user = await FindUserByEmail(changePasswordDto.Email);
+            var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.OldPassword, changePasswordDto.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                throw new ValidationAppException("Change password failed.", result.Errors.Select(ent => ent.Description));
+            }
         }
 
 
@@ -187,12 +216,22 @@ namespace BLL.Services
             return _mapper.Map<EntityCreatedViewModel>(user);
         }
 
-        private async Task<ApplicationUser> FindUserAsync(string email)
+        private async Task<ApplicationUser> FindUserByEmail(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
                 throw new EntityNotFoundException($"User with email '{email}' not found.");
+            }
+            return user;
+        }
+
+        private async Task<ApplicationUser> FindUserByIdAsync(int id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                throw new EntityNotFoundException($"User with ID '{id}' not found.");
             }
             return user;
         }

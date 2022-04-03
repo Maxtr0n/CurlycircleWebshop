@@ -9,11 +9,13 @@ namespace BLL.ViewModels
 {
     public class UserViewModel
     {
-        public int Id { get; set; } = default!;
+        public int Id { get; set; }
 
-        public string Email { get; set; } = default!;
+        public int CartId { get; set; }
 
-        public Role Role { get; set; } = default!;
+        public string Email { get; set; } = null!;
+
+        public Role Role { get; set; }
 
         public TokenViewModel Token { get; set; } = default!;
     }

@@ -14,7 +14,7 @@ namespace DAL.EntityConfigurations
         public void Configure(EntityTypeBuilder<ApplicationUser> userConfiguration)
         {
             userConfiguration.ToTable("Users");
-            userConfiguration.OwnsOne(u => u.Cart).WithOwner(c => c.ApplicationUser);
+            userConfiguration.HasOne(u => u.Cart);
             userConfiguration.OwnsOne(u => u.Address);
         }
     }

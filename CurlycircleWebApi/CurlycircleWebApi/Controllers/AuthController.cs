@@ -30,7 +30,7 @@ namespace CurlycircleWebApi.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public Task Register([FromBody] UserUpsertDto registerDto)
+        public Task Register([FromBody] RegisterDto registerDto)
         {
             return authService.RegisterAsync(registerDto);
         }

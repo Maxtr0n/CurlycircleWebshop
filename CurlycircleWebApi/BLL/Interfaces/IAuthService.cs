@@ -12,16 +12,14 @@ namespace BLL.Interfaces
     {
         Task<UserViewModel> LoginAsync(LoginDto loginDto);
 
-        Task RegisterAsync(UserUpsertDto registerDto);
+        Task RegisterAsync(RegisterDto registerDto);
 
         Task<TokenViewModel> RefreshAsync(RefreshDto refreshDto);
 
         Task RevokeAsync(RevokeDto revokeDto);
 
-        Task UpdateUserAsync(UserUpsertDto updateDto);
+        Task UpdateUserAsync(UserUpdateDto userUpdateDto);
 
         Task ChangePasswordAsync(ChangePasswordDto changePasswordDto);
-
-        Task<EntityCreatedViewModel> CreateAnonymousUserAsync();
     }
 }

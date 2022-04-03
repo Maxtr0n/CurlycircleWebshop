@@ -21,6 +21,8 @@ namespace DAL.EntityConfigurations
                 .UseHiLo("orderseq");
 
             orderConfiguration.OwnsOne(o => o.Address);
+
+            orderConfiguration.OwnsMany(o => o.OrderItems);
         }
     }
 }

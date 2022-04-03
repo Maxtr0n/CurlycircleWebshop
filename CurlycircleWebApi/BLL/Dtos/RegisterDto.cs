@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Dtos
 {
-    public class UserUpsertDto
+    public class RegisterDto
     {
         public string Email { get; set; } = default!;
 

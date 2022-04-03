@@ -9,13 +9,13 @@ namespace Domain.Entities
 {
     public class Address : ValueObject
     {
-        public string City { get; private set; }
+        public string City { get; set; }
 
-        public string ZipCode { get; private set; }
+        public string ZipCode { get; set; }
 
-        public string Line1 { get; private set; }
+        public string Line1 { get; set; }
 
-        public string? Line2 { get; private set; }
+        public string? Line2 { get; set; }
 
         public Address(string city, string zipCode, string line1, string? line2)
         {

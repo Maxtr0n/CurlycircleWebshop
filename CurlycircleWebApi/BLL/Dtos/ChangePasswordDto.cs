@@ -8,8 +8,10 @@ namespace BLL.Dtos
 {
     public class ChangePasswordDto
     {
-        public string OldPassword { get; set; } = default!;
+        public string Email { get; set; } = null!;
 
-        public string NewPassword { get; set; } = default!;
+        public string OldPassword { get; set; } = null!;
+
+        public string NewPassword { get; set; } = null!;
     }
 }

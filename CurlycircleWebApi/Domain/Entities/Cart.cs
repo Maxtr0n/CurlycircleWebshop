@@ -6,14 +6,7 @@ namespace Domain.Entities
 {
     public class Cart : EntityBase
     {
-        private ApplicationUser? _applicationUser;
-
-        public ApplicationUser ApplicationUser
-        {
-            get => _applicationUser
-                    ?? throw new InvalidOperationException("Uninitialized property: " + nameof(ApplicationUser));
-            set => _applicationUser = value;
-        }
+        public ApplicationUser? ApplicationUser { get; set; }
 
         public List<OrderItem> OrderItems { get; set; }
 
