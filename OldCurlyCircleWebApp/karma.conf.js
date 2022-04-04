@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/curly-circle-web-app'),
+      dir: require('path').join(__dirname, './coverage/CurlycircleWebApp'),
       subdir: '.',
       reporters: [
         { type: 'html' },
