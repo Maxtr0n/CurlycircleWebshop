@@ -47,5 +47,19 @@ namespace CurlycircleWebApi.Controllers
         {
             return authService.RevokeAsync(revokeDto);
         }
+
+        [HttpPut("update")]
+        [Authorize]
+        public Task Update(UserUpdateDto userUpdateDto)
+        {
+            return authService.UpdateUserAsync(userUpdateDto);
+        }
+
+        [HttpPut("change-password")]
+        [Authorize]
+        public Task ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            return authService.ChangePasswordAsync(changePasswordDto);
+        }
     }
 }
