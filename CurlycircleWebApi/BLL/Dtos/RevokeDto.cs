@@ -9,5 +9,6 @@ namespace BLL.Dtos
     public class RevokeDto
     {
         public string Email { get; set; } = default!;
+        public int Id { get; set; }
     }
 }

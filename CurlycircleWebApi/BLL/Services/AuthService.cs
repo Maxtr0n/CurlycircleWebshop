@@ -43,7 +43,7 @@ namespace BLL.Services
         {
             try
             {
-                var user = await FindUserByEmail(loginDto.Email);
+                var user = await FindUserByEmailAsync(loginDto.Email);
                 var passwordMatches = await _userManager.CheckPasswordAsync(user, loginDto.Password);
                 if (!passwordMatches)
                 {
@@ -101,7 +101,7 @@ namespace BLL.Services
 
         public async Task RegisterAsync(RegisterDto registerDto)
         {
-            var userExists = await FindUserByEmail(registerDto.Email);
+            var userExists = await FindUserByEmailAsync(registerDto.Email);
             if (userExists != null)
             {
                 throw new ValidationAppException("Register attempt failed.", new[]
@@ -123,7 +123,7 @@ namespace BLL.Services
         public async Task<TokenViewModel> RefreshAsync(RefreshDto refreshDto)
         {
             var principal = GetPrincipalFromExpiredtoken(refreshDto.AccessToken);
-            var user = await FindUserByEmail(refreshDto.Email);
+            var user = await FindUserByIdAsync(refreshDto.Id);
             var refreshToken = refreshDto.RefreshToken;
             var accessToken = refreshDto.AccessToken;
 
@@ -164,7 +164,7 @@ namespace BLL.Services
 
         public async Task RevokeAsync(RevokeDto revokeDto)
         {
-            var user = await FindUserByEmail(revokeDto.Email);
+            var user = await FindUserByEmailAsync(revokeDto.Email);
 
             if (user == null)
             {
@@ -183,7 +183,7 @@ namespace BLL.Services
         {
             var user = await FindUserByIdAsync(userUpdateDto.UserId);
 
-            user.Email = userUpdateDto.NewEmail;
+            user.Email = userUpdateDto.Email;
             user.FirstName = userUpdateDto.FirstName;
             user.LastName = userUpdateDto.LastName;
             user.PhoneNumber = userUpdateDto.PhoneNumber;
@@ -202,7 +202,7 @@ namespace BLL.Services
 
         public async Task ChangePasswordAsync(ChangePasswordDto changePasswordDto)
         {
-            var user = await FindUserByEmail(changePasswordDto.Email);
+            var user = await FindUserByEmailAsync(changePasswordDto.Email);
             var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.OldPassword, changePasswordDto.NewPassword);
 
             if (!result.Succeeded)
@@ -211,7 +211,7 @@ namespace BLL.Services
             }
         }
 
-        private async Task<ApplicationUser> FindUserByEmail(string email)
+        private async Task<ApplicationUser> FindUserByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)

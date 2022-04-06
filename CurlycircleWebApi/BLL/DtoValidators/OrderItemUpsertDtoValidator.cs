@@ -1,17 +1,17 @@
-﻿using System;
+﻿using BLL.Dtos;
+using Domain.Entities;
+using FluentValidation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BLL.Dtos;
-using Domain.Entities;
-using FluentValidation;
 
 namespace BLL.DtoValidators
 {
-    public class OrderItemDtoValidator : AbstractValidator<OrderItemUpsertDto>
+    public class OrderItemUpsertDtoValidator : AbstractValidator<OrderItemUpsertDto>
     {
-        public OrderItemDtoValidator()
+        public OrderItemUpsertDtoValidator()
         {
             RuleFor(ent => ent.OrderId)
                 .NotEmpty().WithMessage("OrderId is required");

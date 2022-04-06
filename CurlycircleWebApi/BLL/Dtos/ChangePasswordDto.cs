@@ -10,6 +10,8 @@ namespace BLL.Dtos
     {
         public string Email { get; set; } = null!;
 
+        public string Id { get; set; }
+
         public string OldPassword { get; set; } = null!;
 
         public string NewPassword { get; set; } = null!;

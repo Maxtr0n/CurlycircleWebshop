@@ -8,10 +8,12 @@ namespace BLL.Dtos
 {
     public class RefreshDto
     {
-        public string Email { get; set; } = default!;
+        public string Email { get; set; } = null!;
 
-        public string AccessToken { get; set; } = default!;
+        public int Id { get; set; }
 
-        public string RefreshToken { get; set; } = default!;
+        public string AccessToken { get; set; } = null!;
+
+        public string RefreshToken { get; set; } = null!;
     }
 }
