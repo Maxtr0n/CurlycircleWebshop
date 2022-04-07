@@ -73,7 +73,7 @@ namespace CurlycircleWebApi.Controllers
             return _cartService.GetAllCartItemsAsync(cartId);
         }
 
-        [HttpPut("{cartId}/cartItems/{cartItemId")]
+        [HttpPut("{cartId}/cartItems/{cartItemId}")]
         public Task UpdateCartItem([FromRoute] int cartId, [FromRoute] int cartItemId, [FromBody] int quantity)
         {
             return _cartService.UpdateCartItemAsync(cartId, cartItemId, quantity);

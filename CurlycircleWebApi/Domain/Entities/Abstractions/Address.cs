@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Address : ValueObject
+    public abstract class Address : ValueObject
     {
         public string City { get; set; }
 

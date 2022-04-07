@@ -20,9 +20,23 @@ namespace DAL.EntityConfigurations
             orderConfiguration.Property(o => o.Id)
                 .UseHiLo("orderseq");
 
-            orderConfiguration.OwnsOne(o => o.Address);
+            orderConfiguration.OwnsMany(o => o.OrderItems, oi =>
+            {
+                oi.Property(oi => oi.OrderId).UseHiLo("orderitemseq");
+                oi.HasKey(oi => oi.Id);
+                oi.WithOwner(oi => oi.Order).HasForeignKey(oi => oi.OrderId);
+                oi.Navigation(oi => oi.Order).UsePropertyAccessMode(PropertyAccessMode.Field);
+                oi.HasOne(oi => oi.Product);
+            });
 
-            orderConfiguration.OwnsMany(o => o.OrderItems);
+            orderConfiguration.OwnsOne(o => o.Address, a =>
+            {
+                a.WithOwner(a => a.Order).HasForeignKey(a => a.OrderId);
+                a.Property(a => a.ZipCode).HasColumnName("ZipCode");
+                a.Property(a => a.City).HasColumnName("City");
+                a.Property(a => a.Line1).HasColumnName("Line1");
+                a.Property(a => a.Line2).HasColumnName("Line2");
+            });
         }
     }
 }

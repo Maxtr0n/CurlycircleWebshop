@@ -11,13 +11,13 @@ namespace Domain.Entities
 
         public List<OrderItem> OrderItems { get; set; }
 
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = null!;
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = null!;
 
-        public string Email { get; set; }
+        public string Email { get; set; } = null!;
 
-        public Address Address { get; set; }
+        public OrderAddress Address { get; set; } = null!;
 
         public double Total { get; set; }
 
@@ -25,23 +25,13 @@ namespace Domain.Entities
 
         public PaymentMethod PaymentMethod { get; set; }
 
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = null!;
 
         public string? Note { get; set; }
 
-        public Order(string firstName, string lastName, string email, Address address, double total, ShippingMethod shippingMethod, PaymentMethod paymentMethod, string phoneNumber, DateTime orderDateTime, string? note = null)
+        public Order()
         {
-            OrderDateTime = orderDateTime;
             OrderItems = new List<OrderItem>();
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            Address = address;
-            Total = total;
-            ShippingMethod = shippingMethod;
-            PaymentMethod = paymentMethod;
-            PhoneNumber = phoneNumber;
-            Note = note;
         }
 
         public void AddOrderItem(OrderItem orderItem)

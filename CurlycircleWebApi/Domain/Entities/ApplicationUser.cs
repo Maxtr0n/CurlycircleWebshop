@@ -20,23 +20,19 @@ namespace Domain.Entities
 
         public List<Order> Orders { get; set; }
 
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = null!;
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = null!;
 
-        public Address Address { get; set; }
+        public UserAddress Address { get; set; } = null!;
 
         public string? RefreshToken { get; set; }
 
         public DateTime? RefreshTokenExpiryTime { get; set; }
 
-        public ApplicationUser(string email, string firstName, string lastName, Address address)
+        public ApplicationUser()
         {
             Orders = new List<Order>();
-            Email = email;
-            FirstName = firstName;
-            LastName = lastName;
-            Address = address;
         }
     }
 }

@@ -109,8 +109,7 @@ namespace BLL.Services
                     "User with given email already exists."
                 });
             }
-            Address userAddress = new Address(registerDto.City, registerDto.ZipCode, registerDto.Line1, registerDto.Line2);
-            ApplicationUser user = new ApplicationUser(registerDto.Email, registerDto.FirstName, registerDto.LastName, userAddress);
+            ApplicationUser user = _mapper.Map<ApplicationUser>(registerDto);
             var result = await _userManager.CreateAsync(user, registerDto.Password);
             if (!result.Succeeded)
             {

@@ -20,7 +20,14 @@ namespace DAL.EntityConfigurations
             cartConfiguration.Property(c => c.Id)
                 .UseHiLo("cartseq");
 
-            cartConfiguration.OwnsMany(c => c.CartItems);
+            cartConfiguration.OwnsMany(c => c.CartItems, ci =>
+            {
+                ci.Property(ci => ci.Id).UseHiLo("cartitemseq");
+                ci.HasKey(ci => ci.Id);
+                ci.WithOwner(ci => ci.Cart).HasForeignKey(ci => ci.CartId);
+                ci.Navigation(ci => ci.Cart).UsePropertyAccessMode(PropertyAccessMode.Field);
+                ci.HasOne(ci => ci.Product);
+            });
         }
     }
 }

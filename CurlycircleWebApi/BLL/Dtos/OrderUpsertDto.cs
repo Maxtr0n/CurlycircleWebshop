@@ -18,7 +18,7 @@ namespace BLL.Dtos
 
         public string Email { get; set; } = default!;
 
-        public Address Address { get; set; } = default!;
+        public OrderAddress Address { get; set; } = default!;
 
         public double Total { get; set; } = default!;
 

@@ -19,6 +19,12 @@ namespace BLL
 
             CreateMap<ApplicationUser, EntityCreatedViewModel>();
 
+            CreateMap<RegisterDto, ApplicationUser>()
+                .ForMember(x => x.Address.ZipCode, options => options.MapFrom(x => x.ZipCode))
+                .ForMember(x => x.Address.City, options => options.MapFrom(x => x.City))
+                .ForMember(x => x.Address.Line1, options => options.MapFrom(x => x.Line1))
+                .ForMember(x => x.Address.Line2, options => options.MapFrom(x => x.Line2));
+
             CreateMap<Product, ProductViewModel>();
             CreateMap<ProductUpsertDto, Product>();
             CreateMap<IEnumerable<Product>, ProductsViewModel>()
