@@ -6,11 +6,12 @@ namespace Domain.Entities
 {
     public class Product : EntityBase
     {
+        private ProductCategory? _productCategory;
+        private int? _productCategoryId;
+
         public double Price { get; set; }
 
-        public string Name { get; set; }
-
-        private ProductCategory? _productCategory;
+        public string Name { get; set; } = null!;
 
         public ProductCategory ProductCategory
         {
@@ -18,8 +19,6 @@ namespace Domain.Entities
                     ?? throw new InvalidOperationException("Uninitialized property: " + nameof(ProductCategory));
             set => _productCategory = value;
         }
-
-        private int? _productCategoryId;
 
         public int ProductCategoryId
         {
@@ -32,21 +31,14 @@ namespace Domain.Entities
 
         public string? ImageUrl { get; set; }
 
-        public Color Color { get; set; }
+        public Color Color { get; set; } = Color.Other;
 
-        public Pattern Pattern { get; set; }
+        public Pattern Pattern { get; set; } = Pattern.Other;
 
-        public Material Material { get; set; }
+        public Material Material { get; set; } = Material.Other;
 
-        public Product(double price, string name, string? description = null, string? imageUrl = null, Color color = Enums.Color.Other, Pattern pattern = Enums.Pattern.Other, Material material = Enums.Material.Other)
+        public Product()
         {
-            Price = price;
-            Name = name;
-            Description = description;
-            ImageUrl = imageUrl;
-            Color = color;
-            Pattern = pattern;
-            Material = material;
         }
 
         public void Update(Product updateProduct)

@@ -23,7 +23,9 @@ namespace BLL
                 .ForMember(x => x.Address.ZipCode, options => options.MapFrom(x => x.ZipCode))
                 .ForMember(x => x.Address.City, options => options.MapFrom(x => x.City))
                 .ForMember(x => x.Address.Line1, options => options.MapFrom(x => x.Line1))
-                .ForMember(x => x.Address.Line2, options => options.MapFrom(x => x.Line2));
+                .ForMember(x => x.Address.Line2, options => options.MapFrom(x => x.Line2))
+                .ForMember(x => x.UserName, options => options.MapFrom(x => x.Email))
+                .ForMember(x => x.Email, options => options.MapFrom(x => x.Email));
 
             CreateMap<Product, ProductViewModel>();
             CreateMap<ProductUpsertDto, Product>();

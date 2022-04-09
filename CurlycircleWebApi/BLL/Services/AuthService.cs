@@ -64,11 +64,6 @@ namespace BLL.Services
                     }
                 }
 
-                //var cartBeforeLogin = get cart from cartservice based on logindto.cartid
-                //check if not null
-                //compare with user cartid
-                //if they are the same -> its fine
-                //if they are not, add the contents of the old cart to the user cart, then delete old cart
                 if (loginDto.CartId.HasValue && loginDto.CartId != user.Cart.Id)
                 {
                     var cartBeforeLogin = await _cartService.FindCartByIdAsync(loginDto.CartId.GetValueOrDefault());
@@ -99,7 +94,7 @@ namespace BLL.Services
             }
         }
 
-        public async Task RegisterAsync(RegisterDto registerDto)
+        public async Task<EntityCreatedViewModel> RegisterAsync(RegisterDto registerDto)
         {
             var userExists = await FindUserByEmailAsync(registerDto.Email);
             if (userExists != null)
@@ -117,6 +112,11 @@ namespace BLL.Services
             }
 
             await _unitOfWork.SaveChangesAsync();
+
+            return new EntityCreatedViewModel
+            {
+                Id = user.Id
+            };
         }
 
         public async Task<TokenViewModel> RefreshAsync(RefreshDto refreshDto)

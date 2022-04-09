@@ -8,7 +8,6 @@
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
-
 export interface CartItemUpsertDto {
     cartId: number;
     productId: number;
@@ -26,19 +25,19 @@ export interface CartItemViewModel {
 }
 
 export interface CartItemsViewModel {
-    cartItems: CartItemViewModel[] | undefined;
+    cartItems: CartItemViewModel[];
 }
 
 export interface CartViewModel {
     id: number;
-    cartItems: CartItemViewModel[] | undefined;
+    cartItems: CartItemViewModel[];
 }
 
 export interface ChangePasswordDto {
-    email: string | undefined;
-    id: string | undefined;
-    oldPassword: string | undefined;
-    newPassword: string | undefined;
+    email: string;
+    id: string;
+    oldPassword: string;
+    newPassword: string;
 }
 
 export enum Color {
@@ -50,7 +49,7 @@ export enum Color {
     Black,
     Orange,
     Pink,
-    Other
+    Other,
 }
 
 export interface EntityCreatedViewModel {
@@ -58,38 +57,38 @@ export interface EntityCreatedViewModel {
 }
 
 export interface LoginDto {
-    email: string | undefined;
-    password: string | undefined;
-    cartId: number | undefined;
+    email: string;
+    password: string;
+    cartId: number;
 }
 
 export enum Material {
     Fabric,
     Plastic,
     Metal,
-    Other
+    Other,
 }
 
 export interface Order {
     id: number;
     orderDateTime: Date;
-    orderItems: OrderItem[] | undefined;
-    firstName: string | undefined;
-    lastName: string | undefined;
-    email: string | undefined;
+    orderItems: OrderItem[];
+    firstName: string;
+    lastName: string;
+    email: string;
     address: OrderAddress;
     total: number;
     shippingMethod: ShippingMethod;
     paymentMethod: PaymentMethod;
-    phoneNumber: string | undefined;
-    note: string | undefined;
+    phoneNumber: string;
+    note: string;
 }
 
 export interface OrderAddress {
-    city: string | undefined;
-    zipCode: string | undefined;
-    line1: string | undefined;
-    line2: string | undefined;
+    city: string;
+    zipCode: string;
+    line1: string;
+    line2: string;
     order: Order;
     orderId: number;
 }
@@ -121,39 +120,39 @@ export interface OrderItemViewModel {
 }
 
 export interface OrderItemsViewModel {
-    orderItems: OrderItemViewModel[] | undefined;
+    orderItems: OrderItemViewModel[];
 }
 
 export interface OrderUpsertDto {
     orderDateTime: Date;
-    orderItems: OrderItemUpsertDto[] | undefined;
-    name: string | undefined;
-    email: string | undefined;
+    orderItems: OrderItemUpsertDto[];
+    name: string;
+    email: string;
     address: OrderAddress;
     total: number;
     shippingMethod: ShippingMethod;
     paymentMethod: PaymentMethod;
-    phoneNumber: string | undefined;
-    note: string | undefined;
+    phoneNumber: string;
+    note: string;
 }
 
 export interface OrderViewModel {
     id: number;
     orderDateTime: Date;
-    orderItems: OrderItemViewModel[] | undefined;
-    firstName: string | undefined;
-    lastName: string | undefined;
-    email: string | undefined;
+    orderItems: OrderItemViewModel[];
+    firstName: string;
+    lastName: string;
+    email: string;
     address: OrderAddress;
     total: number;
     shippingMethod: ShippingMethod;
     paymentMethod: PaymentMethod;
-    phoneNumber: string | undefined;
-    note: string | undefined;
+    phoneNumber: string;
+    note: string;
 }
 
 export interface OrdersViewModel {
-    orders: OrderViewModel[] | undefined;
+    orders: OrderViewModel[];
 }
 
 export enum Pattern {
@@ -161,105 +160,105 @@ export enum Pattern {
     Dotted,
     Striped,
     Checkered,
-    Other
+    Other,
 }
 
 export enum PaymentMethod {
     MoneyTransfer,
     CashOnDelivery,
-    WebPayment
+    WebPayment,
 }
 
 export interface Product {
     id: number;
     price: number;
-    name: string | undefined;
+    name: string;
     productCategory: ProductCategory;
     productCategoryId: number;
-    description: string | undefined;
-    imageUrl: string | undefined;
+    description: string;
+    imageUrl: string;
     color: Color;
     pattern: Pattern;
     material: Material;
 }
 
 export interface ProductCategoriesViewModel {
-    productCategories: ProductCategoryViewModel[] | undefined;
+    productCategories: ProductCategoryViewModel[];
 }
 
 export interface ProductCategory {
     id: number;
-    name: string | undefined;
-    description: string | undefined;
-    products: Product[] | undefined;
+    name: string;
+    description: string;
+    products: Product[];
 }
 
 export interface ProductCategoryUpsertDto {
-    name: string | undefined;
-    description: string | undefined;
-    productIds: number[] | undefined;
+    name: string;
+    description: string;
+    productIds: number[];
 }
 
 export interface ProductCategoryViewModel {
     id: number;
-    name: string | undefined;
-    description: string | undefined;
+    name: string;
+    description: string;
 }
 
 export interface ProductUpsertDto {
     price: number;
-    name: string | undefined;
+    name: string;
     productCategoryId: number;
-    description: string | undefined;
-    imageUrl: string | undefined;
-    color: string | undefined;
-    pattern: string | undefined;
-    material: string | undefined;
+    description: string;
+    imageUrl: string;
+    color: string;
+    pattern: string;
+    material: string;
 }
 
 export interface ProductViewModel {
     id: number;
     price: number;
-    name: string | undefined;
+    name: string;
     productCategoryId: number;
-    description: string | undefined;
-    imageUrl: string | undefined;
+    description: string;
+    imageUrl: string;
     color: Color;
     pattern: Pattern;
     material: Material;
 }
 
 export interface ProductsViewModel {
-    products: ProductViewModel[] | undefined;
+    products: ProductViewModel[];
 }
 
 export interface RefreshDto {
-    email: string | undefined;
+    email: string;
     id: number;
-    accessToken: string | undefined;
-    refreshToken: string | undefined;
+    accessToken: string;
+    refreshToken: string;
 }
 
 export interface RegisterDto {
-    email: string | undefined;
-    firstName: string | undefined;
-    lastName: string | undefined;
-    readonly city: string | undefined;
-    readonly zipCode: string | undefined;
-    readonly line1: string | undefined;
-    readonly line2: string | undefined;
-    phoneNumber: string | undefined;
-    password: string | undefined;
+    email: string;
+    firstName: string;
+    lastName: string;
+    readonly city: string;
+    readonly zipCode: string;
+    readonly line1: string;
+    readonly line2: string;
+    phoneNumber: string;
+    password: string;
 }
 
 export interface RevokeDto {
-    email: string | undefined;
+    email: string;
     id: number;
 }
 
 export enum Role {
     User,
-    Admin
+    Admin,
 }
 
 export enum ShippingMethod {
@@ -267,30 +266,30 @@ export enum ShippingMethod {
     MagyarPostaPont,
     MagyarPostaCsomagPont,
     HomeDelivery,
-    PersonalDelivery
+    PersonalDelivery,
 }
 
 export interface TokenViewModel {
-    accessToken: string | undefined;
-    refreshToken: string | undefined;
+    accessToken: string;
+    refreshToken: string;
 }
 
 export interface UserUpdateDto {
     userId: number;
-    email: string | undefined;
-    firstName: string | undefined;
-    lastName: string | undefined;
-    city: string | undefined;
-    zipCode: string | undefined;
-    line1: string | undefined;
-    line2: string | undefined;
-    phoneNumber: string | undefined;
+    email: string;
+    firstName: string;
+    lastName: string;
+    city: string;
+    zipCode: string;
+    line1: string;
+    line2: string;
+    phoneNumber: string;
 }
 
 export interface UserViewModel {
     id: number;
     cartId: number;
-    email: string | undefined;
+    email: string;
     role: Role;
     token: TokenViewModel;
 }

@@ -5,17 +5,15 @@ namespace Domain.Entities
 {
     public class ProductCategory : EntityBase
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         public string? Description { get; set; }
 
         public List<Product> Products { get; set; }
 
-        public ProductCategory(string name, string? description = null)
+        public ProductCategory()
         {
             Products = new List<Product>();
-            Name = name;
-            Description = description;
         }
 
         public void AddProduct(Product product)

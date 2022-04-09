@@ -22,15 +22,13 @@ namespace CurlycircleWebApi.Controllers
         }
 
         [HttpPost("login")]
-        [AllowAnonymous]
         public Task<UserViewModel> Login([FromBody] LoginDto loginDto)
         {
             return authService.LoginAsync(loginDto);
         }
 
         [HttpPost("register")]
-        [AllowAnonymous]
-        public Task Register([FromBody] RegisterDto registerDto)
+        public Task<EntityCreatedViewModel> Register([FromBody] RegisterDto registerDto)
         {
             return authService.RegisterAsync(registerDto);
         }

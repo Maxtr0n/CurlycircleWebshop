@@ -3,30 +3,37 @@ import {
     HttpRequest,
     HttpHandler,
     HttpEvent,
-    HttpInterceptor
+    HttpInterceptor,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService } from '../services/auth.service';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
+    constructor(private authenticationService: AuthService) {}
 
-    constructor(private authenticationService: AuthService) { }
+    intercept(
+        request: HttpRequest<any>,
+        next: HttpHandler
+    ): Observable<HttpEvent<any>> {
+        return next.handle(request).pipe(
+            catchError((error) => {
+                if (error.status === 0) {
+                    // A client-side or network error occurred. Handle it accordingly.
+                    console.error('An error occurred:', error.error);
+                } else if (error.status === 401) {
+                    // try refresh if 401 response returned from api
+                }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request).pipe(catchError(error => {
-            if (error.status === 0) {
-                // A client-side or network error occurred. Handle it accordingly.
-                console.error('An error occurred:', error.error);
-            } else if (error.status === 401) {
-                // auto logout if 401 response returned from api
-                //this.authenticationService.logout();
-                location.reload();
-            }
-
-            const errorr = error.error.message || error.statusText;
-            return throwError(() => new Error('Something bad happened; please try again later.'));
-        }))
+                const errorr = error.error.message || error.statusText;
+                return throwError(
+                    () =>
+                        new Error(
+                            'Something bad happened; please try again later.'
+                        )
+                );
+            })
+        );
     }
 }
