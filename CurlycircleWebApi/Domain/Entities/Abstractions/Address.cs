@@ -9,20 +9,16 @@ namespace Domain.Entities
 {
     public abstract class Address : ValueObject
     {
-        public string City { get; set; }
+        public string City { get; set; } = null!;
 
-        public string ZipCode { get; set; }
+        public string ZipCode { get; set; } = null!;
 
-        public string Line1 { get; set; }
+        public string Line1 { get; set; } = null!;
 
         public string? Line2 { get; set; }
 
-        public Address(string city, string zipCode, string line1, string? line2)
+        public Address()
         {
-            City = city;
-            ZipCode = zipCode;
-            Line1 = line1;
-            Line2 = line2;
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

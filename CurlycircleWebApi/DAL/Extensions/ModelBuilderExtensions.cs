@@ -23,6 +23,8 @@ namespace DAL.Extensions
                 Id = 1,
                 UserName = "admin",
                 Email = "admin@admin.com",
+                FirstName = "Máté",
+                LastName = "Schütz",
                 SecurityStamp = Guid.NewGuid().ToString()
             };
             admin.PasswordHash = passwordHasher.HashPassword(admin, "abc123");
@@ -32,6 +34,8 @@ namespace DAL.Extensions
             {
                 Id = 2,
                 UserName = "user",
+                FirstName = "Béla",
+                LastName = "Kovács",
                 Email = "user@user.com",
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
@@ -41,6 +45,25 @@ namespace DAL.Extensions
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasData(users);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .OwnsOne(u => u.Address).HasData(
+                new UserAddress
+                {
+                    UserId = 1,
+                    City = "Göd",
+                    ZipCode = "2131",
+                    Line1 = "Sajó utca 19."
+                },
+                new UserAddress
+                {
+                    UserId = 2,
+                    City = "Göd",
+                    ZipCode = "2131",
+                    Line1 = "Sajó utca 19.",
+                    Line2 = "Fsz."
+                }
+                );
 
             #endregion
 

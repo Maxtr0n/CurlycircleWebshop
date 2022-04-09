@@ -19,7 +19,7 @@ namespace Domain.Entities
 
         public int OrderId { get; set; }
 
-        public OrderAddress(string city, string zipCode, string line1, string? line2) : base(city, zipCode, line1, line2)
+        public OrderAddress() : base()
         {
         }
     }
