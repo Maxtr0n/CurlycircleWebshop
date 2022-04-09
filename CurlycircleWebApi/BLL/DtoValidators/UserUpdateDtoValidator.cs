@@ -14,8 +14,6 @@ namespace BLL.DtoValidators
         {
             RuleFor(ent => ent.UserId)
                 .NotEmpty().WithMessage("UserId is required.");
-            RuleFor(ent => ent.Email)
-                .NotEmpty().WithMessage("Email is required.");
             RuleFor(ent => ent.City)
                 .NotEmpty().WithMessage("City is required.");
             RuleFor(ent => ent.FirstName)

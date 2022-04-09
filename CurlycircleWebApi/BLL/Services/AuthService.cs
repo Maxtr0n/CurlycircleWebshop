@@ -181,8 +181,21 @@ namespace BLL.Services
         public async Task UpdateUserAsync(UserUpdateDto userUpdateDto)
         {
             var user = await FindUserByIdAsync(userUpdateDto.UserId);
+            if (userUpdateDto.Email is not null)
+            {
+                var userWithEmail = await FindUserByEmailAsync(userUpdateDto.Email);
+                if (userWithEmail is not null)
+                {
+                    throw new ValidationAppException("Update user failed.", new[]
+                    {
+                        "Email is already taken."
+                    });
+                }
 
-            user.Email = userUpdateDto.Email;
+                user.Email = userUpdateDto.Email;
+                user.UserName = userUpdateDto.Email;
+            }
+
             user.FirstName = userUpdateDto.FirstName;
             user.LastName = userUpdateDto.LastName;
             user.PhoneNumber = userUpdateDto.PhoneNumber;
