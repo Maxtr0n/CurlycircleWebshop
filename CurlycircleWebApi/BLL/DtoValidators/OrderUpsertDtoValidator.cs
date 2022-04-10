@@ -14,8 +14,12 @@ namespace BLL.DtoValidators
         {
             RuleFor(ent => ent.Name)
                 .NotEmpty().WithMessage("Name is required");
-            RuleFor(ent => ent.Address)
-                .NotEmpty().WithMessage("Address is required.");
+            RuleFor(ent => ent.City)
+                .NotEmpty().WithMessage("City is required.");
+            RuleFor(ent => ent.ZipCode)
+                .NotEmpty().WithMessage("ZipCode is required.");
+            RuleFor(ent => ent.Line1)
+                .NotEmpty().WithMessage("Line1 is required.");
             RuleFor(ent => ent.Email)
                 .NotEmpty().WithMessage("Email is required.");
             RuleFor(ent => ent.OrderDateTime)

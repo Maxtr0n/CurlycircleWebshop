@@ -18,7 +18,13 @@ namespace BLL.Dtos
 
         public string Email { get; set; } = default!;
 
-        public OrderAddress Address { get; set; } = default!;
+        public string City { get; set; } = null!;
+
+        public string ZipCode { get; set; } = null!;
+
+        public string Line1 { get; set; } = null!;
+
+        public string? Line2 { get; set; }
 
         public double Total { get; set; } = default!;
 

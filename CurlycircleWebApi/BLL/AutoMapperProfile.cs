@@ -20,10 +20,10 @@ namespace BLL
             CreateMap<ApplicationUser, EntityCreatedViewModel>();
 
             CreateMap<RegisterDto, ApplicationUser>()
-                .ForMember(x => x.Address.ZipCode, options => options.MapFrom(x => x.ZipCode))
-                .ForMember(x => x.Address.City, options => options.MapFrom(x => x.City))
-                .ForMember(x => x.Address.Line1, options => options.MapFrom(x => x.Line1))
-                .ForMember(x => x.Address.Line2, options => options.MapFrom(x => x.Line2))
+                .ForPath(x => x.Address.ZipCode, options => options.MapFrom(x => x.ZipCode))
+                .ForPath(x => x.Address.City, options => options.MapFrom(x => x.City))
+                .ForPath(x => x.Address.Line1, options => options.MapFrom(x => x.Line1))
+                .ForPath(x => x.Address.Line2, options => options.MapFrom(x => x.Line2))
                 .ForMember(x => x.UserName, options => options.MapFrom(x => x.Email))
                 .ForMember(x => x.Email, options => options.MapFrom(x => x.Email));
 
@@ -38,7 +38,13 @@ namespace BLL
                 .ForMember(pvm => pvm.ProductCategories, options => options.MapFrom(x => x));
 
             CreateMap<Order, OrderViewModel>();
-            CreateMap<OrderUpsertDto, Order>();
+            CreateMap<OrderUpsertDto, Order>()
+                .ForPath(x => x.Address.ZipCode, options => options.MapFrom(x => x.ZipCode))
+                .ForPath(x => x.Address.City, options => options.MapFrom(x => x.City))
+                .ForPath(x => x.Address.Line1, options => options.MapFrom(x => x.Line1))
+                .ForPath(x => x.Address.Line2, options => options.MapFrom(x => x.Line2));
+
+
             CreateMap<IEnumerable<Order>, OrdersViewModel>()
                 .ForMember(ovm => ovm.Orders, options => options.MapFrom(x => x));
 

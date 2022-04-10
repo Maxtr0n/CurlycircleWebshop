@@ -14,13 +14,13 @@ namespace BLL.Dtos
 
         public string LastName { get; set; } = default!;
 
-        public string City { get; private set; } = default!;
+        public string City { get; set; } = default!;
 
-        public string ZipCode { get; private set; } = default!;
+        public string ZipCode { get; set; } = default!;
 
-        public string Line1 { get; private set; } = default!;
+        public string Line1 { get; set; } = default!;
 
-        public string? Line2 { get; private set; }
+        public string? Line2 { get; set; }
 
         public string PhoneNumber { get; set; } = default!;
 

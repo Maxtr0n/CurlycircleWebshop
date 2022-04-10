@@ -22,7 +22,9 @@ namespace DAL.Extensions
             {
                 Id = 1,
                 UserName = "admin",
+                NormalizedUserName = "ADMIN",
                 Email = "admin@admin.com",
+                NormalizedEmail = "ADMIN@ADMIN.COM",
                 FirstName = "Máté",
                 LastName = "Schütz",
                 SecurityStamp = Guid.NewGuid().ToString()
@@ -34,9 +36,11 @@ namespace DAL.Extensions
             {
                 Id = 2,
                 UserName = "user",
+                NormalizedUserName = "USER",
                 FirstName = "Béla",
                 LastName = "Kovács",
                 Email = "user@user.com",
+                NormalizedEmail = "USER@USER.COM",
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
 

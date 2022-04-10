@@ -96,7 +96,7 @@ namespace BLL.Services
 
         public async Task<EntityCreatedViewModel> RegisterAsync(RegisterDto registerDto)
         {
-            var userExists = await FindUserByEmailAsync(registerDto.Email);
+            var userExists = await _userManager.FindByEmailAsync(registerDto.Email);
             if (userExists != null)
             {
                 throw new ValidationAppException("Register attempt failed.", new[]
@@ -105,6 +105,7 @@ namespace BLL.Services
                 });
             }
             ApplicationUser user = _mapper.Map<ApplicationUser>(registerDto);
+            user.Cart = new Cart();
             var result = await _userManager.CreateAsync(user, registerDto.Password);
             if (!result.Succeeded)
             {
@@ -126,14 +127,7 @@ namespace BLL.Services
             var refreshToken = refreshDto.RefreshToken;
             var accessToken = refreshDto.AccessToken;
 
-            if (user == null)
-            {
-                throw new ValidationAppException("Refresh attempt failed.", new[]
-                {
-                    "User does not exist."
-                });
-            }
-            else if (user.RefreshToken != refreshToken)
+            if (user.RefreshToken != refreshToken)
             {
                 throw new ValidationAppException("Refresh attempt failed.", new[]
                 {
@@ -163,18 +157,8 @@ namespace BLL.Services
 
         public async Task RevokeAsync(RevokeDto revokeDto)
         {
-            var user = await FindUserByEmailAsync(revokeDto.Email);
-
-            if (user == null)
-            {
-                throw new ValidationAppException("Revoke attempt failed.", new[]
-                {
-                    "User does not exist."
-                });
-            }
-
+            var user = await FindUserByIdAsync(revokeDto.Id);
             user.RefreshToken = null;
-
             await _unitOfWork.SaveChangesAsync();
         }
 

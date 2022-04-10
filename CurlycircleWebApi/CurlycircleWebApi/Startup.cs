@@ -86,7 +86,7 @@ namespace CurlycircleWebApi
                 .AddFluentValidation(options =>
                 {
                     options.RegisterValidatorsFromAssemblyContaining<BllModule>();
-                    //options.DisableDataAnnotationsValidation = true;
+                    options.DisableDataAnnotationsValidation = true;
                 })
                 .AddNewtonsoftJson(options =>
                 {
