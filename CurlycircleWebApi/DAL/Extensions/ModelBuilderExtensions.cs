@@ -25,6 +25,7 @@ namespace DAL.Extensions
                 NormalizedUserName = "ADMIN",
                 Email = "admin@admin.com",
                 NormalizedEmail = "ADMIN@ADMIN.COM",
+                PhoneNumber = "06302217831",
                 FirstName = "Máté",
                 LastName = "Schütz",
                 SecurityStamp = Guid.NewGuid().ToString()
@@ -39,6 +40,7 @@ namespace DAL.Extensions
                 NormalizedUserName = "USER",
                 FirstName = "Béla",
                 LastName = "Kovács",
+                PhoneNumber = "06302217831",
                 Email = "user@user.com",
                 NormalizedEmail = "USER@USER.COM",
                 SecurityStamp = Guid.NewGuid().ToString(),
@@ -105,14 +107,25 @@ namespace DAL.Extensions
 
             #region Carts
 
+            var carts = new List<Cart>();
+
             var cart1 = new Cart
             {
                 Id = 1,
+                ApplicationUserId = 1,
+            };
+
+            var cart2 = new Cart
+            {
+                Id = 2,
                 ApplicationUserId = 2,
             };
 
+            carts.Add(cart1);
+            carts.Add(cart2);
+
             modelBuilder.Entity<Cart>()
-                .HasData(cart1);
+                .HasData(carts);
 
             #endregion
 

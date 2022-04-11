@@ -14,9 +14,14 @@ namespace DAL.EntityConfigurations
         public void Configure(EntityTypeBuilder<ApplicationUser> userConfiguration)
         {
             userConfiguration.ToTable("Users");
+            userConfiguration.HasMany(u => u.Orders)
+                .WithOne(o => o.ApplicationUser)
+                .HasForeignKey(o => o.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Restrict);
             userConfiguration.HasOne(u => u.Cart)
                 .WithOne(c => c.ApplicationUser)
-                .HasForeignKey<Cart>(c => c.ApplicationUserId);
+                .HasForeignKey<Cart>(c => c.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Cascade);
             userConfiguration.OwnsOne(u => u.Address, a =>
             {
                 a.WithOwner(a => a.User).HasForeignKey(a => a.UserId);

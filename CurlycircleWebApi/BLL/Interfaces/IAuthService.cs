@@ -21,5 +21,7 @@ namespace BLL.Interfaces
         Task UpdateUserAsync(UserUpdateDto userUpdateDto);
 
         Task ChangePasswordAsync(ChangePasswordDto changePasswordDto);
+
+        Task DeleteUserAsync(DeleteUserDto deleteUserDto);
     }
 }

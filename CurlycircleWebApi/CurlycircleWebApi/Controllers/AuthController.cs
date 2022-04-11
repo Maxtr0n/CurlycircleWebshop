@@ -59,5 +59,12 @@ namespace CurlycircleWebApi.Controllers
         {
             return authService.ChangePasswordAsync(changePasswordDto);
         }
+
+        [HttpDelete("delete-user")]
+        [Authorize]
+        public Task DeleteUser(DeleteUserDto deleteUserDto)
+        {
+            return authService.DeleteUserAsync(deleteUserDto);
+        }
     }
 }

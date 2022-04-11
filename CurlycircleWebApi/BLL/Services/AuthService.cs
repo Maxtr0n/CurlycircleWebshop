@@ -41,57 +41,56 @@ namespace BLL.Services
 
         public async Task<UserViewModel> LoginAsync(LoginDto loginDto)
         {
-            try
-            {
-                var user = await FindUserByEmailAsync(loginDto.Email);
-                var passwordMatches = await _userManager.CheckPasswordAsync(user, loginDto.Password);
-                if (!passwordMatches)
-                {
-                    throw new Exception();
-                }
-                var token = new TokenViewModel
-                {
-                    AccessToken = await CreateAccessTokenAsync(user),
-                    RefreshToken = CreateRefreshToken()
-                };
-                var userRoles = await _userManager.GetRolesAsync(user);
-                var role = Role.User;
-                foreach (var userRole in userRoles)
-                {
-                    if (userRole.Equals("Admin"))
-                    {
-                        role = Role.Admin;
-                    }
-                }
+            var user = await FindUserByEmailAsync(loginDto.Email);
+            var passwordMatches = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 
-                if (loginDto.CartId.HasValue && loginDto.CartId != user.Cart.Id)
-                {
-                    var cartBeforeLogin = await _cartService.FindCartByIdAsync(loginDto.CartId.GetValueOrDefault());
-                    foreach (var oldCartItem in cartBeforeLogin.CartItems)
-                    {
-                        var cartItemCreateDto = _mapper.Map<CartItemUpsertDto>(oldCartItem);
-                        await _cartService.AddCartItemAsync(user.Cart.Id, cartItemCreateDto);
-                    }
-
-                    await _cartService.DeleteCartAsync(cartBeforeLogin.Id);
-                }
-
-                return new UserViewModel
-                {
-                    Id = user.Id,
-                    CartId = user.Cart.Id,
-                    Email = user.Email,
-                    Role = role,
-                    Token = token
-                };
-            }
-            catch (Exception)
+            if (!passwordMatches)
             {
                 throw new ValidationAppException("Login attempt failed.", new[]
                 {
                     "Invalid user credentials."
                 });
             }
+
+            var token = new TokenViewModel
+            {
+                AccessToken = await CreateAccessTokenAsync(user),
+                RefreshToken = CreateRefreshToken()
+            };
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var role = Role.User;
+
+            foreach (var userRole in userRoles)
+            {
+                if (userRole.Equals("Admin"))
+                {
+                    role = Role.Admin;
+                }
+            }
+
+            if (loginDto.CartId.HasValue && loginDto.CartId != user.Cart.Id)
+            {
+                var cartBeforeLogin = await _cartService.FindCartByIdAsync(loginDto.CartId.GetValueOrDefault());
+                foreach (var oldCartItem in cartBeforeLogin.CartItems)
+                {
+                    var cartItemCreateDto = _mapper.Map<CartItemUpsertDto>(oldCartItem);
+                    await _cartService.AddCartItemAsync(user.Cart.Id, cartItemCreateDto);
+                }
+
+                await _cartService.DeleteCartAsync(cartBeforeLogin.Id);
+            }
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return new UserViewModel
+            {
+                Id = user.Id,
+                CartId = user.Cart.Id,
+                Email = user.Email,
+                Role = role,
+                Token = token
+            };
         }
 
         public async Task<EntityCreatedViewModel> RegisterAsync(RegisterDto registerDto)
@@ -107,6 +106,12 @@ namespace BLL.Services
             ApplicationUser user = _mapper.Map<ApplicationUser>(registerDto);
             user.Cart = new Cart();
             var result = await _userManager.CreateAsync(user, registerDto.Password);
+            if (!result.Succeeded)
+            {
+                throw new ValidationAppException("User registration failed.", result.Errors.Select(ent => ent.Description));
+            }
+
+            var roleResult = await _userManager.AddToRoleAsync(user, "User");
             if (!result.Succeeded)
             {
                 throw new ValidationAppException("User registration failed.", result.Errors.Select(ent => ent.Description));
@@ -194,17 +199,44 @@ namespace BLL.Services
             {
                 throw new ValidationAppException("Update user failed.", result.Errors.Select(ent => ent.Description));
             }
+
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task ChangePasswordAsync(ChangePasswordDto changePasswordDto)
         {
             var user = await FindUserByEmailAsync(changePasswordDto.Email);
+            var passwordMatches = await _userManager.CheckPasswordAsync(user, changePasswordDto.OldPassword);
+            if (!passwordMatches)
+            {
+                throw new ValidationAppException("Login attempt failed.", new[]
+                {
+                    "Invalid user credentials."
+                });
+            }
             var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.OldPassword, changePasswordDto.NewPassword);
 
             if (!result.Succeeded)
             {
                 throw new ValidationAppException("Change password failed.", result.Errors.Select(ent => ent.Description));
             }
+
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task DeleteUserAsync(DeleteUserDto deleteUserDto)
+        {
+            var user = await FindUserByIdAsync(deleteUserDto.Id);
+            var passwordMatches = await _userManager.CheckPasswordAsync(user, deleteUserDto.Password);
+            if (!passwordMatches)
+            {
+                throw new ValidationAppException("Delete attempt failed.", new[]
+                {
+                    "Invalid user credentials."
+                });
+            }
+            await _userManager.DeleteAsync(user);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         private async Task<ApplicationUser> FindUserByEmailAsync(string email)

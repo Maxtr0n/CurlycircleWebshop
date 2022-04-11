@@ -9,6 +9,10 @@ namespace Domain.Entities
     {
         public DateTime OrderDateTime { get; set; }
 
+        public ApplicationUser? ApplicationUser { get; set; }
+
+        public int? ApplicationUserId { get; set; }
+
         public List<OrderItem> OrderItems { get; set; }
 
         public string FirstName { get; set; } = null!;
