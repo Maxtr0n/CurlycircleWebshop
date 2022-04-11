@@ -37,6 +37,8 @@ namespace Domain.Entities
 
         public Material Material { get; set; } = Material.Other;
 
+        public bool IsAvailable { get; set; } = true;
+
         public Product()
         {
         }
@@ -49,6 +51,7 @@ namespace Domain.Entities
             Color = updateProduct.Color;
             Pattern = updateProduct.Pattern;
             Material = updateProduct.Material;
+            IsAvailable = updateProduct.IsAvailable;
         }
     }
 }

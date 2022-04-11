@@ -8,20 +8,22 @@ namespace BLL.Dtos
 {
     public class ProductUpsertDto
     {
-        public double Price { get; set; } = default!;
+        public double Price { get; set; }
 
-        public string Name { get; set; } = default!;
+        public string Name { get; set; } = null!;
 
-        public int ProductCategoryId { get; set; } = default!;
+        public int ProductCategoryId { get; set; }
 
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; }
 
-        public string ImageUrl { get; set; } = default!;
+        public string? ImageUrl { get; set; }
 
-        public string Color { get; set; } = default!;
+        public string? Color { get; set; }
 
-        public string Pattern { get; set; } = default!;
+        public string? Pattern { get; set; }
 
-        public string Material { get; set; } = default!;
+        public string? Material { get; set; }
+
+        public bool? IsAvailable { get; set; }
     }
 }
