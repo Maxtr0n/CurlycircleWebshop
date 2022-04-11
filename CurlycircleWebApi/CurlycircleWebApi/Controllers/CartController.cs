@@ -26,7 +26,7 @@ namespace CurlycircleWebApi.Controllers
         public Task<EntityCreatedViewModel> CreateCart()
         {
             HttpContext.Response.StatusCode = StatusCodes.Status201Created;
-            return _cartService.CreateCartForAnonymousUserAsync();
+            return _cartService.CreateCartAsync();
         }
 
         [HttpPost("{cartId}/cartItems")]

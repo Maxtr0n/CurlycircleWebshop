@@ -24,19 +24,19 @@ namespace BLL.Services
     public class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ICartService _cartService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly ICartRepository _cartRepository;
 
         private IConfiguration Configuration { get; }
 
-        public AuthService(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, ICartService cartService)
+        public AuthService(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, ICartRepository cartRepository)
         {
             _userManager = userManager;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             Configuration = configuration;
-            _cartService = cartService;
+            _cartRepository = cartRepository;
         }
 
         public async Task<UserViewModel> LoginAsync(LoginDto loginDto)
@@ -71,14 +71,14 @@ namespace BLL.Services
 
             if (loginDto.CartId.HasValue && loginDto.CartId != user.Cart.Id)
             {
-                var cartBeforeLogin = await _cartService.FindCartByIdAsync(loginDto.CartId.GetValueOrDefault());
+                var cartBeforeLogin = await _cartRepository.GetCartByIdAsync(loginDto.CartId.GetValueOrDefault());
+
                 foreach (var oldCartItem in cartBeforeLogin.CartItems)
                 {
-                    var cartItemCreateDto = _mapper.Map<CartItemUpsertDto>(oldCartItem);
-                    await _cartService.AddCartItemAsync(user.Cart.Id, cartItemCreateDto);
+                    await _cartRepository.AddCartItemAsync(user.Cart.Id, oldCartItem);
                 }
 
-                await _cartService.DeleteCartAsync(cartBeforeLogin.Id);
+                await _cartRepository.DeleteCartAsync(cartBeforeLogin.Id);
             }
 
             await _unitOfWork.SaveChangesAsync();
@@ -103,6 +103,7 @@ namespace BLL.Services
                     "User with given email already exists."
                 });
             }
+
             ApplicationUser user = _mapper.Map<ApplicationUser>(registerDto);
             user.Cart = new Cart();
             var result = await _userManager.CreateAsync(user, registerDto.Password);
@@ -111,6 +112,7 @@ namespace BLL.Services
                 throw new ValidationAppException("User registration failed.", result.Errors.Select(ent => ent.Description));
             }
 
+            //Handle roles
             var roleResult = await _userManager.AddToRoleAsync(user, "User");
             if (!result.Succeeded)
             {

@@ -15,6 +15,8 @@ namespace Domain.Interfaces
 
         void UpdateCart(Cart cart);
 
+        Task AddCartItemAsync(int cartId, CartItem cartItem);
+
         Task DeleteCartAsync(int cartId);
     }
 }

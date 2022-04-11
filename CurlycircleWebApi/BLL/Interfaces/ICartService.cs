@@ -10,7 +10,7 @@ namespace BLL.Interfaces
 {
     public interface ICartService
     {
-        Task<EntityCreatedViewModel> CreateCartForAnonymousUserAsync();
+        Task<EntityCreatedViewModel> CreateCartAsync();
 
         Task<CartViewModel> FindCartByIdAsync(int cartId);
 

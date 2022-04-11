@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220411170602_InitialCreate")]
+    [Migration("20220411175937_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,14 +75,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "0ed1fd61-950c-40b8-8f88-af626567b988",
+                            ConcurrencyStamp = "cf79872c-f879-49ab-82fb-72e2a8e7fb9f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "60600cad-6fa8-4768-9902-25b7daff2d91",
+                            ConcurrencyStamp = "e21c5f87-741e-4715-8f82-c45ff46e1163",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -174,7 +174,7 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2736401f-dabd-4bcd-a62a-879c9e2f65a4",
+                            ConcurrencyStamp = "12959507-be93-4e7b-a94b-42bf3b26c49f",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Máté",
@@ -182,10 +182,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGRLmNCZCKM4yyuUdlB8eVJA7pNZWR7yDrMfapbS9RBq99rhUZy7MSpuhuWfLocd3A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGMK2MhJzCjifDipladb1iWgYYJfjG5CQ2kxRgFHKClWWk5D6IvWTA9MknM9+tGPGQ==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a58e3784-41fc-485b-ba7c-d57dec53f402",
+                            SecurityStamp = "7938ce01-4790-44a8-9aad-8ccbedaef89c",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -193,7 +193,7 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "efae8274-b419-4130-8fd2-d2985c105802",
+                            ConcurrencyStamp = "fb9d6889-0dea-4c26-9804-94d62184da26",
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "Béla",
@@ -201,10 +201,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAEAACcQAAAAELvM/EjL/U1jT4YE9aDhCHD6gLNPZEu1Qk19bWtSbOIaGd6l9Bk6ZimP4VGQyvAWiQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECoDjc7YXMqDLuAfvOonOpKWBVXwFXqxTTaXqeQYB/zVFazEw15WyTJo8jRozNBjUQ==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "aea8c817-ee0f-4af4-b2c4-5ae13d8a1c63",
+                            SecurityStamp = "ded9cfda-5430-4fcb-af39-aa6c6ecf9cdc",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });

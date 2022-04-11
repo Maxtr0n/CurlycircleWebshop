@@ -30,9 +30,8 @@ namespace BLL.Services
 
         public async Task<EntityCreatedViewModel> AddCartItemAsync(int cartId, CartItemUpsertDto cartItemCreateDto)
         {
-            var cart = await _cartRepository.GetCartByIdAsync(cartId);
             var cartItem = _mapper.Map<CartItem>(cartItemCreateDto);
-            cart.AddCartItem(cartItem);
+            await _cartRepository.AddCartItemAsync(cartId, cartItem);
 
             await _unitOfWork.SaveChangesAsync();
             return new EntityCreatedViewModel(cartItem.Id);
@@ -45,7 +44,7 @@ namespace BLL.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<EntityCreatedViewModel> CreateCartForAnonymousUserAsync()
+        public async Task<EntityCreatedViewModel> CreateCartAsync()
         {
             Cart cart = new Cart();
             var id = _cartRepository.CreateCartAsync(cart);
