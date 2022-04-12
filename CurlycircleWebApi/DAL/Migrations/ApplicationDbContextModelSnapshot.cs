@@ -22,22 +22,31 @@ namespace DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.HasSequence("cartitemseq")
+            modelBuilder.HasSequence<int>("cartitemseq")
+                .StartsAt(1000L)
                 .IncrementsBy(10);
 
-            modelBuilder.HasSequence("cartseq")
+            modelBuilder.HasSequence<int>("cartseq")
+                .StartsAt(1000L)
                 .IncrementsBy(10);
 
-            modelBuilder.HasSequence("orderitemseq")
+            modelBuilder.HasSequence<int>("orderitemseq")
+                .StartsAt(1000L)
                 .IncrementsBy(10);
 
-            modelBuilder.HasSequence("orderseq")
+            modelBuilder.HasSequence<int>("OrderNumbers")
+                .StartsAt(100000L);
+
+            modelBuilder.HasSequence<int>("orderseq")
+                .StartsAt(1000L)
                 .IncrementsBy(10);
 
-            modelBuilder.HasSequence("productcategoryseq")
+            modelBuilder.HasSequence<int>("productcategoryseq")
+                .StartsAt(1000L)
                 .IncrementsBy(10);
 
-            modelBuilder.HasSequence("productseq")
+            modelBuilder.HasSequence<int>("productseq")
+                .StartsAt(1000L)
                 .IncrementsBy(10);
 
             modelBuilder.Entity("Domain.Entities.ApplicationRole", b =>
@@ -73,14 +82,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "cf79872c-f879-49ab-82fb-72e2a8e7fb9f",
+                            ConcurrencyStamp = "1a193246-c0e2-456d-8e7f-b2284c9d0b45",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "e21c5f87-741e-4715-8f82-c45ff46e1163",
+                            ConcurrencyStamp = "3dd414a5-bafa-4220-b3dd-70759a7b26d2",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -172,7 +181,7 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "12959507-be93-4e7b-a94b-42bf3b26c49f",
+                            ConcurrencyStamp = "0599a4ad-8e9b-4338-b2d6-ba1b2e8818fa",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Máté",
@@ -180,10 +189,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGMK2MhJzCjifDipladb1iWgYYJfjG5CQ2kxRgFHKClWWk5D6IvWTA9MknM9+tGPGQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGCN5eGMR+PwhEXvigBCvGUMBkYd5z/gLwcFORlJu0Fz4J1pgZ3AuA2XwHlaVAa6Zw==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7938ce01-4790-44a8-9aad-8ccbedaef89c",
+                            SecurityStamp = "59307ab6-c0f4-41aa-8f3b-35a998f377bc",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -191,7 +200,7 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fb9d6889-0dea-4c26-9804-94d62184da26",
+                            ConcurrencyStamp = "01d59bac-a881-4e3e-8e3b-018c6d030d78",
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "Béla",
@@ -199,10 +208,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAEAACcQAAAAECoDjc7YXMqDLuAfvOonOpKWBVXwFXqxTTaXqeQYB/zVFazEw15WyTJo8jRozNBjUQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECY1t7qtPGshF7sG9cCBnruxdhq/kWBIFZ/koPmHYlASRYAMQJKJjE3AP6QmdeSnHQ==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ded9cfda-5430-4fcb-af39-aa6c6ecf9cdc",
+                            SecurityStamp = "41c8d638-23bc-4c3d-9390-dc8b1b2578cb",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });
@@ -268,6 +277,11 @@ namespace DAL.Migrations
 
                     b.Property<DateTime>("OrderDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR OrderNumbers");
 
                     b.Property<string>("PaymentMethod")
                         .IsRequired()

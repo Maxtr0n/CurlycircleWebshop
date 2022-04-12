@@ -13,6 +13,8 @@ namespace Domain.Interfaces
 
         Task<Cart> GetCartByIdAsync(int cartId);
 
+        Task<Cart> GetUserCartAsync(int userId);
+
         void UpdateCart(Cart cart);
 
         Task AddCartItemAsync(int cartId, CartItem cartItem);

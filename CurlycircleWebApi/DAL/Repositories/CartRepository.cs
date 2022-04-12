@@ -63,5 +63,17 @@ namespace DAL.Repositories
         {
             dbContext.Carts.Update(cart);
         }
+
+        public async Task<Cart> GetUserCartAsync(int userId)
+        {
+            var cart = await dbContext.Carts.Where(c => c.ApplicationUserId == userId).FirstOrDefaultAsync();
+
+            if (cart == null)
+            {
+                throw new EntityNotFoundException($"Could not find cart for user with Id {userId}.");
+            }
+
+            return cart;
+        }
     }
 }

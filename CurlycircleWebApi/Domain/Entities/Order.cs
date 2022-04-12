@@ -15,6 +15,8 @@ namespace Domain.Entities
 
         public List<OrderItem> OrderItems { get; set; }
 
+        public int OrderNumber { get; set; }
+
         public string FirstName { get; set; } = null!;
 
         public string LastName { get; set; } = null!;

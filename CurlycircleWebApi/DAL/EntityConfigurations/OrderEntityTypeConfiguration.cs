@@ -20,6 +20,9 @@ namespace DAL.EntityConfigurations
             orderConfiguration.Property(o => o.Id)
                 .UseHiLo("orderseq");
 
+            orderConfiguration.Property<int>(o => o.OrderNumber)
+                .HasDefaultValueSql("NEXT VALUE FOR OrderNumbers");
+
             orderConfiguration.OwnsMany(o => o.OrderItems, oi =>
             {
                 oi.Property(oi => oi.OrderId).UseHiLo("orderitemseq");

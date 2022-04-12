@@ -69,6 +69,8 @@ namespace BLL.Services
                 }
             }
 
+            user.Cart = await _cartRepository.GetUserCartAsync(user.Id);
+
             if (loginDto.CartId.HasValue && loginDto.CartId != user.Cart.Id)
             {
                 var cartBeforeLogin = await _cartRepository.GetCartByIdAsync(loginDto.CartId.GetValueOrDefault());

@@ -108,6 +108,7 @@ namespace CurlycircleWebApi
                     options.Password.RequireNonAlphanumeric = false;
                     options.User.RequireUniqueEmail = true;
                 })
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 

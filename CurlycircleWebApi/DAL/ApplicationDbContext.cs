@@ -32,6 +32,34 @@ namespace DAL
                 .Property(o => o.ShippingMethod)
                 .HasConversion<string>();
 
+            modelBuilder.HasSequence<int>("OrderNumbers")
+                .StartsAt(100000)
+                .IncrementsBy(1);
+
+            modelBuilder.HasSequence<int>("cartseq")
+               .StartsAt(1000)
+               .IncrementsBy(10);
+
+            modelBuilder.HasSequence<int>("orderseq")
+               .StartsAt(1000)
+               .IncrementsBy(10);
+
+            modelBuilder.HasSequence<int>("productcategoryseq")
+               .StartsAt(1000)
+               .IncrementsBy(10);
+
+            modelBuilder.HasSequence<int>("productseq")
+               .StartsAt(1000)
+               .IncrementsBy(10);
+
+            modelBuilder.HasSequence<int>("cartitemseq")
+               .StartsAt(1000)
+               .IncrementsBy(10);
+
+            modelBuilder.HasSequence<int>("orderitemseq")
+               .StartsAt(1000)
+               .IncrementsBy(10);
+
             modelBuilder.ApplyConfiguration(new ApplicationUserEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OrderEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ProductCategoryEntityTypeConfiguration());

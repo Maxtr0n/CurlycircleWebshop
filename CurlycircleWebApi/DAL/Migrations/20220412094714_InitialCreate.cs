@@ -9,28 +9,38 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateSequence(
+            migrationBuilder.CreateSequence<int>(
                 name: "cartitemseq",
+                startValue: 1000L,
                 incrementBy: 10);
 
-            migrationBuilder.CreateSequence(
+            migrationBuilder.CreateSequence<int>(
                 name: "cartseq",
+                startValue: 1000L,
                 incrementBy: 10);
 
-            migrationBuilder.CreateSequence(
+            migrationBuilder.CreateSequence<int>(
                 name: "orderitemseq",
+                startValue: 1000L,
                 incrementBy: 10);
 
-            migrationBuilder.CreateSequence(
+            migrationBuilder.CreateSequence<int>(
+                name: "OrderNumbers",
+                startValue: 100000L);
+
+            migrationBuilder.CreateSequence<int>(
                 name: "orderseq",
+                startValue: 1000L,
                 incrementBy: 10);
 
-            migrationBuilder.CreateSequence(
+            migrationBuilder.CreateSequence<int>(
                 name: "productcategoryseq",
+                startValue: 1000L,
                 incrementBy: 10);
 
-            migrationBuilder.CreateSequence(
+            migrationBuilder.CreateSequence<int>(
                 name: "productseq",
+                startValue: 1000L,
                 incrementBy: 10);
 
             migrationBuilder.CreateTable(
@@ -252,6 +262,7 @@ namespace DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false),
                     OrderDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ApplicationUserId = table.Column<int>(type: "int", nullable: true),
+                    OrderNumber = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR OrderNumbers"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -336,8 +347,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "cf79872c-f879-49ab-82fb-72e2a8e7fb9f", "Admin", "ADMIN" },
-                    { 2, "e21c5f87-741e-4715-8f82-c45ff46e1163", "User", "USER" }
+                    { 1, "1a193246-c0e2-456d-8e7f-b2284c9d0b45", "Admin", "ADMIN" },
+                    { 2, "3dd414a5-bafa-4220-b3dd-70759a7b26d2", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
@@ -355,8 +366,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SecurityStamp", "TwoFactorEnabled", "UserName", "City", "Line1", "Line2", "ZipCode" },
                 values: new object[,]
                 {
-                    { 1, 0, "12959507-be93-4e7b-a94b-42bf3b26c49f", "admin@admin.com", false, "Máté", "Schütz", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEGMK2MhJzCjifDipladb1iWgYYJfjG5CQ2kxRgFHKClWWk5D6IvWTA9MknM9+tGPGQ==", "06302217831", false, null, null, "7938ce01-4790-44a8-9aad-8ccbedaef89c", false, "admin", "Göd", "Sajó utca 19.", null, "2131" },
-                    { 2, 0, "fb9d6889-0dea-4c26-9804-94d62184da26", "user@user.com", false, "Béla", "Kovács", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAECoDjc7YXMqDLuAfvOonOpKWBVXwFXqxTTaXqeQYB/zVFazEw15WyTJo8jRozNBjUQ==", "06302217831", false, null, null, "ded9cfda-5430-4fcb-af39-aa6c6ecf9cdc", false, "user", "Göd", "Sajó utca 19.", "Fsz.", "2131" }
+                    { 1, 0, "0599a4ad-8e9b-4338-b2d6-ba1b2e8818fa", "admin@admin.com", false, "Máté", "Schütz", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEGCN5eGMR+PwhEXvigBCvGUMBkYd5z/gLwcFORlJu0Fz4J1pgZ3AuA2XwHlaVAa6Zw==", "06302217831", false, null, null, "59307ab6-c0f4-41aa-8f3b-35a998f377bc", false, "admin", "Göd", "Sajó utca 19.", null, "2131" },
+                    { 2, 0, "01d59bac-a881-4e3e-8e3b-018c6d030d78", "user@user.com", false, "Béla", "Kovács", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAECY1t7qtPGshF7sG9cCBnruxdhq/kWBIFZ/koPmHYlASRYAMQJKJjE3AP6QmdeSnHQ==", "06302217831", false, null, null, "41c8d638-23bc-4c3d-9390-dc8b1b2578cb", false, "user", "Göd", "Sajó utca 19.", "Fsz.", "2131" }
                 });
 
             migrationBuilder.InsertData(
@@ -520,6 +531,9 @@ namespace DAL.Migrations
 
             migrationBuilder.DropSequence(
                 name: "orderitemseq");
+
+            migrationBuilder.DropSequence(
+                name: "OrderNumbers");
 
             migrationBuilder.DropSequence(
                 name: "orderseq");
