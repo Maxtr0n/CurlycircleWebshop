@@ -5,6 +5,7 @@ using CurlycircleWebApi.Infrastructure;
 using DAL;
 using Domain.Entities;
 using FluentValidation.AspNetCore;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -86,13 +87,14 @@ namespace CurlycircleWebApi
                 .AddFluentValidation(options =>
                 {
                     options.RegisterValidatorsFromAssemblyContaining<BllModule>();
-                    options.DisableDataAnnotationsValidation = true;
                 })
                 .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.Converters.Add(new StringEnumConverter());
                 });
+
+            services.AddFluentValidationRulesToSwagger();
 
             services.AddRouting(options => options.LowercaseUrls = true);
 

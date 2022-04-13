@@ -61,5 +61,14 @@ namespace DAL.Repositories
                 dbContext.Orders.Remove(order);
             }
         }
+
+        public async Task<IEnumerable<Order>> GetUserOrdersAsync(int userId)
+        {
+            var orders = await dbContext.Orders
+                .Include(o => o.OrderItems)
+                .Where(o => o.ApplicationUserId == userId)
+                .ToListAsync();
+            return orders;
+        }
     }
 }

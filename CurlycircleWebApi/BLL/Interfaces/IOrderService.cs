@@ -22,6 +22,7 @@ namespace BLL.Interfaces
 
         Task<OrderItemsViewModel> GetAllOrderOrderItemsAsync(int orderId);
 
-        Task<EntityCreatedViewModel> AddOrderItemAsync(int orderId, OrderItemUpsertDto orderItemCreateDto);
+        Task<OrdersViewModel> GetUserOrders(int userId);
+
     }
 }

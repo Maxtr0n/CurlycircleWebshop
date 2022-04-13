@@ -52,11 +52,10 @@ namespace BLL.Services
                 });
             }
 
-            var token = new TokenViewModel
-            {
-                AccessToken = await CreateAccessTokenAsync(user),
-                RefreshToken = CreateRefreshToken()
-            };
+            var accessToken = await CreateAccessTokenAsync(user);
+            var refreshToken = CreateRefreshToken();
+            user.RefreshToken = refreshToken;
+
 
             var userRoles = await _userManager.GetRolesAsync(user);
             var role = Role.User;
@@ -85,14 +84,12 @@ namespace BLL.Services
 
             await _unitOfWork.SaveChangesAsync();
 
-            return new UserViewModel
-            {
-                Id = user.Id,
-                CartId = user.Cart.Id,
-                Email = user.Email,
-                Role = role,
-                Token = token
-            };
+            var userViewModel = _mapper.Map<UserViewModel>(user);
+            userViewModel.Role = role;
+            userViewModel.AccessToken = accessToken;
+            userViewModel.RefreshToken = refreshToken;
+
+            return userViewModel;
         }
 
         public async Task<EntityCreatedViewModel> RegisterAsync(RegisterDto registerDto)

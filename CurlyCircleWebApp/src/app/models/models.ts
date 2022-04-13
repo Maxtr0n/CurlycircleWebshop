@@ -19,18 +19,18 @@ export interface CartItemViewModel {
     id: number;
     cartId: number;
     productId: number;
-    product: Product;
+    product: ProductViewModel;
     price: number;
     quantity: number;
 }
 
 export interface CartItemsViewModel {
-    cartItems: CartItemViewModel[];
+    cartItems: CartItemViewModel[] | null;
 }
 
 export interface CartViewModel {
     id: number;
-    cartItems: CartItemViewModel[];
+    cartItems: CartItemViewModel[] | null;
 }
 
 export interface ChangePasswordDto {
@@ -52,6 +52,11 @@ export enum Color {
     Other,
 }
 
+export interface DeleteUserDto {
+    id: number;
+    password: string;
+}
+
 export interface EntityCreatedViewModel {
     id: number;
 }
@@ -59,7 +64,7 @@ export interface EntityCreatedViewModel {
 export interface LoginDto {
     email: string;
     password: string;
-    cartId: number;
+    cartId: number | null;
 }
 
 export enum Material {
@@ -69,90 +74,61 @@ export enum Material {
     Other,
 }
 
-export interface Order {
-    id: number;
-    orderDateTime: Date;
-    orderItems: OrderItem[];
-    firstName: string;
-    lastName: string;
-    email: string;
-    address: OrderAddress;
-    total: number;
-    shippingMethod: ShippingMethod;
-    paymentMethod: PaymentMethod;
-    phoneNumber: string;
-    note: string;
-}
-
-export interface OrderAddress {
-    city: string;
-    zipCode: string;
-    line1: string;
-    line2: string;
-    order: Order;
+export interface OrderAddressViewModel {
     orderId: number;
-}
-
-export interface OrderItem {
-    id: number;
-    order: Order;
-    orderId: number;
-    product: Product;
-    productId: number;
-    price: number;
-    quantity: number;
-}
-
-export interface OrderItemUpsertDto {
-    orderId: number;
-    productId: number;
-    price: number;
-    quantity: number;
+    city: string | null;
+    zipCode: string | null;
+    line1: string | null;
+    line2: string | null;
 }
 
 export interface OrderItemViewModel {
     id: number;
     orderId: number;
     productId: number;
-    product: Product;
+    product: ProductViewModel;
     price: number;
     quantity: number;
 }
 
 export interface OrderItemsViewModel {
-    orderItems: OrderItemViewModel[];
+    orderItems: OrderItemViewModel[] | null;
 }
 
 export interface OrderUpsertDto {
-    orderDateTime: Date;
-    orderItems: OrderItemUpsertDto[];
+    cartId: number;
+    applicationUserId: number | null;
     name: string;
     email: string;
-    address: OrderAddress;
-    total: number;
+    city: string;
+    zipCode: string;
+    line1: string;
+    line2: string | null;
     shippingMethod: ShippingMethod;
     paymentMethod: PaymentMethod;
     phoneNumber: string;
-    note: string;
+    note: string | null;
 }
 
 export interface OrderViewModel {
     id: number;
     orderDateTime: Date;
-    orderItems: OrderItemViewModel[];
-    firstName: string;
-    lastName: string;
-    email: string;
-    address: OrderAddress;
+    user: UserViewModel;
+    userId: number | null;
+    orderItems: OrderItemViewModel[] | null;
+    firstName: string | null;
+    lastName: string | null;
+    email: string | null;
+    address: OrderAddressViewModel;
     total: number;
     shippingMethod: ShippingMethod;
     paymentMethod: PaymentMethod;
-    phoneNumber: string;
-    note: string;
+    phoneNumber: string | null;
+    note: string | null;
 }
 
 export interface OrdersViewModel {
-    orders: OrderViewModel[];
+    orders: OrderViewModel[] | null;
 }
 
 export enum Pattern {
@@ -169,67 +145,49 @@ export enum PaymentMethod {
     WebPayment,
 }
 
-export interface Product {
-    id: number;
-    price: number;
-    name: string;
-    productCategory: ProductCategory;
-    productCategoryId: number;
-    description: string;
-    imageUrl: string;
-    color: Color;
-    pattern: Pattern;
-    material: Material;
-}
-
 export interface ProductCategoriesViewModel {
-    productCategories: ProductCategoryViewModel[];
-}
-
-export interface ProductCategory {
-    id: number;
-    name: string;
-    description: string;
-    products: Product[];
+    productCategories: ProductCategoryViewModel[] | null;
 }
 
 export interface ProductCategoryUpsertDto {
     name: string;
-    description: string;
-    productIds: number[];
+    description: string | null;
+    productIds: number[] | null;
 }
 
 export interface ProductCategoryViewModel {
     id: number;
-    name: string;
-    description: string;
+    name: string | null;
+    description: string | null;
 }
 
 export interface ProductUpsertDto {
     price: number;
     name: string;
     productCategoryId: number;
-    description: string;
-    imageUrl: string;
-    color: string;
-    pattern: string;
-    material: string;
+    description: string | null;
+    imageUrl: string | null;
+    color: string | null;
+    pattern: string | null;
+    material: string | null;
+    isAvailable: boolean | null;
 }
 
 export interface ProductViewModel {
     id: number;
     price: number;
-    name: string;
+    name: string | null;
     productCategoryId: number;
-    description: string;
-    imageUrl: string;
+    description: string | null;
+    imageUrl: string | null;
     color: Color;
     pattern: Pattern;
     material: Material;
+    isAvailable: boolean;
 }
 
 export interface ProductsViewModel {
-    products: ProductViewModel[];
+    products: ProductViewModel[] | null;
 }
 
 export interface RefreshDto {
@@ -243,10 +201,10 @@ export interface RegisterDto {
     email: string;
     firstName: string;
     lastName: string;
-    readonly city: string;
-    readonly zipCode: string;
-    readonly line1: string;
-    readonly line2: string;
+    city: string;
+    zipCode: string;
+    line1: string;
+    line2: string | null;
     phoneNumber: string;
     password: string;
 }
@@ -270,26 +228,34 @@ export enum ShippingMethod {
 }
 
 export interface TokenViewModel {
-    accessToken: string;
-    refreshToken: string;
+    accessToken: string | null;
+    refreshToken: string | null;
 }
 
 export interface UserUpdateDto {
     userId: number;
-    email: string;
+    email: string | null;
     firstName: string;
     lastName: string;
     city: string;
     zipCode: string;
     line1: string;
-    line2: string;
+    line2: string | null;
     phoneNumber: string;
 }
 
 export interface UserViewModel {
     id: number;
     cartId: number;
-    email: string;
+    email: string | null;
+    firstName: string | null;
+    lastName: string | null;
+    phoneNumber: string | null;
+    city: string | null;
+    zipCode: string | null;
+    line1: string | null;
+    line2: string | null;
     role: Role;
-    token: TokenViewModel;
+    accessToken: string | null;
+    refreshToken: string | null;
 }

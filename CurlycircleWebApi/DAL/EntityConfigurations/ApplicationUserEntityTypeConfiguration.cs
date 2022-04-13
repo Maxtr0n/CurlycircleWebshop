@@ -24,7 +24,7 @@ namespace DAL.EntityConfigurations
                 .OnDelete(DeleteBehavior.Cascade);
             userConfiguration.OwnsOne(u => u.Address, a =>
             {
-                a.WithOwner(a => a.User).HasForeignKey(a => a.UserId);
+                a.WithOwner(a => a.ApplicationUser).HasForeignKey(a => a.ApplicationUserId);
                 a.Property(a => a.ZipCode).HasColumnName("ZipCode");
                 a.Property(a => a.City).HasColumnName("City");
                 a.Property(a => a.Line1).HasColumnName("Line1");

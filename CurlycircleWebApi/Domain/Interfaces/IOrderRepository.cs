@@ -18,5 +18,7 @@ namespace Domain.Interfaces
         void UpdateOrder(Order order);
 
         Task DeleteOrderAsync(int orderId);
+
+        Task<IEnumerable<Order>> GetUserOrdersAsync(int userId);
     }
 }

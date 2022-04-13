@@ -8,16 +8,16 @@ namespace Domain.Entities
 {
     public class UserAddress : Address
     {
-        private ApplicationUser? _user;
+        private ApplicationUser? _applicationUser;
 
-        public ApplicationUser User
+        public ApplicationUser ApplicationUser
         {
-            get => _user
-                    ?? throw new InvalidOperationException("Uninitialized property: " + nameof(User));
-            set => _user = value;
+            get => _applicationUser
+                    ?? throw new InvalidOperationException("Uninitialized property: " + nameof(ApplicationUser));
+            set => _applicationUser = value;
         }
 
-        public int UserId { get; set; }
+        public int ApplicationUserId { get; set; }
 
         public UserAddress() : base()
         {

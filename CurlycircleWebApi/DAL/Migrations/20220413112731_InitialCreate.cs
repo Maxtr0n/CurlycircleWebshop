@@ -347,8 +347,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "1a193246-c0e2-456d-8e7f-b2284c9d0b45", "Admin", "ADMIN" },
-                    { 2, "3dd414a5-bafa-4220-b3dd-70759a7b26d2", "User", "USER" }
+                    { 1, "76ac4f9d-fb49-4347-88e2-6cba8424ec8a", "Admin", "ADMIN" },
+                    { 2, "3f8edcaf-77f5-4279-b0ee-b62a925bd616", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
@@ -366,8 +366,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SecurityStamp", "TwoFactorEnabled", "UserName", "City", "Line1", "Line2", "ZipCode" },
                 values: new object[,]
                 {
-                    { 1, 0, "0599a4ad-8e9b-4338-b2d6-ba1b2e8818fa", "admin@admin.com", false, "Máté", "Schütz", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEGCN5eGMR+PwhEXvigBCvGUMBkYd5z/gLwcFORlJu0Fz4J1pgZ3AuA2XwHlaVAa6Zw==", "06302217831", false, null, null, "59307ab6-c0f4-41aa-8f3b-35a998f377bc", false, "admin", "Göd", "Sajó utca 19.", null, "2131" },
-                    { 2, 0, "01d59bac-a881-4e3e-8e3b-018c6d030d78", "user@user.com", false, "Béla", "Kovács", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAECY1t7qtPGshF7sG9cCBnruxdhq/kWBIFZ/koPmHYlASRYAMQJKJjE3AP6QmdeSnHQ==", "06302217831", false, null, null, "41c8d638-23bc-4c3d-9390-dc8b1b2578cb", false, "user", "Göd", "Sajó utca 19.", "Fsz.", "2131" }
+                    { 1, 0, "95d62643-2238-4ca2-8116-aabd1d8ac54c", "admin@admin.com", false, "Máté", "Schütz", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEHsmrmei/Pj7aHKEuPTWS1xIXAbnZnK30tGGisz679pM1Fn+98DvviEfLNGyroV9Cg==", "06302217831", false, null, null, "7843dcf0-4911-47fc-8499-decbc2cee779", false, "admin", "Göd", "Sajó utca 19.", null, "2131" },
+                    { 2, 0, "8ef2e743-217a-47af-84b8-1f38e97d3ed6", "user@user.com", false, "Béla", "Kovács", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEGHG+HmiqAK1Y3p68C4gntgS6xm2YUWTtdbYKk+X0FkbdDseLQJxAKNg0GYiq0FO2Q==", "06302217831", false, null, null, "5c3eb1f2-c04c-4e88-b4c7-39a42dea6783", false, "user", "Göd", "Sajó utca 19.", "Fsz.", "2131" }
                 });
 
             migrationBuilder.InsertData(

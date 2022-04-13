@@ -82,14 +82,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "1a193246-c0e2-456d-8e7f-b2284c9d0b45",
+                            ConcurrencyStamp = "76ac4f9d-fb49-4347-88e2-6cba8424ec8a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "3dd414a5-bafa-4220-b3dd-70759a7b26d2",
+                            ConcurrencyStamp = "3f8edcaf-77f5-4279-b0ee-b62a925bd616",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -181,7 +181,7 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0599a4ad-8e9b-4338-b2d6-ba1b2e8818fa",
+                            ConcurrencyStamp = "95d62643-2238-4ca2-8116-aabd1d8ac54c",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Máté",
@@ -189,10 +189,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGCN5eGMR+PwhEXvigBCvGUMBkYd5z/gLwcFORlJu0Fz4J1pgZ3AuA2XwHlaVAa6Zw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHsmrmei/Pj7aHKEuPTWS1xIXAbnZnK30tGGisz679pM1Fn+98DvviEfLNGyroV9Cg==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "59307ab6-c0f4-41aa-8f3b-35a998f377bc",
+                            SecurityStamp = "7843dcf0-4911-47fc-8499-decbc2cee779",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -200,7 +200,7 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "01d59bac-a881-4e3e-8e3b-018c6d030d78",
+                            ConcurrencyStamp = "8ef2e743-217a-47af-84b8-1f38e97d3ed6",
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "Béla",
@@ -208,10 +208,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAEAACcQAAAAECY1t7qtPGshF7sG9cCBnruxdhq/kWBIFZ/koPmHYlASRYAMQJKJjE3AP6QmdeSnHQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGHG+HmiqAK1Y3p68C4gntgS6xm2YUWTtdbYKk+X0FkbdDseLQJxAKNg0GYiq0FO2Q==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "41c8d638-23bc-4c3d-9390-dc8b1b2578cb",
+                            SecurityStamp = "5c3eb1f2-c04c-4e88-b4c7-39a42dea6783",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });
@@ -629,7 +629,7 @@ namespace DAL.Migrations
                 {
                     b.OwnsOne("Domain.Entities.UserAddress", "Address", b1 =>
                         {
-                            b1.Property<int>("UserId")
+                            b1.Property<int>("ApplicationUserId")
                                 .HasColumnType("int");
 
                             b1.Property<string>("City")
@@ -651,26 +651,26 @@ namespace DAL.Migrations
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("ZipCode");
 
-                            b1.HasKey("UserId");
+                            b1.HasKey("ApplicationUserId");
 
                             b1.ToTable("Users");
 
-                            b1.WithOwner("User")
-                                .HasForeignKey("UserId");
+                            b1.WithOwner("ApplicationUser")
+                                .HasForeignKey("ApplicationUserId");
 
-                            b1.Navigation("User");
+                            b1.Navigation("ApplicationUser");
 
                             b1.HasData(
                                 new
                                 {
-                                    UserId = 1,
+                                    ApplicationUserId = 1,
                                     City = "Göd",
                                     Line1 = "Sajó utca 19.",
                                     ZipCode = "2131"
                                 },
                                 new
                                 {
-                                    UserId = 2,
+                                    ApplicationUserId = 2,
                                     City = "Göd",
                                     Line1 = "Sajó utca 19.",
                                     Line2 = "Fsz.",

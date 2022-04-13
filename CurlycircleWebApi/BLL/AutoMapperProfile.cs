@@ -19,6 +19,11 @@ namespace BLL
 
             CreateMap<ApplicationUser, EntityCreatedViewModel>();
 
+            CreateMap<ApplicationUser, UserViewModel>()
+                .IncludeMembers(u => u.Address);
+
+            CreateMap<UserAddress, UserViewModel>();
+
             CreateMap<RegisterDto, ApplicationUser>()
                 .ForPath(x => x.Address.ZipCode, options => options.MapFrom(x => x.ZipCode))
                 .ForPath(x => x.Address.City, options => options.MapFrom(x => x.City))

@@ -14,6 +14,10 @@ namespace BLL.ViewModels
 
         public DateTime OrderDateTime { get; set; } = default!;
 
+        public UserViewModel? User { get; set; }
+
+        public int? UserId { get; set; }
+
         public IEnumerable<OrderItemViewModel> OrderItems { get; set; } = default!;
 
         public string FirstName { get; set; } = default!;
@@ -22,7 +26,7 @@ namespace BLL.ViewModels
 
         public string Email { get; set; } = default!;
 
-        public OrderAddress Address { get; set; } = default!;
+        public OrderAddressViewModel Address { get; set; } = default!;
 
         public double Total { get; set; } = default!;
 

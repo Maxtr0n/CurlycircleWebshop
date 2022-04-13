@@ -15,7 +15,7 @@ namespace BLL.ViewModels
 
         public int ProductId { get; set; }
 
-        public Product Product { get; set; } = null!;
+        public ProductViewModel Product { get; set; } = null!;
 
         public double Price { get; set; }
 

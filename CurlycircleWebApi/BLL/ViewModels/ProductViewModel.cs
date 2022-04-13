@@ -26,5 +26,7 @@ namespace BLL.ViewModels
         public Pattern? Pattern { get; set; } = default!;
 
         public Material? Material { get; set; } = default!;
+
+        public bool IsAvailable { get; set; }
     }
 }

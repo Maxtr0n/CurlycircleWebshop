@@ -56,14 +56,14 @@ namespace DAL.Extensions
                 .OwnsOne(u => u.Address).HasData(
                 new UserAddress
                 {
-                    UserId = 1,
+                    ApplicationUserId = 1,
                     City = "Göd",
                     ZipCode = "2131",
                     Line1 = "Sajó utca 19."
                 },
                 new UserAddress
                 {
-                    UserId = 2,
+                    ApplicationUserId = 2,
                     City = "Göd",
                     ZipCode = "2131",
                     Line1 = "Sajó utca 19.",

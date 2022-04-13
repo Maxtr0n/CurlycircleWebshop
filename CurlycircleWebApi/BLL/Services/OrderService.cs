@@ -15,15 +15,18 @@ namespace BLL.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly ICartRepository _cartRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public OrderService(
           IOrderRepository orderRepository,
+          ICartRepository cartRepository,
           IUnitOfWork unitOfWork,
           IMapper mapper)
         {
             _orderRepository = orderRepository;
+            _cartRepository = cartRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -31,6 +34,18 @@ namespace BLL.Services
         public async Task<EntityCreatedViewModel> CreateOrderAsync(OrderUpsertDto orderUpsertDto)
         {
             var order = _mapper.Map<Order>(orderUpsertDto);
+            var userCart = await _cartRepository.GetCartByIdAsync(orderUpsertDto.CartId);
+
+            foreach (var cartItem in userCart.CartItems)
+            {
+                var orderItem = new OrderItem
+                {
+                    ProductId = cartItem.ProductId,
+                    Price = cartItem.Price,
+                    Quantity = cartItem.Quantity,
+                };
+                order.OrderItems.Add(orderItem);
+            }
 
             var id = _orderRepository.AddOrder(order);
             await _unitOfWork.SaveChangesAsync();
@@ -71,14 +86,11 @@ namespace BLL.Services
             return orderItemsViewModel;
         }
 
-        public async Task<EntityCreatedViewModel> AddOrderItemAsync(int orderId, OrderItemUpsertDto orderItemCreateDto)
+        public async Task<OrdersViewModel> GetUserOrders(int userId)
         {
-            var order = await _orderRepository.GetOrderByIdAsync(orderId);
-            var orderItem = _mapper.Map<OrderItem>(orderItemCreateDto);
-            order.AddOrderItem(orderItem);
-
-            await _unitOfWork.SaveChangesAsync();
-            return new EntityCreatedViewModel(orderItem.Id);
+            var orders = await _orderRepository.GetUserOrdersAsync(userId);
+            var ordersViewModel = _mapper.Map<OrdersViewModel>(orders);
+            return ordersViewModel;
         }
     }
 }

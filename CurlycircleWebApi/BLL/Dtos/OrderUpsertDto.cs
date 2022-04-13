@@ -10,9 +10,9 @@ namespace BLL.Dtos
 {
     public class OrderUpsertDto
     {
-        public DateTime OrderDateTime { get; set; } = default!;
+        public int CartId { get; set; }
 
-        public List<OrderItemUpsertDto> OrderItems { get; set; } = default!;
+        public int? ApplicationUserId { get; set; }
 
         public string Name { get; set; } = default!;
 
@@ -25,8 +25,6 @@ namespace BLL.Dtos
         public string Line1 { get; set; } = null!;
 
         public string? Line2 { get; set; }
-
-        public double Total { get; set; } = default!;
 
         public ShippingMethod ShippingMethod { get; set; } = default!;
 

@@ -65,20 +65,18 @@ namespace CurlycircleWebApi.Controllers
             return _orderService.DeleteOrderAsync(orderId);
         }
 
-        [HttpPost("{orderId}/orderItems")]
-        [Authorize(Roles = "Admin")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        public Task<EntityCreatedViewModel> AddOrderItem([FromRoute] int orderId, [FromBody] OrderItemUpsertDto orderItemUpsertDto)
-        {
-            HttpContext.Response.StatusCode = StatusCodes.Status201Created;
-            return _orderService.AddOrderItemAsync(orderId, orderItemUpsertDto);
-        }
-
         [HttpGet("{orderId}/orderItems")]
         [Authorize(Roles = "Admin")]
         public Task<OrderItemsViewModel> GetOrderItems([FromRoute] int orderId)
         {
             return _orderService.GetAllOrderOrderItemsAsync(orderId);
+        }
+
+        [HttpGet("{userId}")]
+        [Authorize]
+        public Task<OrdersViewModel> GetUserOrders([FromRoute] int userId)
+        {
+            return _orderService.GetUserOrders(userId);
         }
     }
 }
