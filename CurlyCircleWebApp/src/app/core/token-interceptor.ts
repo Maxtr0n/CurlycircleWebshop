@@ -6,9 +6,17 @@ import {
     HttpInterceptor,
     HttpErrorResponse,
 } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
+import {
+    BehaviorSubject,
+    catchError,
+    filter,
+    Observable,
+    switchMap,
+    take,
+    throwError,
+} from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { RefreshDto } from '../models/models';
+import { RefreshDto, TokenViewModel } from '../models/models';
 
 @Injectable({
     providedIn: 'root',
@@ -17,6 +25,7 @@ export class TokenInterceptor implements HttpInterceptor {
     private isRefreshing = false;
     private refreshTokenSubject: BehaviorSubject<any> =
         new BehaviorSubject<any>(null);
+
     constructor(private readonly authService: AuthService) {}
 
     intercept(
@@ -24,7 +33,7 @@ export class TokenInterceptor implements HttpInterceptor {
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         let authReq = request;
-        const authToken = this.authService.getToken()?.accessToken;
+        const authToken = this.authService.getAccessToken();
         if (authToken != null) {
             authReq = this.addTokenHeader(request, authToken);
         }
@@ -37,7 +46,15 @@ export class TokenInterceptor implements HttpInterceptor {
                     error.status === 401
                 ) {
                     return this.handle401Error(authReq, next);
+                } else if (
+                    error instanceof HttpErrorResponse &&
+                    error.status === 400 &&
+                    error.message === 'Refresh attempt failed.'
+                ) {
+                    //please log in again
+                    this.authService.logout();
                 }
+
                 return throwError(() => error);
             })
         );
@@ -50,25 +67,25 @@ export class TokenInterceptor implements HttpInterceptor {
         if (!this.isRefreshing) {
             this.isRefreshing = true;
             this.refreshTokenSubject.next(null);
-            const token = this.authService.getToken()?.refreshToken;
-            if (token) refreshDto = new RefreshDto();
-            return this.authService.refreshToken(token).pipe(
-                switchMap((token: any) => {
-                    this.isRefreshing = false;
-                    this.tokenService.saveToken(token.accessToken);
-                    this.refreshTokenSubject.next(token.accessToken);
+            const refreshToken = this.authService.getRefreshToken();
+            if (refreshToken)
+                return this.authService.refreshToken().pipe(
+                    switchMap((token: TokenViewModel) => {
+                        this.isRefreshing = false;
+                        this.authService.setUserTokens(token);
+                        this.refreshTokenSubject.next(token.accessToken);
 
-                    return next.handle(
-                        this.addTokenHeader(request, token.accessToken)
-                    );
-                }),
-                catchError((err) => {
-                    this.isRefreshing = false;
+                        return next.handle(
+                            this.addTokenHeader(request, token.accessToken)
+                        );
+                    }),
+                    catchError((error) => {
+                        this.isRefreshing = false;
 
-                    this.tokenService.signOut();
-                    return throwError(err);
-                })
-            );
+                        this.authService.logout();
+                        return throwError(() => error);
+                    })
+                );
         }
         return this.refreshTokenSubject.pipe(
             filter((token) => token !== null),

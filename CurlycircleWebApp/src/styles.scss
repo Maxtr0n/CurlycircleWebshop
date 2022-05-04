@@ -1,7 +1,6 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -13,20 +12,27 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $curlyapp-primary: mat.define-palette(mat.$green-palette, 800);
-$curlyapp-accent: mat.define-palette(mat.$deep-purple-palette, A200, A100, A400);
+$curlyapp-accent: mat.define-palette(
+    mat.$deep-purple-palette,
+    A200,
+    A100,
+    A400
+);
 
 // The warn palette is optional (defaults to red).
 $curlyapp-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$CurlyCircleWebApp-theme: mat.define-light-theme((
-  color: (
-    primary: $curlyapp-primary,
-    accent: $curlyapp-accent,
-    warn: $curlyapp-warn,
-  )
-));
+$CurlyCircleWebApp-theme: mat.define-light-theme(
+    (
+        color: (
+            primary: $curlyapp-primary,
+            accent: $curlyapp-accent,
+            warn: $curlyapp-warn,
+        ),
+    )
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -35,5 +41,33 @@ $CurlyCircleWebApp-theme: mat.define-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+body {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+// Icon sizing styles
+.material-icons.md-18 {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+}
+.material-icons.md-30 {
+    font-size: 30px;
+    height: 30px;
+    width: 30px;
+}
+.material-icons.md-36 {
+    font-size: 36px;
+    height: 36px;
+    width: 36px;
+}
+.material-icons.md-48 {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+}

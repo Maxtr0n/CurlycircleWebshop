@@ -228,8 +228,8 @@ export enum ShippingMethod {
 }
 
 export interface TokenViewModel {
-    accessToken: string | null;
-    refreshToken: string | null;
+    accessToken: string;
+    refreshToken: string;
 }
 
 export interface UserUpdateDto {

@@ -71,12 +71,5 @@ namespace CurlycircleWebApi.Controllers
         {
             return _orderService.GetAllOrderOrderItemsAsync(orderId);
         }
-
-        [HttpGet("{userId}")]
-        [Authorize]
-        public Task<OrdersViewModel> GetUserOrders([FromRoute] int userId)
-        {
-            return _orderService.GetUserOrders(userId);
-        }
     }
 }

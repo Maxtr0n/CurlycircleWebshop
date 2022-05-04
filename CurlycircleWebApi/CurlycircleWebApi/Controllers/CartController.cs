@@ -21,7 +21,7 @@ namespace CurlycircleWebApi.Controllers
             _cartService = cartService;
         }
 
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public Task<EntityCreatedViewModel> CreateCart()
         {

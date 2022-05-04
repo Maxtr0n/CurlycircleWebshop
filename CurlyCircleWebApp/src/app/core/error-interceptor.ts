@@ -24,9 +24,15 @@ export class ErrorInterceptor implements HttpInterceptor {
                     console.error('An error occurred:', error.error);
                 } else if (error.status === 401) {
                     // try refresh if 401 response returned from api
+                } else if (
+                    error.status === 400 &&
+                    error.message === 'Refresh attempt failed.'
+                ) {
+                    //please log in again
+                    this.authenticationService.logout();
                 }
 
-                const errorr = error.error.message || error.statusText;
+                const err = error.error.message || error.statusText;
                 return throwError(
                     () =>
                         new Error(
