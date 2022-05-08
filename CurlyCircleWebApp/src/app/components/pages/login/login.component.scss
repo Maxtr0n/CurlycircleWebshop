@@ -1,0 +1,11 @@
+.form-content {
+    padding-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+mat-form-field {
+    width: 350px;
+}

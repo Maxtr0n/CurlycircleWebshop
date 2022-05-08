@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './core/http-interceptor-providers';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { HomeComponent } from './components/pages/home/home.component';
 import { LoginComponent } from './components/pages/login/login.component';
@@ -33,8 +34,9 @@ import { SidenavListComponent } from './components/sidenav-list/sidenav-list.com
         HttpClientModule,
         MaterialModule,
         FlexLayoutModule,
+        ReactiveFormsModule,
     ],
     providers: [httpInterceptorProviders],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

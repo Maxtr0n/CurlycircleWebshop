@@ -33,8 +33,6 @@ export class CartService {
         this.authService.currentUser$.pipe(
             switchMap(user => this.handleUserChanged(user))
         ).subscribe();
-        console.log('CartService constructor');
-
     }
 
     public get currentCartValue(): CartViewModel | null {
@@ -124,7 +122,10 @@ export class CartService {
     //töröljük a cartot, és tegyük át az elemeket a user cartjába
     private handleUserChanged(user: UserViewModel | null): Observable<CartViewModel | null> {
         const localCart = this.getCurrentLocalCart();
-        if (user === null && localCart !== null) {
+
+        if (user !== null) {
+            return this.getCartByIdAndSetAsUserCart(user.cartId);
+        } else if (localCart !== null) {
             if (localCart.isAnonymous) {
                 return this.getCartById(localCart.id).pipe(
                     tap(cart => {
@@ -138,16 +139,6 @@ export class CartService {
                     this.currentCartSubject.next(null);
                     console.log('No user but user local cart detected. Happens at logout.');
                 });
-            }
-        } else if (user !== null && localCart === null) {
-            return this.getCartByIdAndSetAsUserCart(user.cartId);
-        } else if (user !== null && localCart !== null) {
-            // az összes itemet a régi kosárból hozzáadjuk a user kosarához, majd lekérjük az új kosarat
-            const oldCartItems = this.currentCartValue?.cartItems;
-            if (oldCartItems) {
-                return this.addOldItemsAndGetCart(oldCartItems, user, localCart.id);
-            } else {
-                return this.getCartByIdAndSetAsUserCart(user.cartId);
             }
         }
 

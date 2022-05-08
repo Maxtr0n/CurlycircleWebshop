@@ -25,7 +25,6 @@ export class AuthService {
             this.getCurrentUser()
         );
         this.currentUser$ = this.currentUserSubject.asObservable();
-        console.log('AuthService constructor');
     }
 
     public login(loginDto: LoginDto): Observable<UserViewModel> {

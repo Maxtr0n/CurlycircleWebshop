@@ -1,3 +1,15 @@
-<div class="container">
-
-</div>
+<form [formGroup]="loginFormGroup" (submit)="login()" class="form-content">
+    <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+        <mat-label>Jelszó</mat-label>
+        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!loginFormGroup.valid">Bejelentkezés</button>
+</form>
