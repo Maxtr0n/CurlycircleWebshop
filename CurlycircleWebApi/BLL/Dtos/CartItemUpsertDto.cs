@@ -8,8 +8,6 @@ namespace BLL.Dtos
 {
     public class CartItemUpsertDto
     {
-        public int CartId { get; set; }
-
         public int ProductId { get; set; }
 
         public double Price { get; set; }

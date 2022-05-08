@@ -18,13 +18,14 @@ export class AuthService {
     private readonly authUrl = 'api/auth';
 
     private currentUserSubject: BehaviorSubject<UserViewModel | null>;
-    public currentUser: Observable<UserViewModel | null>;
+    public currentUser$: Observable<UserViewModel | null>;
 
     constructor(private readonly httpClient: AppHttpClient) {
         this.currentUserSubject = new BehaviorSubject<UserViewModel | null>(
             this.getCurrentUser()
         );
-        this.currentUser = this.currentUserSubject.asObservable();
+        this.currentUser$ = this.currentUserSubject.asObservable();
+        console.log('AuthService constructor');
     }
 
     public login(loginDto: LoginDto): Observable<UserViewModel> {

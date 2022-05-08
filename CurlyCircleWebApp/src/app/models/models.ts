@@ -9,7 +9,6 @@
 // ReSharper disable InconsistentNaming
 
 export interface CartItemUpsertDto {
-    cartId: number;
     productId: number;
     price: number;
     quantity: number;
@@ -31,6 +30,11 @@ export interface CartItemsViewModel {
 export interface CartViewModel {
     id: number;
     cartItems: CartItemViewModel[] | null;
+}
+
+export interface LocalCart {
+    id: number;
+    isAnonymous: boolean;
 }
 
 export interface ChangePasswordDto {

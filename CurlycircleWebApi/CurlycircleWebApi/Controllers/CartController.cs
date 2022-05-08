@@ -55,7 +55,7 @@ namespace CurlycircleWebApi.Controllers
 
         [HttpDelete("{cartId}/cartItems/{cartItemId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public Task ClearCart([FromRoute] int cartId, [FromRoute] int cartItemId)
+        public Task RemoveCartItem([FromRoute] int cartId, [FromRoute] int cartItemId)
         {
             HttpContext.Response.StatusCode = StatusCodes.Status204NoContent;
             return _cartService.RemoveCartItemAsync(cartId, cartItemId);
