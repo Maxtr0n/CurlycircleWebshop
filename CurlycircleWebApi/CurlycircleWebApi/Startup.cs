@@ -165,13 +165,13 @@ namespace CurlycircleWebApi
 
             app.UseRouting();
 
+            app.UseStaticFiles();
+
             app.UseCors("AllowAngularClient");
 
             app.UseAuthentication();
 
             app.UseAuthorization();
-
-            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

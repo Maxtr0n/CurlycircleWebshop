@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-    <div fxHide.gt-xs>
+    <div fxHide.gt-sm>
         <button mat-icon-button (click)="onToggleSidenav()">
             <mat-icon>menu</mat-icon>
         </button>
@@ -8,7 +8,7 @@
         <a routerLink="/home">Curlycircle Webshop</a>
     </div>
 
-    <div fxFlex fxLayout fxLayoutAlign="start" fxHide.xs>
+    <div fxFlex fxLayout fxLayoutAlign="start" fxHide.lt-md>
         <ul fxLayout fxLayoutGap="15px" class="navigation-items">
             <li>
                 <a routerLink="/home">Kezdőlap</a>
@@ -22,7 +22,7 @@
         </ul>
     </div>
     <div fxFlex fxLayout fxLayoutAlign="end">
-        <ul fxLayout fcLayoutGap="15px" class="navigation-items">
+        <ul fxLayout fxLayoutGap="5px" class="navigation-items">
             <li>
                 <button mat-icon-button aria-label="Kosár" [matMenuTriggerFor]="cartMenu" class="nav-icon-button">
                     <mat-icon class="material-icons md-30">shopping_cart</mat-icon>

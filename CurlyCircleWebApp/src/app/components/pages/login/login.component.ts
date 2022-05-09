@@ -51,8 +51,7 @@ export class LoginComponent extends UnsubscribeOnDestroy implements OnInit {
         this.subscribe(this.authService.login(loginDto).pipe(
             tap((token) => {
                 console.log(token);
-                //snackbart feldobni hogy sikerült
-                this.snackBar.open("Sikeres bejelentkezés", '', { duration: 3000 });
+                this.snackBar.open("Sikeres bejelentkezés", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'], verticalPosition: 'top' });
                 this.router.navigate(['']);
             })
         ));

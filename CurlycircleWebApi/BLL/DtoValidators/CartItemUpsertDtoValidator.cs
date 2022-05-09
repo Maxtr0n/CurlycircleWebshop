@@ -12,8 +12,6 @@ namespace BLL.DtoValidators
     {
         public CartItemUpsertDtoValidator()
         {
-            RuleFor(ent => ent.CartId)
-               .NotEmpty().WithMessage("CartId is required.");
             RuleFor(ent => ent.Price)
                 .NotEmpty().WithMessage("Price is required.");
             RuleFor(ent => ent.ProductId)
