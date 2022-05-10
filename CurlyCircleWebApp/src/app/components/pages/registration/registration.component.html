@@ -1,0 +1,87 @@
+<form [formGroup]="registrationFormGroup" (submit)="register()" class="form-content" fxLayout="column"
+    fxLayoutAlign="center center">
+    <div fxLayout="column" fxLayoutAlign="center center">
+        <h1>Regisztráció</h1>
+        <p>Fiókoddal nyomon tudod követni a leadott rendeléseidet és rendeléskor az adataid megadásával sem kell
+            törődnöd.
+        </p>
+        <div fxLayout="column">
+            <h2 fxFlexAlign="start">Személyes adatok</h2>
+            <div fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Telefonszám</mat-label>
+                    <input matInput formControlName="phoneNumber" />
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                <mat-form-field appearance="outline">
+                    <mat-label>Vezetéknév</mat-label>
+                    <input matInput formControlName="lastName" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Keresztnév</mat-label>
+                    <input matInput formControlName="firstName" />
+                </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+        </div>
+
+        <div fxLayout="column">
+            <h2 fxFlexAlign="start">Jelszó</h2>
+            <div fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                <mat-form-field appearance="outline">
+                    <mat-label>Jelszó</mat-label>
+                    <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'">
+                    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Jelszó megerősítése</mat-label>
+                    <input matInput formControlName="passwordConfirmation"
+                        [type]="hidePasswordConfirmation ? 'password' : 'text'">
+                    <mat-error
+                        *ngIf="registrationFormGroup.errors?.['notSame'] && (registrationFormGroup.touched || registrationFormGroup.dirty)">
+                        Nem egyeznek a jelszavak.</mat-error>
+                    <button mat-icon-button matSuffix (click)="hidePasswordConfirmation = !hidePasswordConfirmation"
+                        [attr.aria-label]="'Hide password confirmation'" [attr.aria-pressed]="hidePasswordConfirmation">
+                        <mat-icon>{{hidePasswordConfirmation ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+        </div>
+
+        <div fxLayout="column">
+            <h2 fxFlexAlign="start">Cím</h2>
+            <div fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                <mat-form-field appearance="outline">
+                    <mat-label>Irányítószám</mat-label>
+                    <input matInput formControlName="zipCode" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Város</mat-label>
+                    <input matInput formControlName="city" />
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                <mat-form-field appearance="outline">
+                    <mat-label>Cím</mat-label>
+                    <input matInput formControlName="line1" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Cím második sora (opcionális)</mat-label>
+                    <input matInput formControlName="line2" />
+                </mat-form-field>
+            </div>
+        </div>
+        <button mat-raised-button color="primary" type="submit"
+            [disabled]="!registrationFormGroup.valid">Regisztrálok</button>
+        <p>Már van fiókod? <a routerLink="/login">Jelentkezz be!</a></p>
+    </div>
+</form>

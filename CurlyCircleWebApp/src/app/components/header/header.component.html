@@ -24,17 +24,13 @@
     <div fxFlex fxLayout fxLayoutAlign="end">
         <ul fxLayout fxLayoutGap="5px" class="navigation-items">
             <li>
-                <button mat-icon-button aria-label="Kosár" [matMenuTriggerFor]="cartMenu" class="nav-icon-button">
-                    <mat-icon class="material-icons md-30">shopping_cart</mat-icon>
+                <button mat-icon-button aria-label="Kosár" matTooltip="Kosár" class="nav-icon-button">
+                    <mat-icon matBadge="2" matBadgeColor="warn" class="material-icons md-30">shopping_cart</mat-icon>
                 </button>
-                <mat-menu #cartMenu="matMenu" xPosition="before">
-                    <button mat-menu-item>Item 1</button>
-                    <button mat-menu-item>Item 2</button>
-                </mat-menu>
             </li>
             <li>
                 <button mat-icon-button routerLink="/login" routerLinkActive="active" aria-label="Profil"
-                    class="nav-icon-button">
+                    matTooltip="Profil" class="nav-icon-button">
                     <mat-icon class="material-icons md-30">person</mat-icon>
                 </button>
             </li>

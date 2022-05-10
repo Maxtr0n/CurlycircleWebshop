@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
+import { catchError, tap } from 'rxjs';
 import { UnsubscribeOnDestroy } from 'src/app/core/UnsubscribeOnDestroy';
 import { LoginDto } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
@@ -37,8 +37,9 @@ export class LoginComponent extends UnsubscribeOnDestroy implements OnInit {
     login(): void {
         //lekérni az cartservicetől a cartId-t és ha nem null akk küldjük el azt is
         const currentCart = this.cartService.currentCartValue;
+        const currentLocalCart = this.cartService.getCurrentLocalCart();
         let currentCartId: number | null = null;
-        if (currentCart) {
+        if (currentCart && currentLocalCart && currentLocalCart.isAnonymous) {
             currentCartId = currentCart.id;
         }
 

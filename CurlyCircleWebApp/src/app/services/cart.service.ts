@@ -62,7 +62,7 @@ export class CartService {
         }
     }
 
-    private getCurrentLocalCart(): LocalCart | null {
+    public getCurrentLocalCart(): LocalCart | null {
         const currentLocalCart = localStorage.getItem(LOCAL_CART_KEY);
         if (currentLocalCart === null) {
             return null;

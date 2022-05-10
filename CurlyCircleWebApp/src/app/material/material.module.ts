@@ -12,6 +12,9 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDividerModule } from '@angular/material/divider';
+
 
 @NgModule({
     declarations: [],
@@ -28,6 +31,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatInputModule,
         MatFormFieldModule,
         MatSnackBarModule,
+        MatTooltipModule,
+        MatDividerModule,
     ],
     exports: [
         MatSliderModule,
@@ -41,6 +46,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatInputModule,
         MatFormFieldModule,
         MatSnackBarModule,
+        MatTooltipModule,
+        MatDividerModule,
     ],
 })
-export class MaterialModule {}
+export class MaterialModule { }

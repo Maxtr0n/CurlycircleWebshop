@@ -1,6 +1,6 @@
 <form [formGroup]="loginFormGroup" (submit)="login()" class="form-content" fxLayout="column"
     fxLayoutAlign="center center">
-    <h1>Kérlek jelentkezz be</h1>
+    <h1>Bejelentkezés</h1>
     <mat-form-field appearance="outline" [hideRequiredMarker]="true">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" />
@@ -14,4 +14,5 @@
         </button>
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit" [disabled]="!loginFormGroup.valid">Bejelentkezés</button>
+    <p>Még nincs fiókod? <a routerLink="/registration">Regisztrálj!</a></p>
 </form>
