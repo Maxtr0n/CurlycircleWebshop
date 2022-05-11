@@ -28,12 +28,22 @@
                     <mat-icon matBadge="2" matBadgeColor="warn" class="material-icons md-30">shopping_cart</mat-icon>
                 </button>
             </li>
-            <li>
-                <button mat-icon-button routerLink="/login" routerLinkActive="active" aria-label="Profil"
-                    matTooltip="Profil" class="nav-icon-button">
-                    <mat-icon class="material-icons md-30">person</mat-icon>
-                </button>
-            </li>
+            <ng-container *ngIf="currentUser !== null">
+                <li>
+                    <button mat-icon-button routerLink="/profile" routerLinkActive="active" aria-label="Profil"
+                        matTooltip="Profil" class="nav-icon-button">
+                        <mat-icon class="material-icons md-30">person</mat-icon>
+                    </button>
+                </li>
+            </ng-container>
+            <ng-container *ngIf="currentUser === null">
+                <li>
+                    <button mat-icon-button routerLink="/login" routerLinkActive="active" aria-label="Profil"
+                        matTooltip="Profil" class="nav-icon-button">
+                        <mat-icon class="material-icons md-30">person</mat-icon>
+                    </button>
+                </li>
+            </ng-container>
         </ul>
     </div>
 </mat-toolbar>

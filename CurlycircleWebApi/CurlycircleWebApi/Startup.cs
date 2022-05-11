@@ -104,7 +104,7 @@ namespace CurlycircleWebApi
             services.AddIdentityCore<ApplicationUser>(options =>
                 {
                     options.Password.RequiredLength = 6;
-                    options.Password.RequireLowercase = true;
+                    options.Password.RequireLowercase = false;
                     options.Password.RequireDigit = true;
                     options.Password.RequireUppercase = false;
                     options.Password.RequireNonAlphanumeric = false;

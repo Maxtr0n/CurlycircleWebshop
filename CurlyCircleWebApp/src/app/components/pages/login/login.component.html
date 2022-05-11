@@ -3,15 +3,18 @@
     <h1>Bejelentkezés</h1>
     <mat-form-field appearance="outline" [hideRequiredMarker]="true">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" />
+        <input matInput formControlName="email" [errorStateMatcher]="errorStateMatcher" />
+        <mat-error *ngIf="loginFormGroup.hasError('wrongCredentials')"></mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" [hideRequiredMarker]="true">
         <mat-label>Jelszó</mat-label>
-        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'">
+        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'"
+            [errorStateMatcher]="errorStateMatcher" />
         <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hidePassword">
             <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
+        <mat-error *ngIf="loginFormGroup.hasError('wrongCredentials')"></mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit" [disabled]="!loginFormGroup.valid">Bejelentkezés</button>
     <p>Még nincs fiókod? <a routerLink="/registration">Regisztrálj!</a></p>

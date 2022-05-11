@@ -14,3 +14,14 @@ mat-form-field {
 mat-divider {
     padding-bottom: 15px;
 }
+
+.password-hint-container {
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.password-hint-icon {
+    padding-top: 5px;
+    padding-left: 5px;
+    color: grey;
+}

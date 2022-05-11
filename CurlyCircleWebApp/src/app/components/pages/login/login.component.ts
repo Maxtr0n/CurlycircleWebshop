@@ -3,19 +3,20 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs';
-import { UnsubscribeOnDestroy } from 'src/app/core/UnsubscribeOnDestroy';
 import { LoginDto } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
+import { FormErrorStateMatcher } from '../../utilities/state-matchers/form-error-state-matcher';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent extends UnsubscribeOnDestroy implements OnInit {
+export class LoginComponent implements OnInit {
     hidePassword = true;
     isLoggedIn = false;
+    errorStateMatcher = new FormErrorStateMatcher();
 
     loginFormGroup: FormGroup = this.formBuilder.group({
         email: ['', Validators.required],
@@ -29,7 +30,6 @@ export class LoginComponent extends UnsubscribeOnDestroy implements OnInit {
         private readonly formBuilder: FormBuilder,
         private readonly snackBar: MatSnackBar,
     ) {
-        super();
     }
 
     ngOnInit(): void { }
@@ -49,13 +49,21 @@ export class LoginComponent extends UnsubscribeOnDestroy implements OnInit {
             cartId: currentCartId
         };
 
-        this.subscribe(this.authService.login(loginDto).pipe(
+        this.authService.login(loginDto).pipe(
             tap((token) => {
-                console.log(token);
-                this.snackBar.open("Sikeres bejelentkezés", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'], verticalPosition: 'top' });
-                this.router.navigate(['']);
+
             })
-        ));
+        ).subscribe({
+            next: (token) => {
+                console.log(token);
+                this.snackBar.open("Sikeres bejelentkezés.", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'] });
+                this.router.navigate(['']);
+            },
+            error: (err) => {
+                this.snackBar.open("Helytelen email vagy jelszó.", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-warn'] });
+                this.loginFormGroup.setErrors({ wrongCredentials: true });
+            }
+        });
     }
 
 }
