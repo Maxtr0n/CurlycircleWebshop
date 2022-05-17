@@ -18,6 +18,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component';
 import { RegistrationComponent } from './components/pages/registration/registration.component';
 import { ProfileComponent } from './components/pages/profile/profile.component';
+import { MyOrdersComponent } from './components/pages/my-orders/my-orders.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { ProfileComponent } from './components/pages/profile/profile.component';
         SidenavListComponent,
         RegistrationComponent,
         ProfileComponent,
+        MyOrdersComponent,
     ],
     imports: [
         BrowserModule,

@@ -1,1 +1,91 @@
-<p>profile works!</p>
+<div fxLayout="column" fxLayoutAlign="center center">
+    <div class="personal-data-container" fxLayout="column">
+        <h2 class="mat-h2">Személyes adatok</h2>
+        <form class="personal-data-form" [formGroup]="personalDataFormGroup" (submit)="updateUser()" fxLayout="column"
+            fxLayoutAlign="center center">
+            <div class="personal-data-form-row" fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column"
+                fxLayoutGap.lt-md="0px">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Telefonszám</mat-label>
+                    <input matInput formControlName="phoneNumber" />
+                </mat-form-field>
+            </div>
+            <div class="personal-data-form-row" fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column"
+                fxLayoutGap.lt-md="0px">
+                <mat-form-field appearance="outline">
+                    <mat-label>Vezetéknév</mat-label>
+                    <input matInput formControlName="lastName" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Keresztnév</mat-label>
+                    <input matInput formControlName="firstName" />
+                </mat-form-field>
+            </div>
+            <div class="personal-data-form-row" fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column"
+                fxLayoutGap.lt-md="0px">
+                <mat-form-field appearance="outline">
+                    <mat-label>Irányítószám</mat-label>
+                    <input matInput formControlName="zipCode" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Város</mat-label>
+                    <input matInput formControlName="city" />
+                </mat-form-field>
+            </div>
+            <div class="personal-data-form-row" fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column"
+                fxLayoutGap.lt-md="0px">
+                <mat-form-field appearance="outline">
+                    <mat-label>Cím</mat-label>
+                    <input matInput formControlName="line1" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Cím második sora (opcionális)</mat-label>
+                    <input matInput formControlName="line2" />
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" type="submit"
+                [disabled]="!personalDataFormGroup.valid">Módosítások
+                mentése</button>
+        </form>
+        <mat-divider></mat-divider>
+    </div>
+    <div class="password-container">
+        <h2 class="mat-h2">Jelszó</h2>
+        <form class="password-form" [formGroup]="passwordFormGroup" (submit)="changePassword()" fxLayout="column"
+            fxLayoutAlign="center center">
+            <mat-form-field appearance="outline">
+                <mat-label>Régi jelszó</mat-label>
+                <input matInput formControlName="oldPassword" [type]="hideOldPassword ? 'oldPassword' : 'text'" />
+                <button mat-icon-button matSuffix (click)="hideOldPassword = !hideOldPassword"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideOldPassword">
+                    <mat-icon>{{hideOldPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Új jelszó</mat-label>
+                <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" />
+                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Új jelszó megerősítése</mat-label>
+                <input matInput formControlName="passwordConfirmation" [errorStateMatcher]="passwordErrorStateMatcher"
+                    [type]="hidePasswordConfirmation ? 'password' : 'text'" />
+                <mat-error *ngIf="passwordFormGroup.get('passwordGroup')?.hasError('notSame')">
+                    Nem egyeznek a jelszavak.</mat-error>
+                <button mat-icon-button matSuffix (click)="hidePasswordConfirmation = !hidePasswordConfirmation"
+                    [attr.aria-label]="'Hide password confirmation'" [attr.aria-pressed]="hidePasswordConfirmation">
+                    <mat-icon>{{hidePasswordConfirmation ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!passwordFormGroup.valid">Jelszó
+                módosítása</button>
+        </form>
+    </div>
+</div>

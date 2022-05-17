@@ -39,7 +39,6 @@ export interface LocalCart {
 
 export interface ChangePasswordDto {
     email: string;
-    id: string;
     oldPassword: string;
     newPassword: string;
 }
@@ -251,15 +250,15 @@ export interface UserUpdateDto {
 export interface UserViewModel {
     id: number;
     cartId: number;
-    email: string | null;
-    firstName: string | null;
-    lastName: string | null;
-    phoneNumber: string | null;
-    city: string | null;
-    zipCode: string | null;
-    line1: string | null;
+    email: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    city: string;
+    zipCode: string;
+    line1: string;
     line2: string | null;
     role: Role;
-    accessToken: string | null;
-    refreshToken: string | null;
+    accessToken: string;
+    refreshToken: string;
 }

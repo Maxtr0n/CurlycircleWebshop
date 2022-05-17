@@ -45,10 +45,12 @@ export class RegistrationComponent implements OnInit {
     get line1() { return this.registrationFormGroup.get('line1'); }
     get line2() { return this.registrationFormGroup.get('line2'); }
 
-    constructor(private readonly authService: AuthService,
+    constructor(
+        private readonly authService: AuthService,
         private readonly router: Router,
         private readonly formBuilder: FormBuilder,
-        private readonly snackBar: MatSnackBar,) {
+        private readonly snackBar: MatSnackBar,
+    ) {
     }
 
     ngOnInit(): void {
@@ -77,7 +79,7 @@ export class RegistrationComponent implements OnInit {
         });
     }
 
-    getPasswordRuleTooltipText() {
+    getPasswordRuleTooltipText(): string {
         return `A jelszónak legalább 6 karakterből kell állnia és tartalmaznia kell legalább egy számot.`;
     }
 

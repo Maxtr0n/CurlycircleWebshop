@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { UserViewModel } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,11 +16,17 @@ export class HeaderComponent implements OnInit {
 
     constructor(
         private readonly authService: AuthService,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly snackBar: MatSnackBar,
     ) {
         authService.currentUser$.subscribe((user) => {
             this.currentUser = user;
         });
+    }
+
+    logout(): void {
+        this.authService.logout();
+        this.snackBar.open("Sikeresen kijelentkeztél.", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'] });
     }
 
     ngOnInit(): void { }

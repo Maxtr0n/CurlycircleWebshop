@@ -18,8 +18,6 @@ namespace BLL.DtoValidators
                 .NotEmpty().WithMessage("NewPassword is required.");
             RuleFor(ent => ent.OldPassword)
                .NotEmpty().WithMessage("OldPassword is required.");
-            RuleFor(ent => ent.Id)
-               .NotEmpty().WithMessage("Id is required.");
         }
     }
 }

@@ -30,10 +30,17 @@
             </li>
             <ng-container *ngIf="currentUser !== null">
                 <li>
-                    <button mat-icon-button routerLink="/profile" routerLinkActive="active" aria-label="Profil"
-                        matTooltip="Profil" class="nav-icon-button">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Profil" class="nav-icon-button">
                         <mat-icon class="material-icons md-30">person</mat-icon>
                     </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item routerLink="/profile" routerLinkActive="active"
+                            aria-label="Profil">Profil</button>
+                        <button mat-menu-item routerLink="/my-orders" routerLinkActive="active"
+                            aria-label="Rendeléseim">Rendeléseim</button>
+                        <button mat-menu-item routerLink="" routerLinkActive="active" aria-label="Kijelentkezés"
+                            (click)="logout()">Kijelentkezés</button>
+                    </mat-menu>
                 </li>
             </ng-container>
             <ng-container *ngIf="currentUser === null">
