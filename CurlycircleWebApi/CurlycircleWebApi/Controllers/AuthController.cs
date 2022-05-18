@@ -48,7 +48,7 @@ namespace CurlycircleWebApi.Controllers
 
         [HttpPut("update")]
         [Authorize]
-        public Task Update(UserUpdateDto userUpdateDto)
+        public Task<UserDataViewModel> Update(UserUpdateDto userUpdateDto)
         {
             return authService.UpdateUserAsync(userUpdateDto);
         }
@@ -65,6 +65,13 @@ namespace CurlycircleWebApi.Controllers
         public Task DeleteUser(DeleteUserDto deleteUserDto)
         {
             return authService.DeleteUserAsync(deleteUserDto);
+        }
+
+        [HttpGet("user-data")]
+        [Authorize]
+        public Task<UserDataViewModel> GetUserData(int userId)
+        {
+            return authService.GetUserDataAsync(userId);
         }
     }
 }

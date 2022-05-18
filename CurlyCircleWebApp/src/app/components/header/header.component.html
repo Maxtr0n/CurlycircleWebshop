@@ -14,10 +14,10 @@
                 <a routerLink="/home">Kezdőlap</a>
             </li>
             <li>
-                <a routerLink="/login">Termékek</a>
+                <a routerLink="/product-categories">Termékek</a>
             </li>
             <li>
-                <a routerLink="/login">Kapcsolat</a>
+                <a routerLink="/contact">Kapcsolat</a>
             </li>
         </ul>
     </div>
@@ -25,21 +25,30 @@
         <ul fxLayout fxLayoutGap="5px" class="navigation-items">
             <li>
                 <button mat-icon-button aria-label="Kosár" matTooltip="Kosár" class="nav-icon-button">
-                    <mat-icon matBadge="2" matBadgeColor="warn" class="material-icons md-30">shopping_cart</mat-icon>
+                    <mat-icon [matBadge]="currentCartSize" matBadgeColor="warn" class="material-icons md-30">
+                        shopping_cart</mat-icon>
                 </button>
             </li>
             <ng-container *ngIf="currentUser !== null">
                 <li>
                     <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Profil" class="nav-icon-button">
-                        <mat-icon class="material-icons md-30">person</mat-icon>
+                        <mat-icon class="material-icons md-30">account_circle</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item routerLink="/profile" routerLinkActive="active"
-                            aria-label="Profil">Profil</button>
+                        <button mat-menu-item routerLink="/profile" routerLinkActive="active" aria-label="Profil">
+                            <mat-icon>person</mat-icon>
+                            <span>Profil</span>
+                        </button>
                         <button mat-menu-item routerLink="/my-orders" routerLinkActive="active"
-                            aria-label="Rendeléseim">Rendeléseim</button>
+                            aria-label="Rendeléseim">
+                            <mat-icon>storefront</mat-icon>
+                            <span>Rendeléseim</span>
+                        </button>
                         <button mat-menu-item routerLink="" routerLinkActive="active" aria-label="Kijelentkezés"
-                            (click)="logout()">Kijelentkezés</button>
+                            (click)="logout()">
+                            <mat-icon>logout</mat-icon>
+                            <span>Kijelentkezés</span>
+                        </button>
                     </mat-menu>
                 </li>
             </ng-container>
@@ -47,7 +56,7 @@
                 <li>
                     <button mat-icon-button routerLink="/login" routerLinkActive="active" aria-label="Profil"
                         matTooltip="Profil" class="nav-icon-button">
-                        <mat-icon class="material-icons md-30">person</mat-icon>
+                        <mat-icon class="material-icons md-30">account_circle</mat-icon>
                     </button>
                 </li>
             </ng-container>

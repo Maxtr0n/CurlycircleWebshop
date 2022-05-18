@@ -262,3 +262,14 @@ export interface UserViewModel {
     accessToken: string;
     refreshToken: string;
 }
+
+export interface UserDataViewModel {
+    email: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    city: string;
+    zipCode: string;
+    line1: string;
+    line2: string | null;
+}

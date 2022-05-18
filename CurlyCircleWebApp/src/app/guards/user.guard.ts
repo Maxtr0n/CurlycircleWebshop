@@ -6,7 +6,8 @@ import {
     RouterStateSnapshot,
     UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { catchError, map, Observable, of, switchMap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
@@ -16,7 +17,7 @@ export class UserGuard implements CanActivate {
     constructor(
         private router: Router,
         private readonly authService: AuthService
-    ) {}
+    ) { }
 
     canActivate(
         route: ActivatedRouteSnapshot,
@@ -26,11 +27,25 @@ export class UserGuard implements CanActivate {
         | Promise<boolean | UrlTree>
         | boolean
         | UrlTree {
+        const jwtHelper = new JwtHelperService();
         const currentUser = this.authService.currentUserValue;
-        if (currentUser !== null) {
+
+        if (currentUser !== null && !jwtHelper.isTokenExpired(currentUser.accessToken)) {
             return true;
         }
-        this.router.navigate(['login']);
-        return false;
+
+        return this.authService.refreshToken().pipe(
+            map((token) => {
+                if (token) {
+                    return true;
+                }
+                this.router.navigate(['login']);
+                return false;
+            }),
+            catchError(() => {
+                return of(false);
+            })
+        );
+
     }
 }

@@ -47,14 +47,23 @@
                     <input matInput formControlName="line2" />
                 </mat-form-field>
             </div>
-            <button mat-raised-button color="primary" type="submit"
-                [disabled]="!personalDataFormGroup.valid">Módosítások
-                mentése</button>
+            <div class="personal-data-form-row" fxLayout="row" fxLayoutAlign="space-between">
+                <button mat-raised-button color="warn" [disabled]="!personalDataFormGroup.dirty"
+                    (click)="setFormDefaults(user)">Mégsem</button>
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="!personalDataFormGroup.valid || !personalDataFormGroup.dirty">Módosítások
+                    mentése</button>
+            </div>
         </form>
         <mat-divider></mat-divider>
     </div>
-    <div class="password-container">
-        <h2 class="mat-h2">Jelszó</h2>
+    <div class="password-container" fxLayout="column">
+        <div class="password-hint-container">
+            <span fxFlexAlign="start" class="mat-h2">Jelszó</span>
+            <mat-icon [matTooltip]="getPasswordRuleTooltipText()" class="material-icons-outlined password-hint-icon">
+                info
+            </mat-icon>
+        </div>
         <form class="password-form" [formGroup]="passwordFormGroup" (submit)="changePassword()" fxLayout="column"
             fxLayoutAlign="center center">
             <mat-form-field appearance="outline">
@@ -69,7 +78,7 @@
                 <mat-label>Új jelszó</mat-label>
                 <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" />
                 <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
-                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                    [attr.aria-label]="'Jelszó elrejtése'" [attr.aria-pressed]="hidePassword">
                     <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
@@ -77,15 +86,17 @@
                 <mat-label>Új jelszó megerősítése</mat-label>
                 <input matInput formControlName="passwordConfirmation" [errorStateMatcher]="passwordErrorStateMatcher"
                     [type]="hidePasswordConfirmation ? 'password' : 'text'" />
-                <mat-error *ngIf="passwordFormGroup.get('passwordGroup')?.hasError('notSame')">
+                <mat-error *ngIf="passwordFormGroup.hasError('notSame')">
                     Nem egyeznek a jelszavak.</mat-error>
                 <button mat-icon-button matSuffix (click)="hidePasswordConfirmation = !hidePasswordConfirmation"
-                    [attr.aria-label]="'Hide password confirmation'" [attr.aria-pressed]="hidePasswordConfirmation">
+                    [attr.aria-label]="'Jelszó megerősítés elrejtése'" [attr.aria-pressed]="hidePasswordConfirmation">
                     <mat-icon>{{hidePasswordConfirmation ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
-            <button mat-raised-button color="primary" type="submit" [disabled]="!passwordFormGroup.valid">Jelszó
-                módosítása</button>
+            <div fxFlexAlign="end">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!passwordFormGroup.valid">Jelszó
+                    módosítása</button>
+            </div>
         </form>
     </div>
 </div>

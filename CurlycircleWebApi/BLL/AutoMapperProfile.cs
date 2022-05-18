@@ -67,6 +67,11 @@ namespace BLL
 
             CreateMap<IEnumerable<CartItem>, CartItemsViewModel>()
                 .ForMember(civm => civm.CartItems, options => options.MapFrom(x => x));
+
+            CreateMap<ApplicationUser, UserDataViewModel>()
+                .IncludeMembers(u => u.Address);
+
+            CreateMap<UserAddress, UserDataViewModel>();
         }
     }
 }

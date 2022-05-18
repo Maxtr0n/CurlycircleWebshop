@@ -17,7 +17,7 @@ export class AdminGuard implements CanActivate {
     constructor(
         private readonly router: Router,
         private readonly authService: AuthService
-    ) {}
+    ) { }
 
     canActivate(
         route: ActivatedRouteSnapshot,
@@ -28,7 +28,7 @@ export class AdminGuard implements CanActivate {
         | boolean
         | UrlTree {
         const currentUser = this.authService.currentUserValue;
-        if (currentUser?.role === Role.Admin) {
+        if (currentUser !== null && currentUser.role === Role.Admin) {
             return true;
         }
         this.router.navigate(['login']);

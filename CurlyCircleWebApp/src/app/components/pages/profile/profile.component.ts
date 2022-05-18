@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
     passwordErrorStateMatcher = new FormErrorStateMatcher();
 
     personalDataFormGroup: FormGroup = this.formBuilder.group({
-        email: ['', [Validators.required, Validators.email]],
+        email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         phoneNumber: ['', Validators.required],
@@ -44,9 +44,9 @@ export class ProfileComponent implements OnInit {
     get zipCode() { return this.personalDataFormGroup.get('zipCode'); }
     get line1() { return this.personalDataFormGroup.get('line1'); }
     get line2() { return this.personalDataFormGroup.get('line2'); }
-    get password() { return this.personalDataFormGroup.get('password'); }
-    get passwordConfirmation() { return this.personalDataFormGroup.get('passwordConfirmation'); }
-    get oldPassword() { return this.personalDataFormGroup.get('oldPassword'); }
+    get password() { return this.passwordFormGroup.get('password'); }
+    get passwordConfirmation() { return this.passwordFormGroup.get('passwordConfirmation'); }
+    get oldPassword() { return this.passwordFormGroup.get('oldPassword'); }
 
     constructor(
         private readonly authService: AuthService,
@@ -57,7 +57,10 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit(): void {
         this.authService.currentUser$.subscribe({
-            next: (user) => this.user = user
+            next: (user) => {
+                this.user = user;
+                this.setFormDefaults(user);
+            }
         });
     }
 
@@ -68,7 +71,7 @@ export class ProfileComponent implements OnInit {
 
         const userUpdateDto: UserUpdateDto = {
             userId: this.user.id,
-            email: this.email?.value,
+            email: null, //nem engedjük meg, hogy változtassa az email címét a user
             firstName: this.firstName?.value,
             lastName: this.lastName?.value,
             city: this.city?.value,
@@ -78,7 +81,14 @@ export class ProfileComponent implements OnInit {
             phoneNumber: this.phoneNumber?.value,
         };
 
-        //TODO call UpdateUser
+        this.authService.updateUser(userUpdateDto).subscribe({
+            next: () => {
+                this.snackBar.open("Sikeresen módosítottad az adataid.", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'] });
+            },
+            error: (err) => {
+                this.snackBar.open("Sikertelen adatmódosíás.", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-warn'] });
+            }
+        });
     }
 
     changePassword(): void {
@@ -88,15 +98,36 @@ export class ProfileComponent implements OnInit {
 
         const changePasswordDto: ChangePasswordDto = {
             email: this.user.email,
-            oldPassword: '',
-            newPassword: ''
+            oldPassword: this.oldPassword?.value,
+            newPassword: this.password?.value
         };
 
-        //TODO call ChangePassword
+        this.authService.changePassword(changePasswordDto).subscribe({
+            next: () => {
+                this.snackBar.open("Sikeresen módosítottad a jelszavad.", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'] });
+            },
+            error: (err) => {
+                console.log(err);
+                this.snackBar.open("Sikertelen jelszó módosítás.", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-warn'] });
+            }
+        });
     }
 
     getPasswordRuleTooltipText(): string {
         return `A jelszónak legalább 6 karakterből kell állnia és tartalmaznia kell legalább egy számot.`;
+    }
+
+    setFormDefaults(user: UserViewModel | null) {
+        this.email?.setValue(user?.email);
+        this.firstName?.setValue(user?.firstName);
+        this.lastName?.setValue(user?.lastName);
+        this.phoneNumber?.setValue(user?.phoneNumber);
+        this.city?.setValue(user?.city);
+        this.zipCode?.setValue(user?.zipCode);
+        this.line1?.setValue(user?.line1);
+        this.line2?.setValue(user?.line2);
+
+        this.personalDataFormGroup.markAsPristine();
     }
 
 }

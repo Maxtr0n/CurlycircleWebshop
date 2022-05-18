@@ -16,7 +16,11 @@ export class AppComponent {
 
     constructor(private authService: AuthService, private cartService: CartService, private router: Router) {
         this.currentUser = null;
-        this.authService.currentUser$.subscribe(x => this.currentUser = x);
+        this.authService.currentUser$.subscribe({
+            next: (user) => {
+                this.currentUser = user;
+            }
+        });
     }
 
 }

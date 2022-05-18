@@ -18,10 +18,12 @@ namespace BLL.Interfaces
 
         Task RevokeAsync(RevokeDto revokeDto);
 
-        Task UpdateUserAsync(UserUpdateDto userUpdateDto);
+        Task<UserDataViewModel> UpdateUserAsync(UserUpdateDto userUpdateDto);
 
         Task ChangePasswordAsync(ChangePasswordDto changePasswordDto);
 
         Task DeleteUserAsync(DeleteUserDto deleteUserDto);
+
+        Task<UserDataViewModel> GetUserDataAsync(int userId);
     }
 }

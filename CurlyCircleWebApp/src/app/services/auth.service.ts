@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, EMPTY, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, of, tap, throwError } from 'rxjs';
 import {
+    ChangePasswordDto,
     EntityCreatedViewModel,
     LoginDto,
     RefreshDto,
     RegisterDto,
     TokenViewModel,
+    UserDataViewModel,
+    UserUpdateDto,
     UserViewModel,
 } from '../models/models';
 import { AppHttpClient } from '../core/app-http-client';
@@ -51,13 +54,16 @@ export class AuthService {
     public refreshToken(): Observable<TokenViewModel> {
         let user = this.getCurrentUser();
         if (user === null) {
-            return EMPTY; //not sure if its correct to return empty observable here
+            return throwError(() => {
+                const error = new Error(`No user is logged in`);
+                return error;
+            });
         }
         let refreshDto: RefreshDto = {
-            email: user.email!,
+            email: user.email,
             id: user.id,
-            accessToken: user.accessToken!,
-            refreshToken: user.refreshToken!,
+            accessToken: user.accessToken,
+            refreshToken: user.refreshToken,
         };
         return this.httpClient
             .post<TokenViewModel>(`${this.authUrl}/refresh`, refreshDto)
@@ -66,6 +72,18 @@ export class AuthService {
                     this.setUserTokens(tokenViewModel);
                 })
             );
+    }
+
+    public updateUser(userUpdateDto: UserUpdateDto): Observable<UserDataViewModel> {
+        return this.httpClient.put<UserDataViewModel>(`${this.authUrl}/update`, userUpdateDto).pipe(
+            tap((userData) => {
+                this.updateCurrentUser(userData);
+            })
+        );
+    }
+
+    public changePassword(changePasswordDto: ChangePasswordDto): Observable<void> {
+        return this.httpClient.put(`${this.authUrl}/change-password`, changePasswordDto);
     }
 
     public get currentUserValue(): UserViewModel | null {
@@ -108,10 +126,29 @@ export class AuthService {
         if (user !== null) {
             user.accessToken = tokenViewModel.accessToken;
             user.refreshToken = tokenViewModel.refreshToken;
+            console.log("Sikeres frissítés, új tokenek beállítva!");
             this.setCurrentUser(user);
             return true;
         }
         return false;
+    }
+
+    private updateCurrentUser(userDataViewModel: UserDataViewModel): void {
+        if (!this.currentUserValue)
+            return;
+
+        let currentUser = this.currentUserValue;
+        currentUser.email = userDataViewModel.email;
+        currentUser.firstName = userDataViewModel.firstName;
+        currentUser.lastName = userDataViewModel.lastName;
+        currentUser.phoneNumber = userDataViewModel.phoneNumber;
+        currentUser.city = userDataViewModel.city;
+        currentUser.zipCode = userDataViewModel.zipCode;
+        currentUser.line1 = userDataViewModel.line1;
+        currentUser.line2 = userDataViewModel.line2;
+
+        this.setCurrentUser(currentUser);
+        this.currentUserSubject.next(currentUser);
     }
 
     private setCurrentUser(userViewModel: UserViewModel): void {

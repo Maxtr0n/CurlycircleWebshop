@@ -168,7 +168,7 @@ namespace BLL.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task UpdateUserAsync(UserUpdateDto userUpdateDto)
+        public async Task<UserDataViewModel> UpdateUserAsync(UserUpdateDto userUpdateDto)
         {
             var user = await FindUserByIdAsync(userUpdateDto.UserId);
             if (userUpdateDto.Email is not null)
@@ -202,6 +202,7 @@ namespace BLL.Services
             }
 
             await _unitOfWork.SaveChangesAsync();
+            return _mapper.Map<UserDataViewModel>(user);
         }
 
         public async Task ChangePasswordAsync(ChangePasswordDto changePasswordDto)
@@ -240,6 +241,13 @@ namespace BLL.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
+        public async Task<UserDataViewModel> GetUserDataAsync(int userId)
+        {
+            var user = await FindUserByIdAsync(userId);
+
+            return _mapper.Map<UserDataViewModel>(user);
+        }
+
         private async Task<ApplicationUser> FindUserByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -274,7 +282,7 @@ namespace BLL.Services
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SigningKey"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddMinutes(Convert.ToDouble(Configuration["Jwt:ExpirationMinutes"]));
+            var expires = DateTime.Now.AddMinutes(Convert.ToDouble(Configuration["Jwt:TokenValidityInMinutes"]));
 
             var token = new JwtSecurityToken(
                 Configuration["Jwt:Issuer"],
@@ -304,7 +312,7 @@ namespace BLL.Services
                 ValidIssuer = Configuration["Jwt:Issuer"],
                 ValidAudience = Configuration["Jwt:Audience"],
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"])),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SigningKey"])),
                 ValidateLifetime = false,
                 ClockSkew = TimeSpan.Zero
             };
