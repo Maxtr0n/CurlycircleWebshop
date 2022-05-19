@@ -149,7 +149,7 @@ export enum PaymentMethod {
 }
 
 export interface ProductCategoriesViewModel {
-    productCategories: ProductCategoryViewModel[] | null;
+    productCategories: ProductCategoryViewModel[];
 }
 
 export interface ProductCategoryUpsertDto {
@@ -160,7 +160,7 @@ export interface ProductCategoryUpsertDto {
 
 export interface ProductCategoryViewModel {
     id: number;
-    name: string | null;
+    name: string;
     description: string | null;
 }
 
