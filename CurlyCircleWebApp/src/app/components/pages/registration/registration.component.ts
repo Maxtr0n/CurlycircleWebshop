@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs';
 import { RegisterDto } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { passwordsMatchValidator } from 'src/app/components/utilities/validators/password-match-validator';
-import { FormErrorStateMatcher } from '../../utilities/state-matchers/form-error-state-matcher';
+import { PasswordMatchErrorStateMatcher } from '../../utilities/state-matchers/password-match-error-state-matcher';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -17,7 +17,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class RegistrationComponent implements OnInit {
     hidePassword = true;
     hidePasswordConfirmation = true;
-    passwordErrorStateMatcher = new FormErrorStateMatcher();
+    passwordErrorStateMatcher = new PasswordMatchErrorStateMatcher();
 
     registrationFormGroup: FormGroup = this.formBuilder.group({
         email: ['', [Validators.required, Validators.email]],

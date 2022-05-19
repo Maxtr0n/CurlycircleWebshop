@@ -42,7 +42,7 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Jelszó</mat-label>
                     <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" />
-                    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                    <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword"
                         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
                         <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
@@ -54,7 +54,8 @@
                         [type]="hidePasswordConfirmation ? 'password' : 'text'" />
                     <mat-error *ngIf="registrationFormGroup.get('passwordGroup')?.hasError('notSame')">
                         Nem egyeznek a jelszavak.</mat-error>
-                    <button mat-icon-button matSuffix (click)="hidePasswordConfirmation = !hidePasswordConfirmation"
+                    <button mat-icon-button matSuffix type="button"
+                        (click)="hidePasswordConfirmation = !hidePasswordConfirmation"
                         [attr.aria-label]="'Hide password confirmation'" [attr.aria-pressed]="hidePasswordConfirmation">
                         <mat-icon>{{hidePasswordConfirmation ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>

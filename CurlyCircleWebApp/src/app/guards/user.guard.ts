@@ -31,6 +31,7 @@ export class UserGuard implements CanActivate {
         const currentUser = this.authService.currentUserValue;
 
         if (currentUser !== null && !jwtHelper.isTokenExpired(currentUser.accessToken)) {
+            console.log('nincs lejárva az access token');
             return true;
         }
 
@@ -43,6 +44,7 @@ export class UserGuard implements CanActivate {
                 return false;
             }),
             catchError(() => {
+                this.router.navigate(['login']);
                 return of(false);
             })
         );

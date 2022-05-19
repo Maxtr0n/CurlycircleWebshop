@@ -6,7 +6,6 @@ import { catchError, tap } from 'rxjs';
 import { LoginDto } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
-import { FormErrorStateMatcher } from '../../utilities/state-matchers/form-error-state-matcher';
 
 @Component({
     selector: 'app-login',
@@ -15,8 +14,6 @@ import { FormErrorStateMatcher } from '../../utilities/state-matchers/form-error
 })
 export class LoginComponent implements OnInit {
     hidePassword = true;
-    isLoggedIn = false;
-    errorStateMatcher = new FormErrorStateMatcher();
 
     loginFormGroup: FormGroup = this.formBuilder.group({
         email: ['', Validators.required],
@@ -32,6 +29,9 @@ export class LoginComponent implements OnInit {
     ) {
     }
 
+    get email() { return this.loginFormGroup.get('email'); }
+    get password() { return this.loginFormGroup.get('password'); }
+
     ngOnInit(): void { }
 
     login(): void {
@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
         const currentCart = this.cartService.currentCartValue;
         const currentLocalCart = this.cartService.getCurrentLocalCart();
         let currentCartId: number | null = null;
+
         if (currentCart && currentLocalCart && currentLocalCart.isAnonymous) {
             currentCartId = currentCart.id;
         }
@@ -49,11 +50,7 @@ export class LoginComponent implements OnInit {
             cartId: currentCartId
         };
 
-        this.authService.login(loginDto).pipe(
-            tap((token) => {
-
-            })
-        ).subscribe({
+        this.authService.login(loginDto).subscribe({
             next: (token) => {
                 console.log(token);
                 this.snackBar.open("Sikeres bejelentkezés.", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'] });
@@ -61,7 +58,7 @@ export class LoginComponent implements OnInit {
             },
             error: (err) => {
                 this.snackBar.open("Helytelen email vagy jelszó.", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-warn'] });
-                this.loginFormGroup.setErrors({ wrongCredentials: true });
+                this.loginFormGroup?.setErrors({ wrongCredentials: true });
             }
         });
     }

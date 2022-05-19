@@ -30,6 +30,11 @@ export class AuthService {
         this.currentUser$ = this.currentUserSubject.asObservable();
     }
 
+
+    public get currentUserValue(): UserViewModel | null {
+        return this.currentUserSubject.value;
+    }
+
     public login(loginDto: LoginDto): Observable<UserViewModel> {
         return this.httpClient
             .post<UserViewModel>(`${this.authUrl}/login`, loginDto)
@@ -52,7 +57,7 @@ export class AuthService {
     }
 
     public refreshToken(): Observable<TokenViewModel> {
-        let user = this.getCurrentUser();
+        let user = this.currentUserValue;
         if (user === null) {
             return throwError(() => {
                 const error = new Error(`No user is logged in`);
@@ -86,10 +91,6 @@ export class AuthService {
         return this.httpClient.put(`${this.authUrl}/change-password`, changePasswordDto);
     }
 
-    public get currentUserValue(): UserViewModel | null {
-        return this.currentUserSubject.value;
-    }
-
     public logout(): void {
         this.removeCurrentUser();
         this.currentUserSubject.next(null);
@@ -120,17 +121,20 @@ export class AuthService {
         return null;
     }
 
-    public setUserTokens(tokenViewModel: TokenViewModel): boolean {
-        const user = this.getCurrentUser();
+    public setUserTokens(tokenViewModel: TokenViewModel): void {
+        const user = this.currentUserValue;
 
-        if (user !== null) {
-            user.accessToken = tokenViewModel.accessToken;
-            user.refreshToken = tokenViewModel.refreshToken;
-            console.log("Sikeres frissítés, új tokenek beállítva!");
-            this.setCurrentUser(user);
-            return true;
+        if (user === null) {
+            return;
         }
-        return false;
+
+        console.log(`Régi token: ${user.refreshToken}`);
+        user.accessToken = tokenViewModel.accessToken;
+        user.refreshToken = tokenViewModel.refreshToken;
+        console.log(`Új token: ${user.refreshToken}`);
+
+        this.setCurrentUser(user);
+        this.currentUserSubject.next(user);
     }
 
     private updateCurrentUser(userDataViewModel: UserDataViewModel): void {

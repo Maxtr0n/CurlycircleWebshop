@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ChangePasswordDto, UserUpdateDto, UserViewModel } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
-import { FormErrorStateMatcher } from '../../utilities/state-matchers/form-error-state-matcher';
+import { PasswordMatchErrorStateMatcher } from '../../utilities/state-matchers/password-match-error-state-matcher';
 import { passwordsMatchValidator } from '../../utilities/validators/password-match-validator';
 
 @Component({
@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
     hidePassword = true;
     hidePasswordConfirmation = true;
     hideOldPassword = true;
-    passwordErrorStateMatcher = new FormErrorStateMatcher();
+    passwordErrorStateMatcher = new PasswordMatchErrorStateMatcher();
 
     personalDataFormGroup: FormGroup = this.formBuilder.group({
         email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],

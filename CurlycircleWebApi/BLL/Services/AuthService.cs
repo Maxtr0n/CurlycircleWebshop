@@ -152,6 +152,12 @@ namespace BLL.Services
             var newRefreshToken = CreateRefreshToken();
 
             user.RefreshToken = newRefreshToken;
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                throw new ValidationAppException("Refresh failed.", result.Errors.Select(ent => ent.Description));
+            }
             await _unitOfWork.SaveChangesAsync();
 
             return new TokenViewModel()

@@ -40,23 +40,18 @@ export class CartService {
 
     public addItemToCart(product: ProductViewModel, quantity: number): Observable<EntityCreatedViewModel> {
         const cartId = this.currentCartValue?.id;
+        const cartItemDto: CartItemUpsertDto = {
+            productId: product.id,
+            price: product.price,
+            quantity: quantity,
+        };
 
         if (cartId) {
-            const cartItemDto: CartItemUpsertDto = {
-                productId: product.id,
-                price: product.price,
-                quantity: quantity,
-            };
-
             return this.addToCart(cartId, cartItemDto);
         }
         else {
             return this.createCartAndGetById().pipe(
-                switchMap(cart => this.addToCart(cart.id, {
-                    productId: product.id,
-                    price: product.price,
-                    quantity: quantity,
-                }))
+                switchMap(cart => this.addToCart(cart.id, cartItemDto))
             );
         }
     }
@@ -123,40 +118,35 @@ export class CartService {
         const localCart = this.getCurrentLocalCart();
 
         if (user !== null) {
-            return this.getCartByIdAndSetAsUserCart(user.cartId);
-        } else if (localCart !== null) {
-            if (localCart.isAnonymous) {
-                return this.getCartById(localCart.id).pipe(
-                    tap(cart => {
-                        this.currentCartSubject.next(cart);
-                        console.log('No user but anonymous local cart detected.');
-                    })
-                );
-            } else {
-                return new Observable(() => {
-                    this.removeCurrentLocalCart();
-                    this.currentCartSubject.next(null);
-                    console.log('No user but user local cart detected. Happens at logout.');
-                });
+            //ha a user nem null, loginnél a backend elintézi a kosarak összevonását, így elég lekérni a user kosarát
+            //ha nem login, hanem program indulás miatt kerülünk ide, akkor is elég lekérni a user kosarát
+            console.log('User detected from CartService.');
+            return this.getCartByIdAndSetAsUserCart(user.id);
+
+        } else {
+            if (localCart !== null) {
+                //ha van elmentve cart a localstoragebe
+                if (localCart.isAnonymous) {
+                    //ha a localCart anonim userhez tartozik, akkor lekérjük a kosarat, és beállítjuk kosárként
+                    return this.getCartById(localCart.id).pipe(
+                        tap(cart => {
+                            this.currentCartSubject.next(cart);
+                            console.log('No user but anonymous local cart detected.');
+                        })
+                    );
+                } else {
+                    //ha nem anonim, akkor egy userhez tartozik, de nincs bejelentkezett user, tehát töröljük a localstorageből
+                    return new Observable(() => {
+                        this.removeCurrentLocalCart();
+                        this.currentCartSubject.next(null);
+                        console.log('No user but user local cart detected. Happens at logout.');
+                    });
+                }
             }
         }
 
+        //ha nincs user és nincs local cart, akkor nincs teendőnk, majd egy termék hozzáadásnál létrejön a kosár
         console.log('No user and no local cart detected.');
         return new Observable();
-    }
-
-    private addOldItemsAndGetCart(oldCartItems: CartItemViewModel[], user: UserViewModel, cartToDelete: number): Observable<CartViewModel> {
-        const observableItems = oldCartItems.map(cartItem => this.addToCart(user.cartId, {
-            productId: cartItem.productId,
-            price: cartItem.price,
-            quantity: cartItem.quantity
-        }));
-
-        return forkJoin(observableItems, (...results) => {
-            return this.getCartByIdAndSetAsUserCart(user.cartId);
-        }).pipe(
-            switchMap(result => result),
-            tap(this.deleteCart(cartToDelete))
-        );
     }
 }
