@@ -121,7 +121,7 @@ export class CartService {
             //ha a user nem null, loginnél a backend elintézi a kosarak összevonását, így elég lekérni a user kosarát
             //ha nem login, hanem program indulás miatt kerülünk ide, akkor is elég lekérni a user kosarát
             console.log('User detected from CartService.');
-            return this.getCartByIdAndSetAsUserCart(user.id);
+            return this.getCartByIdAndSetAsUserCart(user.cartId);
 
         } else {
             if (localCart !== null) {

@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs';
 import { RegisterDto } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
-import { passwordsMatchValidator } from 'src/app/components/utilities/validators/password-match-validator';
-import { PasswordMatchErrorStateMatcher } from '../../utilities/state-matchers/password-match-error-state-matcher';
+import { passwordsMatchValidator } from 'src/app/utilities/validators/password-match-validator';
+import { PasswordMatchErrorStateMatcher } from '../../../utilities/state-matchers/password-match-error-state-matcher';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

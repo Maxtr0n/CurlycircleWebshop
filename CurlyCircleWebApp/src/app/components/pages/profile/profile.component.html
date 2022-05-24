@@ -68,7 +68,7 @@
             fxLayoutAlign="center center">
             <mat-form-field appearance="outline">
                 <mat-label>Régi jelszó</mat-label>
-                <input matInput formControlName="oldPassword" [type]="hideOldPassword ? 'oldPassword' : 'text'" />
+                <input matInput formControlName="oldPassword" [type]="hideOldPassword ? 'password' : 'text'" />
                 <button mat-icon-button matSuffix type="button" (click)="hideOldPassword = !hideOldPassword"
                     [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideOldPassword">
                     <mat-icon>{{hideOldPassword ? 'visibility_off' : 'visibility'}}</mat-icon>

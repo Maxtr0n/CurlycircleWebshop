@@ -5,7 +5,8 @@ export class PasswordMatchErrorStateMatcher implements ErrorStateMatcher {
     isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
         const invalidCtrl = !!(control?.invalid && control?.parent?.dirty);
         const invalidParent = !!(control?.parent?.invalid && control?.parent?.dirty);
+        const passwordFieldTouched = !!(control?.parent?.get('password')?.touched);
 
-        return invalidCtrl || invalidParent;
+        return (invalidCtrl || invalidParent) && passwordFieldTouched;
     }
 }

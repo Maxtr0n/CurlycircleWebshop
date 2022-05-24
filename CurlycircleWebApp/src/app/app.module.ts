@@ -21,6 +21,7 @@ import { ProfileComponent } from './components/pages/profile/profile.component';
 import { MyOrdersComponent } from './components/pages/my-orders/my-orders.component';
 import { ContactComponent } from './components/pages/contact/contact.component';
 import { ProductCategoriesComponent } from './components/pages/product-categories/product-categories.component';
+import { ProductsComponent } from './components/pages/products/products.component';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import { ProductCategoriesComponent } from './components/pages/product-categorie
         MyOrdersComponent,
         ContactComponent,
         ProductCategoriesComponent,
+        ProductsComponent,
     ],
     imports: [
         BrowserModule,

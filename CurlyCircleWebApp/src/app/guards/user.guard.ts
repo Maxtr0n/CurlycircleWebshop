@@ -40,10 +40,14 @@ export class UserGuard implements CanActivate {
                 if (token) {
                     return true;
                 }
+                console.log('nem sikeres a frissítés -> logout');
+                this.authService.logout();
                 this.router.navigate(['login']);
                 return false;
             }),
             catchError(() => {
+                console.log('nem sikeres a frissítés -> logout');
+                this.authService.logout();
                 this.router.navigate(['login']);
                 return of(false);
             })

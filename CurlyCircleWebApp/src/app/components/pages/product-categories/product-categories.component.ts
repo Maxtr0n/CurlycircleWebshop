@@ -26,4 +26,8 @@ export class ProductCategoriesComponent implements OnInit {
         });
     }
 
+    onProductCategoryClicked(): void {
+
+    }
+
 }

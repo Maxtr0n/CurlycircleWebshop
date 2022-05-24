@@ -4,8 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ChangePasswordDto, UserUpdateDto, UserViewModel } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
-import { PasswordMatchErrorStateMatcher } from '../../utilities/state-matchers/password-match-error-state-matcher';
-import { passwordsMatchValidator } from '../../utilities/validators/password-match-validator';
+import { PasswordMatchErrorStateMatcher } from '../../../utilities/state-matchers/password-match-error-state-matcher';
+import { passwordsMatchValidator } from '../../../utilities/validators/password-match-validator';
 
 @Component({
     selector: 'app-profile',
@@ -30,10 +30,12 @@ export class ProfileComponent implements OnInit {
         line2: ['',],
     });
 
+
+
     passwordFormGroup: FormGroup = this.formBuilder.group({
-        oldPassword: ['', [Validators.required, Validators.min(6), Validators.pattern('.*[0-9].*')]],
+        oldPassword: ['', [Validators.required]],
         password: ['', [Validators.required, Validators.min(6), Validators.pattern('.*[0-9].*')]],
-        passwordConfirmation: ['', Validators.required],
+        passwordConfirmation: [''],
     }, { validators: passwordsMatchValidator });
 
     get email() { return this.personalDataFormGroup.get('email'); }
@@ -105,6 +107,11 @@ export class ProfileComponent implements OnInit {
         this.authService.changePassword(changePasswordDto).subscribe({
             next: () => {
                 this.snackBar.open("Sikeresen módosítottad a jelszavad.", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'] });
+                this.oldPassword?.setValue(null);
+                this.password?.setValue(null);
+                this.passwordConfirmation?.setValue(null);
+                this.passwordFormGroup.markAsPristine();
+                this.passwordFormGroup.markAsUntouched();
             },
             error: (err) => {
                 console.log(err);
