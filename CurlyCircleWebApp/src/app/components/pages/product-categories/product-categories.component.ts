@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { ProductCategoriesViewModel, ProductCategoryViewModel } from 'src/app/models/models';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 
@@ -11,7 +12,9 @@ export class ProductCategoriesComponent implements OnInit {
     productCategories: ProductCategoryViewModel[] = [];
 
     constructor(
-        private readonly productCategoryService: ProductCategoryService
+        private readonly productCategoryService: ProductCategoryService,
+        private readonly router: Router,
+        private readonly route: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
@@ -26,8 +29,9 @@ export class ProductCategoriesComponent implements OnInit {
         });
     }
 
-    onProductCategoryClicked(): void {
-
+    onProductCategoryClicked(id: number): void {
+        this.router.navigate([id], { relativeTo: this.route });
+        console.log('clicked: ' + id);
     }
 
 }

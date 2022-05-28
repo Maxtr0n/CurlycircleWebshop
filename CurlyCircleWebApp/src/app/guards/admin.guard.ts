@@ -41,10 +41,12 @@ export class AdminGuard implements CanActivate {
                 if (token) {
                     return true;
                 }
+                this.authService.logout();
                 this.router.navigate(['login']);
                 return false;
             }),
             catchError(() => {
+                this.authService.logout();
                 this.router.navigate(['login']);
                 return of(false);
             })

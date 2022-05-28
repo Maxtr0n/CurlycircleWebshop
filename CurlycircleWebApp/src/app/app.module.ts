@@ -22,6 +22,7 @@ import { MyOrdersComponent } from './components/pages/my-orders/my-orders.compon
 import { ContactComponent } from './components/pages/contact/contact.component';
 import { ProductCategoriesComponent } from './components/pages/product-categories/product-categories.component';
 import { ProductsComponent } from './components/pages/products/products.component';
+import { ProductDetailsComponent } from './components/pages/product-details/product-details.component';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import { ProductsComponent } from './components/pages/products/products.componen
         ContactComponent,
         ProductCategoriesComponent,
         ProductsComponent,
+        ProductDetailsComponent,
     ],
     imports: [
         BrowserModule,

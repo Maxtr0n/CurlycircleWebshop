@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppHttpClient } from '../core/app-http-client';
-import { ProductCategoriesViewModel, ProductsViewModel } from '../models/models';
+import { ProductCategoriesViewModel, ProductCategoryViewModel, ProductsViewModel } from '../models/models';
 
 @Injectable({
     providedIn: 'root'
@@ -13,6 +13,10 @@ export class ProductCategoryService {
 
     public getProductCategories(): Observable<ProductCategoriesViewModel> {
         return this.httpClient.get<ProductCategoriesViewModel>(`${this.productCategoriesUrl}`);
+    }
+
+    public getProductCategory(productCategoryId: number): Observable<ProductCategoryViewModel> {
+        return this.httpClient.get<ProductCategoryViewModel>(`${this.productCategoriesUrl}/${productCategoryId}`);
     }
 
     public getProductCategoryProducts(productCategoryId: number): Observable<ProductsViewModel> {
