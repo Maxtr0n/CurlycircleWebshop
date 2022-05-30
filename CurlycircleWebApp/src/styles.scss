@@ -41,6 +41,8 @@ $CurlyCircleWebApp-theme: mat.define-light-theme(
 
 /* You can add global styles to this file, and also import other style files */
 
+$hover-color: mat.get-color-from-palette(mat.$blue-grey-palette, 50);
+
 html,
 body {
     height: 100%;
@@ -70,4 +72,11 @@ body {
     font-size: 48px;
     height: 48px;
     width: 48px;
+}
+
+.xng-breadcrumb-root {
+    padding: 8px 16px;
+    display: inline-block;
+    border-radius: 4px;
+    background-color: mat.get-color-from-palette(mat.$blue-grey-palette, 50);
 }

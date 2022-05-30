@@ -5,9 +5,11 @@ import { HomeComponent } from './components/pages/home/home.component';
 import { LoginComponent } from './components/pages/login/login.component';
 import { MyOrdersComponent } from './components/pages/my-orders/my-orders.component';
 import { ProductCategoriesComponent } from './components/pages/product-categories/product-categories.component';
+import { ProductDetailsComponent } from './components/pages/product-details/product-details.component';
 import { ProductsComponent } from './components/pages/products/products.component';
 import { ProfileComponent } from './components/pages/profile/profile.component';
 import { RegistrationComponent } from './components/pages/registration/registration.component';
+import { ShopComponent } from './components/pages/shop/shop.component';
 import { UserGuard } from './guards/user.guard';
 
 const routes: Routes = [
@@ -17,9 +19,16 @@ const routes: Routes = [
     { path: 'profile', component: ProfileComponent, canActivate: [UserGuard] },
     { path: 'my-orders', component: MyOrdersComponent, canActivate: [UserGuard] },
     {
-        path: 'product-categories', children: [
-            { path: '', pathMatch: 'full', component: ProductCategoriesComponent },
-            { path: ':id', component: ProductsComponent },
+        path: 'shop', component: ShopComponent, children: [
+            { path: '', pathMatch: 'full', data: { breadcrumb: { alias: 'ProductCategories' } }, component: ProductCategoriesComponent },
+            { path: ':productCategoryId', redirectTo: ':productCategoryId/products', pathMatch: 'full' },
+            {
+                path: ':productCategoryId/products', children: [
+                    { path: '', pathMatch: 'full', data: { breadcrumb: { alias: 'Products' } }, component: ProductsComponent },
+                    { path: ':productId', data: { breadcrumb: { alias: 'ProductDetails' } }, component: ProductDetailsComponent }
+                ]
+            },
+
         ]
     },
     { path: 'contact', component: ContactComponent },

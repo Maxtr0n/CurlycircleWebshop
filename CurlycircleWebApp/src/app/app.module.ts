@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './core/http-interceptor-providers';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BreadcrumbModule } from 'xng-breadcrumb';
 
 import { HomeComponent } from './components/pages/home/home.component';
 import { LoginComponent } from './components/pages/login/login.component';
@@ -23,6 +24,7 @@ import { ContactComponent } from './components/pages/contact/contact.component';
 import { ProductCategoriesComponent } from './components/pages/product-categories/product-categories.component';
 import { ProductsComponent } from './components/pages/products/products.component';
 import { ProductDetailsComponent } from './components/pages/product-details/product-details.component';
+import { ShopComponent } from './components/pages/shop/shop.component';
 
 @NgModule({
     declarations: [
@@ -40,6 +42,7 @@ import { ProductDetailsComponent } from './components/pages/product-details/prod
         ProductCategoriesComponent,
         ProductsComponent,
         ProductDetailsComponent,
+        ShopComponent,
     ],
     imports: [
         BrowserModule,
@@ -49,8 +52,11 @@ import { ProductDetailsComponent } from './components/pages/product-details/prod
         MaterialModule,
         FlexLayoutModule,
         ReactiveFormsModule,
+        BreadcrumbModule,
     ],
-    providers: [httpInterceptorProviders],
+    providers: [
+        httpInterceptorProviders,
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule { }

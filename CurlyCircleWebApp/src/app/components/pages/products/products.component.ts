@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, switchMap, tap } from 'rxjs';
 import { ProductCategoryViewModel, ProductViewModel } from 'src/app/models/models';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { ProductService } from 'src/app/services/product.service';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
     selector: 'app-products',
@@ -19,11 +21,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
     constructor(
         private readonly productCategoryService: ProductCategoryService,
         private readonly router: Router,
-        private readonly route: ActivatedRoute
+        private readonly route: ActivatedRoute,
+        private readonly snackBar: MatSnackBar,
+        private readonly breadcrumbService: BreadcrumbService,
     ) { }
 
 
     ngOnInit(): void {
+        this.breadcrumbService.set('@Products', '');
         this.getData();
     }
 
@@ -34,32 +39,28 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
     getData(): void {
         this.productCategory$ = this.route.params.pipe(
-            switchMap(params => this.productCategoryService.getProductCategory(params['id']))
+            switchMap(params => this.productCategoryService.getProductCategory(params['productCategoryId']))
         ).subscribe({
             next: (productCategoryViewModel) => {
                 this.productCategory = productCategoryViewModel;
-            },
-            error: (error) => {
-                console.log(error);
-                //TODO throw snackbar with error
+                this.breadcrumbService.set('@Products', productCategoryViewModel.name);
             }
         });
         this.products$ = this.route.params.pipe(
-            switchMap(params => this.productCategoryService.getProductCategoryProducts(params['id']))
+            switchMap(params => this.productCategoryService.getProductCategoryProducts(params['productCategoryId']))
         ).subscribe({
             next: (productsViewModel) => {
                 this.products = productsViewModel.products;
-                console.log(this.products);
             },
             error: (error) => {
                 console.log(error);
-                //TODO throw snackbar with error
+                this.snackBar.open("A termékek betöltése sikertelen. Kérlek próbálkozz újra!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-warn'] });
             }
         });
     }
 
     onProductClicked(id: number): void {
-        this.router.navigate(['/product', id]);
+        this.router.navigate([id], { relativeTo: this.route });
     }
 
 }

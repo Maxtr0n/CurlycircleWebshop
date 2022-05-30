@@ -1,8 +1,9 @@
+@use '../../../../styles';
+
 .product-category-card:hover {
     cursor: pointer;
-    background-color: lightgray;
+    background-color: styles.$hover-color;
 }
 
 .product-categories {
-    max-width: 80%;
 }

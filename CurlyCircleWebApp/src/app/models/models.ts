@@ -179,7 +179,7 @@ export interface ProductUpsertDto {
 export interface ProductViewModel {
     id: number;
     price: number;
-    name: string | null;
+    name: string;
     productCategoryId: number;
     description: string | null;
     imageUrl: string | null;

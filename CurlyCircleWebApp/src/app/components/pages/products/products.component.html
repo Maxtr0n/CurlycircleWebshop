@@ -1,18 +1,13 @@
-<div fxLayout="column" fxLayoutAlign="center center" class="container">
-    <div fxLayout="row wrap" fxLayoutGap="16px grid" fxLayoutAlign="center stretch" class="products">
-        <div fxFlex="25%" fxFlex.md="33%" fxFlex.xs="100%" fxFlex.sm="50%" *ngFor="let product of products"
-            fxLayoutAlign="center stretch">
-            <mat-card (click)="onProductClicked(product.id)" class="product-card">
-                <mat-card-title>{{product.name}}</mat-card-title>
-                <img mat-card-image src="http://localhost:5000/images/placeholder.jpg"
-                    alt="Image of a product category">
-                <mat-card-content>
-                    <p>
-                        {{product.description}}
-                    </p>
-                </mat-card-content>
-            </mat-card>
-        </div>
+<div fxLayout="row wrap" fxLayoutGap="16px grid" fxLayoutAlign="start stretch" class="products">
+    <div fxFlex="350px" *ngFor="let product of products" fxLayoutAlign="center stretch">
+        <mat-card (click)="onProductClicked(product.id)" class="product-card">
+            <mat-card-title>{{product.name}}</mat-card-title>
+            <img mat-card-image src="http://localhost:5000/images/placeholder.jpg" alt="Image of a product category">
+            <mat-card-content>
+                <p>
+                    {{product.description}}
+                </p>
+            </mat-card-content>
+        </mat-card>
     </div>
-
 </div>
