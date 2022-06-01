@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
 import { ProductViewModel } from 'src/app/models/models';
+import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { ProductService } from 'src/app/services/product.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
@@ -12,10 +13,12 @@ import { BreadcrumbService } from 'xng-breadcrumb';
     styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
+    productCategory$: Subscription = new Subscription;
     product$: Subscription = new Subscription;
     product: ProductViewModel | null = null;
 
     constructor(
+        private readonly productCategoryService: ProductCategoryService,
         private readonly productService: ProductService,
         private readonly router: Router,
         private readonly route: ActivatedRoute,
@@ -24,7 +27,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit(): void {
-        this.breadcrumbService.set('@ProductDetails', '');
+        this.breadcrumbService.set('@ProductCategories', 'Kategóriák');
+        this.breadcrumbService.set('@Products', 'Kategória');
+        this.breadcrumbService.set('@ProductDetails', 'Termék');
         this.getData();
     }
 
@@ -33,6 +38,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }
 
     getData(): void {
+        this.productCategory$ = this.route.params.pipe(
+            switchMap(params => this.productCategoryService.getProductCategory(params['productCategoryId']))
+        ).subscribe({
+            next: (productCategoryViewModel) => {
+                this.breadcrumbService.set('@Products', productCategoryViewModel.name);
+            }
+        });
         this.product$ = this.route.params.pipe(
             switchMap(params => this.productService.getProduct(params['productId']))
         ).subscribe({

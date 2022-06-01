@@ -25,6 +25,7 @@ import { ProductCategoriesComponent } from './components/pages/product-categorie
 import { ProductsComponent } from './components/pages/products/products.component';
 import { ProductDetailsComponent } from './components/pages/product-details/product-details.component';
 import { ShopComponent } from './components/pages/shop/shop.component';
+import { PrimengModule } from './primeng/primeng.module';
 
 @NgModule({
     declarations: [
@@ -53,6 +54,7 @@ import { ShopComponent } from './components/pages/shop/shop.component';
         FlexLayoutModule,
         ReactiveFormsModule,
         BreadcrumbModule,
+        PrimengModule
     ],
     providers: [
         httpInterceptorProviders,

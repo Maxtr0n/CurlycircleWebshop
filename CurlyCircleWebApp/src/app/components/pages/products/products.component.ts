@@ -28,7 +28,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
 
     ngOnInit(): void {
-        this.breadcrumbService.set('@Products', '');
+        this.breadcrumbService.set('@ProductCategories', 'Kategóriák');
+        this.breadcrumbService.set('@Products', 'Kategória');
         this.getData();
     }
 
