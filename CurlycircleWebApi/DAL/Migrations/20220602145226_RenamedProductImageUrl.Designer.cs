@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220602145226_RenamedProductImageUrl")]
+    partial class RenamedProductImageUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,14 +84,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "235038dc-fa7b-4b9d-a25d-79bb36c9a4c3",
+                            ConcurrencyStamp = "2c47e30c-1a2c-4cae-b10e-82bb4ce94ddc",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "d82051e6-89da-42a5-83cf-9c54a341d7ce",
+                            ConcurrencyStamp = "acf67c42-cbba-477f-9780-29d3373d5785",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -181,7 +183,7 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7611ff17-5cc0-4deb-baaf-bc727d2c705c",
+                            ConcurrencyStamp = "fb75df90-7707-42f9-8f12-3f7cdce7349d",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Máté",
@@ -189,10 +191,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECTge9AfGaL2DUcJZ2PeJh6boh7jP+WjH0RGRSUtsrth/s4xfRptCopO0AuCIsFAmw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDgdYK/imWr81XC3XCOGLxZl01vp3qk4zrSlSEOSVweB9lHm2rtwvqH/FOMbnHG8ww==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b04ea6fe-89e7-4c99-a62a-eb34c2e9aa3f",
+                            SecurityStamp = "49872a3a-6899-4237-b8c5-62b8d6101bce",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -200,7 +202,7 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f105aee8-4677-45a0-b0b1-153acf146721",
+                            ConcurrencyStamp = "d42ba653-47da-48b5-a4a6-3016eb314ef6",
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "Béla",
@@ -208,10 +210,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKF4E9uGscCHXKlRz4ciGQGJDcxgCKRVDC1rTx1goRl+/Tw9ceXOsMgkpRZ7ovHZ+A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIA5Yhe/p6J8mVx3bzstnNDNR8QShNb57O4FWDcE6VXeVkLDOwTJf1v36veb1wKT+w==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "33370e2b-99b8-4d9e-97e0-76f668de2366",
+                            SecurityStamp = "b78bd386-fe6f-4c65-b803-84b911873ea1",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });
@@ -353,7 +355,6 @@ namespace DAL.Migrations
                             Id = 1,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
-                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Curly1",
@@ -366,7 +367,6 @@ namespace DAL.Migrations
                             Id = 2,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
-                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Curly2",
@@ -391,7 +391,6 @@ namespace DAL.Migrations
                             Id = 4,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
-                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Curly4",
@@ -404,7 +403,6 @@ namespace DAL.Migrations
                             Id = 5,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
-                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Curly5",
@@ -417,7 +415,6 @@ namespace DAL.Migrations
                             Id = 6,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
-                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Hajcsat1",
@@ -430,7 +427,6 @@ namespace DAL.Migrations
                             Id = 7,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
-                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Hajcsat2",
@@ -443,7 +439,6 @@ namespace DAL.Migrations
                             Id = 8,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
-                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Hajcsat3",
@@ -456,7 +451,6 @@ namespace DAL.Migrations
                             Id = 9,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
-                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Hajgumi1",
@@ -469,7 +463,6 @@ namespace DAL.Migrations
                             Id = 10,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
-                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Hajgumi2",
@@ -488,9 +481,6 @@ namespace DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "productcategoryseq");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrls")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

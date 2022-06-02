@@ -9,6 +9,8 @@ namespace Domain.Entities
 
         public string? Description { get; set; }
 
+        public string? ImageUrls { get; set; }
+
         public List<Product> Products { get; set; }
 
         public ProductCategory()
