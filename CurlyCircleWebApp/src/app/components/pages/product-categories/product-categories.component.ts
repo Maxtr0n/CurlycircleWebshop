@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { AppConstants } from 'src/app/core/app-constants';
 import { ProductCategoriesViewModel, ProductCategoryViewModel } from 'src/app/models/models';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
@@ -27,14 +28,24 @@ export class ProductCategoriesComponent implements OnInit {
     }
 
     private getData(): void {
-        this.productCategoryService.getProductCategories().subscribe({
-            next: (productCategoriesViewModel) => {
-                this.productCategories = productCategoriesViewModel.productCategories;
-            },
-            error: (error) => {
-                this.snackBar.open("A termék kategóriák betöltése sikertelen. Kérlek próbálkozz újra!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-warn'] });
-            }
-        });
+        this.productCategoryService.getProductCategories()
+            .subscribe({
+                next: (productCategoriesViewModel) => {
+                    productCategoriesViewModel.productCategories.forEach((productCategoryViewModel) => {
+                        if (productCategoryViewModel.imageUrls.length > 0) {
+                            productCategoryViewModel.imageUrls = productCategoryViewModel.imageUrls.map((imageUrl) => {
+                                return AppConstants.IMAGES_URL.concat(imageUrl);
+                            });
+                        } else {
+                            productCategoryViewModel.imageUrls = [AppConstants.NO_IMAGE_URL];
+                        }
+                    });
+                    this.productCategories = productCategoriesViewModel.productCategories;
+                },
+                error: (error) => {
+                    this.snackBar.open("A termék kategóriák betöltése sikertelen. Kérlek próbálkozz újra!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-warn'] });
+                }
+            });
     }
 
     onProductCategoryClicked(id: number): void {

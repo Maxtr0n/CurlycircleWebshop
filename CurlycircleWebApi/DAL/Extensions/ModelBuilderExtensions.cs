@@ -188,6 +188,7 @@ namespace DAL.Extensions
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                 Price = 3000,
                 ProductCategoryId = 1,
+                ImageUrls = string.Empty
             };
             var product4 = new Product
             {

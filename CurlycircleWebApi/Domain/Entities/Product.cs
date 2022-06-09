@@ -29,7 +29,7 @@ namespace Domain.Entities
 
         public string? Description { get; set; }
 
-        public string? ImageUrls { get; set; }
+        public string ImageUrls { get; set; } = string.Empty;
 
         public Color Color { get; set; } = Color.Other;
 

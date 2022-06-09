@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220602145226_RenamedProductImageUrl")]
-    partial class RenamedProductImageUrl
+    [Migration("20220606170816_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,14 +84,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "2c47e30c-1a2c-4cae-b10e-82bb4ce94ddc",
+                            ConcurrencyStamp = "a0023800-d12c-425a-83d8-3b3988e240c3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "acf67c42-cbba-477f-9780-29d3373d5785",
+                            ConcurrencyStamp = "76f1ddbd-201e-4821-96eb-4e15e9d594a5",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -183,7 +183,7 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fb75df90-7707-42f9-8f12-3f7cdce7349d",
+                            ConcurrencyStamp = "6c7f22fe-1b79-4555-9e56-e99d0dc98414",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Máté",
@@ -191,10 +191,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDgdYK/imWr81XC3XCOGLxZl01vp3qk4zrSlSEOSVweB9lHm2rtwvqH/FOMbnHG8ww==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEA0W1egr+i9yj/oSmfKBzGfF7U5Z7aQJaggqPH9zHTQv7pgfAFKLmOjErlLhCGCBrg==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "49872a3a-6899-4237-b8c5-62b8d6101bce",
+                            SecurityStamp = "bb196ef3-00fe-4439-aa4c-c66c57a50a77",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -202,7 +202,7 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d42ba653-47da-48b5-a4a6-3016eb314ef6",
+                            ConcurrencyStamp = "e85ad6ec-e1a7-4658-9a0c-996e319c6713",
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "Béla",
@@ -210,10 +210,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIA5Yhe/p6J8mVx3bzstnNDNR8QShNb57O4FWDcE6VXeVkLDOwTJf1v36veb1wKT+w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKFRA0DLQcxS3HhQOMhjU+k5HjsXGwO4HGpRClK9fDZe5Tr1bXYvQHEx0B1AvgtJzw==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b78bd386-fe6f-4c65-b803-84b911873ea1",
+                            SecurityStamp = "8b012450-b364-4493-99fa-f2d5f31d432f",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });
@@ -322,6 +322,7 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrls")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAvailable")
@@ -355,6 +356,7 @@ namespace DAL.Migrations
                             Id = 1,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
+                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Curly1",
@@ -367,6 +369,7 @@ namespace DAL.Migrations
                             Id = 2,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
+                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Curly2",
@@ -379,6 +382,7 @@ namespace DAL.Migrations
                             Id = 3,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
+                            ImageUrls = "",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Curly3",
@@ -391,6 +395,7 @@ namespace DAL.Migrations
                             Id = 4,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
+                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Curly4",
@@ -403,6 +408,7 @@ namespace DAL.Migrations
                             Id = 5,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
+                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Curly5",
@@ -415,6 +421,7 @@ namespace DAL.Migrations
                             Id = 6,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
+                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Hajcsat1",
@@ -427,6 +434,7 @@ namespace DAL.Migrations
                             Id = 7,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
+                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Hajcsat2",
@@ -439,6 +447,7 @@ namespace DAL.Migrations
                             Id = 8,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
+                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Hajcsat3",
@@ -451,6 +460,7 @@ namespace DAL.Migrations
                             Id = 9,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
+                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Hajgumi1",
@@ -463,6 +473,7 @@ namespace DAL.Migrations
                             Id = 10,
                             Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
+                            ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
                             Material = 3,
                             Name = "Hajgumi2",
@@ -483,6 +494,10 @@ namespace DAL.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrls")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -496,18 +511,21 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
+                            ImageUrls = "placeholder.jpg",
                             Name = "Curly hajgöndörítők"
                         },
                         new
                         {
                             Id = 2,
                             Description = "Donec tincidunt nunc ac sapien blandit pellentesque. Nulla tincidunt dui vitae nibh aliquet, et efficitur dui dignissim.",
+                            ImageUrls = "placeholder2.jpeg",
                             Name = "Hajcsatok"
                         },
                         new
                         {
                             Id = 3,
                             Description = "Vestibulum aliquam gravida dui, ut volutpat nisi semper quis. ",
+                            ImageUrls = "placeholder3.jpeg",
                             Name = "Hajgumik"
                         });
                 });

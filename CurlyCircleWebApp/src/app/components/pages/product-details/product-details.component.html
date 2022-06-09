@@ -1,8 +1,12 @@
 <div fxLayout="row" fxLayoutAlign="center center">
-    <p-galleria [value]="images">
-        <ng-template pTemplate="item" let-item>
-            <img [src]="item.previewImageSrc" [alt]="item.alt" />
-        </ng-template>
-    </p-galleria>
+    <div>
+        <p-galleria [value]="productImages" [numVisible]="3" [showItemNavigators]="true" [showThumbnails]="false"
+            [containerStyle]="{'max-width': '640px'}" [circular]="true">
+            <ng-template pTemplate="item" let-item>
+                <img [src]="item" class="product-image" />
+            </ng-template>
+        </p-galleria>
+    </div>
+
 
 </div>

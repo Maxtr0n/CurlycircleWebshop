@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
+import { AppConstants } from 'src/app/core/app-constants';
 import { ProductViewModel } from 'src/app/models/models';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -16,6 +17,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     productCategory$: Subscription = new Subscription;
     product$: Subscription = new Subscription;
     product: ProductViewModel | null = null;
+    productImages: string[] = [];
 
     constructor(
         private readonly productCategoryService: ProductCategoryService,
@@ -50,6 +52,14 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         ).subscribe({
             next: (productViewModel) => {
                 console.log(productViewModel);
+                if (productViewModel.imageUrls.length > 0) {
+                    productViewModel.imageUrls = productViewModel.imageUrls.map((imageUrl) => {
+                        return AppConstants.IMAGES_URL.concat(imageUrl);
+                    });
+                } else {
+                    productViewModel.imageUrls = [AppConstants.NO_IMAGE_URL];
+                }
+                this.productImages = productViewModel.imageUrls;
                 this.product = productViewModel;
                 this.breadcrumbService.set('@ProductDetails', productViewModel.name);
             },

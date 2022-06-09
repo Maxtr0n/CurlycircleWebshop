@@ -19,7 +19,7 @@ namespace BLL.ViewModels
 
         public string? Description { get; set; } = default!;
 
-        public string? ImageUrl { get; set; } = default!;
+        public IEnumerable<string> ImageUrls { get; set; } = default!;
 
         public Color? Color { get; set; } = default!;
 

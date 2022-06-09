@@ -13,5 +13,7 @@ namespace BLL.ViewModels
         public string Name { get; set; } = default!;
 
         public string Description { get; set; } = default!;
+
+        public IEnumerable<string> ImageUrls { get; set; } = default!;
     }
 }

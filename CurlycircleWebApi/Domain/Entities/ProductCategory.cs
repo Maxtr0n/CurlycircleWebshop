@@ -9,7 +9,7 @@ namespace Domain.Entities
 
         public string? Description { get; set; }
 
-        public string? ImageUrls { get; set; }
+        public string ImageUrls { get; set; } = string.Empty;
 
         public List<Product> Products { get; set; }
 

@@ -156,12 +156,14 @@ export interface ProductCategoryUpsertDto {
     name: string;
     description: string | null;
     productIds: number[] | null;
+    imageUrls: string[];
 }
 
 export interface ProductCategoryViewModel {
     id: number;
     name: string;
     description: string | null;
+    imageUrls: string[];
 }
 
 export interface ProductUpsertDto {
@@ -169,7 +171,7 @@ export interface ProductUpsertDto {
     name: string;
     productCategoryId: number;
     description: string | null;
-    imageUrl: string | null;
+    imageUrls: string[];
     color: string | null;
     pattern: string | null;
     material: string | null;
@@ -182,7 +184,7 @@ export interface ProductViewModel {
     name: string;
     productCategoryId: number;
     description: string | null;
-    imageUrl: string | null;
+    imageUrls: string[];
     color: Color;
     pattern: Pattern;
     material: Material;
@@ -190,7 +192,7 @@ export interface ProductViewModel {
 }
 
 export interface ProductsViewModel {
-    products: ProductViewModel[] | null;
+    products: ProductViewModel[];
 }
 
 export interface RefreshDto {

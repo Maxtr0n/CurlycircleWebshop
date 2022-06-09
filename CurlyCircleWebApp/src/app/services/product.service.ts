@@ -7,6 +7,7 @@ import { ProductViewModel } from '../models/models';
     providedIn: 'root'
 })
 export class ProductService {
+    public readonly imagesUrl = 'http://localhost:5000/images/';
     private readonly productsUrl = 'api/products';
 
     constructor(private readonly httpClient: AppHttpClient) { }

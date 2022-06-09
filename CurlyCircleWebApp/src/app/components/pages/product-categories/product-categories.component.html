@@ -1,8 +1,9 @@
-<div fxLayout="row wrap" fxLayoutGap="16px grid" fxLayoutAlign="start stretch" class="product-categories">
-    <div fxFlex="350px" *ngFor="let productCategory of productCategories" fxLayoutAlign="center stretch">
+<div fxLayout="row wrap" fxLayoutGap="16px grid" fxLayoutAlign="center stretch" class="product-categories">
+    <div fxFlex="25%" fxFlex.md="33%" fxFlex.sm="50%" fxFlex.xs="100%" *ngFor="let productCategory of productCategories"
+        fxLayoutAlign="center stretch">
         <mat-card (click)="onProductCategoryClicked(productCategory.id)" class="product-category-card">
             <mat-card-title>{{productCategory.name}}</mat-card-title>
-            <img mat-card-image src="http://localhost:5000/images/placeholder.jpg" alt="Image of a product category">
+            <img mat-card-image [src]="productCategory.imageUrls[0]" alt="Image of a product category">
             <mat-card-content>
                 <p>
                     {{productCategory.description}}

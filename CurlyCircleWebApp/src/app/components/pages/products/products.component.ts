@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, switchMap, tap } from 'rxjs';
+import { AppConstants } from 'src/app/core/app-constants';
 import { ProductCategoryViewModel, ProductViewModel } from 'src/app/models/models';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -51,6 +52,15 @@ export class ProductsComponent implements OnInit, OnDestroy {
             switchMap(params => this.productCategoryService.getProductCategoryProducts(params['productCategoryId']))
         ).subscribe({
             next: (productsViewModel) => {
+                productsViewModel.products.forEach((productViewModel) => {
+                    if (productViewModel.imageUrls.length > 0) {
+                        productViewModel.imageUrls = productViewModel.imageUrls.map((imageUrl) => {
+                            return AppConstants.IMAGES_URL.concat(imageUrl);
+                        });
+                    } else {
+                        productViewModel.imageUrls = [AppConstants.NO_IMAGE_URL];
+                    }
+                });
                 this.products = productsViewModel.products;
             },
             error: (error) => {

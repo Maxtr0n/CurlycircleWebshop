@@ -64,7 +64,8 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrls = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -135,7 +136,7 @@ namespace DAL.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductCategoryId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrls = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Color = table.Column<int>(type: "int", nullable: false),
                     Pattern = table.Column<int>(type: "int", nullable: false),
                     Material = table.Column<int>(type: "int", nullable: false),
@@ -347,18 +348,18 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "76ac4f9d-fb49-4347-88e2-6cba8424ec8a", "Admin", "ADMIN" },
-                    { 2, "3f8edcaf-77f5-4279-b0ee-b62a925bd616", "User", "USER" }
+                    { 1, "a0023800-d12c-425a-83d8-3b3988e240c3", "Admin", "ADMIN" },
+                    { 2, "76f1ddbd-201e-4821-96eb-4e15e9d594a5", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "ProductCategories",
-                columns: new[] { "Id", "Description", "Name" },
+                columns: new[] { "Id", "Description", "ImageUrls", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "Curly hajgöndörítők" },
-                    { 2, "Donec tincidunt nunc ac sapien blandit pellentesque. Nulla tincidunt dui vitae nibh aliquet, et efficitur dui dignissim.", "Hajcsatok" },
-                    { 3, "Vestibulum aliquam gravida dui, ut volutpat nisi semper quis. ", "Hajgumik" }
+                    { 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg", "Curly hajgöndörítők" },
+                    { 2, "Donec tincidunt nunc ac sapien blandit pellentesque. Nulla tincidunt dui vitae nibh aliquet, et efficitur dui dignissim.", "placeholder2.jpeg", "Hajcsatok" },
+                    { 3, "Vestibulum aliquam gravida dui, ut volutpat nisi semper quis. ", "placeholder3.jpeg", "Hajgumik" }
                 });
 
             migrationBuilder.InsertData(
@@ -366,8 +367,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SecurityStamp", "TwoFactorEnabled", "UserName", "City", "Line1", "Line2", "ZipCode" },
                 values: new object[,]
                 {
-                    { 1, 0, "95d62643-2238-4ca2-8116-aabd1d8ac54c", "admin@admin.com", false, "Máté", "Schütz", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEHsmrmei/Pj7aHKEuPTWS1xIXAbnZnK30tGGisz679pM1Fn+98DvviEfLNGyroV9Cg==", "06302217831", false, null, null, "7843dcf0-4911-47fc-8499-decbc2cee779", false, "admin", "Göd", "Sajó utca 19.", null, "2131" },
-                    { 2, 0, "8ef2e743-217a-47af-84b8-1f38e97d3ed6", "user@user.com", false, "Béla", "Kovács", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEGHG+HmiqAK1Y3p68C4gntgS6xm2YUWTtdbYKk+X0FkbdDseLQJxAKNg0GYiq0FO2Q==", "06302217831", false, null, null, "5c3eb1f2-c04c-4e88-b4c7-39a42dea6783", false, "user", "Göd", "Sajó utca 19.", "Fsz.", "2131" }
+                    { 1, 0, "6c7f22fe-1b79-4555-9e56-e99d0dc98414", "admin@admin.com", false, "Máté", "Schütz", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEA0W1egr+i9yj/oSmfKBzGfF7U5Z7aQJaggqPH9zHTQv7pgfAFKLmOjErlLhCGCBrg==", "06302217831", false, null, null, "bb196ef3-00fe-4439-aa4c-c66c57a50a77", false, "admin", "Göd", "Sajó utca 19.", null, "2131" },
+                    { 2, 0, "e85ad6ec-e1a7-4658-9a0c-996e319c6713", "user@user.com", false, "Béla", "Kovács", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEKFRA0DLQcxS3HhQOMhjU+k5HjsXGwO4HGpRClK9fDZe5Tr1bXYvQHEx0B1AvgtJzw==", "06302217831", false, null, null, "8b012450-b364-4493-99fa-f2d5f31d432f", false, "user", "Göd", "Sajó utca 19.", "Fsz.", "2131" }
                 });
 
             migrationBuilder.InsertData(
@@ -390,19 +391,19 @@ namespace DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Color", "Description", "ImageUrl", "IsAvailable", "Material", "Name", "Pattern", "Price", "ProductCategoryId" },
+                columns: new[] { "Id", "Color", "Description", "ImageUrls", "IsAvailable", "Material", "Name", "Pattern", "Price", "ProductCategoryId" },
                 values: new object[,]
                 {
-                    { 1, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", null, true, 3, "Curly1", 4, 2500.0, 1 },
-                    { 2, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", null, true, 3, "Curly2", 4, 3000.0, 1 },
-                    { 3, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", null, true, 3, "Curly3", 4, 3000.0, 1 },
-                    { 4, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", null, true, 3, "Curly4", 4, 3500.0, 1 },
-                    { 5, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", null, true, 3, "Curly5", 4, 3500.0, 1 },
-                    { 6, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", null, true, 3, "Hajcsat1", 4, 4000.0, 2 },
-                    { 7, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", null, true, 3, "Hajcsat2", 4, 2500.0, 2 },
-                    { 8, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", null, true, 3, "Hajcsat3", 4, 1500.0, 2 },
-                    { 9, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", null, true, 3, "Hajgumi1", 4, 2000.0, 3 },
-                    { 10, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", null, true, 3, "Hajgumi2", 4, 3000.0, 3 }
+                    { 1, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Curly1", 4, 2500.0, 1 },
+                    { 2, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Curly2", 4, 3000.0, 1 },
+                    { 3, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "", true, 3, "Curly3", 4, 3000.0, 1 },
+                    { 4, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Curly4", 4, 3500.0, 1 },
+                    { 5, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Curly5", 4, 3500.0, 1 },
+                    { 6, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Hajcsat1", 4, 4000.0, 2 },
+                    { 7, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Hajcsat2", 4, 2500.0, 2 },
+                    { 8, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Hajcsat3", 4, 1500.0, 2 },
+                    { 9, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Hajgumi1", 4, 2000.0, 3 },
+                    { 10, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Hajgumi2", 4, 3000.0, 3 }
                 });
 
             migrationBuilder.CreateIndex(
