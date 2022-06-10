@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="center center">
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="">
     <div>
         <p-galleria [value]="productImages" [numVisible]="3" [showItemNavigators]="true" [showThumbnails]="false"
             [containerStyle]="{'max-width': '640px'}" [circular]="true">
@@ -7,6 +7,18 @@
             </ng-template>
         </p-galleria>
     </div>
-
+    <div fxLayout="column">
+        <h1>{{product?.name}}</h1>
+        <p>{{product?.description}}</p>
+        <p>{{product?.price}} Ft</p>
+        <div>
+            <p-inputNumber [(ngModel)]="quantity" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal"
+                spinnerMode="horizontal" [min]="1" [max]="10" decrementButtonClass="p-button-danger"
+                incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus" mode="decimal">
+            </p-inputNumber>
+        </div>
+        <button (click)="addToCart()" mat-raised-button color="primary">Kosárba</button>
+    </div>
 
 </div>

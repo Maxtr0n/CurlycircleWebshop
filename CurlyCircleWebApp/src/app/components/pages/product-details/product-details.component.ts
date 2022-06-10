@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
 import { AppConstants } from 'src/app/core/app-constants';
 import { ProductViewModel } from 'src/app/models/models';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { ProductService } from 'src/app/services/product.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
@@ -18,10 +19,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     product$: Subscription = new Subscription;
     product: ProductViewModel | null = null;
     productImages: string[] = [];
+    quantity: number = 1;
 
     constructor(
         private readonly productCategoryService: ProductCategoryService,
         private readonly productService: ProductService,
+        private readonly cartService: CartService,
         private readonly router: Router,
         private readonly route: ActivatedRoute,
         private readonly snackBar: MatSnackBar,
@@ -67,5 +70,11 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
                 this.snackBar.open("A termék betöltése sikertelen. Kérlek próbálkozz újra!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-warn'] });
             }
         });
+    }
+
+    addToCart(): void {
+        if (this.product) {
+            this.cartService.addItemToCart(this.product, this.quantity);
+        }
     }
 }

@@ -8,7 +8,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './core/http-interceptor-providers';
+
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { BreadcrumbModule } from 'xng-breadcrumb';
 
 import { HomeComponent } from './components/pages/home/home.component';
@@ -53,6 +55,7 @@ import { PrimengModule } from './primeng/primeng.module';
         MaterialModule,
         FlexLayoutModule,
         ReactiveFormsModule,
+        FormsModule,
         BreadcrumbModule,
         PrimengModule
     ],
