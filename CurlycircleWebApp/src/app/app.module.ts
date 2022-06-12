@@ -27,7 +27,7 @@ import { ProductCategoriesComponent } from './components/pages/product-categorie
 import { ProductsComponent } from './components/pages/products/products.component';
 import { ProductDetailsComponent } from './components/pages/product-details/product-details.component';
 import { ShopComponent } from './components/pages/shop/shop.component';
-import { PrimengModule } from './primeng/primeng.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -57,7 +57,7 @@ import { PrimengModule } from './primeng/primeng.module';
         ReactiveFormsModule,
         FormsModule,
         BreadcrumbModule,
-        PrimengModule
+        NgbModule,
     ],
     providers: [
         httpInterceptorProviders,

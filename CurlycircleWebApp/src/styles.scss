@@ -80,3 +80,5 @@ body {
     border-radius: 4px;
     background-color: mat.get-color-from-palette(mat.$blue-grey-palette, 50);
 }
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

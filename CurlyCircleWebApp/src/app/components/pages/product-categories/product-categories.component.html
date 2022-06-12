@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" fxLayoutGap="16px grid" fxLayoutAlign="center stretch" class="product-categories">
+<div fxLayout="row wrap" fxLayoutGap="2em grid" fxLayoutAlign="center stretch" class="product-categories">
     <div fxFlex="25%" fxFlex.md="33%" fxFlex.sm="50%" fxFlex.xs="100%" *ngFor="let productCategory of productCategories"
         fxLayoutAlign="center stretch">
         <mat-card (click)="onProductCategoryClicked(productCategory.id)" class="product-category-card">

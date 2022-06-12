@@ -1,22 +1,19 @@
-<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="">
-    <div>
-        <p-galleria [value]="productImages" [numVisible]="3" [showItemNavigators]="true" [showThumbnails]="false"
-            [containerStyle]="{'max-width': '640px'}" [circular]="true">
-            <ng-template pTemplate="item" let-item>
-                <img [src]="item" class="product-image" />
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="2em">
+    <div class="carousel-container">
+        <ngb-carousel>
+            <ng-template ngbSlide *ngFor="let image of productImages; let index=index">
+                <div class="picsum-img-wrapper carousel-image-container">
+                    <img [src]="image" class="w-100">
+                </div>
             </ng-template>
-        </p-galleria>
+        </ngb-carousel>
     </div>
-    <div fxLayout="column">
+    <div fxLayout="column" fxLayoutGap="1em">
         <h1>{{product?.name}}</h1>
         <p>{{product?.description}}</p>
         <p>{{product?.price}} Ft</p>
         <div>
-            <p-inputNumber [(ngModel)]="quantity" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal"
-                spinnerMode="horizontal" [min]="1" [max]="10" decrementButtonClass="p-button-danger"
-                incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus" mode="decimal">
-            </p-inputNumber>
+
         </div>
         <button (click)="addToCart()" mat-raised-button color="primary">Kosárba</button>
     </div>
