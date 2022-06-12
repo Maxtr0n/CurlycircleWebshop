@@ -1,0 +1,9 @@
+<mat-card (click)="onCardClicked(item.id)" class="product-card" fxLayout="column">
+    <mat-card-title>{{item.name}}</mat-card-title>
+    <img mat-card-image [src]="item.imageUrls[0]" alt="Image of a product" class="product-image">
+    <mat-card-content>
+        <p>
+            {{item.description}}
+        </p>
+    </mat-card-content>
+</mat-card>

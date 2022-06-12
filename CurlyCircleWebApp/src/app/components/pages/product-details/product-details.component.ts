@@ -54,7 +54,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
             switchMap(params => this.productService.getProduct(params['productId']))
         ).subscribe({
             next: (productViewModel) => {
-                console.log(productViewModel);
                 if (productViewModel.imageUrls.length > 0) {
                     productViewModel.imageUrls = productViewModel.imageUrls.map((imageUrl) => {
                         return AppConstants.IMAGES_URL.concat(imageUrl);
@@ -74,7 +73,26 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
     addToCart(): void {
         if (this.product) {
-            this.cartService.addItemToCart(this.product, this.quantity);
+            this.cartService.addItemToCart(this.product, this.quantity).subscribe({
+                next: () => {
+                    this.snackBar.open("A termék sikeresen hozzáadva a kosárhoz!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'] });
+                },
+                error: () => {
+                    this.snackBar.open("A termék hozzáadása a kosárhoz sikertelen. Kérlek próbálkozz újra!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-warn'] });
+                }
+            });
+        }
+    }
+
+    increaseQuantity(): void {
+        if (this.quantity < 10) {
+            this.quantity++;
+        }
+    }
+
+    decreaseQuantity(): void {
+        if (this.quantity > 1) {
+            this.quantity--;
         }
     }
 }

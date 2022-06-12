@@ -12,8 +12,20 @@
         <h1>{{product?.name}}</h1>
         <p>{{product?.description}}</p>
         <p>{{product?.price}} Ft</p>
-        <div>
-
+        <div fxlayout="row inline" fxLayoutGap="1em">
+            <button [disabled]="quantity<=1" (click)="decreaseQuantity()" mat-raised-button color="primary">
+                <mat-icon>
+                    remove
+                </mat-icon>
+            </button>
+            <mat-form-field appearance="outline">
+                <input matInput type="number" [(ngModel)]="quantity" min="1" max="10" class="quantity-input" />
+            </mat-form-field>
+            <button [disabled]="quantity>=10" (click)="increaseQuantity()" mat-raised-button color="primary">
+                <mat-icon>
+                    add
+                </mat-icon>
+            </button>
         </div>
         <button (click)="addToCart()" mat-raised-button color="primary">Kosárba</button>
     </div>

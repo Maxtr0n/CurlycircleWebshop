@@ -28,6 +28,8 @@ import { ProductsComponent } from './components/pages/products/products.componen
 import { ProductDetailsComponent } from './components/pages/product-details/product-details.component';
 import { ShopComponent } from './components/pages/shop/shop.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProductCardComponent } from './components/shared/product-card/product-card.component';
+import { CartComponent } from './components/pages/cart/cart.component';
 
 @NgModule({
     declarations: [
@@ -46,6 +48,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         ProductsComponent,
         ProductDetailsComponent,
         ShopComponent,
+        ProductCardComponent,
+        CartComponent,
     ],
     imports: [
         BrowserModule,

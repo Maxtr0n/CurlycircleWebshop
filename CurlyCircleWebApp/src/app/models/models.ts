@@ -18,7 +18,6 @@ export interface CartItemViewModel {
     id: number;
     cartId: number;
     productId: number;
-    product: ProductViewModel;
     price: number;
     quantity: number;
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CartComponent } from './components/pages/cart/cart.component';
 import { ContactComponent } from './components/pages/contact/contact.component';
 import { HomeComponent } from './components/pages/home/home.component';
 import { LoginComponent } from './components/pages/login/login.component';
@@ -31,6 +32,7 @@ const routes: Routes = [
 
         ]
     },
+    { path: 'cart', component: CartComponent },
     { path: 'contact', component: ContactComponent },
     { path: '', component: HomeComponent },
     { path: '**', component: HomeComponent }, //TODO: PageNotFoundComponent

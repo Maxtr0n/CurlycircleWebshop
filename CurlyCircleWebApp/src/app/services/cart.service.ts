@@ -56,6 +56,33 @@ export class CartService {
         }
     }
 
+    public clearCart(): Observable<void> {
+        const cartId = this.currentCartValue?.id;
+        if (!cartId) {
+            return of();
+        }
+
+        return this.httpClient.delete<void>(`${this.cartUrl}/${cartId}/clear`);
+    }
+
+    public removeCartItem(cartItemId: number): Observable<void> {
+        const cartId = this.currentCartValue?.id;
+        if (!cartId) {
+            return of();
+        }
+
+        return this.httpClient.delete<void>(`${this.cartUrl}/${cartId}/cartItems/${cartItemId}`);
+    }
+
+    public updateCartItem(cartItemId: number, quantity: number): Observable<void> {
+        const cartId = this.currentCartValue?.id;
+        if (!cartId) {
+            return of();
+        }
+
+        return this.httpClient.put<void>(`${this.cartUrl}/${cartId}/cartItems/${cartItemId}`, { quantity });
+    }
+
     public getCurrentLocalCart(): LocalCart | null {
         const currentLocalCart = localStorage.getItem(LOCAL_CART_KEY);
         if (currentLocalCart === null) {
@@ -81,8 +108,10 @@ export class CartService {
         return this.httpClient.get<CartViewModel>(`${this.cartUrl}/${cartId}`);
     }
 
-    private deleteCart(cartId: number): Observable<void> {
-        return this.httpClient.delete(`${this.cartUrl}/${cartId}`);
+    private getCartByIdAndEmit(cartId: number): Observable<CartViewModel> {
+        return this.getCartById(cartId).pipe(
+            tap(cart => this.currentCartSubject.next(cart))
+        );
     }
 
     private getCartByIdAndSetAsUserCart(cartId: number): Observable<CartViewModel> {
@@ -95,7 +124,9 @@ export class CartService {
     }
 
     private addToCart(cartId: number, cartItemDto: CartItemUpsertDto): Observable<EntityCreatedViewModel> {
-        return this.httpClient.post<EntityCreatedViewModel>(`${this.cartUrl}/${cartId}/cartItems`, cartItemDto);
+        return this.httpClient.post<EntityCreatedViewModel>(`${this.cartUrl}/${cartId}/cartItems`, cartItemDto).pipe(
+            switchMap(() => this.getCartByIdAndEmit(cartId))
+        );
     }
 
     private createCartAndGetById(): Observable<CartViewModel> {

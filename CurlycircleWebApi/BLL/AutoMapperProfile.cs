@@ -65,6 +65,8 @@ namespace BLL
 
             CreateMap<Cart, CartViewModel>();
 
+            CreateMap<CartItem, CartItemViewModel>();
+
             CreateMap<CartItemUpsertDto, CartItem>();
 
             CreateMap<CartItemViewModel, CartItemUpsertDto>();

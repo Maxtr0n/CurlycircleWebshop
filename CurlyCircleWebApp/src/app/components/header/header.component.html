@@ -24,7 +24,8 @@
     <div fxFlex fxLayout fxLayoutAlign="end">
         <ul fxLayout fxLayoutGap="5px" class="navigation-items">
             <li>
-                <button mat-icon-button aria-label="Kosár" matTooltip="Kosár" class="nav-icon-button">
+                <button mat-icon-button routerLink="/cart" routerLinkActive="active" aria-label="Kosár"
+                    matTooltip="Kosár" class="nav-icon-button">
                     <mat-icon [matBadge]="currentCartSize" matBadgeColor="warn" class="material-icons md-30">
                         shopping_cart</mat-icon>
                 </button>
