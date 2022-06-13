@@ -10,24 +10,25 @@
     </div>
     <div fxLayout="column" fxLayoutGap="1em">
         <h1>{{product?.name}}</h1>
+        <h2>{{product?.price}} Ft</h2>
         <p>{{product?.description}}</p>
-        <p>{{product?.price}} Ft</p>
         <div fxlayout="row inline" fxLayoutGap="1em">
-            <button [disabled]="quantity<=1" (click)="decreaseQuantity()" mat-raised-button color="primary">
+            <button [disabled]="quantity<=1" (click)="decreaseQuantity()" mat-icon-button color="primary">
                 <mat-icon>
                     remove
                 </mat-icon>
             </button>
-            <mat-form-field appearance="outline">
-                <input matInput type="number" [(ngModel)]="quantity" min="1" max="10" class="quantity-input" />
+            <mat-form-field appearance="outline" class="quantity-container">
+                <input matInput type="number" readonly="true" [(ngModel)]="quantity" min="1" max="10"
+                    class="quantity-input" />
             </mat-form-field>
-            <button [disabled]="quantity>=10" (click)="increaseQuantity()" mat-raised-button color="primary">
+            <button [disabled]="quantity>=10" (click)="increaseQuantity()" mat-icon-button color="primary">
                 <mat-icon>
                     add
                 </mat-icon>
             </button>
         </div>
-        <button (click)="addToCart()" mat-raised-button color="primary">Kosárba</button>
+        <button (click)="addToCart()" mat-raised-button color="primary" class="cart-button">Kosárba</button>
     </div>
 
 </div>

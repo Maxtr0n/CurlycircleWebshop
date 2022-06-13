@@ -15,6 +15,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
     declarations: [],
@@ -34,6 +35,7 @@ import { MatCardModule } from '@angular/material/card';
         MatTooltipModule,
         MatDividerModule,
         MatCardModule,
+        MatTableModule,
     ],
     exports: [
         MatSliderModule,
@@ -50,6 +52,7 @@ import { MatCardModule } from '@angular/material/card';
         MatTooltipModule,
         MatDividerModule,
         MatCardModule,
+        MatTableModule,
     ],
 })
 export class MaterialModule { }

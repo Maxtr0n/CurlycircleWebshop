@@ -56,31 +56,37 @@ export class CartService {
         }
     }
 
-    public clearCart(): Observable<void> {
+    public clearCart(): Observable<CartViewModel> {
         const cartId = this.currentCartValue?.id;
         if (!cartId) {
             return of();
         }
 
-        return this.httpClient.delete<void>(`${this.cartUrl}/${cartId}/clear`);
+        return this.httpClient.delete<void>(`${this.cartUrl}/${cartId}/clear`).pipe(
+            switchMap(() => this.getCartByIdAndEmit(cartId))
+        );
     }
 
-    public removeCartItem(cartItemId: number): Observable<void> {
+    public removeCartItem(cartItemId: number): Observable<CartViewModel> {
         const cartId = this.currentCartValue?.id;
         if (!cartId) {
             return of();
         }
 
-        return this.httpClient.delete<void>(`${this.cartUrl}/${cartId}/cartItems/${cartItemId}`);
+        return this.httpClient.delete<void>(`${this.cartUrl}/${cartId}/cartItems/${cartItemId}`).pipe(
+            switchMap(() => this.getCartByIdAndEmit(cartId))
+        );
     }
 
-    public updateCartItem(cartItemId: number, quantity: number): Observable<void> {
+    public updateCartItem(cartItemId: number, quantity: number): Observable<CartViewModel> {
         const cartId = this.currentCartValue?.id;
         if (!cartId) {
             return of();
         }
 
-        return this.httpClient.put<void>(`${this.cartUrl}/${cartId}/cartItems/${cartItemId}`, { quantity });
+        return this.httpClient.put<void>(`${this.cartUrl}/${cartId}/cartItems/${cartItemId}`, { quantity }).pipe(
+            switchMap(() => this.getCartByIdAndEmit(cartId))
+        );
     }
 
     public getCurrentLocalCart(): LocalCart | null {

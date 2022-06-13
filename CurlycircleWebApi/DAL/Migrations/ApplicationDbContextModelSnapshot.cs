@@ -645,7 +645,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Domain.Entities.ApplicationUser", b =>
                 {
-                    b.OwnsOne("Domain.Entities.UserAddress", "Address", b1 =>
+                    b.OwnsOne("Domain.Entities.ApplicationUser.Address#Domain.Entities.UserAddress", "Address", b1 =>
                         {
                             b1.Property<int>("ApplicationUserId")
                                 .HasColumnType("int");
@@ -671,7 +671,7 @@ namespace DAL.Migrations
 
                             b1.HasKey("ApplicationUserId");
 
-                            b1.ToTable("Users");
+                            b1.ToTable("Users", (string)null);
 
                             b1.WithOwner("ApplicationUser")
                                 .HasForeignKey("ApplicationUserId");
@@ -707,7 +707,7 @@ namespace DAL.Migrations
                         .HasForeignKey("Domain.Entities.Cart", "ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.OwnsMany("Domain.Entities.CartItem", "CartItems", b1 =>
+                    b.OwnsMany("Domain.Entities.Cart.CartItems#Domain.Entities.CartItem", "CartItems", b1 =>
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
@@ -733,7 +733,7 @@ namespace DAL.Migrations
 
                             b1.HasIndex("ProductId");
 
-                            b1.ToTable("CartItem");
+                            b1.ToTable("CartItem", (string)null);
 
                             b1.WithOwner("Cart")
                                 .HasForeignKey("CartId");
@@ -761,7 +761,7 @@ namespace DAL.Migrations
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.OwnsOne("Domain.Entities.OrderAddress", "Address", b1 =>
+                    b.OwnsOne("Domain.Entities.Order.Address#Domain.Entities.OrderAddress", "Address", b1 =>
                         {
                             b1.Property<int>("OrderId")
                                 .HasColumnType("int");
@@ -787,7 +787,7 @@ namespace DAL.Migrations
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("Orders");
+                            b1.ToTable("Orders", (string)null);
 
                             b1.WithOwner("Order")
                                 .HasForeignKey("OrderId");
@@ -795,7 +795,7 @@ namespace DAL.Migrations
                             b1.Navigation("Order");
                         });
 
-                    b.OwnsMany("Domain.Entities.OrderItem", "OrderItems", b1 =>
+                    b.OwnsMany("Domain.Entities.Order.OrderItems#Domain.Entities.OrderItem", "OrderItems", b1 =>
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
@@ -823,7 +823,7 @@ namespace DAL.Migrations
 
                             b1.HasIndex("ProductId");
 
-                            b1.ToTable("OrderItem");
+                            b1.ToTable("OrderItem", (string)null);
 
                             b1.WithOwner("Order")
                                 .HasForeignKey("OrderId");

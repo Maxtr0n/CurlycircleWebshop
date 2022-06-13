@@ -18,17 +18,18 @@ export interface CartItemViewModel {
     id: number;
     cartId: number;
     productId: number;
+    product: ProductViewModel;
     price: number;
     quantity: number;
 }
 
 export interface CartItemsViewModel {
-    cartItems: CartItemViewModel[] | null;
+    cartItems: CartItemViewModel[];
 }
 
 export interface CartViewModel {
     id: number;
-    cartItems: CartItemViewModel[] | null;
+    cartItems: CartItemViewModel[];
 }
 
 export interface LocalCart {

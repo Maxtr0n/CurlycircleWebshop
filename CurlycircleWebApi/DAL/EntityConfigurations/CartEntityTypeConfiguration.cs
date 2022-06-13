@@ -27,6 +27,7 @@ namespace DAL.EntityConfigurations
                 ci.WithOwner(ci => ci.Cart).HasForeignKey(ci => ci.CartId);
                 ci.Navigation(ci => ci.Cart).UsePropertyAccessMode(PropertyAccessMode.Field);
                 ci.HasOne(ci => ci.Product);
+                ci.Navigation(ci => ci.Product).AutoInclude();
             });
         }
     }
