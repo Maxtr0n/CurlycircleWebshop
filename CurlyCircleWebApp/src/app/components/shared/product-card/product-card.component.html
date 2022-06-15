@@ -1,6 +1,10 @@
 <mat-card (click)="onCardClicked(item.id)" class="product-card" fxLayout="column">
     <mat-card-title>{{item.name}}</mat-card-title>
-    <img mat-card-image [src]="item.imageUrls[0]" alt="Image of a product" class="product-image">
+    <img *ngIf="item.imageUrls.length > 0; else noImageBlock" mat-card-image [src]="imagesBaseUrl + item.imageUrls[0]"
+        alt="Image of a product" class="product-image">
+    <ng-template #noImageBlock>
+        <img mat-card-image [src]="noImageUrl" alt="Image of a product" class="product-image">
+    </ng-template>
     <mat-card-content>
         <p>
             {{item.description}}

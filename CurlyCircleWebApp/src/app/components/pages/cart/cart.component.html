@@ -10,7 +10,11 @@
                 <th mat-header-cell *matHeaderCellDef>Termék</th>
                 <td mat-cell *matCellDef="let element">
                     <div class="product-container">
-                        <img [src]="element.product.imageUrls[0]" class="w-50">
+                        <img *ngIf="element.product.imageUrls.length > 0; else noImageBlock"
+                            [src]="imagesBaseUrl + element.product.imageUrls[0]" class="w-50">
+                        <ng-template #noImageBlock>
+                            <img [src]="noImageUrl" class="w-50">
+                        </ng-template>
                         <p>{{element.product.name}}</p>
                     </div>
                 </td>

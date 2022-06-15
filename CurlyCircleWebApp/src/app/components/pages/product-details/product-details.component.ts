@@ -18,8 +18,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     productCategory$: Subscription = new Subscription;
     product$: Subscription = new Subscription;
     product: ProductViewModel | null = null;
-    productImages: string[] = [];
     quantity: number = 1;
+    imagesBaseUrl: string = AppConstants.IMAGES_URL;
+    noImageUrl: string = AppConstants.NO_IMAGE_URL;
 
     constructor(
         private readonly productCategoryService: ProductCategoryService,
@@ -54,14 +55,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
             switchMap(params => this.productService.getProduct(params['productId']))
         ).subscribe({
             next: (productViewModel) => {
-                if (productViewModel.imageUrls.length > 0) {
-                    productViewModel.imageUrls = productViewModel.imageUrls.map((imageUrl) => {
-                        return AppConstants.IMAGES_URL.concat(imageUrl);
-                    });
-                } else {
-                    productViewModel.imageUrls = [AppConstants.NO_IMAGE_URL];
-                }
-                this.productImages = productViewModel.imageUrls;
                 this.product = productViewModel;
                 this.breadcrumbService.set('@ProductDetails', productViewModel.name);
             },

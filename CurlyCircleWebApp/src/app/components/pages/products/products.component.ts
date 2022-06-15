@@ -18,6 +18,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     products: ProductViewModel[] | null = [];
     productCategory$: Subscription = new Subscription;
     products$: Subscription = new Subscription;
+    imagesBaseUrl: string = AppConstants.IMAGES_URL;
+    noImageUrl: string = AppConstants.NO_IMAGE_URL;
 
     constructor(
         private readonly productCategoryService: ProductCategoryService,
@@ -52,15 +54,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
             switchMap(params => this.productCategoryService.getProductCategoryProducts(params['productCategoryId']))
         ).subscribe({
             next: (productsViewModel) => {
-                productsViewModel.products.forEach((productViewModel) => {
-                    if (productViewModel.imageUrls.length > 0) {
-                        productViewModel.imageUrls = productViewModel.imageUrls.map((imageUrl) => {
-                            return AppConstants.IMAGES_URL.concat(imageUrl);
-                        });
-                    } else {
-                        productViewModel.imageUrls = [AppConstants.NO_IMAGE_URL];
-                    }
-                });
                 this.products = productsViewModel.products;
             },
             error: (error) => {

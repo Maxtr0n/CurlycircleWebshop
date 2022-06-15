@@ -1,11 +1,21 @@
 <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="2em">
     <div class="carousel-container">
         <ngb-carousel>
-            <ng-template ngbSlide *ngFor="let image of productImages; let index=index">
-                <div class="picsum-img-wrapper carousel-image-container">
-                    <img [src]="image" class="w-100">
-                </div>
-            </ng-template>
+            <ng-container *ngIf="!product || product.imageUrls.length <= 0;">
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper carousel-image-container">
+                        <img [src]="noImageUrl" class="w-100">
+                    </div>
+                </ng-template>
+            </ng-container>
+            <ng-container *ngIf="product && product.imageUrls.length > 0">
+                <ng-template ngbSlide *ngFor="let image of product?.imageUrls; let index=index">
+                    <div class="picsum-img-wrapper carousel-image-container">
+                        <img [src]="imagesBaseUrl + image" class="w-100">
+                        <img *ngIf="image.length <= 0" [src]="noImageUrl" class="w-100">
+                    </div>
+                </ng-template>
+            </ng-container>
         </ngb-carousel>
     </div>
     <div fxLayout="column" fxLayoutGap="1em">

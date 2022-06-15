@@ -16,6 +16,8 @@ export class CartComponent implements OnInit {
 
     displayedColumns: string[] = ['product', 'price', 'quantity', 'total', 'delete'];
     dataSource = new MatTableDataSource<CartItemViewModel>([]);
+    imagesBaseUrl: string = AppConstants.IMAGES_URL;
+    noImageUrl: string = AppConstants.NO_IMAGE_URL;
 
     constructor(
         private readonly cartService: CartService,
@@ -28,16 +30,6 @@ export class CartComponent implements OnInit {
             map(cart => cart?.cartItems ?? [])
         ).subscribe({
             next: (cartItems: CartItemViewModel[]) => {
-                cartItems.forEach((cartItem) => {
-                    if (cartItem.product.imageUrls.length > 0) {
-                        cartItem.product.imageUrls = cartItem.product.imageUrls.map((imageUrl) => {
-                            return AppConstants.IMAGES_URL.concat(imageUrl);
-                        });
-                    } else {
-                        cartItem.product.imageUrls = [AppConstants.NO_IMAGE_URL];
-                    }
-                });
-
                 this.dataSource.data = cartItems;
             }
         });

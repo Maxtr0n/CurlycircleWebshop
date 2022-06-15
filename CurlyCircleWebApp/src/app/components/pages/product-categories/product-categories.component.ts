@@ -13,6 +13,8 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 })
 export class ProductCategoriesComponent implements OnInit {
     productCategories: ProductCategoryViewModel[] = [];
+    imagesBaseUrl: string = AppConstants.IMAGES_URL;
+    noImageUrl: string = AppConstants.NO_IMAGE_URL;
 
     constructor(
         private readonly productCategoryService: ProductCategoryService,
@@ -31,15 +33,6 @@ export class ProductCategoriesComponent implements OnInit {
         this.productCategoryService.getProductCategories()
             .subscribe({
                 next: (productCategoriesViewModel) => {
-                    productCategoriesViewModel.productCategories.forEach((productCategoryViewModel) => {
-                        if (productCategoryViewModel.imageUrls.length > 0) {
-                            productCategoryViewModel.imageUrls = productCategoryViewModel.imageUrls.map((imageUrl) => {
-                                return AppConstants.IMAGES_URL.concat(imageUrl);
-                            });
-                        } else {
-                            productCategoryViewModel.imageUrls = [AppConstants.NO_IMAGE_URL];
-                        }
-                    });
                     this.productCategories = productCategoriesViewModel.productCategories;
                 },
                 error: (error) => {
