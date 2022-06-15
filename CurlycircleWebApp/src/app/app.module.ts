@@ -23,9 +23,9 @@ import { RegistrationComponent } from './components/pages/registration/registrat
 import { ProfileComponent } from './components/pages/profile/profile.component';
 import { MyOrdersComponent } from './components/pages/my-orders/my-orders.component';
 import { ContactComponent } from './components/pages/contact/contact.component';
-import { ProductCategoriesComponent } from './components/pages/product-categories/product-categories.component';
-import { ProductsComponent } from './components/pages/products/products.component';
-import { ProductDetailsComponent } from './components/pages/product-details/product-details.component';
+import { ProductCategoriesComponent } from './components/pages/shop/product-categories/product-categories.component';
+import { ProductsComponent } from './components/pages/shop/products/products.component';
+import { ProductDetailsComponent } from './components/pages/shop/product-details/product-details.component';
 import { ShopComponent } from './components/pages/shop/shop.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductCardComponent } from './components/shared/product-card/product-card.component';
