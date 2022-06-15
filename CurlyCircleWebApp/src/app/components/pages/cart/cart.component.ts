@@ -14,7 +14,7 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CartComponent implements OnInit {
 
-    displayedColumns: string[] = ['product', 'price', 'quantity', 'delete', 'total'];
+    displayedColumns: string[] = ['product', 'price', 'quantity', 'total', 'delete'];
     dataSource = new MatTableDataSource<CartItemViewModel>([]);
     imagesBaseUrl: string = AppConstants.IMAGES_URL;
     noImageUrl: string = AppConstants.NO_IMAGE_URL;
@@ -42,7 +42,7 @@ export class CartComponent implements OnInit {
     }
 
     public checkout(): void {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/order']);
     }
 
     public clearCart(): void {

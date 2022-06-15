@@ -14,13 +14,39 @@ table {
     display: flex;
     flex-direction: row;
     gap: 1em;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 1em;
     margin-top: 1em;
+
+    p {
+        margin: 0px;
+    }
+}
+
+.product-image {
     width: 20em;
+    border-radius: 1em;
 }
 
 tr.mat-footer-row {
     font-weight: bold;
-  }
+    border-top: 2px solid #e0e0e0;
+}
+
+.mat-column-price {
+    text-align: center;
+}
+
+.mat-column-quantity {
+    text-align: center;
+}
+
+.mat-column-total {
+    text-align: center;
+}
+
+.mat-column-delete {
+    text-align: center;
+    width: 5em;
+}

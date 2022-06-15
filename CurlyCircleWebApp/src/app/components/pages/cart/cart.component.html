@@ -4,18 +4,17 @@
     </ng-container>
 
     <ng-container *ngIf="dataSource.data.length > 0">
-        <h2>Kosár tartalma</h2>
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="product">
                 <th mat-header-cell *matHeaderCellDef>Termék</th>
                 <td mat-cell *matCellDef="let element">
                     <div class="product-container">
                         <img *ngIf="element.product.imageUrls.length > 0; else noImageBlock"
-                            [src]="imagesBaseUrl + element.product.imageUrls[0]" class="w-50">
+                            [src]="imagesBaseUrl + element.product.imageUrls[0]" class="product-image">
                         <ng-template #noImageBlock>
-                            <img [src]="noImageUrl" class="w-50">
+                            <img [src]="noImageUrl" class="product-image">
                         </ng-template>
-                        <p>{{element.product.name}}</p>
+                        <p class="mat-title">{{element.product.name}}</p>
                     </div>
                 </td>
                 <td mat-footer-cell *matFooterCellDef>Összesen</td>
@@ -33,8 +32,8 @@
             <ng-container matColumnDef="delete">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
-                    <button color="warn" mat-icon-button (click)="removeItem(element)">
-                        <mat-icon>delete</mat-icon>
+                    <button mat-icon-button (click)="removeItem(element)">
+                        <mat-icon>close</mat-icon>
                     </button>
                 </td>
                 <td mat-footer-cell *matFooterCellDef></td>
