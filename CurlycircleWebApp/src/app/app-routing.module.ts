@@ -12,6 +12,7 @@ import { ProfileComponent } from './components/pages/profile/profile.component';
 import { RegistrationComponent } from './components/pages/registration/registration.component';
 import { ShopComponent } from './components/pages/shop/shop.component';
 import { UserGuard } from './guards/user.guard';
+import { OrderComponent } from './components/pages/order/order.component';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -33,6 +34,7 @@ const routes: Routes = [
         ]
     },
     { path: 'cart', component: CartComponent },
+    { path: 'order', component: OrderComponent },
     { path: 'contact', component: ContactComponent },
     { path: '', component: HomeComponent },
     { path: '**', component: HomeComponent }, //TODO: PageNotFoundComponent

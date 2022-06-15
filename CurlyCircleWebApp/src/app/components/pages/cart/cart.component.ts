@@ -14,10 +14,11 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CartComponent implements OnInit {
 
-    displayedColumns: string[] = ['product', 'price', 'quantity', 'total', 'delete'];
+    displayedColumns: string[] = ['product', 'price', 'quantity', 'delete', 'total'];
     dataSource = new MatTableDataSource<CartItemViewModel>([]);
     imagesBaseUrl: string = AppConstants.IMAGES_URL;
     noImageUrl: string = AppConstants.NO_IMAGE_URL;
+    total: number = 0;
 
     constructor(
         private readonly cartService: CartService,
@@ -31,6 +32,7 @@ export class CartComponent implements OnInit {
         ).subscribe({
             next: (cartItems: CartItemViewModel[]) => {
                 this.dataSource.data = cartItems;
+                this.total = cartItems.reduce((acc, curr) => acc + curr.price * curr.quantity, 0);
             }
         });
     }

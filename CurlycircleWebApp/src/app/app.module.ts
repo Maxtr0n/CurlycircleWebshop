@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +30,8 @@ import { ShopComponent } from './components/pages/shop/shop.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductCardComponent } from './components/shared/product-card/product-card.component';
 import { CartComponent } from './components/pages/cart/cart.component';
+import { OrderComponent } from './components/pages/order/order.component';
+import { HufPipe } from './utilities/pipes/huf-pipe';
 
 @NgModule({
     declarations: [
@@ -50,6 +52,8 @@ import { CartComponent } from './components/pages/cart/cart.component';
         ShopComponent,
         ProductCardComponent,
         CartComponent,
+        OrderComponent,
+        HufPipe,
     ],
     imports: [
         BrowserModule,
