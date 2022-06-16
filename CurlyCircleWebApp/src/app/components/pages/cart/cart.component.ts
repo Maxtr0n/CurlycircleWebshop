@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { AppConstants } from 'src/app/core/app-constants';
 import { CartItemViewModel, CartViewModel } from 'src/app/models/models';
+import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class CartComponent implements OnInit {
 
     constructor(
         private readonly cartService: CartService,
+        private readonly authService: AuthService,
         private readonly router: Router,
         private readonly snackBar: MatSnackBar,
     ) { }
@@ -42,7 +44,11 @@ export class CartComponent implements OnInit {
     }
 
     public checkout(): void {
-        this.router.navigate(['/order']);
+        if (this.authService.currentUserValue) {
+            this.router.navigate(['/order']);
+        } else {
+            this.router.navigate(['/order-options']);
+        }
     }
 
     public clearCart(): void {

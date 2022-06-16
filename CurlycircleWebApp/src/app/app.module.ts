@@ -33,6 +33,7 @@ import { CartComponent } from './components/pages/cart/cart.component';
 import { OrderComponent } from './components/pages/order/order.component';
 import { HufPipe } from './utilities/pipes/huf-pipe';
 import { QuantityPickerComponent } from './components/shared/quantity-picker/quantity-picker.component';
+import { OrderOptionsComponent } from './components/pages/order-options/order-options.component';
 
 @NgModule({
     declarations: [
@@ -56,6 +57,7 @@ import { QuantityPickerComponent } from './components/shared/quantity-picker/qua
         OrderComponent,
         HufPipe,
         QuantityPickerComponent,
+        OrderOptionsComponent,
     ],
     imports: [
         BrowserModule,

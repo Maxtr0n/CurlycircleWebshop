@@ -1,1 +1,20 @@
-<p>order works!</p>
+<div fxLayout="column" fxLayoutAlign="center space-between" fxLayoutGap="1em" class="order-container mat-elevation-z8">
+    <mat-stepper orientation="horizontal" labelPosition="bottom">
+        <mat-step [stepControl]="personalDataFormGroup">
+            <form>
+                <ng-template matStepLabel>Személyes adatok</ng-template>
+            </form>
+
+        </mat-step>
+        <mat-step [stepControl]="shippingFormGroup">
+            <form>
+                <ng-template matStepLabel>Szállítás</ng-template>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="paymentFormGroup">
+            <form>
+                <ng-template matStepLabel>Szállítás</ng-template>
+            </form>
+        </mat-step>
+    </mat-stepper>
+</div>

@@ -13,6 +13,7 @@ import { RegistrationComponent } from './components/pages/registration/registrat
 import { ShopComponent } from './components/pages/shop/shop.component';
 import { UserGuard } from './guards/user.guard';
 import { OrderComponent } from './components/pages/order/order.component';
+import { OrderOptionsComponent } from './components/pages/order-options/order-options.component';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
     },
     { path: 'cart', component: CartComponent },
     { path: 'order', component: OrderComponent },
+    { path: 'order-options', component: OrderOptionsComponent },
     { path: 'contact', component: ContactComponent },
     { path: '', component: HomeComponent },
     { path: '**', component: HomeComponent }, //TODO: PageNotFoundComponent

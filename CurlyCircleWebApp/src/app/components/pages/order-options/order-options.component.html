@@ -1,0 +1,15 @@
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around" fxLayoutAlign.lt-md="center" fxLayoutGap="1em"
+    class="order-options-container mat-elevation-z8">
+    <div fxLayout="column" fxLayoutAlign="center">
+        <p>Ha gyorsan szeretnél rendelni.</p>
+        <button (click)="checkout()" mat-button color="primary">Rendelés regisztráció nélkül</button>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center">
+        <p>Ha később is meg szeretnéd tekinteni a rendelésid.</p>
+        <button (click)="registration()" mat-button color="primary">Regisztrálás</button>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center">
+        <p>Van már fiókod nálunk?</p>
+        <button (click)="login()" mat-button color="primary">Bejelentkezés</button>
+    </div>
+</div>

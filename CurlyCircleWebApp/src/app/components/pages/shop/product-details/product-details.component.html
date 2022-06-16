@@ -1,14 +1,14 @@
-<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="2em">
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="2em" *ngIf="product">
     <div class="carousel-container">
         <ngb-carousel>
-            <ng-container *ngIf="!product || product.imageUrls.length <= 0;">
+            <ng-container *ngIf="product.imageUrls.length <= 0;">
                 <ng-template ngbSlide>
                     <div class="picsum-img-wrapper carousel-image-container">
                         <img [src]="noImageUrl" class="w-100">
                     </div>
                 </ng-template>
             </ng-container>
-            <ng-container *ngIf="product && product.imageUrls.length > 0">
+            <ng-container *ngIf="product.imageUrls.length > 0">
                 <ng-template ngbSlide *ngFor="let image of product?.imageUrls; let index=index">
                     <div class="picsum-img-wrapper carousel-image-container">
                         <img [src]="imagesBaseUrl + image" class="w-100">
@@ -19,9 +19,9 @@
         </ngb-carousel>
     </div>
     <div fxLayout="column" fxLayoutGap="1em">
-        <h1>{{product?.name}}</h1>
-        <h2>{{product?.price | currency}}</h2>
-        <p>{{product?.description}}</p>
+        <h1>{{product.name}}</h1>
+        <h2>{{product.price | huf}}</h2>
+        <p>{{product.description}}</p>
         <div fxlayout="row inline" fxLayoutGap="1em">
             <button [disabled]="quantity<=1" (click)="decreaseQuantity()" mat-icon-button color="primary">
                 <mat-icon>
