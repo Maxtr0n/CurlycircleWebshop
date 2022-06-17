@@ -35,6 +35,8 @@ namespace BLL.Services
         {
             var order = _mapper.Map<Order>(orderUpsertDto);
             var userCart = await _cartRepository.GetCartByIdAsync(orderUpsertDto.CartId);
+            order.OrderDateTime = DateTime.Now;
+            order.Total = 0;
 
             foreach (var cartItem in userCart.CartItems)
             {
@@ -45,6 +47,7 @@ namespace BLL.Services
                     Quantity = cartItem.Quantity,
                 };
                 order.OrderItems.Add(orderItem);
+                order.Total += cartItem.Quantity * cartItem.Price;
             }
 
             var id = _orderRepository.AddOrder(order);
