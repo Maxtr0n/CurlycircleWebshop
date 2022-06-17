@@ -1,19 +1,94 @@
 <div fxLayout="column" fxLayoutAlign="center space-between" fxLayoutGap="1em" class="order-container mat-elevation-z8">
     <mat-stepper orientation="horizontal" labelPosition="bottom">
-        <mat-step [stepControl]="personalDataFormGroup">
-            <form>
-                <ng-template matStepLabel>Személyes adatok</ng-template>
+        <mat-step [stepControl]="personalDataFormGroup" label="Személyes adatok" errorMessage="Name is required.">
+            <form [formGroup]="personalDataFormGroup" fxLayout="column" fxLayoutAlign="center center"
+                class="order-data-form">
+                <div class="order-data-form-row" fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column"
+                    fxLayoutGap.lt-md="0px">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Telefonszám</mat-label>
+                        <input matInput formControlName="phoneNumber" />
+                    </mat-form-field>
+                </div>
+                <div class="order-data-form-row" fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column"
+                    fxLayoutGap.lt-md="0px">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Vezetéknév</mat-label>
+                        <input matInput formControlName="lastName" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Keresztnév</mat-label>
+                        <input matInput formControlName="firstName" />
+                    </mat-form-field>
+                </div>
+                <div class="order-data-form-row" fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column"
+                    fxLayoutGap.lt-md="0px">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Irányítószám</mat-label>
+                        <input matInput formControlName="zipCode" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Város</mat-label>
+                        <input matInput formControlName="city" />
+                    </mat-form-field>
+                </div>
+                <div class="order-data-form-row" fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column"
+                    fxLayoutGap.lt-md="0px">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cím</mat-label>
+                        <input matInput formControlName="line1" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cím második sora (opcionális)</mat-label>
+                        <input matInput formControlName="line2" />
+                    </mat-form-field>
+                </div>
+                <div class="order-data-form-row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Megjegyzés</mat-label>
+                        <textarea maxlength="300" matInput formControlName="note"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="order-data-form-row" fxLayout="row" fxLayoutAlign="end">
+                    <button mat-button matStepperNext color="primary" type="button">Következő</button>
+                </div>
             </form>
-
         </mat-step>
-        <mat-step [stepControl]="shippingFormGroup">
-            <form>
-                <ng-template matStepLabel>Szállítás</ng-template>
+        <mat-step [stepControl]="shippingFormGroup" label="Szállítás">
+            <form [formGroup]="shippingFormGroup" fxLayout="column">
+                <mat-radio-group formControlName="shippingMethod" class="order-data-form-row" fxLayout="column"
+                    fxLAyoutAlign="start">
+                    <mat-radio-button value="Foxpost">Foxpost</mat-radio-button>
+                    <mat-radio-button value="MagyarPostaPont">Magyar Posta Pont</mat-radio-button>
+                    <mat-radio-button value="MagyarPostaCsomagPont">Magyar Posta CsomagPont</mat-radio-button>
+                    <mat-radio-button value="HomeDelivery">Házhoz szállítás</mat-radio-button>
+                    <mat-radio-button value="PersonalDelivery">Személyes átvétel</mat-radio-button>
+                </mat-radio-group>
+                <div class="order-data-form-row" fxLayout="row" fxLayoutAlign="space-between">
+                    <button mat-button matStepperPrevious color="warn" type="button">Előző</button>
+                    <button mat-button matStepperNext color="primary" type="button">Következő</button>
+                </div>
             </form>
         </mat-step>
-        <mat-step [stepControl]="paymentFormGroup">
-            <form>
-                <ng-template matStepLabel>Szállítás</ng-template>
+        <mat-step [stepControl]="paymentFormGroup" label="Fizetés">
+            <form [formGroup]="paymentFormGroup">
+                <mat-radio-group formControlName="paymentMethod" class="order-data-form-row" fxLayout="column"
+                    fxLAyoutAlign="start">
+                    <mat-radio-button value="MoneyTransfer">Átutalás</mat-radio-button>
+                    <mat-radio-button value="CashOnDelivery">Készpénzzel átvételkor</mat-radio-button>
+                    <mat-radio-button value="WebPayment">Webes fizetés</mat-radio-button>
+                </mat-radio-group>
+                <div class="order-data-form-row" fxLayout="row" fxLayoutAlign="space-between">
+                    <button mat-button matStepperPrevious color="warn" type="button">Előző</button>
+                    <button mat-button matStepperNext color="primary" (click)="onSubmit()"
+                        [disabled]="!personalDataFormGroup.valid || !shippingFormGroup.valid || !paymentFormGroup.valid || !currentCart || currentCart.cartItems.length <= 0"
+                        type="button">Rendelés
+                        áttekintése</button>
+                </div>
             </form>
         </mat-step>
     </mat-stepper>

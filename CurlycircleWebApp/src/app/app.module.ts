@@ -34,6 +34,8 @@ import { OrderComponent } from './components/pages/order/order.component';
 import { HufPipe } from './utilities/pipes/huf-pipe';
 import { QuantityPickerComponent } from './components/shared/quantity-picker/quantity-picker.component';
 import { OrderOptionsComponent } from './components/pages/order-options/order-options.component';
+import { ConfirmOrderComponent } from './components/pages/confirm-order/confirm-order.component';
+import { OrderSuccessComponent } from './components/pages/order-success/order-success.component';
 
 @NgModule({
     declarations: [
@@ -58,6 +60,8 @@ import { OrderOptionsComponent } from './components/pages/order-options/order-op
         HufPipe,
         QuantityPickerComponent,
         OrderOptionsComponent,
+        ConfirmOrderComponent,
+        OrderSuccessComponent,
     ],
     imports: [
         BrowserModule,

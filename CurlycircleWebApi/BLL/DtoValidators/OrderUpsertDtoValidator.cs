@@ -12,21 +12,24 @@ namespace BLL.DtoValidators
     {
         public OrderUpsertDtoValidator()
         {
-            RuleFor(ent => ent.Name)
-                .NotEmpty().WithMessage("Name is required")
-                .MaximumLength(40);
+            RuleFor(ent => ent.FirstName)
+                .NotEmpty().WithMessage("FirstName is required")
+                .MaximumLength(50);
+            RuleFor(ent => ent.LastName)
+                .NotEmpty().WithMessage("LastName is required")
+                .MaximumLength(50);
             RuleFor(ent => ent.City)
                 .NotEmpty().WithMessage("City is required.")
-                .MaximumLength(40);
+                .MaximumLength(50);
             RuleFor(ent => ent.ZipCode)
                 .NotEmpty().WithMessage("ZipCode is required.")
-                .MaximumLength(40);
+                .MaximumLength(50);
             RuleFor(ent => ent.Line1)
                 .NotEmpty().WithMessage("Line1 is required.")
-                .MaximumLength(40);
+                .MaximumLength(50);
             RuleFor(ent => ent.Email)
                 .NotEmpty().WithMessage("Email is required.")
-                .MaximumLength(40);
+                .MaximumLength(50);
             RuleFor(ent => ent.CartId)
                 .NotEmpty().WithMessage("CartId is required.");
             RuleFor(ent => ent.PaymentMethod)
@@ -35,7 +38,7 @@ namespace BLL.DtoValidators
                 .NotEmpty().WithMessage("ShippingMethod is required.");
             RuleFor(ent => ent.PhoneNumber)
                 .NotEmpty().WithMessage("PhoneNumber is required.")
-                .MaximumLength(40);
+                .MaximumLength(50);
         }
     }
 }

@@ -14,7 +14,9 @@ namespace BLL.Dtos
 
         public int? ApplicationUserId { get; set; }
 
-        public string Name { get; set; } = default!;
+        public string FirstName { get; set; } = default!;
+
+        public string LastName { get; set; } = default!;
 
         public string Email { get; set; } = default!;
 

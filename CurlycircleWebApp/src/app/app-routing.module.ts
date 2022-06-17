@@ -14,6 +14,8 @@ import { ShopComponent } from './components/pages/shop/shop.component';
 import { UserGuard } from './guards/user.guard';
 import { OrderComponent } from './components/pages/order/order.component';
 import { OrderOptionsComponent } from './components/pages/order-options/order-options.component';
+import { ConfirmOrderComponent } from './components/pages/confirm-order/confirm-order.component';
+import { OrderSuccessComponent } from './components/pages/order-success/order-success.component';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -37,6 +39,8 @@ const routes: Routes = [
     { path: 'cart', component: CartComponent },
     { path: 'order', component: OrderComponent },
     { path: 'order-options', component: OrderOptionsComponent },
+    { path: 'confirm-order', component: ConfirmOrderComponent },
+    { path: 'order-success', component: OrderSuccessComponent },
     { path: 'contact', component: ContactComponent },
     { path: '', component: HomeComponent },
     { path: '**', component: HomeComponent }, //TODO: PageNotFoundComponent

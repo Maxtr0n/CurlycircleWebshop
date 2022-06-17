@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { OrderUpsertDto } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { OrderService } from 'src/app/services/order.service';
@@ -12,9 +14,10 @@ import { ProductService } from 'src/app/services/product.service';
     styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
+    currentCart = this.cartService.currentCartValue;
 
     personalDataFormGroup: UntypedFormGroup = this.formBuilder.group({
-        email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.email]],
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         phoneNumber: ['', Validators.required],
@@ -25,12 +28,12 @@ export class OrderComponent implements OnInit {
         note: [''],
     });
 
-    shippingFormGroup = this.formBuilder.group({
+    shippingFormGroup: UntypedFormGroup = this.formBuilder.group({
         shippingMethod: ['', Validators.required]
 
     });
 
-    paymentFormGroup = this.formBuilder.group({
+    paymentFormGroup: UntypedFormGroup = this.formBuilder.group({
         paymentMethod: ['', Validators.required]
     });
 
@@ -41,6 +44,7 @@ export class OrderComponent implements OnInit {
         private readonly orderService: OrderService,
         private readonly authService: AuthService,
         private readonly router: Router,
+        private readonly snackbar: MatSnackBar
     ) { }
 
     ngOnInit(): void {
@@ -50,6 +54,21 @@ export class OrderComponent implements OnInit {
     }
 
     public onSubmit(): void {
+        if (!this.currentCart || this.currentCart.cartItems.length <= 0) {
+            this.snackbar.open('Nincs termék a kosaradban.', '', { duration: 3000 });
+            return;
+        }
+
+        let order: OrderUpsertDto = {
+            cartId: this.currentCart.id,
+            applicationUserId: this.authService.currentUserValue?.id,
+            ...this.personalDataFormGroup.value,
+            ...this.shippingFormGroup.value,
+            ...this.paymentFormGroup.value,
+
+        };
+        this.orderService.setCurrentOrder(order);
+        this.router.navigate(['/confirm-order']);
     }
 
     get email() { return this.personalDataFormGroup.get('email'); }

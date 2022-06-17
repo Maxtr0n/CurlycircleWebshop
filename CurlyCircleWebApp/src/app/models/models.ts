@@ -101,7 +101,8 @@ export interface OrderItemsViewModel {
 export interface OrderUpsertDto {
     cartId: number;
     applicationUserId: number | null;
-    name: string;
+    firstName: string;
+    lastName: string;
     email: string;
     city: string;
     zipCode: string;
@@ -119,14 +120,14 @@ export interface OrderViewModel {
     user: UserViewModel;
     userId: number | null;
     orderItems: OrderItemViewModel[] | null;
-    firstName: string | null;
-    lastName: string | null;
-    email: string | null;
+    firstName: string;
+    lastName: string;
+    email: string;
     address: OrderAddressViewModel;
     total: number;
     shippingMethod: ShippingMethod;
     paymentMethod: PaymentMethod;
-    phoneNumber: string | null;
+    phoneNumber: string;
     note: string | null;
 }
 
