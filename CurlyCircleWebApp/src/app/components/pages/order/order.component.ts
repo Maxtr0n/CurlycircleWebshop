@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
@@ -13,7 +13,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class OrderComponent implements OnInit {
 
-    personalDataFormGroup: FormGroup = this.formBuilder.group({
+    personalDataFormGroup: UntypedFormGroup = this.formBuilder.group({
         email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
@@ -35,7 +35,7 @@ export class OrderComponent implements OnInit {
     });
 
     constructor(
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private readonly cartService: CartService,
         private readonly productService: ProductService,
         private readonly orderService: OrderService,

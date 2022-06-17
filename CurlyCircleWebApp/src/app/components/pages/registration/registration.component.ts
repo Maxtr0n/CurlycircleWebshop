@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs';
@@ -19,7 +19,7 @@ export class RegistrationComponent implements OnInit {
     hidePasswordConfirmation = true;
     passwordErrorStateMatcher = new PasswordMatchErrorStateMatcher();
 
-    registrationFormGroup: FormGroup = this.formBuilder.group({
+    registrationFormGroup: UntypedFormGroup = this.formBuilder.group({
         email: ['', [Validators.required, Validators.email]],
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
@@ -48,7 +48,7 @@ export class RegistrationComponent implements OnInit {
     constructor(
         private readonly authService: AuthService,
         private readonly router: Router,
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         private readonly snackBar: MatSnackBar,
     ) {
     }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs';
@@ -15,7 +15,7 @@ import { CartService } from 'src/app/services/cart.service';
 export class LoginComponent implements OnInit {
     hidePassword = true;
 
-    loginFormGroup: FormGroup = this.formBuilder.group({
+    loginFormGroup: UntypedFormGroup = this.formBuilder.group({
         email: ['', Validators.required],
         password: ['', Validators.required],
     });
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
         private readonly authService: AuthService,
         private readonly cartService: CartService,
         private readonly router: Router,
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         private readonly snackBar: MatSnackBar,
     ) {
     }

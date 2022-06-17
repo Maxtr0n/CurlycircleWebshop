@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ChangePasswordDto, UserUpdateDto, UserViewModel } from 'src/app/models/models';
@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
     hideOldPassword = true;
     passwordErrorStateMatcher = new PasswordMatchErrorStateMatcher();
 
-    personalDataFormGroup: FormGroup = this.formBuilder.group({
+    personalDataFormGroup: UntypedFormGroup = this.formBuilder.group({
         email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
 
 
 
-    passwordFormGroup: FormGroup = this.formBuilder.group({
+    passwordFormGroup: UntypedFormGroup = this.formBuilder.group({
         oldPassword: ['', [Validators.required]],
         password: ['', [Validators.required, Validators.min(6), Validators.pattern('.*[0-9].*')]],
         passwordConfirmation: [''],
@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit {
     constructor(
         private readonly authService: AuthService,
         private readonly router: Router,
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         private readonly snackBar: MatSnackBar,
     ) { }
 
