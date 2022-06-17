@@ -33,9 +33,9 @@ namespace BLL.DtoValidators
             RuleFor(ent => ent.CartId)
                 .NotEmpty().WithMessage("CartId is required.");
             RuleFor(ent => ent.PaymentMethod)
-                .NotEmpty().WithMessage("PaymentMethod is required.");
+                .IsInEnum().WithMessage("Not a valid value for PaymentMethod.");
             RuleFor(ent => ent.ShippingMethod)
-                .NotEmpty().WithMessage("ShippingMethod is required.");
+                .IsInEnum().WithMessage("Not a valid value for ShippingMethod.");
             RuleFor(ent => ent.PhoneNumber)
                 .NotEmpty().WithMessage("PhoneNumber is required.")
                 .MaximumLength(50);

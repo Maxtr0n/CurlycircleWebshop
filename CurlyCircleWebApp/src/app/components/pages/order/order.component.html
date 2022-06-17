@@ -62,11 +62,11 @@
             <form [formGroup]="shippingFormGroup" fxLayout="column">
                 <mat-radio-group formControlName="shippingMethod" class="order-data-form-row" fxLayout="column"
                     fxLAyoutAlign="start">
-                    <mat-radio-button value="Foxpost">Foxpost</mat-radio-button>
-                    <mat-radio-button value="MagyarPostaPont">Magyar Posta Pont</mat-radio-button>
-                    <mat-radio-button value="MagyarPostaCsomagPont">Magyar Posta CsomagPont</mat-radio-button>
-                    <mat-radio-button value="HomeDelivery">Házhoz szállítás</mat-radio-button>
-                    <mat-radio-button value="PersonalDelivery">Személyes átvétel</mat-radio-button>
+                    <mat-radio-button value="0">Foxpost</mat-radio-button>
+                    <mat-radio-button value="1">Magyar Posta Pont</mat-radio-button>
+                    <mat-radio-button value="2">Magyar Posta CsomagPont</mat-radio-button>
+                    <mat-radio-button value="3">Házhoz szállítás</mat-radio-button>
+                    <mat-radio-button value="4">Személyes átvétel</mat-radio-button>
                 </mat-radio-group>
                 <div class="order-data-form-row" fxLayout="row" fxLayoutAlign="space-between">
                     <button mat-button matStepperPrevious color="warn" type="button">Előző</button>
@@ -78,9 +78,9 @@
             <form [formGroup]="paymentFormGroup">
                 <mat-radio-group formControlName="paymentMethod" class="order-data-form-row" fxLayout="column"
                     fxLAyoutAlign="start">
-                    <mat-radio-button value="MoneyTransfer">Átutalás</mat-radio-button>
-                    <mat-radio-button value="CashOnDelivery">Készpénzzel átvételkor</mat-radio-button>
-                    <mat-radio-button value="WebPayment">Webes fizetés</mat-radio-button>
+                    <mat-radio-button value="0">Átutalás</mat-radio-button>
+                    <mat-radio-button value="1">Készpénzzel átvételkor</mat-radio-button>
+                    <mat-radio-button value="2">Webes fizetés</mat-radio-button>
                 </mat-radio-group>
                 <div class="order-data-form-row" fxLayout="row" fxLayoutAlign="space-between">
                     <button mat-button matStepperPrevious color="warn" type="button">Előző</button>

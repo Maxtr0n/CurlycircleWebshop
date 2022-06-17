@@ -26,6 +26,7 @@ export class OrderService {
     }
 
     public placeOrder(order: OrderUpsertDto): Observable<OrderUpsertDto> {
+        console.log('rendelés leadva', order);
         return this.httpClient.post<OrderUpsertDto>(this.ordersUrl, order);
     }
 

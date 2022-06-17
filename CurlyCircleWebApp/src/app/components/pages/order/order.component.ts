@@ -61,7 +61,7 @@ export class OrderComponent implements OnInit {
 
         let order: OrderUpsertDto = {
             cartId: this.currentCart.id,
-            applicationUserId: this.authService.currentUserValue?.id,
+            applicationUserId: this.authService.currentUserValue?.id ?? null,
             ...this.personalDataFormGroup.value,
             ...this.shippingFormGroup.value,
             ...this.paymentFormGroup.value,

@@ -38,7 +38,7 @@ export class ConfirmOrderComponent implements OnInit {
             },
             error: (err) => {
                 console.log(err);
-                this.snackbar.open('Nem sikerült leadni a rendelésed, kérlek próbálkozz később.', '', { duration: 3000 });
+                this.snackbar.open('Nem sikerült leadni a rendelésed, kérlek próbálkozz később.', '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-warn'] });
             }
         });
     }
