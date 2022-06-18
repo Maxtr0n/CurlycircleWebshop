@@ -30,6 +30,7 @@ namespace DAL.EntityConfigurations
                 oi.WithOwner(oi => oi.Order).HasForeignKey(oi => oi.OrderId);
                 oi.Navigation(oi => oi.Order).UsePropertyAccessMode(PropertyAccessMode.Field);
                 oi.HasOne(oi => oi.Product);
+                oi.Navigation(oi => oi.Product).AutoInclude();
             });
 
             orderConfiguration.OwnsOne(o => o.Address, a =>

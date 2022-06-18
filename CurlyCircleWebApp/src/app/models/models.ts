@@ -119,7 +119,7 @@ export interface OrderViewModel {
     orderDateTime: Date;
     user: UserViewModel;
     userId: number | null;
-    orderItems: OrderItemViewModel[] | null;
+    orderItems: OrderItemViewModel[];
     firstName: string;
     lastName: string;
     email: string;
@@ -132,7 +132,7 @@ export interface OrderViewModel {
 }
 
 export interface OrdersViewModel {
-    orders: OrderViewModel[] | null;
+    orders: OrderViewModel[];
 }
 
 export enum Pattern {
