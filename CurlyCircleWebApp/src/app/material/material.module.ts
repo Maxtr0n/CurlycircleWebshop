@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
     declarations: [],
@@ -39,7 +40,8 @@ import { MatRadioModule } from '@angular/material/radio';
         MatCardModule,
         MatTableModule,
         MatStepperModule,
-        MatRadioModule
+        MatRadioModule,
+        MatExpansionModule
     ],
     exports: [
         MatSliderModule,
@@ -58,7 +60,8 @@ import { MatRadioModule } from '@angular/material/radio';
         MatCardModule,
         MatTableModule,
         MatStepperModule,
-        MatRadioModule
+        MatRadioModule,
+        MatExpansionModule
     ],
 })
 export class MaterialModule { }

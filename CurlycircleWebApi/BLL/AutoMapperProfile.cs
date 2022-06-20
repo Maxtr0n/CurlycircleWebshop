@@ -46,7 +46,11 @@ namespace BLL
             CreateMap<IEnumerable<ProductCategory>, ProductCategoriesViewModel>()
                 .ForMember(pvm => pvm.ProductCategories, options => options.MapFrom(x => x));
 
-            CreateMap<Order, OrderViewModel>();
+            CreateMap<Order, OrderViewModel>()
+                .IncludeMembers(o => o.Address);
+
+            CreateMap<OrderAddress, OrderViewModel>();
+
             CreateMap<OrderUpsertDto, Order>()
                 .ForPath(x => x.Address.ZipCode, options => options.MapFrom(x => x.ZipCode))
                 .ForPath(x => x.Address.City, options => options.MapFrom(x => x.City))

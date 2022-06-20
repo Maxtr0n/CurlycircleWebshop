@@ -1,1 +1,43 @@
-<p>my-orders works!</p>
+<div fxLayout="column" fxLayoutAlign="center" fxLayoutGap=" 1em" class="my-orders-container">
+    <h1 fxFlexAlign="center">Rendelések</h1>
+    <ng-container *ngFor="let order of orders">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header collapsedHeight="100px" expandedHeight="100px">
+                <mat-panel-title>
+                    <div fxlLayout="row" fxLayoutAlign="start" fxLayoutGap=" 1em" class="expansion-panel-header">
+                        <div fxLayout="column" fxFlex="1 1 0">
+                            <h3>Rendelés ideje</h3>
+                            <p>{{order.orderDateTime | date: 'yyyy.MM.dd. HH:mm'}}</p>
+                        </div>
+                        <div fxLayout="column" fxFlex="1 1 0">
+                            <h3>Összesen</h3>
+                            <p>{{order.total | huf}}</p>
+                        </div>
+                        <div fxLayout="column" fxFlex="1 1 0">
+                            <h3>Azonosító</h3>
+                            <p>#{{order.id}}</p>
+                        </div>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap=" 1em" class="expansion-panel-body">
+                <h3>Termékek</h3>
+                <ng-container *ngFor="let item of order.orderItems">
+                    <div fxlLayout="row" fxLayoutAlign="space-between" fxLayoutGap="1em">
+                        <img *ngIf="item.product.imageUrls.length > 0; else noImageBlock"
+                            [src]="imagesBaseUrl + item.product.imageUrls[0]" class="product-image">
+                        <ng-template #noImageBlock>
+                            <img [src]="noImageUrl" class="product-image">
+                        </ng-template>
+                        <div fxLayout="column" fxFlex="1 1 0">
+                            <h3>{{item.product.name}}</h3>
+                            <p>{{item.product.price | huf}}</p>
+                            <p>{{item.quantity}} db</p>
+                            <p>Részösszeg: {{item.price * item.quantity | huf}}</p>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </mat-expansion-panel>
+    </ng-container>
+</div>

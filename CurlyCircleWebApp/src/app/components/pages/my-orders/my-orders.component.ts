@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppConstants } from 'src/app/core/app-constants';
 import { OrderViewModel } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
@@ -9,6 +10,8 @@ import { UserService } from 'src/app/services/user.service';
     styleUrls: ['./my-orders.component.scss']
 })
 export class MyOrdersComponent implements OnInit {
+    imagesBaseUrl: string = AppConstants.IMAGES_URL;
+    noImageUrl: string = AppConstants.NO_IMAGE_URL;
     orders: OrderViewModel[] = [];
 
     constructor(
