@@ -1,0 +1,33 @@
+@use '../../../styles';
+
+.quick-links-container {
+    width: 100%;
+    text-align: center;
+}
+
+.footer-top-section {
+    background-color: styles.$footer-background-light-color;
+}
+
+.footer-bottom-section {
+    background-color: styles.$footer-background-dark-color;
+    color: white;
+
+    p {
+        margin: 16px;
+    }
+
+    div {
+        margin: 16px;
+
+        a {
+            margin: 0px 4px;
+            text-decoration: none;
+            color: white;
+        }
+
+        a:hover {
+            color: styles.$hover-color;
+        }
+    }
+}

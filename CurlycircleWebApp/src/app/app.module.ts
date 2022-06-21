@@ -12,6 +12,7 @@ import { httpInterceptorProviders } from './core/http-interceptor-providers';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BreadcrumbModule } from 'xng-breadcrumb';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { HomeComponent } from './components/pages/home/home.component';
 import { LoginComponent } from './components/pages/login/login.component';
@@ -74,6 +75,7 @@ import { OrderSuccessComponent } from './components/pages/order-success/order-su
         FormsModule,
         BreadcrumbModule,
         NgbModule,
+        FontAwesomeModule,
     ],
     providers: [
         httpInterceptorProviders,

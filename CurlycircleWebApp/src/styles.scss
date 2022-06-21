@@ -11,7 +11,7 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$curlyapp-primary: mat.define-palette(mat.$green-palette, 800);
+$curlyapp-primary: mat.define-palette(mat.$light-green-palette, 900);
 $curlyapp-accent: mat.define-palette(
     mat.$deep-purple-palette,
     A200,
@@ -41,7 +41,16 @@ $CurlyCircleWebApp-theme: mat.define-light-theme(
 
 /* You can add global styles to this file, and also import other style files */
 
+// Colors
+
+$text-color: mat.get-color-from-palette(mat.$green-palette, 800-contrast);;
+
 $hover-color: mat.get-color-from-palette(mat.$blue-grey-palette, 50);
+
+$footer-background-light-color: mat.get-color-from-palette(mat.$light-green-palette, 200);
+$footer-background-dark-color: mat.get-color-from-palette(mat.$light-green-palette, 900);
+
+// Basic styles
 
 html,
 body {

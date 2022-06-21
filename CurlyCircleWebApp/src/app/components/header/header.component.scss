@@ -1,3 +1,5 @@
+@use '../../../styles';
+
 a {
     text-decoration: none;
     color: white;
@@ -5,7 +7,7 @@ a {
 
 a:hover,
 a:active {
-    color: lightgray;
+    color: styles.$hover-color;
 }
 
 .navigation-items {
@@ -15,5 +17,5 @@ a:active {
 }
 
 .nav-icon-button:hover {
-    color: lightgray;
+    color: styles.$hover-color;
 }
