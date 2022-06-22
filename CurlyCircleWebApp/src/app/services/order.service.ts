@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppHttpClient } from '../core/app-http-client';
-import { OrderUpsertDto } from '../models/models';
+import { OrdersViewModel, OrderUpsertDto, OrderViewModel } from '../models/models';
 
 @Injectable({
     providedIn: 'root'
@@ -28,6 +28,14 @@ export class OrderService {
     public placeOrder(order: OrderUpsertDto): Observable<OrderUpsertDto> {
         console.log('rendelés leadva', order);
         return this.httpClient.post<OrderUpsertDto>(this.ordersUrl, order);
+    }
+
+    public getOrders(): Observable<OrdersViewModel> {
+        return this.httpClient.get<OrdersViewModel>(this.ordersUrl);
+    }
+
+    public getOrder(id: number): Observable<OrderViewModel> {
+        return this.httpClient.get<OrderViewModel>(`${this.ordersUrl}/${id}`);
     }
 
 }

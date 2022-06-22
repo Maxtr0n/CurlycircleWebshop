@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { CartViewModel, UserViewModel } from 'src/app/models/models';
+import { CartViewModel, Role, UserViewModel } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 
@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
 
     currentUser: UserViewModel | null = null;
     currentCart: CartViewModel | null = null;
+    isAdmin: boolean = false;
     currentCartSize: string = "";
 
     constructor(
@@ -33,6 +34,11 @@ export class HeaderComponent implements OnInit {
     ngOnInit(): void {
         this.authService.currentUser$.subscribe((user) => {
             this.currentUser = user;
+            if (user) {
+                this.isAdmin = Role[user.role].toString() === Role.Admin.toString();
+            } else {
+                this.isAdmin = false;
+            }
         });
 
         this.cartService.currentCart$.subscribe((cart) => {

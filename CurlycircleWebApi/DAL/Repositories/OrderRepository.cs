@@ -36,6 +36,7 @@ namespace DAL.Repositories
         public async Task<Order> GetOrderByIdAsync(int orderId)
         {
             var order = await dbContext.Orders
+                .Include(o => o.ApplicationUserId)
                 .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
                 .FirstOrDefaultAsync(o => o.Id == orderId);

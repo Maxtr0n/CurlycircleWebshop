@@ -1,0 +1,22 @@
+<div fxLayout="column" fxLayoutAlign="center space-between" fxLayoutGap="1em" class="orders-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Dátum</th>
+            <td mat-cell *matCellDef="let element">{{element.orderDateTime | date: 'yyyy.MM.dd. HH:mm'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let element">{{element.email}}</td>
+        </ng-container>
+        <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef>Összeg</th>
+            <td mat-cell *matCellDef="let element">{{element.total | huf}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row (click)="orderClicked(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

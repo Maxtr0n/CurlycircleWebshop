@@ -16,6 +16,9 @@ import { OrderComponent } from './components/pages/order/order.component';
 import { OrderOptionsComponent } from './components/pages/order-options/order-options.component';
 import { ConfirmOrderComponent } from './components/pages/confirm-order/confirm-order.component';
 import { OrderSuccessComponent } from './components/pages/order-success/order-success.component';
+import { AdminOrdersComponent } from './components/pages/admin/admin-orders/admin-orders.component';
+import { AdminGuard } from './guards/admin.guard';
+import { AdminOrderDetailsComponent } from './components/pages/admin/admin-order-details/admin-order-details.component';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -42,6 +45,12 @@ const routes: Routes = [
     { path: 'confirm-order', component: ConfirmOrderComponent },
     { path: 'order-success', component: OrderSuccessComponent },
     { path: 'contact', component: ContactComponent },
+    {
+        path: 'admin-orders', canActivate: [AdminGuard], children: [
+            { path: '', pathMatch: 'full', component: AdminOrdersComponent },
+            { path: ':orderId', component: AdminOrderDetailsComponent }
+        ]
+    },
     { path: '', component: HomeComponent },
     { path: '**', component: HomeComponent }, //TODO: PageNotFoundComponent
 ];

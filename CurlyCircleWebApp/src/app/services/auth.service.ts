@@ -42,7 +42,6 @@ export class AuthService {
                 tap((user) => {
                     this.setCurrentUser(user);
                     this.currentUserSubject.next(user);
-                    console.log('login success:' + user.accessToken);
                 })
             );
     }

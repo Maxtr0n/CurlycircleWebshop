@@ -37,6 +37,8 @@ import { QuantityPickerComponent } from './components/shared/quantity-picker/qua
 import { OrderOptionsComponent } from './components/pages/order-options/order-options.component';
 import { ConfirmOrderComponent } from './components/pages/confirm-order/confirm-order.component';
 import { OrderSuccessComponent } from './components/pages/order-success/order-success.component';
+import { AdminOrdersComponent } from './components/pages/admin/admin-orders/admin-orders.component';
+import { AdminOrderDetailsComponent } from './components/pages/admin/admin-order-details/admin-order-details.component';
 
 @NgModule({
     declarations: [
@@ -63,6 +65,8 @@ import { OrderSuccessComponent } from './components/pages/order-success/order-su
         OrderOptionsComponent,
         ConfirmOrderComponent,
         OrderSuccessComponent,
+        AdminOrdersComponent,
+        AdminOrderDetailsComponent,
     ],
     imports: [
         BrowserModule,

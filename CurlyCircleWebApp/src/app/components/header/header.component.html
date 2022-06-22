@@ -19,6 +19,9 @@
             <li>
                 <a routerLink="/contact">Kapcsolat</a>
             </li>
+            <li *ngIf="isAdmin">
+                <a routerLink="/admin-orders">Rendelések</a>
+            </li>
         </ul>
     </div>
     <div fxFlex fxLayout fxLayoutAlign="end">
