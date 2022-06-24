@@ -11,10 +11,12 @@ namespace CurlycircleWebApi.Controllers
     public class UserController : ApiController
     {
         private readonly IOrderService _orderService;
+        private readonly IAuthService _authService;
 
-        public UserController(IOrderService orderService)
+        public UserController(IOrderService orderService, IAuthService authService)
         {
             _orderService = orderService;
+            _authService = authService;
         }
 
         [HttpGet("{userId}/orders")]
@@ -22,6 +24,13 @@ namespace CurlycircleWebApi.Controllers
         public Task<OrdersViewModel> GetUserOrders([FromRoute] int userId)
         {
             return _orderService.GetUserOrders(userId);
+        }
+
+        [HttpGet("{userId}/user-data")]
+        [Authorize]
+        public Task<UserDataViewModel> GetUserData([FromRoute] int userId)
+        {
+            return _authService.GetUserDataAsync(userId);
         }
 
     }

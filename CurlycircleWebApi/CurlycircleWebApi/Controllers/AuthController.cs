@@ -66,12 +66,5 @@ namespace CurlycircleWebApi.Controllers
         {
             return authService.DeleteUserAsync(deleteUserDto);
         }
-
-        [HttpGet("user-data")]
-        [Authorize]
-        public Task<UserDataViewModel> GetUserData(int userId)
-        {
-            return authService.GetUserDataAsync(userId);
-        }
     }
 }

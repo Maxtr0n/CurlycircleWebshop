@@ -39,6 +39,8 @@ import { ConfirmOrderComponent } from './components/pages/confirm-order/confirm-
 import { OrderSuccessComponent } from './components/pages/order-success/order-success.component';
 import { AdminOrdersComponent } from './components/pages/admin/admin-orders/admin-orders.component';
 import { AdminOrderDetailsComponent } from './components/pages/admin/admin-order-details/admin-order-details.component';
+import { ShippingMethodPipe } from './utilities/pipes/shipping-method-pipe';
+import { PaymentMethodPipe } from './utilities/pipes/payment-method-pipe';
 
 @NgModule({
     declarations: [
@@ -61,6 +63,8 @@ import { AdminOrderDetailsComponent } from './components/pages/admin/admin-order
         CartComponent,
         OrderComponent,
         HufPipe,
+        ShippingMethodPipe,
+        PaymentMethodPipe,
         QuantityPickerComponent,
         OrderOptionsComponent,
         ConfirmOrderComponent,

@@ -1,1 +1,46 @@
-<p>admin-order-details works!</p>
+<ng-container *ngIf="order;else noOrderBlock">
+    <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="1em" class="order-details-container mat-elevation-z8">
+        <h1>Rendelés részletei</h1>
+        <div class="order-data-container">
+            <p>Rendelés azonosító: {{order.id}}</p>
+            <p>Rendelés dátuma: {{order.orderDateTime | date:'yyyy.MM.dd HH:mm'}}</p>
+            <p>Rendelő neve: {{order.lastName + ' ' + order.firstName}}</p>
+            <p>Email: {{order.email}}</p>
+            <p>Telefonszám: {{order.phoneNumber}}</p>
+            <p>Cím: {{order.zipCode + ' ' + order.city + ', ' + order.line1 + ' ' +
+                order.line2}}</p>
+            <p>Fizetési mód: {{order.paymentMethod | payment}}</p>
+            <p>Szállítási mód: {{order.shippingMethod | shipping}}</p>
+            <p>Összesen: {{order.total | huf}}</p>
+            <p>Megjegyzés: {{order.note}}</p>
+            <ng-container *ngIf="order.userId; else anonymOrderBlock">
+                <p>Felhasználó email: {{orderUserEmail}}</p>
+            </ng-container>
+            <ng-template #anonymOrderBlock>
+                <p>Regisztráció nélküli rendelés</p>
+            </ng-template>
+        </div>
+        <div fxLayout="column" fxLayoutGap="1em">
+            <h2>Termékek</h2>
+            <ng-container *ngFor="let item of order.orderItems">
+                <div fxlLayout="row" fxLayoutAlign="space-between" fxLayoutGap="1em">
+                    <img *ngIf="item.product.imageUrls.length > 0; else noImageBlock"
+                        [src]="imagesBaseUrl + item.product.imageUrls[0]" class="product-image">
+                    <ng-template #noImageBlock>
+                        <img [src]="noImageUrl" class="product-image">
+                    </ng-template>
+                    <div fxLayout="column" fxFlex="1 1 0">
+                        <h3>{{item.product.name}}</h3>
+                        <p>{{item.product.price | huf}}</p>
+                        <p>{{item.quantity}} db</p>
+                        <p>Részösszeg: {{item.price * item.quantity | huf}}</p>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #noOrderBlock>
+    Nem létezik ilyen rendelés.
+</ng-template>

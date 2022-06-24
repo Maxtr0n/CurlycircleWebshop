@@ -16,4 +16,8 @@ export class UserService {
     public getUserOrders(userId: number): Observable<OrdersViewModel> {
         return this.httpClient.get<OrdersViewModel>(`${this.userUrl}/${userId}/orders`);
     }
+
+    public getUserData(userId: number): Observable<any> {
+        return this.httpClient.get<any>(`${this.userUrl}/${userId}/user-data`);
+    }
 }

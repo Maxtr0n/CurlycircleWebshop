@@ -79,9 +79,9 @@ export enum Material {
 
 export interface OrderAddressViewModel {
     orderId: number;
-    city: string | null;
-    zipCode: string | null;
-    line1: string | null;
+    city: string;
+    zipCode: string;
+    line1: string;
     line2: string | null;
 }
 
@@ -122,7 +122,10 @@ export interface OrderViewModel {
     firstName: string;
     lastName: string;
     email: string;
-    address: OrderAddressViewModel;
+    zipCode: string;
+    city: string;
+    line1: string;
+    line2: string | null;
     total: number;
     shippingMethod: ShippingMethod;
     paymentMethod: PaymentMethod;
