@@ -47,7 +47,8 @@ namespace BLL
                 .ForMember(pvm => pvm.ProductCategories, options => options.MapFrom(x => x));
 
             CreateMap<Order, OrderViewModel>()
-                .IncludeMembers(o => o.Address);
+                .IncludeMembers(o => o.Address)
+                .ForMember(ovm => ovm.UserId, options => options.MapFrom(o => o.ApplicationUserId));
 
             CreateMap<OrderAddress, OrderViewModel>();
 

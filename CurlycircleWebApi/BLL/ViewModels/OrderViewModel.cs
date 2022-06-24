@@ -14,8 +14,6 @@ namespace BLL.ViewModels
 
         public DateTime OrderDateTime { get; set; } = default!;
 
-        public UserViewModel? User { get; set; }
-
         public int? UserId { get; set; }
 
         public IEnumerable<OrderItemViewModel> OrderItems { get; set; } = default!;

@@ -117,7 +117,6 @@ export interface OrderUpsertDto {
 export interface OrderViewModel {
     id: number;
     orderDateTime: Date;
-    user: UserViewModel;
     userId: number | null;
     orderItems: OrderItemViewModel[];
     firstName: string;
