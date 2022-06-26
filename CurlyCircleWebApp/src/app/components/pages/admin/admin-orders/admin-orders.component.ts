@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,9 +12,10 @@ import { OrderService } from 'src/app/services/order.service';
     templateUrl: './admin-orders.component.html',
     styleUrls: ['./admin-orders.component.scss']
 })
-export class AdminOrdersComponent implements OnInit {
+export class AdminOrdersComponent implements OnInit, AfterViewInit {
     displayedColumns: string[] = ['date', 'id', 'email', 'total'];
     dataSource = new MatTableDataSource<OrderViewModel>([]);
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     constructor(
         private readonly authService: AuthService,
@@ -29,6 +31,10 @@ export class AdminOrdersComponent implements OnInit {
                 this.dataSource.data = orders.orders;
             }
         });
+    }
+
+    ngAfterViewInit(): void {
+        this.dataSource.paginator = this.paginator;
     }
 
     orderClicked(order: OrderViewModel): void {

@@ -1,4 +1,12 @@
 <div fxLayout="column" fxLayoutAlign="center space-between" fxLayoutGap="1em" class="orders-container mat-elevation-z8">
+    <div fxLayout="row">
+        <h1 fxFlex="1 1 0" class="h2">Rendelések</h1>
+        <mat-form-field appearance="fill" fxFlexAlign="end" class="search-field">
+            <mat-label>Keresés</mat-label>
+            <input matInput>
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </div>
     <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef>Dátum</th>
@@ -19,4 +27,6 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row (click)="orderClicked(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons aria-label="Válaszd ki a rendelések oldalát">
+    </mat-paginator>
 </div>
