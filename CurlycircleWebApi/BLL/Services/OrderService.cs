@@ -55,9 +55,9 @@ namespace BLL.Services
             return new EntityCreatedViewModel(id);
         }
 
-        public async Task<OrdersViewModel> GetAllOrdersAsync()
+        public async Task<OrdersViewModel> GetAllOrdersAsync(string filter, string sortDirection, int pageIndex, int pageSize)
         {
-            var orders = await _orderRepository.GetAllAsync();
+            var orders = await _orderRepository.GetAllAsync(filter, sortDirection, pageIndex, pageSize);
             var ordersViewModel = _mapper.Map<OrdersViewModel>(orders);
             return ordersViewModel;
         }

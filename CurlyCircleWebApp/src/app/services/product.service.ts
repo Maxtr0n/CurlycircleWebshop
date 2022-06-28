@@ -7,7 +7,7 @@ import { ProductViewModel } from '../models/models';
     providedIn: 'root'
 })
 export class ProductService {
-    private readonly productsUrl = 'api/products';
+    private readonly productsUrl = 'api/product';
 
     constructor(private readonly httpClient: AppHttpClient) { }
 

@@ -7,7 +7,7 @@ import { OrdersViewModel, OrderUpsertDto, OrderViewModel } from '../models/model
     providedIn: 'root'
 })
 export class OrderService {
-    private readonly ordersUrl = 'api/orders';
+    private readonly ordersUrl = 'api/order';
 
     private currentOrderSubject: BehaviorSubject<OrderUpsertDto | null>;
     public currentOrder$: Observable<OrderUpsertDto | null>;

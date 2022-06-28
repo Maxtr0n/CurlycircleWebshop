@@ -7,7 +7,7 @@ import { ProductCategoriesViewModel, ProductCategoryViewModel, ProductsViewModel
     providedIn: 'root'
 })
 export class ProductCategoryService {
-    private readonly productCategoriesUrl = 'api/productcategories';
+    private readonly productCategoriesUrl = 'api/productcategory';
 
     constructor(private readonly httpClient: AppHttpClient) { }
 

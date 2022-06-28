@@ -16,12 +16,12 @@ using System.Threading.Tasks;
 namespace CurlycircleWebApi.Controllers
 {
     [Route("api/[controller]")]
-    public class OrdersController : ApiController
+    public class OrderController : ApiController
     {
         private readonly IIdentityHelper _identityHelper;
         private readonly IOrderService _orderService;
 
-        public OrdersController(IIdentityHelper identityHelper, IOrderService orderService)
+        public OrderController(IIdentityHelper identityHelper, IOrderService orderService)
         {
             _identityHelper = identityHelper;
             _orderService = orderService;
@@ -37,9 +37,9 @@ namespace CurlycircleWebApi.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public Task<OrdersViewModel> GetOrders()
+        public Task<OrdersViewModel> GetOrders(string filter, string sortDirection, int pageIndex, int pageSize)
         {
-            return _orderService.GetAllOrdersAsync();
+            return _orderService.GetAllOrdersAsync(filter, sortDirection, pageIndex, pageSize);
         }
 
         [HttpGet("{orderId}")]

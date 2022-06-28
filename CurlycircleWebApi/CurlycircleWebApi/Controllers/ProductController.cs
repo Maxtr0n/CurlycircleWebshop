@@ -17,13 +17,13 @@ using Microsoft.AspNetCore.Authorization;
 namespace CurlycircleWebApi.Controllers
 {
     [Route("api/[controller]")]
-    public class ProductsController : ApiController
+    public class ProductController : ApiController
     {
         private readonly IIdentityHelper _identityHelper;
         private readonly IProductCategoryService _productCategoryService;
         private readonly IProductService _productService;
 
-        public ProductsController(IIdentityHelper identityHelper, IProductCategoryService productCategoryService, IProductService productService)
+        public ProductController(IIdentityHelper identityHelper, IProductCategoryService productCategoryService, IProductService productService)
         {
             _identityHelper = identityHelper;
             _productCategoryService = productCategoryService;

@@ -25,7 +25,7 @@ namespace DAL.Repositories
             return order.Id;
         }
 
-        public async Task<IEnumerable<Order>> GetAllAsync()
+        public async Task<IEnumerable<Order>> GetAllAsync(string filter, string sortDirection, int pageIndex, int pageSize)
         {
             var orders = await dbContext.Orders
                 .Include(o => o.OrderItems)

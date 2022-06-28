@@ -13,12 +13,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace CurlycircleWebApi.Controllers
 {
     [Route("api/[controller]")]
-    public class ProductCategoriesController : ApiController
+    public class ProductCategoryController : ApiController
     {
         private readonly IIdentityHelper _identityHelper;
         private readonly IProductCategoryService _productCategoryService;
 
-        public ProductCategoriesController(IIdentityHelper identityHelper, IProductCategoryService productCategoryService, IProductService productService)
+        public ProductCategoryController(IIdentityHelper identityHelper, IProductCategoryService productCategoryService, IProductService productService)
         {
             _identityHelper = identityHelper;
             _productCategoryService = productCategoryService;

@@ -12,7 +12,7 @@ namespace BLL.Interfaces
     {
         Task<EntityCreatedViewModel> CreateOrderAsync(OrderUpsertDto orderUpsertDto);
 
-        Task<OrdersViewModel> GetAllOrdersAsync();
+        Task<OrdersViewModel> GetAllOrdersAsync(string filter, string sortDirection, int pageIndex, int pageSize);
 
         Task<OrderViewModel> FindOrderByIdAsync(int orderId);
 

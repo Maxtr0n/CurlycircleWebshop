@@ -11,7 +11,7 @@ namespace Domain.Interfaces
     {
         int AddOrder(Order order);
 
-        Task<IEnumerable<Order>> GetAllAsync();
+        Task<IEnumerable<Order>> GetAllAsync(string filter, string sortDirection, int pageIndex, int pageSize);
 
         Task<Order> GetOrderByIdAsync(int orderId);
 

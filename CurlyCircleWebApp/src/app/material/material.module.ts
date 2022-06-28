@@ -20,6 +20,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
     declarations: [],
@@ -44,6 +46,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatRadioModule,
         MatExpansionModule,
         MatPaginatorModule,
+        MatSortModule,
+        MatProgressSpinnerModule,
     ],
     exports: [
         MatSliderModule,
@@ -65,6 +69,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatRadioModule,
         MatExpansionModule,
         MatPaginatorModule,
+        MatSortModule,
+        MatProgressSpinnerModule,
     ],
 })
 export class MaterialModule { }

@@ -3,9 +3,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { OrdersViewModel, OrderViewModel } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
+import { OrdersDataSource } from '../OrdersDataSource';
 
 @Component({
     selector: 'app-admin-orders',
@@ -14,8 +16,10 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class AdminOrdersComponent implements OnInit, AfterViewInit {
     displayedColumns: string[] = ['date', 'id', 'email', 'total'];
-    dataSource = new MatTableDataSource<OrderViewModel>([]);
+    dataSource: OrdersDataSource;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
+    searchWord: string = '';
+    searchWordSubject: Subject<string> = new Subject<string>();
 
     constructor(
         private readonly authService: AuthService,
@@ -23,22 +27,38 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
         private readonly router: Router,
         private readonly snackBar: MatSnackBar,
         private readonly route: ActivatedRoute,
-    ) { }
+    ) {
+        this.dataSource = new OrdersDataSource(this.orderService);
+
+        this.searchWordSubject.pipe(
+            debounceTime(500),
+            distinctUntilChanged()
+        ).subscribe({
+            next: (value: string) => {
+                this.searchWord = value;
+                console.log(value);
+            }
+        });
+    }
 
     ngOnInit(): void {
         this.orderService.getOrders().subscribe({
             next: (orders: OrdersViewModel) => {
-                this.dataSource.data = orders.orders;
+                this.dataSource.loadOrders();
             }
         });
     }
 
     ngAfterViewInit(): void {
-        this.dataSource.paginator = this.paginator;
+        //this.dataSource.paginator = this.paginator;
     }
 
     orderClicked(order: OrderViewModel): void {
         this.router.navigate([order.id], { relativeTo: this.route });
+    }
+
+    searchWordChanged(value: any): void {
+        this.searchWordSubject.next(value);
     }
 
 }
