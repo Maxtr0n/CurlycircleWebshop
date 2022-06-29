@@ -20,7 +20,7 @@ export class OrdersDataSource implements DataSource<OrderViewModel> {
         this.loadingSubject.complete();
     }
 
-    loadOrders(filter = '', sortDirection = 'desc', pageIndex = 0, pageSize = 10) {
+    loadOrders(filter = '', sortDirection = 'desc', pageIndex = 0, pageSize = 25) {
         this.loadingSubject.next(true);
 
         // TODO

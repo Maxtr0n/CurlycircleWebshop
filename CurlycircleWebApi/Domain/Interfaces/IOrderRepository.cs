@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.QueryParameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Domain.Interfaces
     {
         int AddOrder(Order order);
 
-        Task<IEnumerable<Order>> GetAllAsync(string filter, string sortDirection, int pageIndex, int pageSize);
+        Task<PagedList<Order>> GetAllAsync(OrderQueryParameters orderQueryParameters);
 
         Task<Order> GetOrderByIdAsync(int orderId);
 

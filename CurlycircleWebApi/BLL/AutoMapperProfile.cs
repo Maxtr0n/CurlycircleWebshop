@@ -58,6 +58,14 @@ namespace BLL
                 .ForPath(x => x.Address.Line1, options => options.MapFrom(x => x.Line1))
                 .ForPath(x => x.Address.Line2, options => options.MapFrom(x => x.Line2));
 
+            CreateMap<PagedList<Order>, PagedOrdersViewModel>()
+               .ForMember(ovm => ovm.Orders, options => options.MapFrom(x => x))
+               .ForMember(ovm => ovm.PageSize, options => options.MapFrom(x => x.PageSize))
+               .ForMember(ovm => ovm.PageIndex, options => options.MapFrom(x => x.PageIndex))
+               .ForMember(ovm => ovm.TotalCount, options => options.MapFrom(x => x.TotalCount))
+               .ForMember(ovm => ovm.TotalPages, options => options.MapFrom(x => x.TotalPages))
+               .ForMember(ovm => ovm.HasNextPage, options => options.MapFrom(x => x.HasNextPage))
+               .ForMember(ovm => ovm.HasPreviousPage, options => options.MapFrom(x => x.HasPreviousPage));
 
             CreateMap<IEnumerable<Order>, OrdersViewModel>()
                 .ForMember(ovm => ovm.Orders, options => options.MapFrom(x => x));

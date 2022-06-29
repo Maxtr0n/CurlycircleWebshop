@@ -42,7 +42,7 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        this.orderService.getOrders().subscribe({
+        this.orderService.getOrderPage().subscribe({
             next: (orders: OrdersViewModel) => {
                 this.dataSource.loadOrders();
             }

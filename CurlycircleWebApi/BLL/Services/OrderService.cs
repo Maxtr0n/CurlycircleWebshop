@@ -3,6 +3,7 @@ using BLL.Dtos;
 using BLL.Interfaces;
 using BLL.ViewModels;
 using Domain.Entities;
+using Domain.Entities.QueryParameters;
 using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -55,10 +56,11 @@ namespace BLL.Services
             return new EntityCreatedViewModel(id);
         }
 
-        public async Task<OrdersViewModel> GetAllOrdersAsync(string filter, string sortDirection, int pageIndex, int pageSize)
+        public async Task<PagedOrdersViewModel> GetAllOrdersAsync(OrderQueryParameters orderQueryParameters)
         {
-            var orders = await _orderRepository.GetAllAsync(filter, sortDirection, pageIndex, pageSize);
-            var ordersViewModel = _mapper.Map<OrdersViewModel>(orders);
+            var orders = await _orderRepository.GetAllAsync(orderQueryParameters);
+
+            var ordersViewModel = _mapper.Map<PagedOrdersViewModel>(orders);
             return ordersViewModel;
         }
 

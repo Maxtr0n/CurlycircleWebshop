@@ -137,6 +137,23 @@ export interface OrdersViewModel {
     orders: OrderViewModel[];
 }
 
+export interface PagedOrdersViewModel {
+    orders: OrderViewModel[];
+    pageIndex: number;
+    pageSize: number;
+    totalCount: number;
+    totalPages: number;
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+}
+
+export interface OrderQueryParameters {
+    pageIndex: number;
+    pageSize: number;
+    filter: string;
+    sort: string;
+}
+
 export enum Pattern {
     Blank,
     Dotted,

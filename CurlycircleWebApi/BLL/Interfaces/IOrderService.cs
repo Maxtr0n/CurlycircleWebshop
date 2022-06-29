@@ -1,5 +1,6 @@
 ﻿using BLL.Dtos;
 using BLL.ViewModels;
+using Domain.Entities.QueryParameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace BLL.Interfaces
     {
         Task<EntityCreatedViewModel> CreateOrderAsync(OrderUpsertDto orderUpsertDto);
 
-        Task<OrdersViewModel> GetAllOrdersAsync(string filter, string sortDirection, int pageIndex, int pageSize);
+        Task<PagedOrdersViewModel> GetAllOrdersAsync(OrderQueryParameters orderQueryParameters);
 
         Task<OrderViewModel> FindOrderByIdAsync(int orderId);
 

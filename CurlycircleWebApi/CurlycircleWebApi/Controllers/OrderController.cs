@@ -4,10 +4,12 @@ using BLL.ViewModels;
 using CurlycircleWebApi.Common;
 using DAL;
 using Domain.Entities;
+using Domain.Entities.QueryParameters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,9 +39,9 @@ namespace CurlycircleWebApi.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public Task<OrdersViewModel> GetOrders(string filter, string sortDirection, int pageIndex, int pageSize)
+        public Task<PagedOrdersViewModel> GetOrders([FromQuery] OrderQueryParameters orderQueryParameters)
         {
-            return _orderService.GetAllOrdersAsync(filter, sortDirection, pageIndex, pageSize);
+            return _orderService.GetAllOrdersAsync(orderQueryParameters);
         }
 
         [HttpGet("{orderId}")]

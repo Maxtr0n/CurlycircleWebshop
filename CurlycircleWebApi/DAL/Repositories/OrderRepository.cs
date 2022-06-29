@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.QueryParameters;
 using Domain.Exceptions;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -25,11 +26,13 @@ namespace DAL.Repositories
             return order.Id;
         }
 
-        public async Task<IEnumerable<Order>> GetAllAsync(string filter, string sortDirection, int pageIndex, int pageSize)
+        public async Task<PagedList<Order>> GetAllAsync(OrderQueryParameters orderQueryParameters)
         {
-            var orders = await dbContext.Orders
-                .Include(o => o.OrderItems)
-                .ToListAsync();
+            var orders = await PagedList<Order>.CreateAsync(dbContext.Orders
+                .OrderBy(o => o.OrderDateTime)
+                .ThenBy(o => o.Id)
+                .Include(o => o.OrderItems), orderQueryParameters.PageIndex, orderQueryParameters.PageSize);
+
             return orders;
         }
 

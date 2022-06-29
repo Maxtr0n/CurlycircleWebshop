@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppHttpClient } from '../core/app-http-client';
-import { OrdersViewModel, OrderUpsertDto, OrderViewModel } from '../models/models';
+import { OrdersViewModel, OrderUpsertDto, OrderViewModel, PagedOrdersViewModel } from '../models/models';
 
 @Injectable({
     providedIn: 'root'
@@ -30,8 +30,8 @@ export class OrderService {
         return this.httpClient.post<OrderUpsertDto>(this.ordersUrl, order);
     }
 
-    public getOrders(): Observable<OrdersViewModel> {
-        return this.httpClient.get<OrdersViewModel>(this.ordersUrl);
+    public getOrderPage(): Observable<PagedOrdersViewModel> {
+        return this.httpClient.get<PagedOrdersViewModel>(this.ordersUrl);
     }
 
     public getOrder(id: number): Observable<OrderViewModel> {
