@@ -10,9 +10,9 @@
     <div class="spinner-container" *ngIf="dataSource.loading$ | async">
         <mat-spinner></mat-spinner>
     </div>
-    <mat-table [dataSource]="dataSource">
+    <mat-table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc" matSortDisableClear>
         <ng-container matColumnDef="date">
-            <mat-header-cell *matHeaderCellDef>Dátum</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Dátum</mat-header-cell>
             <mat-cell *matCellDef="let element">{{element.orderDateTime | date: 'yyyy.MM.dd. HH:mm'}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="id">

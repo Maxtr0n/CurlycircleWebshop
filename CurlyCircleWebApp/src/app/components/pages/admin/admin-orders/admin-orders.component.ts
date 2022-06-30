@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, debounceTime, distinctUntilChanged, tap } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, tap, merge } from 'rxjs';
 import { OrdersViewModel, OrderViewModel } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
@@ -21,7 +21,7 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     resultsLength: number = 0;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
-    //@ViewChild(MatSort) sort!: MatSort;
+    @ViewChild(MatSort) sort!: MatSort;
 
     searchWord: string = '';
     searchWordSubject: Subject<string> = new Subject<string>();
@@ -52,7 +52,9 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.paginator.page.pipe(
+        this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+        merge(this.sort.sortChange, this.paginator.page).pipe(
             tap(() => this.loadOrdersPage())
         ).subscribe();
     }
@@ -68,7 +70,7 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     loadOrdersPage(): void {
         this.dataSource.loadOrders(
             null,
-            'desc',
+            this.sort.direction,
             this.paginator.pageIndex,
             this.paginator.pageSize,
             null,
