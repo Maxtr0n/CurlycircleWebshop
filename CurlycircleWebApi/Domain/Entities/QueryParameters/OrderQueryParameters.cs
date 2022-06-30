@@ -6,32 +6,16 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities.QueryParameters
 {
-    public class OrderQueryParameters
+    public class OrderQueryParameters : QueryParameters
     {
-        public string Filter { get; set; } = "";
+        public DateTime MinOrderDate { get; set; } = DateTime.MinValue;
 
-        public SortDirection SortDirection { get; set; } = SortDirection.DESC;
+        public DateTime MaxOrderDate { get; set; } = DateTime.Now;
 
-        public int PageIndex { get; set; } = 1;
+        public bool ValidDateRange => MaxOrderDate > MinOrderDate;
 
-        const int maxPageSize = 100;
-        private int _pageSize = 25;
-        public int PageSize
-        {
-            get
-            {
-                return _pageSize;
-            }
-            set
-            {
-                _pageSize = (value > maxPageSize) ? maxPageSize : value;
-            }
-        }
-    }
+        public int? OrderId { get; set; }
 
-    public enum SortDirection
-    {
-        DESC,
-        ASC
+        public string SortOrder { get; set; } = string.Empty;
     }
 }

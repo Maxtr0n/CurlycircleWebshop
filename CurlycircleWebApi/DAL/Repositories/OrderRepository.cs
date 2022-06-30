@@ -28,12 +28,20 @@ namespace DAL.Repositories
 
         public async Task<PagedList<Order>> GetAllAsync(OrderQueryParameters orderQueryParameters)
         {
-            var orders = await PagedList<Order>.CreateAsync(dbContext.Orders
-                .OrderBy(o => o.OrderDateTime)
-                .ThenBy(o => o.Id)
-                .Include(o => o.OrderItems), orderQueryParameters.PageIndex, orderQueryParameters.PageSize);
+            if (!orderQueryParameters.ValidDateRange)
+            {
+                throw new BadParameterException("Max date of order cannot be less than min date of order.");
+            }
 
-            return orders;
+            var orders = dbContext.Orders
+                .Where(o => o.OrderDateTime.Date >= orderQueryParameters.MinOrderDate.Date && o.OrderDateTime.Date <= orderQueryParameters.MaxOrderDate.Date);
+
+            SearchById(ref orders, orderQueryParameters.OrderId);
+
+            ApplySort(ref orders, orderQueryParameters.SortOrder);
+
+            return await PagedList<Order>.CreateAsync(orders
+                .Include(o => o.OrderItems), orderQueryParameters.PageIndex, orderQueryParameters.PageSize);
         }
 
         public async Task<Order> GetOrderByIdAsync(int orderId)
@@ -72,6 +80,25 @@ namespace DAL.Repositories
                 .Where(o => o.ApplicationUserId == userId)
                 .ToListAsync();
             return orders;
+        }
+
+        private void SearchById(ref IQueryable<Order> orders, int? orderId)
+        {
+            if (!orders.Any() || orderId == null)
+                return;
+            orders = orders.Where(o => o.Id == orderId);
+        }
+
+        private void ApplySort(ref IQueryable<Order> orders, string sortOrder)
+        {
+            if (sortOrder.Equals("asc"))
+            {
+                orders = orders.OrderBy(o => o.OrderDateTime).ThenBy(o => o.Id);
+            }
+            else
+            {
+                orders = orders.OrderByDescending(o => o.OrderDateTime).ThenBy(o => o.Id);
+            }
         }
     }
 }
