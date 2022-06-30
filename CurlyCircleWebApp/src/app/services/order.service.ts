@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppHttpClient } from '../core/app-http-client';
-import { OrdersViewModel, OrderUpsertDto, OrderViewModel, PagedOrdersViewModel } from '../models/models';
+import { OrderQueryParameters, OrdersViewModel, OrderUpsertDto, OrderViewModel, PagedOrdersViewModel } from '../models/models';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,9 @@ export class OrderService {
     private currentOrderSubject: BehaviorSubject<OrderUpsertDto | null>;
     public currentOrder$: Observable<OrderUpsertDto | null>;
 
-    constructor(private readonly httpClient: AppHttpClient) {
+    constructor(
+        private readonly httpClient: AppHttpClient
+    ) {
         this.currentOrderSubject = new BehaviorSubject<OrderUpsertDto | null>(null);
         this.currentOrder$ = this.currentOrderSubject.asObservable();
     }
@@ -30,8 +33,8 @@ export class OrderService {
         return this.httpClient.post<OrderUpsertDto>(this.ordersUrl, order);
     }
 
-    public getOrderPage(): Observable<PagedOrdersViewModel> {
-        return this.httpClient.get<PagedOrdersViewModel>(this.ordersUrl);
+    public getOrderPage(orderQueryParameters: OrderQueryParameters): Observable<PagedOrdersViewModel> {
+        return this.httpClient.getOrderWithParams<PagedOrdersViewModel>(this.ordersUrl, orderQueryParameters);
     }
 
     public getOrder(id: number): Observable<OrderViewModel> {

@@ -16,6 +16,6 @@ namespace Domain.Entities.QueryParameters
 
         public int? OrderId { get; set; }
 
-        public string SortOrder { get; set; } = string.Empty;
+        public string SortDirection { get; set; } = string.Empty;
     }
 }

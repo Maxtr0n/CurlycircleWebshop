@@ -150,10 +150,10 @@ export interface PagedOrdersViewModel {
 export interface OrderQueryParameters {
     pageIndex: number;
     pageSize: number;
-    orderId: string;
-    sortOrder: string;
-    minOrderDate: Date;
-    maxOrderDate: Date;
+    orderId: number | null;
+    sortDirection: string;
+    minOrderDate: Date | null;
+    maxOrderDate: Date | null;
 }
 
 export enum Pattern {

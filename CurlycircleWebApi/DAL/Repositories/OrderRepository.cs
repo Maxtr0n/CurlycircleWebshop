@@ -38,7 +38,7 @@ namespace DAL.Repositories
 
             SearchById(ref orders, orderQueryParameters.OrderId);
 
-            ApplySort(ref orders, orderQueryParameters.SortOrder);
+            ApplySort(ref orders, orderQueryParameters.SortDirection);
 
             return await PagedList<Order>.CreateAsync(orders
                 .Include(o => o.OrderItems), orderQueryParameters.PageIndex, orderQueryParameters.PageSize);
@@ -89,9 +89,9 @@ namespace DAL.Repositories
             orders = orders.Where(o => o.Id == orderId);
         }
 
-        private void ApplySort(ref IQueryable<Order> orders, string sortOrder)
+        private void ApplySort(ref IQueryable<Order> orders, string sortDirection)
         {
-            if (sortOrder.Equals("asc"))
+            if (sortDirection.Equals("asc"))
             {
                 orders = orders.OrderBy(o => o.OrderDateTime).ThenBy(o => o.Id);
             }

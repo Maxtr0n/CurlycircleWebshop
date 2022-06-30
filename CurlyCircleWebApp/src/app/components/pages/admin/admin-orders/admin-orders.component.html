@@ -7,6 +7,9 @@
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
     </div>
+    <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+        <mat-spinner></mat-spinner>
+    </div>
     <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="date">
             <mat-header-cell *matHeaderCellDef>Dátum</mat-header-cell>
@@ -27,6 +30,7 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row (click)="orderClicked(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <mat-paginator [pageSizeOptions]="[25, 50, 100]" showFirstLastButtons aria-label="Válaszd ki a rendelések oldalát">
+    <mat-paginator [length]="resultsLength" [pageSize]="25" [pageSizeOptions]="[25, 50, 100]" showFirstLastButtons
+        aria-label="Válaszd ki a rendelések oldalát">
     </mat-paginator>
 </div>

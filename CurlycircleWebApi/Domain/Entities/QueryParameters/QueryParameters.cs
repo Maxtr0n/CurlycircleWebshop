@@ -9,7 +9,7 @@ namespace Domain.Entities.QueryParameters
     public abstract class QueryParameters
     {
         const int maxPageSize = 50;
-        public int PageIndex { get; set; } = 1;
+        public int PageIndex { get; set; } = 0;
         private int _pageSize = 10;
         public int PageSize
         {
