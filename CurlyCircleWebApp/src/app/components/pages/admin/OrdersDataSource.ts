@@ -23,7 +23,7 @@ export class OrdersDataSource implements DataSource<OrderViewModel> {
         this.loadingSubject.complete();
     }
 
-    loadOrders(orderId: number | null = null, sortDirection = 'desc', pageIndex = 0, pageSize = 25,
+    loadOrders(orderId: string | null = null, sortDirection = 'desc', pageIndex = 0, pageSize = 25,
         minOrderDate: Date | null = null, maxOrderDate: Date | null = null): void {
         this.loadingSubject.next(true);
 

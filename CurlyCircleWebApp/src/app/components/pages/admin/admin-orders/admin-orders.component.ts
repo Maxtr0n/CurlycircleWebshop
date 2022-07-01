@@ -37,12 +37,13 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
         this.dataSource.resultsLength$.subscribe(resultsLength => this.resultsLength = resultsLength);
 
         this.searchWordSubject.pipe(
-            debounceTime(500),
+            debounceTime(250),
             distinctUntilChanged()
         ).subscribe({
             next: (value: string) => {
                 this.searchWord = value;
-                console.log(value);
+                this.paginator.pageIndex = 0;
+                this.loadOrdersPage();
             }
         });
     }
@@ -52,8 +53,11 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
+
+        //reset paginator after sorting
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
+        // on sort or paginate events, load a new page
         merge(this.sort.sortChange, this.paginator.page).pipe(
             tap(() => this.loadOrdersPage())
         ).subscribe();
@@ -69,7 +73,7 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
 
     loadOrdersPage(): void {
         this.dataSource.loadOrders(
-            null,
+            this.searchWord,
             this.sort.direction,
             this.paginator.pageIndex,
             this.paginator.pageSize,

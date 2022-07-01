@@ -2,14 +2,14 @@
     <div fxLayout="row">
         <h1 fxFlex="1 1 0" class="h2">Rendelések</h1>
         <mat-form-field appearance="fill" fxFlexAlign="end" class="search-field">
-            <mat-label>Keresés</mat-label>
+            <mat-label>Keresés azonosítóval</mat-label>
             <input matInput type="text" [ngModel]="searchWord" (ngModelChange)="searchWordChanged($event)">
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
     </div>
-    <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <!-- <div class="spinner-container" *ngIf="dataSource.loading$ | async">
         <mat-spinner></mat-spinner>
-    </div>
+    </div> -->
     <mat-table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc" matSortDisableClear>
         <ng-container matColumnDef="date">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Dátum</mat-header-cell>
