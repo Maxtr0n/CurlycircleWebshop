@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
@@ -25,6 +26,10 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
 
     searchWord: string = '';
     searchWordSubject: Subject<string> = new Subject<string>();
+    range = new FormGroup({
+        start: new FormControl<Date | null>(null),
+        end: new FormControl<Date | null>(null),
+    });
 
     constructor(
         private readonly authService: AuthService,
