@@ -22,6 +22,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
     declarations: [],
@@ -48,6 +49,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatPaginatorModule,
         MatSortModule,
         MatProgressSpinnerModule,
+        MatDatepickerModule,
     ],
     exports: [
         MatSliderModule,
@@ -71,6 +73,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatPaginatorModule,
         MatSortModule,
         MatProgressSpinnerModule,
+        MatDatepickerModule,
     ],
 })
 export class MaterialModule { }
