@@ -1,22 +1,25 @@
 <div fxLayout="column" fxLayoutAlign="center space-between" fxLayoutGap="1em" class="orders-container mat-elevation-z8">
-    <div fxLayout="row">
+    <div fxLayout="row" fxLayout.lt-md="column">
         <h1 fxFlex="1 1 0" class="h2">Rendelések</h1>
-        <div fxFlexAlign="end" fxLayout="row">
+        <div fxFlexAlign="end" fxLayout="row" fxLayoutGap="1em" fxLayout.lt-md="column" fxFlexAlign.lt-md="start">
             <mat-form-field appearance="fill" class="search-field">
                 <mat-label>Keresés azonosítóval</mat-label>
-                <input matInput type="text" [ngModel]="searchWord" (ngModelChange)="searchWordChanged($event)">
+                <input matInput type="text" [(ngModel)]="searchWord">
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
             <mat-form-field appearance="fill" class="search-field">
                 <mat-label>Keresés dátummal</mat-label>
                 <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-                    <input matStartDate formControlName="start" placeholder="Start date">
-                    <input matEndDate formControlName="end" placeholder="End date">
+                    <input matStartDate formControlName="start">
+                    <input matEndDate formControlName="end">
                 </mat-date-range-input>
-                <mat-hint>YYYY-MM-DD - YYYY-MM-DD</mat-hint>
+                <mat-hint>YYYY. MM. DD. - YYYY. MM. DD.</mat-hint>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
             </mat-form-field>
+            <button mat-raised-button color="primary" class="filter-button" (click)="filter()">Szűrés</button>
+            <button mat-button color="warn" class="filter-button" (click)="clearFilters()">Szűrők
+                törlése</button>
         </div>
     </div>
     <!-- <div class="spinner-container" *ngIf="dataSource.loading$ | async">

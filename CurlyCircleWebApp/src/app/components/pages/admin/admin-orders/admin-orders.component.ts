@@ -25,7 +25,6 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort!: MatSort;
 
     searchWord: string = '';
-    searchWordSubject: Subject<string> = new Subject<string>();
     range = new FormGroup({
         start: new FormControl<Date | null>(null),
         end: new FormControl<Date | null>(null),
@@ -40,17 +39,6 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     ) {
         this.dataSource = new OrdersDataSource(this.orderService);
         this.dataSource.resultsLength$.subscribe(resultsLength => this.resultsLength = resultsLength);
-
-        this.searchWordSubject.pipe(
-            debounceTime(250),
-            distinctUntilChanged()
-        ).subscribe({
-            next: (value: string) => {
-                this.searchWord = value;
-                this.paginator.pageIndex = 0;
-                this.loadOrdersPage();
-            }
-        });
     }
 
     ngOnInit(): void {
@@ -72,8 +60,15 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
         this.router.navigate([order.id], { relativeTo: this.route });
     }
 
-    searchWordChanged(value: any): void {
-        this.searchWordSubject.next(value);
+    filter(): void {
+        this.paginator.pageIndex = 0;
+        this.loadOrdersPage();
+    }
+
+    clearFilters() {
+        this.searchWord = '';
+        this.range.reset();
+        this.loadOrdersPage();
     }
 
     loadOrdersPage(): void {
@@ -82,9 +77,8 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
             this.sort.direction,
             this.paginator.pageIndex,
             this.paginator.pageSize,
-            null,
-            null
+            this.range.value.start,
+            this.range.value.end
         );
     }
-
 }

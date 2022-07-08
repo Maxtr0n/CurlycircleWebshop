@@ -41,6 +41,7 @@ import { AdminOrdersComponent } from './components/pages/admin/admin-orders/admi
 import { AdminOrderDetailsComponent } from './components/pages/admin/admin-order-details/admin-order-details.component';
 import { ShippingMethodPipe } from './utilities/pipes/shipping-method-pipe';
 import { PaymentMethodPipe } from './utilities/pipes/payment-method-pipe';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
     declarations: [
@@ -87,6 +88,7 @@ import { PaymentMethodPipe } from './utilities/pipes/payment-method-pipe';
     ],
     providers: [
         httpInterceptorProviders,
+        { provide: MAT_DATE_LOCALE, useValue: 'hu-HU' },
     ],
     bootstrap: [AppComponent],
 })
