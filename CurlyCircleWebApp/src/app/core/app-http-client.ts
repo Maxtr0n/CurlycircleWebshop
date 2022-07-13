@@ -17,24 +17,7 @@ export class AppHttpClient {
         return this.http.get<T>(`${this.apiUrl}/${endPoint}`);
     }
 
-    public getOrderWithParams<T>(endPoint: string, orderQueryParameters: OrderQueryParameters): Observable<T> {
-        let httpParams = new HttpParams()
-            .set('pageIndex', orderQueryParameters.pageIndex.toString())
-            .set('pageSize', orderQueryParameters.pageSize.toString())
-            .set('sortDirection', orderQueryParameters.sortDirection);
-
-        if (orderQueryParameters.orderId !== null) {
-            httpParams = httpParams.set('orderId', orderQueryParameters.orderId);
-        }
-
-        if (orderQueryParameters.minOrderDate) {
-            httpParams = httpParams.set('minOrderDate', orderQueryParameters.minOrderDate.toString());
-        }
-
-        if (orderQueryParameters.maxOrderDate) {
-            httpParams = httpParams.set('maxOrderDate', orderQueryParameters.maxOrderDate.toString());
-        }
-
+    public getWithParams<T>(endPoint: string, httpParams: HttpParams): Observable<T> {
         return this.http.get<T>(`${this.apiUrl}/${endPoint}`, {
             params: httpParams
         });

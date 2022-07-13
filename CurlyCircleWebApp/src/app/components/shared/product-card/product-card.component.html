@@ -1,4 +1,4 @@
-<mat-card (click)="onCardClicked(item.id)" class="product-card" fxLayout="column">
+<mat-card (click)="onCardClicked(item.id)" class="product-card" fxLayout="column" *ngIf="!isAdmin;else adminTemplate">
     <mat-card-title>{{item.name}}</mat-card-title>
     <img *ngIf="item.imageUrls.length > 0; else noImageBlock" mat-card-image [src]="imagesBaseUrl + item.imageUrls[0]"
         alt="Image of a product" class="product-image">
@@ -11,3 +11,24 @@
         </p>
     </mat-card-content>
 </mat-card>
+<ng-template #adminTemplate>
+    <div fxLayout="column" fxLayoutGap="2px">
+        <mat-card (click)="onCardClicked(item.id)" class="product-card" fxLayout="column">
+            <mat-card-title>{{item.name}}</mat-card-title>
+            <img *ngIf="item.imageUrls.length > 0; else noImageBlock" mat-card-image
+                [src]="imagesBaseUrl + item.imageUrls[0]" alt="Image of a product" class="product-image">
+            <ng-template #noImageBlock>
+                <img mat-card-image [src]="noImageUrl" alt="Image of a product" class="product-image">
+            </ng-template>
+            <mat-card-content>
+                <p>
+                    {{item.description}}
+                </p>
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <button mat-button>Szerkesztés</button>
+            <button mat-button>Törlés</button>
+        </mat-card>
+    </div>
+</ng-template>

@@ -44,6 +44,7 @@ import { PaymentMethodPipe } from './utilities/pipes/payment-method-pipe';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { hu } from 'date-fns/locale';
 import { DateFnsAdapter, MatDateFnsModule, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
+import { AdminProductsComponent } from './components/pages/admin/admin-products/admin-products.component';
 
 @NgModule({
     declarations: [
@@ -74,6 +75,7 @@ import { DateFnsAdapter, MatDateFnsModule, MAT_DATE_FNS_FORMATS } from '@angular
         OrderSuccessComponent,
         AdminOrdersComponent,
         AdminOrderDetailsComponent,
+        AdminProductsComponent,
     ],
     imports: [
         BrowserModule,

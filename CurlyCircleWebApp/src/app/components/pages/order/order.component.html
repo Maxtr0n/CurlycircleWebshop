@@ -61,7 +61,7 @@
         <mat-step [stepControl]="shippingFormGroup" label="Szállítás">
             <form [formGroup]="shippingFormGroup" fxLayout="column">
                 <mat-radio-group formControlName="shippingMethod" class="order-data-form-row" fxLayout="column"
-                    fxLAyoutAlign="start">
+                    fxLAyoutAlign="start" aria-label="Szállítási módok">
                     <mat-radio-button value="0">Foxpost</mat-radio-button>
                     <mat-radio-button value="1">Magyar Posta Pont</mat-radio-button>
                     <mat-radio-button value="2">Magyar Posta CsomagPont</mat-radio-button>
@@ -77,7 +77,7 @@
         <mat-step [stepControl]="paymentFormGroup" label="Fizetés">
             <form [formGroup]="paymentFormGroup">
                 <mat-radio-group formControlName="paymentMethod" class="order-data-form-row" fxLayout="column"
-                    fxLAyoutAlign="start">
+                    fxLAyoutAlign="start" aria-label="Fizetési módok">
                     <mat-radio-button value="0">Átutalás</mat-radio-button>
                     <mat-radio-button value="1">Készpénzzel átvételkor</mat-radio-button>
                     <mat-radio-button value="2">Webes fizetés</mat-radio-button>

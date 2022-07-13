@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AppConstants } from 'src/app/core/app-constants';
-import { ProductCategoryViewModel, ProductViewModel } from 'src/app/models/models';
+import { ProductCategoryViewModel, ProductViewModel, Role, UserViewModel } from 'src/app/models/models';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-product-card',
@@ -8,7 +9,8 @@ import { ProductCategoryViewModel, ProductViewModel } from 'src/app/models/model
     styleUrls: ['./product-card.component.scss']
 })
 export class ProductCardComponent implements OnInit {
-
+    currentUser: UserViewModel | null = null;
+    isAdmin: boolean = false;
     imagesBaseUrl: string = AppConstants.IMAGES_URL;
     noImageUrl: string = AppConstants.NO_IMAGE_URL;
 
@@ -18,9 +20,18 @@ export class ProductCardComponent implements OnInit {
     @Output()
     onCardClickedEvent = new EventEmitter<number>();
 
-    constructor() { }
+    constructor(private readonly authService: AuthService,) { }
 
     ngOnInit(): void {
+        this.authService.currentUser$.subscribe((user) => {
+            this.currentUser = user;
+            if (user) {
+                this.isAdmin = Role[user.role].toString() === Role.Admin.toString();
+            } else {
+                this.isAdmin = false;
+            }
+        });
+
     }
 
     onCardClicked(id: number): void {

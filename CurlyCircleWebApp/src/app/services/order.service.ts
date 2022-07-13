@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppHttpClient } from '../core/app-http-client';
@@ -34,7 +34,24 @@ export class OrderService {
     }
 
     public getOrderPage(orderQueryParameters: OrderQueryParameters): Observable<PagedOrdersViewModel> {
-        return this.httpClient.getOrderWithParams<PagedOrdersViewModel>(this.ordersUrl, orderQueryParameters);
+        let httpParams = new HttpParams()
+            .set('pageIndex', orderQueryParameters.pageIndex.toString())
+            .set('pageSize', orderQueryParameters.pageSize.toString())
+            .set('sortDirection', orderQueryParameters.sortDirection);
+
+        if (orderQueryParameters.orderId !== null) {
+            httpParams = httpParams.set('orderId', orderQueryParameters.orderId);
+        }
+
+        if (orderQueryParameters.minOrderDate) {
+            httpParams = httpParams.set('minOrderDate', orderQueryParameters.minOrderDate.toString());
+        }
+
+        if (orderQueryParameters.maxOrderDate) {
+            httpParams = httpParams.set('maxOrderDate', orderQueryParameters.maxOrderDate.toString());
+        }
+
+        return this.httpClient.getWithParams<PagedOrdersViewModel>(this.ordersUrl, httpParams);
     }
 
     public getOrder(id: number): Observable<OrderViewModel> {
