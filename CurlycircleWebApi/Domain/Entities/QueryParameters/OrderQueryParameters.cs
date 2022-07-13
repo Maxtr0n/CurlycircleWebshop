@@ -12,7 +12,7 @@ namespace Domain.Entities.QueryParameters
 
         public DateTime MaxOrderDate { get; set; } = DateTime.Now;
 
-        public bool ValidDateRange => MaxOrderDate > MinOrderDate;
+        public bool ValidDateRange => MaxOrderDate >= MinOrderDate;
 
         public int? OrderId { get; set; }
 

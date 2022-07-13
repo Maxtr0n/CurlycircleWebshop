@@ -1,4 +1,5 @@
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
+import { format } from "date-fns";
 import { BehaviorSubject, catchError, Observable, of, finalize } from "rxjs";
 import { OrderQueryParameters, OrderViewModel } from "src/app/models/models";
 import { OrderService } from "src/app/services/order.service";
@@ -27,13 +28,24 @@ export class OrdersDataSource implements DataSource<OrderViewModel> {
         minOrderDate: Date | null = null, maxOrderDate: Date | null = null): void {
         this.loadingSubject.next(true);
 
+        let minDate: string | null = null;
+        let maxDate: string | null = null;
+
+        if (minOrderDate) {
+            minDate = format(minOrderDate, 'yyyy-MM-dd');
+        }
+
+        if (maxOrderDate) {
+            maxDate = format(maxOrderDate, 'yyyy-MM-dd');
+        }
+
         const orderQueryParameters: OrderQueryParameters = {
             pageIndex,
             pageSize,
             orderId,
             sortDirection,
-            minOrderDate,
-            maxOrderDate
+            minOrderDate: minDate,
+            maxOrderDate: maxDate
         };
 
         this.orderService.getOrderPage(orderQueryParameters).subscribe({

@@ -43,7 +43,7 @@ import { ShippingMethodPipe } from './utilities/pipes/shipping-method-pipe';
 import { PaymentMethodPipe } from './utilities/pipes/payment-method-pipe';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { hu } from 'date-fns/locale';
-import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
+import { DateFnsAdapter, MatDateFnsModule, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 
 @NgModule({
     declarations: [
@@ -90,8 +90,9 @@ import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
     ],
     providers: [
         httpInterceptorProviders,
+        { provide: DateAdapter, useClass: DateFnsAdapter },
         { provide: MAT_DATE_LOCALE, useValue: hu },
-        { provide: MAT_DATE_FORMATS, useValue: hu },
+        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS },
     ],
     bootstrap: [AppComponent],
 })

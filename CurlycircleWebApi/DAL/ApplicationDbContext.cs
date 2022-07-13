@@ -38,27 +38,27 @@ namespace DAL
 
             modelBuilder.HasSequence<int>("cartseq")
                .StartsAt(1000)
-               .IncrementsBy(10);
+               .IncrementsBy(1);
 
             modelBuilder.HasSequence<int>("orderseq")
                .StartsAt(1000)
-               .IncrementsBy(10);
+               .IncrementsBy(1);
 
             modelBuilder.HasSequence<int>("productcategoryseq")
                .StartsAt(1000)
-               .IncrementsBy(10);
+               .IncrementsBy(1);
 
             modelBuilder.HasSequence<int>("productseq")
                .StartsAt(1000)
-               .IncrementsBy(10);
+               .IncrementsBy(1);
 
             modelBuilder.HasSequence<int>("cartitemseq")
                .StartsAt(1000)
-               .IncrementsBy(10);
+               .IncrementsBy(1);
 
             modelBuilder.HasSequence<int>("orderitemseq")
                .StartsAt(1000)
-               .IncrementsBy(10);
+               .IncrementsBy(1);
 
             modelBuilder.ApplyConfiguration(new ApplicationUserEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OrderEntityTypeConfiguration());

@@ -152,8 +152,8 @@ export interface OrderQueryParameters {
     pageSize: number;
     orderId: string | null;
     sortDirection: string;
-    minOrderDate: Date | null;
-    maxOrderDate: Date | null;
+    minOrderDate: string | null;
+    maxOrderDate: string | null;
 }
 
 export enum Pattern {
