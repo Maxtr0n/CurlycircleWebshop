@@ -6,6 +6,7 @@ import {
     LoginDto,
     RefreshDto,
     RegisterDto,
+    Role,
     TokenViewModel,
     UserDataViewModel,
     UserUpdateDto,
@@ -23,11 +24,25 @@ export class AuthService {
     private currentUserSubject: BehaviorSubject<UserViewModel | null>;
     public currentUser$: Observable<UserViewModel | null>;
 
+    private isAdminSubject: BehaviorSubject<boolean>;
+    public isAdmin$: Observable<boolean>;
+
     constructor(private readonly httpClient: AppHttpClient) {
         this.currentUserSubject = new BehaviorSubject<UserViewModel | null>(
             this.getCurrentUser()
         );
         this.currentUser$ = this.currentUserSubject.asObservable();
+
+        this.isAdminSubject = new BehaviorSubject<boolean>(false);
+        this.isAdmin$ = this.isAdminSubject.asObservable();
+
+        this.currentUser$.subscribe((user) => {
+            if (user) {
+                this.isAdminSubject.next(Role[user.role].toString() === Role.Admin.toString());
+            } else {
+                this.isAdminSubject.next(false);
+            }
+        });
     }
 
 

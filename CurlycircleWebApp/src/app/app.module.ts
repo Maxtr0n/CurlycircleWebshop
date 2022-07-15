@@ -44,7 +44,12 @@ import { PaymentMethodPipe } from './utilities/pipes/payment-method-pipe';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { hu } from 'date-fns/locale';
 import { DateFnsAdapter, MatDateFnsModule, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
-import { AdminProductsComponent } from './components/pages/admin/admin-products/admin-products.component';
+import { AddProductCategoryDialogComponent } from './components/dialogs/add-product-category-dialog/add-product-category-dialog.component';
+import { DeleteProductCategoryDialogComponent } from './components/dialogs/delete-product-category-dialog/delete-product-category-dialog.component';
+import { ModifyProductCategoryDialogComponent } from './components/dialogs/modify-product-category-dialog/modify-product-category-dialog.component';
+import { ModifyProductDialogComponent } from './components/dialogs/modify-product-dialog/modify-product-dialog.component';
+import { DeleteProductDialogComponent } from './components/dialogs/delete-product-dialog/delete-product-dialog.component';
+import { AddProductDialogComponent } from './components/dialogs/add-product-dialog/add-product-dialog.component';
 
 @NgModule({
     declarations: [
@@ -75,7 +80,12 @@ import { AdminProductsComponent } from './components/pages/admin/admin-products/
         OrderSuccessComponent,
         AdminOrdersComponent,
         AdminOrderDetailsComponent,
-        AdminProductsComponent,
+        AddProductCategoryDialogComponent,
+        DeleteProductCategoryDialogComponent,
+        ModifyProductCategoryDialogComponent,
+        ModifyProductDialogComponent,
+        DeleteProductDialogComponent,
+        AddProductDialogComponent,
     ],
     imports: [
         BrowserModule,

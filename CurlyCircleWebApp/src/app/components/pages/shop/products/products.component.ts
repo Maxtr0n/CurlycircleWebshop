@@ -1,9 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, switchMap, tap } from 'rxjs';
+import { AddProductDialogComponent } from 'src/app/components/dialogs/add-product-dialog/add-product-dialog.component';
+import { DeleteProductDialogComponent } from 'src/app/components/dialogs/delete-product-dialog/delete-product-dialog.component';
+import { ModifyProductDialogComponent } from 'src/app/components/dialogs/modify-product-dialog/modify-product-dialog.component';
 import { AppConstants } from 'src/app/core/app-constants';
 import { ProductCategoryViewModel, ProductViewModel } from 'src/app/models/models';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { ProductService } from 'src/app/services/product.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
@@ -14,6 +19,7 @@ import { BreadcrumbService } from 'xng-breadcrumb';
     styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit, OnDestroy {
+    isAdmin: boolean = false;
     productCategory: ProductCategoryViewModel | null = null;
     products: ProductViewModel[] | null = [];
     productCategory$: Subscription = new Subscription;
@@ -27,12 +33,17 @@ export class ProductsComponent implements OnInit, OnDestroy {
         private readonly route: ActivatedRoute,
         private readonly snackBar: MatSnackBar,
         private readonly breadcrumbService: BreadcrumbService,
+        private readonly authService: AuthService,
+        private readonly dialog: MatDialog
     ) { }
 
 
     ngOnInit(): void {
         this.breadcrumbService.set('@ProductCategories', 'Kategóriák');
         this.breadcrumbService.set('@Products', 'Kategória');
+        this.authService.isAdmin$.subscribe((isAdmin) => {
+            this.isAdmin = isAdmin;
+        });
         this.getData();
     }
 
@@ -67,4 +78,21 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.router.navigate([id], { relativeTo: this.route });
     }
 
+    onProductModifyClicked(id: number): void {
+        let dialogRef = this.dialog.open(ModifyProductDialogComponent, {
+            width: '600px',
+        });
+    }
+
+    onProductDeleteClicked(id: number): void {
+        let dialogRef = this.dialog.open(DeleteProductDialogComponent, {
+            width: '600px',
+        });
+    }
+
+    onProductAddClicked(): void {
+        let dialogRef = this.dialog.open(AddProductDialogComponent, {
+            width: '600px',
+        });
+    }
 }

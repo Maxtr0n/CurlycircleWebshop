@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { AddProductCategoryDialogComponent } from 'src/app/components/dialogs/add-product-category-dialog/add-product-category-dialog.component';
+import { DeleteProductCategoryDialogComponent } from 'src/app/components/dialogs/delete-product-category-dialog/delete-product-category-dialog.component';
+import { ModifyProductCategoryDialogComponent } from 'src/app/components/dialogs/modify-product-category-dialog/modify-product-category-dialog.component';
 import { AppConstants } from 'src/app/core/app-constants';
 import { ProductCategoriesViewModel, ProductCategoryViewModel } from 'src/app/models/models';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
@@ -12,6 +17,7 @@ import { BreadcrumbService } from 'xng-breadcrumb';
     styleUrls: ['./product-categories.component.scss']
 })
 export class ProductCategoriesComponent implements OnInit {
+    isAdmin: boolean = false;
     productCategories: ProductCategoryViewModel[] = [];
     imagesBaseUrl: string = AppConstants.IMAGES_URL;
     noImageUrl: string = AppConstants.NO_IMAGE_URL;
@@ -22,10 +28,15 @@ export class ProductCategoriesComponent implements OnInit {
         private readonly route: ActivatedRoute,
         private readonly snackBar: MatSnackBar,
         private readonly breadcrumbService: BreadcrumbService,
+        private readonly authService: AuthService,
+        private readonly dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
         this.breadcrumbService.set('@ProductCategories', 'Kategóriák');
+        this.authService.isAdmin$.subscribe((isAdmin) => {
+            this.isAdmin = isAdmin;
+        });
         this.getData();
     }
 
@@ -45,4 +56,21 @@ export class ProductCategoriesComponent implements OnInit {
         this.router.navigate([id], { relativeTo: this.route });
     }
 
+    onProductCategoryModifyClicked(id: number): void {
+        let dialogRef = this.dialog.open(ModifyProductCategoryDialogComponent, {
+            width: '600px',
+        });
+    }
+
+    onProductCategoryDeleteClicked(id: number): void {
+        let dialogRef = this.dialog.open(DeleteProductCategoryDialogComponent, {
+            width: '600px',
+        });
+    }
+
+    onProductCategoryAddClicked(): void {
+        let dialogRef = this.dialog.open(AddProductCategoryDialogComponent, {
+            width: '600px',
+        });
+    }
 }

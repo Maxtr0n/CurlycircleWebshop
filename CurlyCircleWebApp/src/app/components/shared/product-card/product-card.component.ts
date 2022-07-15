@@ -9,7 +9,6 @@ import { AuthService } from 'src/app/services/auth.service';
     styleUrls: ['./product-card.component.scss']
 })
 export class ProductCardComponent implements OnInit {
-    currentUser: UserViewModel | null = null;
     isAdmin: boolean = false;
     imagesBaseUrl: string = AppConstants.IMAGES_URL;
     noImageUrl: string = AppConstants.NO_IMAGE_URL;
@@ -20,22 +19,29 @@ export class ProductCardComponent implements OnInit {
     @Output()
     onCardClickedEvent = new EventEmitter<number>();
 
+    @Output()
+    onAdminModifyClickedEvent = new EventEmitter<number>();
+
+    @Output()
+    onAdminDeleteClickedEvent = new EventEmitter<number>();
+
     constructor(private readonly authService: AuthService,) { }
 
     ngOnInit(): void {
-        this.authService.currentUser$.subscribe((user) => {
-            this.currentUser = user;
-            if (user) {
-                this.isAdmin = Role[user.role].toString() === Role.Admin.toString();
-            } else {
-                this.isAdmin = false;
-            }
+        this.authService.isAdmin$.subscribe((isAdmin) => {
+            this.isAdmin = isAdmin;
         });
-
     }
 
     onCardClicked(id: number): void {
         this.onCardClickedEvent.emit(id);
     }
 
+    onAdminModifyClicked(id: number): void {
+        this.onAdminModifyClickedEvent.emit(id);
+    }
+
+    onAdminDeleteClicked(id: number): void {
+        this.onAdminDeleteClickedEvent.emit(id);
+    }
 }

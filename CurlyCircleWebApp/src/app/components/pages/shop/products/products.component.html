@@ -1,6 +1,13 @@
 <div fxLayout="row wrap" fxLayoutGap="2em grid" fxLayoutAlign="center stretch">
     <ng-container *ngFor="let product of products">
-        <app-product-card [item]="product" (onCardClickedEvent)="onProductClicked($event)" fxFlex="25%" fxFlex.md="33%"
-            fxFlex.sm="50%" fxFlex.xs="100%" fxLayoutAlign="center stretch"></app-product-card>
+        <app-product-card [item]="product" (onCardClickedEvent)="onProductClicked($event)"
+            (onAdminModifyClickedEvent)="onProductModifyClicked($event)"
+            (onAdminDeleteClickedEvent)="onProductDeleteClicked($event)" fxFlex="25%" fxFlex.md="33%" fxFlex.sm="50%"
+            fxFlex.xs="100%" fxLayoutAlign="center stretch"></app-product-card>
     </ng-container>
+    <div fxFlexAlign="center">
+        <button (click)="onProductAddClicked()" mat-fab class="product-add-button" color="primary" *ngIf="isAdmin">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
 </div>
