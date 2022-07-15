@@ -50,6 +50,7 @@ import { ModifyProductCategoryDialogComponent } from './components/dialogs/modif
 import { ModifyProductDialogComponent } from './components/dialogs/modify-product-dialog/modify-product-dialog.component';
 import { DeleteProductDialogComponent } from './components/dialogs/delete-product-dialog/delete-product-dialog.component';
 import { AddProductDialogComponent } from './components/dialogs/add-product-dialog/add-product-dialog.component';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 
 @NgModule({
     declarations: [
@@ -99,6 +100,7 @@ import { AddProductDialogComponent } from './components/dialogs/add-product-dial
         BreadcrumbModule,
         NgbModule,
         FontAwesomeModule,
+        NgxMatFileInputModule,
     ],
     providers: [
         httpInterceptorProviders,

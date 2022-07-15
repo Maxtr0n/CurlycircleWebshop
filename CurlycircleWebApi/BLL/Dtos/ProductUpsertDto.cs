@@ -16,7 +16,7 @@ namespace BLL.Dtos
 
         public string? Description { get; set; }
 
-        public List<string> ImageUrls { get; set; } = default!;
+        public IEnumerable<string> ImageUrls { get; set; } = default!;
 
         public string? Color { get; set; }
 

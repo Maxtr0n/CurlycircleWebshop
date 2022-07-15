@@ -1,1 +1,5 @@
-<p>delete-product-dialog works!</p>
+<h2 mat-dialog-title>Biztosan törölni akarod a(z) {{productName}} terméket?</h2>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Mégse</button>
+    <button mat-button [mat-dialog-close]="true">Igen, biztos</button>
+</mat-dialog-actions>

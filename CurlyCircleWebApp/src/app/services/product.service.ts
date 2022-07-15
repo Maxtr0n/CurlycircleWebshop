@@ -14,4 +14,8 @@ export class ProductService {
     public getProduct(productId: number): Observable<ProductViewModel> {
         return this.httpClient.get<ProductViewModel>(`${this.productsUrl}/${productId}`);
     }
+
+    public deleteProduct(productId: number): Observable<void> {
+        return this.httpClient.delete<void>(`${this.productsUrl}/${productId}`);
+    }
 }

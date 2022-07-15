@@ -12,8 +12,6 @@ namespace BLL.Dtos
 
         public string Description { get; set; } = default!;
 
-        public IEnumerable<int> ProductIds { get; set; } = default!;
-
         public IEnumerable<string> ImageUrls { get; set; } = default!;
     }
 }

@@ -177,7 +177,6 @@ export interface ProductCategoriesViewModel {
 export interface ProductCategoryUpsertDto {
     name: string;
     description: string | null;
-    productIds: number[] | null;
     imageUrls: string[];
 }
 

@@ -29,6 +29,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
     constructor(
         private readonly productCategoryService: ProductCategoryService,
+        private readonly productService: ProductService,
         private readonly router: Router,
         private readonly route: ActivatedRoute,
         private readonly snackBar: MatSnackBar,
@@ -81,12 +82,26 @@ export class ProductsComponent implements OnInit, OnDestroy {
     onProductModifyClicked(id: number): void {
         let dialogRef = this.dialog.open(ModifyProductDialogComponent, {
             width: '600px',
+            data: { id: id }
         });
     }
 
     onProductDeleteClicked(id: number): void {
         let dialogRef = this.dialog.open(DeleteProductDialogComponent, {
             width: '600px',
+            data: { id: id }
+        });
+        dialogRef.afterClosed().subscribe({
+            next: (result) => {
+                if (result) {
+                    this.productService.deleteProduct(id).pipe(
+                        tap(() => {
+                            this.snackBar.open("A termék törölve!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-accent'] });
+                            this.getData();
+                        })
+                    ).subscribe();
+                }
+            }
         });
     }
 
