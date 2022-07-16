@@ -177,14 +177,14 @@ export interface ProductCategoriesViewModel {
 export interface ProductCategoryUpsertDto {
     name: string;
     description: string | null;
-    imageUrls: string[];
+    thumbnailImageUrl: string;
 }
 
 export interface ProductCategoryViewModel {
     id: number;
     name: string;
     description: string | null;
-    imageUrls: string[];
+    thumbnailImageUrl: string;
 }
 
 export interface ProductUpsertDto {
@@ -206,6 +206,7 @@ export interface ProductViewModel {
     productCategoryId: number;
     description: string | null;
     imageUrls: string[];
+    thumbnailImageUrl: string;
     color: Color;
     pattern: Pattern;
     material: Material;

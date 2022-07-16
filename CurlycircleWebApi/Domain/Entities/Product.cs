@@ -31,6 +31,8 @@ namespace Domain.Entities
 
         public string ImageUrls { get; set; } = string.Empty;
 
+        public string ThumbnailImageUrl { get; set; } = string.Empty;
+
         public Color Color { get; set; } = Color.Other;
 
         public Pattern Pattern { get; set; } = Pattern.Other;

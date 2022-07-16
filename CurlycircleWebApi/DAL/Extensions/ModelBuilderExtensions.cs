@@ -136,21 +136,21 @@ namespace DAL.Extensions
                 Id = 1,
                 Name = "Curly hajgöndörítők",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
-                ImageUrls = "placeholder.jpg"
+                ThumbnailImageUrl = "placeholder.jpg"
             };
             var productCategory2 = new ProductCategory
             {
                 Id = 2,
                 Name = "Hajcsatok",
                 Description = "Donec tincidunt nunc ac sapien blandit pellentesque. Nulla tincidunt dui vitae nibh aliquet, et efficitur dui dignissim.",
-                ImageUrls = "placeholder2.jpeg"
+                ThumbnailImageUrl = "placeholder2.jpeg"
             };
             var productCategory3 = new ProductCategory
             {
                 Id = 3,
                 Name = "Hajgumik",
                 Description = "Vestibulum aliquam gravida dui, ut volutpat nisi semper quis. ",
-                ImageUrls = "placeholder3.jpeg"
+                ThumbnailImageUrl = "placeholder3.jpeg"
             };
             modelBuilder.Entity<ProductCategory>()
                 .HasData(
@@ -170,7 +170,8 @@ namespace DAL.Extensions
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                 Price = 2500,
                 ProductCategoryId = 1,
-                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg"
+                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
+                ThumbnailImageUrl = "placeholder.jpg"
             };
             var product2 = new Product
             {
@@ -179,7 +180,8 @@ namespace DAL.Extensions
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                 Price = 3000,
                 ProductCategoryId = 1,
-                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg"
+                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
+                ThumbnailImageUrl = "placeholder.jpg"
             };
             var product3 = new Product
             {
@@ -188,7 +190,8 @@ namespace DAL.Extensions
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                 Price = 3000,
                 ProductCategoryId = 1,
-                ImageUrls = string.Empty
+                ImageUrls = string.Empty,
+                ThumbnailImageUrl = string.Empty
             };
             var product4 = new Product
             {
@@ -197,7 +200,8 @@ namespace DAL.Extensions
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                 Price = 3500,
                 ProductCategoryId = 1,
-                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg"
+                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
+                ThumbnailImageUrl = "placeholder.jpg"
             };
             var product5 = new Product
             {
@@ -206,7 +210,8 @@ namespace DAL.Extensions
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                 Price = 3500,
                 ProductCategoryId = 1,
-                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg"
+                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
+                ThumbnailImageUrl = "placeholder.jpg"
             };
             var product6 = new Product
             {
@@ -215,7 +220,8 @@ namespace DAL.Extensions
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                 Price = 4000,
                 ProductCategoryId = 2,
-                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg"
+                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
+                ThumbnailImageUrl = "placeholder.jpg"
             };
             var product7 = new Product
             {
@@ -224,7 +230,8 @@ namespace DAL.Extensions
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                 Price = 2500,
                 ProductCategoryId = 2,
-                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg"
+                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
+                ThumbnailImageUrl = "placeholder.jpg"
             };
             var product8 = new Product
             {
@@ -233,7 +240,8 @@ namespace DAL.Extensions
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                 Price = 1500,
                 ProductCategoryId = 2,
-                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg"
+                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
+                ThumbnailImageUrl = "placeholder.jpg"
             };
             var product9 = new Product
             {
@@ -242,7 +250,8 @@ namespace DAL.Extensions
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                 Price = 2000,
                 ProductCategoryId = 3,
-                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg"
+                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
+                ThumbnailImageUrl = "placeholder.jpg"
             };
             var product10 = new Product
             {
@@ -251,7 +260,8 @@ namespace DAL.Extensions
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                 Price = 3000,
                 ProductCategoryId = 3,
-                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg"
+                ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
+                ThumbnailImageUrl = "placeholder.jpg"
             };
             modelBuilder.Entity<Product>()
                 .HasData(

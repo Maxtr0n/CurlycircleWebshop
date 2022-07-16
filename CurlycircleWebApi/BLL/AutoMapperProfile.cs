@@ -39,10 +39,6 @@ namespace BLL
             CreateMap<IEnumerable<Product>, ProductsViewModel>()
                 .ForMember(pvm => pvm.Products, options => options.MapFrom(x => x));
 
-            CreateMap<ProductCategory, ProductCategoryViewModel>()
-                .ForMember(pvm => pvm.ImageUrls, options => options.MapFrom(p => p.ImageUrls.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList()));
-            CreateMap<ProductCategoryUpsertDto, ProductCategory>()
-                .ForMember(p => p.ImageUrls, options => options.MapFrom(dto => string.Join(";", dto.ImageUrls)));
             CreateMap<IEnumerable<ProductCategory>, ProductCategoriesViewModel>()
                 .ForMember(pvm => pvm.ProductCategories, options => options.MapFrom(x => x));
 

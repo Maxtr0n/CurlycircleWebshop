@@ -10,7 +10,7 @@
             <textarea matInput formControlName="description"></textarea>
         </mat-form-field>
         <mat-form-field appearance="outline">
-            <ngx-mat-file-input formControlName="imageUrls" [multiple]="true" accept=".png, .jpg, .jpeg">
+            <ngx-mat-file-input formControlName="imageFile" [multiple]="false" accept=".png, .jpg, .jpeg">
                 <mat-hint>Válassz ki egy képet</mat-hint>
             </ngx-mat-file-input>
         </mat-form-field>
@@ -18,5 +18,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Mégse</button>
-    <button mat-button [mat-dialog-close]="true" [disabled]="!productCategoryForm.valid">Hozzáad</button>
+    <button mat-button (click)="clickAdd()" [disabled]="!productCategoryForm.valid">Hozzáad</button>
 </mat-dialog-actions>

@@ -21,6 +21,8 @@ namespace BLL.ViewModels
 
         public IEnumerable<string> ImageUrls { get; set; } = default!;
 
+        public string ThumbnailImageUrl { get; set; } = default!;
+
         public Color? Color { get; set; } = default!;
 
         public Pattern? Pattern { get; set; } = default!;
