@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BLL.Dtos;
+﻿using BLL.Dtos;
 using BLL.Interfaces;
 using BLL.ViewModels;
 using CurlycircleWebApi.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CurlycircleWebApi.Controllers
 {
@@ -27,10 +27,18 @@ namespace CurlycircleWebApi.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public Task<EntityCreatedViewModel> CreateProductCategory([FromBody] ProductCategoryUpsertDto productCategoryCreateDto)
+        public Task<EntityCreatedViewModel> CreateProductCategory(IFormFile thumbnailImage)
         {
             HttpContext.Response.StatusCode = StatusCodes.Status201Created;
-            return _productCategoryService.CreateProductCategoryAsync(productCategoryCreateDto);
+            string name = Request.Form["name"];
+            string description = Request.Form["description"];
+            ProductCategoryUpsertDto productCategoryCreateDto = new ProductCategoryUpsertDto()
+            {
+                Name = name,
+                Description = description,
+            };
+
+            return _productCategoryService.CreateProductCategoryAsync(productCategoryCreateDto, thumbnailImage);
         }
 
         [HttpGet]

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppHttpClient } from '../core/app-http-client';
-import { EntityCreatedViewModel, ProductCategoriesViewModel, ProductCategoryUpsertDto, ProductCategoryViewModel, ProductsViewModel, ProductUpsertDto } from '../models/models';
+import { EntityCreatedViewModel, ProductCategoriesViewModel, ProductCategoryUpsertDto, ProductCategoryViewModel, ProductCategoryWithThumbnail, ProductsViewModel, ProductUpsertDto } from '../models/models';
 
 @Injectable({
     providedIn: 'root'
@@ -27,8 +27,17 @@ export class ProductCategoryService {
         return this.httpClient.delete<void>(`${this.productCategoriesUrl}/${productCategoryId}`);
     }
 
-    public createProductCategory(productCategory: ProductCategoryUpsertDto): Observable<EntityCreatedViewModel> {
-        return this.httpClient.post<EntityCreatedViewModel>(`${this.productCategoriesUrl}`, productCategory);
+    public createProductCategory(productCategory: ProductCategoryWithThumbnail): Observable<EntityCreatedViewModel> {
+        const formData = new FormData();
+        if (productCategory.thumbnailImage) {
+            formData.append('thumbnailImage', productCategory.thumbnailImage, productCategory.thumbnailImage.name);
+        }
+        if (productCategory.description) {
+            formData.append('description', productCategory.description);
+        }
+        formData.append('name', productCategory.name);
+
+        return this.httpClient.postWithFile<EntityCreatedViewModel>(`${this.productCategoriesUrl}`, formData);
     }
 
     public createProduct(productCategoryId: number, product: ProductUpsertDto): Observable<EntityCreatedViewModel> {

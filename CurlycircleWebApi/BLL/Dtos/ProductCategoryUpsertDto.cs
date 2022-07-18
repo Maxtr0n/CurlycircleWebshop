@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,6 @@ namespace BLL.Dtos
     {
         public string Name { get; set; } = default!;
 
-        public string Description { get; set; } = default!;
-
-        public IEnumerable<string> ImageUrls { get; set; } = default!;
+        public string? Description { get; set; } = default!;
     }
 }

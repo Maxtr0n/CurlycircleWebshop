@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using BLL.Dtos;
+using BLL.Exceptions;
 using BLL.Interfaces;
 using BLL.ViewModels;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,9 +31,34 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<EntityCreatedViewModel> CreateProductCategoryAsync(ProductCategoryUpsertDto productCategoryCreatetDto)
+        public async Task<EntityCreatedViewModel> CreateProductCategoryAsync(ProductCategoryUpsertDto productCategoryCreateDto, IFormFile thumbnailImage)
         {
-            var productCategory = _mapper.Map<ProductCategory>(productCategoryCreatetDto);
+            var fileName = productCategoryCreateDto.Name.ToLower().Trim().Replace(" ", "_");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\ProductCategoryImages\Thumbnails", fileName);
+            ProductCategory productCategory;
+
+            if (thumbnailImage != null && thumbnailImage.Length > 0)
+            {
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await thumbnailImage.CopyToAsync(fileStream);
+                }
+
+                productCategory = new ProductCategory
+                {
+                    Name = productCategoryCreateDto.Name,
+                    Description = productCategoryCreateDto.Description,
+                    ThumbnailImageUrl = fileName
+                };
+            }
+            else
+            {
+                productCategory = new ProductCategory
+                {
+                    Name = productCategoryCreateDto.Name,
+                    Description = productCategoryCreateDto.Description
+                };
+            }
 
             var id = _productCategoryRepository.AddProductCategory(productCategory);
             await _unitOfWork.SaveChangesAsync();

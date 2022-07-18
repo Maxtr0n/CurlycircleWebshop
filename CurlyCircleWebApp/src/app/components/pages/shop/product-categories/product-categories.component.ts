@@ -7,7 +7,7 @@ import { AddProductCategoryDialogComponent } from 'src/app/components/dialogs/ad
 import { DeleteProductCategoryDialogComponent } from 'src/app/components/dialogs/delete-product-category-dialog/delete-product-category-dialog.component';
 import { ModifyProductCategoryDialogComponent } from 'src/app/components/dialogs/modify-product-category-dialog/modify-product-category-dialog.component';
 import { AppConstants } from 'src/app/core/app-constants';
-import { ProductCategoriesViewModel, ProductCategoryUpsertDto, ProductCategoryViewModel } from 'src/app/models/models';
+import { ProductCategoriesViewModel, ProductCategoryUpsertDto, ProductCategoryViewModel, ProductCategoryWithThumbnail } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
@@ -88,13 +88,15 @@ export class ProductCategoriesComponent implements OnInit {
             width: '600px',
         });
         dialogRef.afterClosed().subscribe({
-            next: (result: ProductCategoryUpsertDto) => {
-                this.productCategoryService.createProductCategory(result).pipe(
-                    tap(() => {
-                        this.snackBar.open(result.name + " hozzáadva!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-accent'] });
-                        this.getData();
-                    })
-                ).subscribe();
+            next: (result: ProductCategoryWithThumbnail) => {
+                if (result) {
+                    this.productCategoryService.createProductCategory(result).pipe(
+                        tap(() => {
+                            this.snackBar.open(result.name + " hozzáadva!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-accent'] });
+                            this.getData();
+                        })
+                    ).subscribe();
+                }
             }
         });
     }

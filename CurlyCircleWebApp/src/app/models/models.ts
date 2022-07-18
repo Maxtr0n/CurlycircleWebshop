@@ -177,7 +177,12 @@ export interface ProductCategoriesViewModel {
 export interface ProductCategoryUpsertDto {
     name: string;
     description: string | null;
-    thumbnailImageUrl: string;
+}
+
+export interface ProductCategoryWithThumbnail {
+    name: string;
+    description: string | null;
+    thumbnailImage: File | null;
 }
 
 export interface ProductCategoryViewModel {

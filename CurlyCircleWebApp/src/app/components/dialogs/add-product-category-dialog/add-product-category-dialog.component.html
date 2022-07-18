@@ -17,6 +17,6 @@
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Mégse</button>
+    <button mat-button [mat-dialog-close]="false">Mégse</button>
     <button mat-button (click)="clickAdd()" [disabled]="!productCategoryForm.valid">Hozzáad</button>
 </mat-dialog-actions>
