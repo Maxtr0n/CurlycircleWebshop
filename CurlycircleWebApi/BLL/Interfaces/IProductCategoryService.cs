@@ -11,7 +11,7 @@ namespace BLL.Interfaces
 {
     public interface IProductCategoryService
     {
-        Task<EntityCreatedViewModel> CreateProductCategoryAsync(ProductCategoryUpsertDto productCategoryCreatetDto, IFormFile thumbnailImage);
+        Task<EntityCreatedViewModel> CreateProductCategoryAsync(ProductCategoryUpsertDto productCategoryCreatetDto);
 
         Task<ProductCategoriesViewModel> GetAllProductCategoriesAsync();
 

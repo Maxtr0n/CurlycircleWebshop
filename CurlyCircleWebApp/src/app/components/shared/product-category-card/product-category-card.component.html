@@ -1,0 +1,39 @@
+<mat-card (click)="onCardClicked(item.id)" class="product-category-card" fxLayout="column"
+    *ngIf="!isAdmin;else adminTemplate">
+    <mat-card-title>{{item.name}}</mat-card-title>
+    <img *ngIf="item.thumbnailImageUrl; else noImageBlock" mat-card-image [src]="imagesBaseUrl + item.thumbnailImageUrl"
+        alt="Kép egy termék kategóriáról" class="product-category-image">
+    <ng-template #noImageBlock>
+        <img mat-card-image [src]="noImageUrl" alt="Kép egy termék kategóriáról" class="product-category-image">
+    </ng-template>
+    <mat-card-content>
+        <p>
+            {{item.description}}
+        </p>
+    </mat-card-content>
+</mat-card>
+<ng-template #adminTemplate>
+    <div fxLayout="column" fxLayoutGap="2px">
+        <mat-card (click)="onCardClicked(item.id)" class="product-category-card" fxLayout="column">
+            <mat-card-title>{{item.name}}</mat-card-title>
+            <img *ngIf="item.thumbnailImageUrl; else noImageBlock" mat-card-image
+                [src]="imagesBaseUrl + item.thumbnailImageUrl" alt="Kép egy termék kategóriáról"
+                class="product-category-image">
+            <ng-template #noImageBlock>
+                <img mat-card-image [src]="noImageUrl" alt="Kép egy termék kategóriáról" class="product-category-image">
+            </ng-template>
+            <mat-card-content>
+                <p>
+                    {{item.description}}
+                </p>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="admin-buttons-card">
+            <mat-card-content>
+                <button mat-button class="admin-button" (click)="onAdminModifyClicked(item.id)">Szerkesztés</button>
+                <button mat-button class="admin-button" (click)="onAdminDeleteClicked(item.id)"
+                    color="warn">Törlés</button>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</ng-template>

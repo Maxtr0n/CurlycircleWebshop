@@ -20,8 +20,6 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 export class ProductCategoriesComponent implements OnInit {
     isAdmin: boolean = false;
     productCategories: ProductCategoryViewModel[] = [];
-    imagesBaseUrl: string = AppConstants.IMAGES_URL;
-    noImageUrl: string = AppConstants.NO_IMAGE_URL;
 
     constructor(
         private readonly productCategoryService: ProductCategoryService,

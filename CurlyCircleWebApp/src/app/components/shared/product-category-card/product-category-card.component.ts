@@ -1,20 +1,21 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AppConstants } from 'src/app/core/app-constants';
-import { ProductCategoryViewModel, ProductViewModel, Role, UserViewModel } from 'src/app/models/models';
+import { ProductCategoryViewModel } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-    selector: 'app-product-card',
-    templateUrl: './product-card.component.html',
-    styleUrls: ['./product-card.component.scss']
+    selector: 'app-product-category-card',
+    templateUrl: './product-category-card.component.html',
+    styleUrls: ['./product-category-card.component.scss']
 })
-export class ProductCardComponent implements OnInit {
+export class ProductCategoryCardComponent implements OnInit {
+
     isAdmin: boolean = false;
-    imagesBaseUrl: string = AppConstants.PRODUCT_THUMBNAILS_URL;
+    imagesBaseUrl: string = AppConstants.PRODUCT_CATEGORY_THUMBNAILS_URL;
     noImageUrl: string = AppConstants.NO_IMAGE_URL;
 
     @Input()
-    item!: ProductViewModel;
+    item!: ProductCategoryViewModel;
 
     @Output()
     onCardClickedEvent = new EventEmitter<number>();
@@ -44,4 +45,5 @@ export class ProductCardComponent implements OnInit {
     onAdminDeleteClicked(id: number): void {
         this.onAdminDeleteClickedEvent.emit(id);
     }
+
 }

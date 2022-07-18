@@ -19,7 +19,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     product$: Subscription = new Subscription;
     product: ProductViewModel | null = null;
     quantity: number = 1;
-    imagesBaseUrl: string = AppConstants.IMAGES_URL;
+    imagesBaseUrl: string = AppConstants.PRODUCT_IMAGES_URL;
     noImageUrl: string = AppConstants.NO_IMAGE_URL;
 
     constructor(

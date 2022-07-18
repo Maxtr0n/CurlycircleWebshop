@@ -24,8 +24,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     products: ProductViewModel[] | null = [];
     productCategory$: Subscription = new Subscription;
     products$: Subscription = new Subscription;
-    imagesBaseUrl: string = AppConstants.IMAGES_URL;
-    noImageUrl: string = AppConstants.NO_IMAGE_URL;
 
     constructor(
         private readonly productCategoryService: ProductCategoryService,

@@ -51,6 +51,7 @@ import { ModifyProductDialogComponent } from './components/dialogs/modify-produc
 import { DeleteProductDialogComponent } from './components/dialogs/delete-product-dialog/delete-product-dialog.component';
 import { AddProductDialogComponent } from './components/dialogs/add-product-dialog/add-product-dialog.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { ProductCategoryCardComponent } from './components/shared/product-category-card/product-category-card.component';
 
 @NgModule({
     declarations: [
@@ -87,6 +88,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
         ModifyProductDialogComponent,
         DeleteProductDialogComponent,
         AddProductDialogComponent,
+        ProductCategoryCardComponent,
     ],
     imports: [
         BrowserModule,

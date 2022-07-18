@@ -27,18 +27,20 @@ namespace CurlycircleWebApi.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public Task<EntityCreatedViewModel> CreateProductCategory(IFormFile thumbnailImage)
+        public Task<EntityCreatedViewModel> CreateProductCategory()
         {
             HttpContext.Response.StatusCode = StatusCodes.Status201Created;
             string name = Request.Form["name"];
             string description = Request.Form["description"];
+            IFormFile? thumbnailImage = Request.Form.Files.FirstOrDefault();
             ProductCategoryUpsertDto productCategoryCreateDto = new ProductCategoryUpsertDto()
             {
                 Name = name,
                 Description = description,
+                ThumbnailImage = thumbnailImage
             };
 
-            return _productCategoryService.CreateProductCategoryAsync(productCategoryCreateDto, thumbnailImage);
+            return _productCategoryService.CreateProductCategoryAsync(productCategoryCreateDto);
         }
 
         [HttpGet]

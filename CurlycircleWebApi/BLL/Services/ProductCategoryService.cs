@@ -6,6 +6,7 @@ using BLL.ViewModels;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,28 +21,36 @@ namespace BLL.Services
         private readonly IProductCategoryRepository _productCategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly long _fileSizeLimit;
 
         public ProductCategoryService(
           IProductCategoryRepository productCategoryRepository,
           IUnitOfWork unitOfWork,
-          IMapper mapper)
+          IMapper mapper,
+          IConfiguration configuration)
         {
             _productCategoryRepository = productCategoryRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _fileSizeLimit = configuration.GetValue<long>("ImageSizeLimit");
         }
 
-        public async Task<EntityCreatedViewModel> CreateProductCategoryAsync(ProductCategoryUpsertDto productCategoryCreateDto, IFormFile thumbnailImage)
+        public async Task<EntityCreatedViewModel> CreateProductCategoryAsync(ProductCategoryUpsertDto productCategoryCreateDto)
         {
-            var fileName = productCategoryCreateDto.Name.ToLower().Trim().Replace(" ", "_");
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\ProductCategoryImages\Thumbnails", fileName);
+            var file = productCategoryCreateDto.ThumbnailImage;
             ProductCategory productCategory;
 
-            if (thumbnailImage != null && thumbnailImage.Length > 0)
+            if (file != null && file.Length > 0)
             {
+                CheckFileExtension(file);
+                CheckFileSize(file);
+
+                var fileName = productCategoryCreateDto.Name.ToLower().Trim().Replace(" ", "_") + Path.GetExtension(file.FileName).ToLowerInvariant();
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\ProductCategoryImages\Thumbnails", fileName);
+
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    await thumbnailImage.CopyToAsync(fileStream);
+                    await file.CopyToAsync(fileStream);
                 }
 
                 productCategory = new ProductCategory
@@ -105,6 +114,31 @@ namespace BLL.Services
 
             await _unitOfWork.SaveChangesAsync();
             return new EntityCreatedViewModel(product.Id);
+        }
+
+        private void CheckFileExtension(IFormFile file)
+        {
+            string[] permittedExtensions = { ".jpg", ".jpeg", ".png" };
+            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+
+            if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
+            {
+                throw new ValidationAppException("File upload failed.", new[]
+                {
+                    "The extension of the file is not accepted."
+                });
+            }
+        }
+
+        private void CheckFileSize(IFormFile file)
+        {
+            if (file.Length > _fileSizeLimit)
+            {
+                throw new ValidationAppException("File upload failed.", new[]
+            {
+                    "The size of the file is too big."
+                });
+            }
         }
     }
 }

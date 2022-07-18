@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
     styleUrls: ['./my-orders.component.scss']
 })
 export class MyOrdersComponent implements OnInit {
-    imagesBaseUrl: string = AppConstants.IMAGES_URL;
+    imagesBaseUrl: string = AppConstants.PRODUCT_THUMBNAILS_URL;
     noImageUrl: string = AppConstants.NO_IMAGE_URL;
     orders: OrderViewModel[] = [];
 
