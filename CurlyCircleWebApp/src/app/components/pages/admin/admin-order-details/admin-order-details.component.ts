@@ -13,7 +13,7 @@ import { UserService } from 'src/app/services/user.service';
     styleUrls: ['./admin-order-details.component.scss']
 })
 export class AdminOrderDetailsComponent implements OnInit, OnDestroy {
-    imagesBaseUrl: string = AppConstants.IMAGES_URL;
+    imagesBaseUrl: string = AppConstants.PRODUCT_THUMBNAILS_URL;
     noImageUrl: string = AppConstants.NO_IMAGE_URL;
     order$: Subscription = new Subscription;
     order: OrderViewModel | null = null;

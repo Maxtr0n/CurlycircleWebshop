@@ -7,6 +7,9 @@ using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -45,12 +48,24 @@ namespace BLL.Services
                 CheckFileExtension(file);
                 CheckFileSize(file);
 
+
                 var fileName = productCategoryCreateDto.Name.ToLower().Trim().Replace(" ", "_") + Path.GetExtension(file.FileName).ToLowerInvariant();
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\ProductCategoryImages\Thumbnails", fileName);
 
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                IImageFormat format;
+
+                using (var outputStream = new FileStream(filePath, FileMode.Create))
                 {
-                    await file.CopyToAsync(fileStream);
+                    file.CopyTo(outputStream);
+
+                    using (var inputStream = new FileStream(filePath, FileMode.Open))
+                    {
+                        using (Image image = Image.Load(inputStream, out format))
+                        {
+                            image.Mutate(x => x.Resize(width: 800, height: 0));
+                            image.Save(outputStream, format);
+                        }
+                    }
                 }
 
                 productCategory = new ProductCategory

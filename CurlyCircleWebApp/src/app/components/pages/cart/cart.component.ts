@@ -17,7 +17,7 @@ export class CartComponent implements OnInit {
 
     displayedColumns: string[] = ['product', 'price', 'quantity', 'total', 'delete'];
     dataSource = new MatTableDataSource<CartItemViewModel>([]);
-    imagesBaseUrl: string = AppConstants.IMAGES_URL;
+    imagesBaseUrl: string = AppConstants.PRODUCT_THUMBNAILS_URL;
     noImageUrl: string = AppConstants.NO_IMAGE_URL;
     total: number = 0;
 

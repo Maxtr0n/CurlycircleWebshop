@@ -1,10 +1,10 @@
 <div fxLayout="row wrap" fxLayoutGap="2em grid" fxLayoutAlign="center">
     <ng-container *ngFor="let productCategory of productCategories">
-        <app-product-card [item]="productCategory" (onCardClickedEvent)="onProductCategoryClicked($event)"
+        <app-product-category-card [item]="productCategory" (onCardClickedEvent)="onProductCategoryClicked($event)"
             (onAdminModifyClickedEvent)="onProductCategoryModifyClicked($event)"
             (onAdminDeleteClickedEvent)="onProductCategoryDeleteClicked($event)" fxFlex="25%" fxFlex.md="33%"
             fxFlex.sm="50%" fxFlex.xs="100%" fxLayoutAlign="center stretch">
-        </app-product-card>
+        </app-product-category-card>
     </ng-container>
     <div fxFlexAlign="center">
         <button (click)="onProductCategoryAddClicked()" mat-fab class="product-category-add-button" color="primary"
