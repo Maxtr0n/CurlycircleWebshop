@@ -40,6 +40,21 @@ export class ProductCategoryService {
         return this.httpClient.postWithFile<EntityCreatedViewModel>(`${this.productCategoriesUrl}`, formData);
     }
 
+    public updateProductCategory(productCategoryId: number, productCategory: ProductCategoryWithThumbnail): Observable<void> {
+        const formData = new FormData();
+        console.log(productCategory);
+        if (productCategory.thumbnailImage) {
+            formData.append('thumbnailImage', productCategory.thumbnailImage, productCategory.thumbnailImage.name);
+        }
+        if (productCategory.description) {
+            formData.append('description', productCategory.description);
+        }
+        formData.append('name', productCategory.name);
+
+        return this.httpClient.putWithFile<void>(`${this.productCategoriesUrl}/${productCategoryId}`, formData);
+    }
+
+
     public createProduct(productCategoryId: number, product: ProductUpsertDto): Observable<EntityCreatedViewModel> {
         return this.httpClient.post<EntityCreatedViewModel>(`${this.productCategoriesUrl}/${productCategoryId}`, product);
     }

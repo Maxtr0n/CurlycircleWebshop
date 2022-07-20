@@ -31,6 +31,10 @@ export class AppHttpClient {
         return this.http.post<T>(`${this.apiUrl}/${endPoint}`, formData);
     }
 
+    public putWithFile<T>(endPoint: string, formData: FormData): Observable<T> {
+        return this.http.put<T>(`${this.apiUrl}/${endPoint}`, formData);
+    }
+
     public put<T>(endPoint: string, dto: Object): Observable<T> {
         return this.http.put<T>(`${this.apiUrl}/${endPoint}`, dto);
     }

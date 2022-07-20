@@ -57,8 +57,18 @@ namespace CurlycircleWebApi.Controllers
 
         [HttpPut("{productCategoryId}")]
         [Authorize(Roles = "Admin")]
-        public Task UpdateProductCategory([FromRoute] int productCategoryId, [FromBody] ProductCategoryUpsertDto productCategoryUpdateDto)
+        public Task UpdateProductCategory([FromRoute] int productCategoryId)
         {
+            string name = Request.Form["name"];
+            string description = Request.Form["description"];
+            IFormFile? thumbnailImage = Request.Form.Files.FirstOrDefault();
+            ProductCategoryUpsertDto productCategoryUpdateDto = new ProductCategoryUpsertDto()
+            {
+                Name = name,
+                Description = description,
+                ThumbnailImage = thumbnailImage
+            };
+
             return _productCategoryService.UpdateProductCategoryAsync(productCategoryId, productCategoryUpdateDto);
         }
 

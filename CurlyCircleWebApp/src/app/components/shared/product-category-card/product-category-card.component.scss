@@ -1,0 +1,20 @@
+@use '../../../../styles';
+
+.product-category-card:hover {
+    cursor: pointer;
+    background-color: styles.$hover-color;
+}
+
+.product-category-image {
+    padding-left: 5%;
+    padding-right: 5%;
+    border-radius: 1em;
+}
+
+.admin-button {
+    height: 32px;
+}
+
+.admin-buttons-card {
+    padding: 8px;
+}

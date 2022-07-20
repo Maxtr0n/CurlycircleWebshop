@@ -21,6 +21,7 @@ namespace BLL.Services
 {
     public class ProductCategoryService : IProductCategoryService
     {
+        private const string pathToProductCategoryThumbnails = @"wwwroot\images\ProductCategoryImages\Thumbnails";
         private readonly IProductCategoryRepository _productCategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -45,28 +46,7 @@ namespace BLL.Services
 
             if (file != null && file.Length > 0)
             {
-                CheckFileExtension(file);
-                CheckFileSize(file);
-
-
-                var fileName = productCategoryCreateDto.Name.ToLower().Trim().Replace(" ", "_") + Path.GetExtension(file.FileName).ToLowerInvariant();
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\ProductCategoryImages\Thumbnails", fileName);
-
-                IImageFormat format;
-
-                using (var outputStream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyTo(outputStream);
-
-                    using (var inputStream = new FileStream(filePath, FileMode.Open))
-                    {
-                        using (Image image = Image.Load(inputStream, out format))
-                        {
-                            image.Mutate(x => x.Resize(width: 800, height: 0));
-                            image.Save(outputStream, format);
-                        }
-                    }
-                }
+                string fileName = await CreateThumbnailFile(productCategoryCreateDto, file);
 
                 productCategory = new ProductCategory
                 {
@@ -103,13 +83,30 @@ namespace BLL.Services
             return productCategoryViewModel;
         }
 
-        public Task UpdateProductCategoryAsync(int productCategoryId, ProductCategoryUpsertDto productCategoryUpdateDto)
+        public async Task UpdateProductCategoryAsync(int productCategoryId, ProductCategoryUpsertDto productCategoryUpdateDto)
         {
-            throw new NotImplementedException();
+            var productCategory = await _productCategoryRepository.GetProductCategoryByIdAsync(productCategoryId);
+
+            productCategory.Name = productCategoryUpdateDto.Name;
+            productCategory.Description = productCategoryUpdateDto.Description;
+            var file = productCategoryUpdateDto.ThumbnailImage;
+
+            if (file != null && file.Length > 0)
+            {
+                DeleteThumbnailFile(productCategory);
+
+                string fileName = await CreateThumbnailFile(productCategoryUpdateDto, file);
+                productCategory.ThumbnailImageUrl = fileName;
+            }
+
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task DeleteProductCategoryAsync(int productCategoryId)
         {
+            var productCategory = await _productCategoryRepository.GetProductCategoryByIdAsync(productCategoryId);
+            DeleteThumbnailFile(productCategory);
+
             await _productCategoryRepository.DeleteProductCategoryAsync(productCategoryId);
             await _unitOfWork.SaveChangesAsync();
         }
@@ -153,6 +150,36 @@ namespace BLL.Services
             {
                     "The size of the file is too big."
                 });
+            }
+        }
+
+        private async Task<string> CreateThumbnailFile(ProductCategoryUpsertDto productCategoryCreateDto, IFormFile file)
+        {
+            CheckFileExtension(file);
+            CheckFileSize(file);
+            var fileName = productCategoryCreateDto.Name.ToLower().Trim().Replace(" ", "_") + Path.GetExtension(file.FileName).ToLowerInvariant();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, fileName);
+
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
+                using Image image = Image.Load(memoryStream, out IImageFormat format);
+                image.Mutate(x => x.Resize(width: 800, height: 0));
+                using var outputStream = new FileStream(filePath, FileMode.Create);
+                image.Save(outputStream, format);
+            }
+
+            return fileName;
+        }
+
+
+        private void DeleteThumbnailFile(ProductCategory productCategory)
+        {
+            var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, productCategory.ThumbnailImageUrl);
+            if (File.Exists(imageToDelete))
+            {
+                File.Delete(imageToDelete);
             }
         }
     }

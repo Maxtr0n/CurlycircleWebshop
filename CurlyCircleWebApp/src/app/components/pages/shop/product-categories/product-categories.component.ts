@@ -60,6 +60,19 @@ export class ProductCategoriesComponent implements OnInit {
             width: '600px',
             data: { id: id }
         });
+        dialogRef.afterClosed().subscribe({
+            next: (result: ProductCategoryWithThumbnail) => {
+                if (result) {
+                    this.productCategoryService.updateProductCategory(id, result)
+                        .subscribe({
+                            next: () => {
+                                this.snackBar.open(result.name + "termék kategória sikeresen módosítva!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-accent'] });
+                                this.getData();
+                            }
+                        });
+                }
+            }
+        });
     }
 
     onProductCategoryDeleteClicked(id: number): void {
