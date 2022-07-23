@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Domain.Enums;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +18,15 @@ namespace BLL.Dtos
 
         public string? Description { get; set; }
 
-        public IEnumerable<string> ImageUrls { get; set; } = default!;
+        public IEnumerable<IFormFile> ProductImages { get; set; } = Enumerable.Empty<IFormFile>();
 
-        public string? Color { get; set; }
+        public IFormFile? ThumbnailImage { get; set; }
 
-        public string? Pattern { get; set; }
+        public Color? Color { get; set; }
 
-        public string? Material { get; set; }
+        public Pattern? Pattern { get; set; }
+
+        public Material? Material { get; set; }
 
         public bool? IsAvailable { get; set; }
     }

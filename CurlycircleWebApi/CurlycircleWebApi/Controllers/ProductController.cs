@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BLL.Dtos;
+﻿using BLL.Dtos;
 using BLL.Interfaces;
 using BLL.Services;
 using BLL.ViewModels;
 using CurlycircleWebApi.Common;
 using DAL;
+using Domain.Entities;
+using Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CurlycircleWebApi.Controllers
 {
@@ -36,6 +37,30 @@ namespace CurlycircleWebApi.Controllers
         public Task<EntityCreatedViewModel> CreateProduct([FromBody] ProductUpsertDto productCreateDto)
         {
             HttpContext.Response.StatusCode = StatusCodes.Status201Created;
+            double price = double.Parse(Request.Form["price"].First());
+            string name = Request.Form["name"].First();
+            int productCategoryId = int.Parse(Request.Form["productCategoryId"].First());
+            Color color = (Color)Enum.Parse(typeof(Color), Request.Form["color"].First());
+            Pattern pattern = (Pattern)Enum.Parse(typeof(Color), Request.Form["pattern"].First()); ;
+            Material material = (Material)Enum.Parse(typeof(Color), Request.Form["material"].First()); ;
+            bool isAvailable = bool.Parse(Request.Form["isAvailable"].First());
+            IFormFile? thumbnailImage = Request.Form.Files.Where(i => i.Name == "ThumbnailImages").FirstOrDefault();
+            IEnumerable<IFormFile> productImages = Request.Form.Files.Where(i => i.Name.Contains("ProductImages")).ToList();
+
+            ProductUpsertDto productUpsertDto = new ProductUpsertDto()
+            {
+                Name = name,
+                Price = price,
+                ProductCategoryId = productCategoryId,
+                Description = productCreateDto.Description,
+                Material = material,
+                Color = color,
+                Pattern = pattern,
+                IsAvailable = isAvailable,
+                ThumbnailImage = thumbnailImage,
+                ProductImages = productImages
+            };
+
             return _productService.CreateProductAsync(productCreateDto);
         }
 

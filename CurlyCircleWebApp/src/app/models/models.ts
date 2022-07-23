@@ -198,9 +198,9 @@ export interface ProductUpsertDto {
     productCategoryId: number;
     description: string | null;
     imageUrls: string[];
-    color: string | null;
-    pattern: string | null;
-    material: string | null;
+    color: Color | null;
+    pattern: Pattern | null;
+    material: Material | null;
     isAvailable: boolean | null;
 }
 

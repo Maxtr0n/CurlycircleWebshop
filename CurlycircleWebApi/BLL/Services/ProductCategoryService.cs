@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.Dtos;
 using BLL.Exceptions;
+using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.ViewModels;
 using Domain.Entities;
@@ -25,18 +26,18 @@ namespace BLL.Services
         private readonly IProductCategoryRepository _productCategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly long _fileSizeLimit;
+        private readonly ThumbnailImageHelper _thumbnailImageHelper;
 
         public ProductCategoryService(
           IProductCategoryRepository productCategoryRepository,
           IUnitOfWork unitOfWork,
           IMapper mapper,
-          IConfiguration configuration)
+          ThumbnailImageHelper thumbnailImageHelper)
         {
             _productCategoryRepository = productCategoryRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _fileSizeLimit = configuration.GetValue<long>("ImageSizeLimit");
+            _thumbnailImageHelper = thumbnailImageHelper;
         }
 
         public async Task<EntityCreatedViewModel> CreateProductCategoryAsync(ProductCategoryUpsertDto productCategoryCreateDto)
@@ -46,7 +47,7 @@ namespace BLL.Services
 
             if (file != null && file.Length > 0)
             {
-                string fileName = await CreateThumbnailFile(productCategoryCreateDto, file);
+                string fileName = await _thumbnailImageHelper.CreateThumbnailFile(file, pathToProductCategoryThumbnails);
 
                 productCategory = new ProductCategory
                 {
@@ -93,9 +94,10 @@ namespace BLL.Services
 
             if (file != null && file.Length > 0)
             {
-                DeleteThumbnailFile(productCategory);
+                var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, productCategory.ThumbnailImageUrl);
+                _thumbnailImageHelper.DeleteThumbnailFile(imageToDelete);
 
-                string fileName = await CreateThumbnailFile(productCategoryUpdateDto, file);
+                string fileName = await _thumbnailImageHelper.CreateThumbnailFile(file, pathToProductCategoryThumbnails);
                 productCategory.ThumbnailImageUrl = fileName;
             }
 
@@ -105,7 +107,8 @@ namespace BLL.Services
         public async Task DeleteProductCategoryAsync(int productCategoryId)
         {
             var productCategory = await _productCategoryRepository.GetProductCategoryByIdAsync(productCategoryId);
-            DeleteThumbnailFile(productCategory);
+            var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, productCategory.ThumbnailImageUrl);
+            _thumbnailImageHelper.DeleteThumbnailFile(imageToDelete);
 
             await _productCategoryRepository.DeleteProductCategoryAsync(productCategoryId);
             await _unitOfWork.SaveChangesAsync();
@@ -127,60 +130,7 @@ namespace BLL.Services
             await _unitOfWork.SaveChangesAsync();
             return new EntityCreatedViewModel(product.Id);
         }
-
-        private void CheckFileExtension(IFormFile file)
-        {
-            string[] permittedExtensions = { ".jpg", ".jpeg", ".png" };
-            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
-
-            if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
-            {
-                throw new ValidationAppException("File upload failed.", new[]
-                {
-                    "The extension of the file is not accepted."
-                });
-            }
-        }
-
-        private void CheckFileSize(IFormFile file)
-        {
-            if (file.Length > _fileSizeLimit)
-            {
-                throw new ValidationAppException("File upload failed.", new[]
-            {
-                    "The size of the file is too big."
-                });
-            }
-        }
-
-        private async Task<string> CreateThumbnailFile(ProductCategoryUpsertDto productCategoryCreateDto, IFormFile file)
-        {
-            CheckFileExtension(file);
-            CheckFileSize(file);
-            var fileName = productCategoryCreateDto.Name.ToLower().Trim().Replace(" ", "_") + Path.GetExtension(file.FileName).ToLowerInvariant();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, fileName);
-
-            using (var memoryStream = new MemoryStream())
-            {
-                await file.CopyToAsync(memoryStream);
-                memoryStream.Position = 0;
-                using Image image = Image.Load(memoryStream, out IImageFormat format);
-                image.Mutate(x => x.Resize(width: 800, height: 0));
-                using var outputStream = new FileStream(filePath, FileMode.Create);
-                image.Save(outputStream, format);
-            }
-
-            return fileName;
-        }
-
-
-        private void DeleteThumbnailFile(ProductCategory productCategory)
-        {
-            var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, productCategory.ThumbnailImageUrl);
-            if (File.Exists(imageToDelete))
-            {
-                File.Delete(imageToDelete);
-            }
-        }
     }
+
+    // var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, productCategory.ThumbnailImageUrl);
 }
