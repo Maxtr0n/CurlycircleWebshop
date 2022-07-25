@@ -44,8 +44,8 @@ namespace CurlycircleWebApi.Controllers
             Pattern pattern = (Pattern)Enum.Parse(typeof(Color), Request.Form["pattern"].First()); ;
             Material material = (Material)Enum.Parse(typeof(Color), Request.Form["material"].First()); ;
             bool isAvailable = bool.Parse(Request.Form["isAvailable"].First());
-            IFormFile? thumbnailImage = Request.Form.Files.Where(i => i.Name == "ThumbnailImages").FirstOrDefault();
-            IEnumerable<IFormFile> productImages = Request.Form.Files.Where(i => i.Name.Contains("ProductImages")).ToList();
+            IFormFile? thumbnailImage = Request.Form.Files.Where(i => i.Name == "thumbnailImage").FirstOrDefault();
+            IEnumerable<IFormFile> productImages = Request.Form.Files.Where(i => i.Name.Contains("productImage")).ToList();
 
             ProductUpsertDto productUpsertDto = new ProductUpsertDto()
             {

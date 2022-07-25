@@ -197,7 +197,19 @@ export interface ProductUpsertDto {
     name: string;
     productCategoryId: number;
     description: string | null;
-    imageUrls: string[];
+    color: Color | null;
+    pattern: Pattern | null;
+    material: Material | null;
+    isAvailable: boolean | null;
+}
+
+export interface ProductWithImages {
+    price: number;
+    name: string;
+    productCategoryId: number;
+    description: string | null;
+    productImages: File[];
+    thumbnailImage: File | null;
     color: Color | null;
     pattern: Pattern | null;
     material: Material | null;
