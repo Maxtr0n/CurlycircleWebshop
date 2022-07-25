@@ -5,6 +5,7 @@ using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.ViewModels;
 using Domain.Entities;
+using Domain.Enums;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -23,34 +24,51 @@ namespace BLL.Services
     public class ProductService : IProductService
     {
         private const string pathToProductThumbnails = @"wwwroot\images\ProductImages\Thumbnails";
+        private const string pathToProductImages = @"wwwroot\images\ProductImages\Originals";
         private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ThumbnailImageHelper _thumbnailImageHelper;
+        private readonly ImageHelper _imageHelper;
 
         public ProductService(
           IProductRepository productRepository,
           IUnitOfWork unitOfWork,
           IMapper mapper,
-           ThumbnailImageHelper thumbnailImageHelper)
+           ImageHelper thumbnailImageHelper)
         {
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _thumbnailImageHelper = thumbnailImageHelper;
+            _imageHelper = thumbnailImageHelper;
         }
 
         public async Task<EntityCreatedViewModel> CreateProductAsync(ProductUpsertDto productUpsertDto)
         {
             var thumbnailImage = productUpsertDto.ThumbnailImage;
-            Product product;
+
+            string fileName = string.Empty;
+            string imageNames = string.Empty;
 
             if (thumbnailImage != null && thumbnailImage.Length > 0)
             {
-                string fileName = await _thumbnailImageHelper.CreateThumbnailFile(thumbnailImage, pathToProductThumbnails);
+                fileName = await _imageHelper.CreateThumbnailFile(thumbnailImage, pathToProductThumbnails);
+                imageNames = await _imageHelper.CreateImageFiles(productUpsertDto.ProductImages, pathToProductImages);
             }
 
-            var product = _mapper.Map<Product>(productUpsertDto);
+            Product product = new()
+            {
+                Price = productUpsertDto.Price,
+                Name = productUpsertDto.Name,
+                ProductCategoryId = productUpsertDto.ProductCategoryId,
+                Description = productUpsertDto.Description,
+                ThumbnailImageUrl = fileName,
+                ImageUrls = imageNames,
+                Color = productUpsertDto.Color ?? Domain.Enums.Color.Other,
+                Pattern = productUpsertDto.Pattern ?? Pattern.Other,
+                Material = productUpsertDto.Material ?? Material.Other,
+                IsAvailable = productUpsertDto.IsAvailable ?? true
+            };
+
 
             var id = _productRepository.AddProduct(product);
             await _unitOfWork.SaveChangesAsync();

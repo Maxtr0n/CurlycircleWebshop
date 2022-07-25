@@ -26,13 +26,13 @@ namespace BLL.Services
         private readonly IProductCategoryRepository _productCategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ThumbnailImageHelper _thumbnailImageHelper;
+        private readonly ImageHelper _thumbnailImageHelper;
 
         public ProductCategoryService(
           IProductCategoryRepository productCategoryRepository,
           IUnitOfWork unitOfWork,
           IMapper mapper,
-          ThumbnailImageHelper thumbnailImageHelper)
+          ImageHelper thumbnailImageHelper)
         {
             _productCategoryRepository = productCategoryRepository;
             _unitOfWork = unitOfWork;
@@ -43,27 +43,21 @@ namespace BLL.Services
         public async Task<EntityCreatedViewModel> CreateProductCategoryAsync(ProductCategoryUpsertDto productCategoryCreateDto)
         {
             var file = productCategoryCreateDto.ThumbnailImage;
-            ProductCategory productCategory;
+
+            string fileName = string.Empty;
 
             if (file != null && file.Length > 0)
             {
-                string fileName = await _thumbnailImageHelper.CreateThumbnailFile(file, pathToProductCategoryThumbnails);
+                fileName = await _thumbnailImageHelper.CreateThumbnailFile(file, pathToProductCategoryThumbnails);
+            }
 
-                productCategory = new ProductCategory
-                {
-                    Name = productCategoryCreateDto.Name,
-                    Description = productCategoryCreateDto.Description,
-                    ThumbnailImageUrl = fileName
-                };
-            }
-            else
+            ProductCategory productCategory = new()
             {
-                productCategory = new ProductCategory
-                {
-                    Name = productCategoryCreateDto.Name,
-                    Description = productCategoryCreateDto.Description
-                };
-            }
+                Name = productCategoryCreateDto.Name,
+                Description = productCategoryCreateDto.Description,
+                ThumbnailImageUrl = fileName
+            };
+
 
             var id = _productCategoryRepository.AddProductCategory(productCategory);
             await _unitOfWork.SaveChangesAsync();
@@ -95,7 +89,7 @@ namespace BLL.Services
             if (file != null && file.Length > 0)
             {
                 var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, productCategory.ThumbnailImageUrl);
-                _thumbnailImageHelper.DeleteThumbnailFile(imageToDelete);
+                _thumbnailImageHelper.DeleteImageFile(imageToDelete);
 
                 string fileName = await _thumbnailImageHelper.CreateThumbnailFile(file, pathToProductCategoryThumbnails);
                 productCategory.ThumbnailImageUrl = fileName;
@@ -108,7 +102,7 @@ namespace BLL.Services
         {
             var productCategory = await _productCategoryRepository.GetProductCategoryByIdAsync(productCategoryId);
             var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, productCategory.ThumbnailImageUrl);
-            _thumbnailImageHelper.DeleteThumbnailFile(imageToDelete);
+            _thumbnailImageHelper.DeleteImageFile(imageToDelete);
 
             await _productCategoryRepository.DeleteProductCategoryAsync(productCategoryId);
             await _unitOfWork.SaveChangesAsync();

@@ -34,8 +34,6 @@ namespace BLL
 
             CreateMap<Product, ProductViewModel>()
                 .ForMember(pvm => pvm.ImageUrls, options => options.MapFrom(p => p.ImageUrls.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList()));
-            CreateMap<ProductUpsertDto, Product>()
-                .ForMember(p => p.ImageUrls, options => options.MapFrom(dto => string.Join(";", dto.ImageUrls)));
             CreateMap<IEnumerable<Product>, ProductsViewModel>()
                 .ForMember(pvm => pvm.Products, options => options.MapFrom(x => x));
 

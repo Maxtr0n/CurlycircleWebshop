@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace BLL.Helpers
 {
-    public class ThumbnailImageHelper
+    public class ImageHelper
     {
         private readonly long _fileSizeLimit;
 
-        public ThumbnailImageHelper(IConfiguration configuration)
+        public ImageHelper(IConfiguration configuration)
         {
             _fileSizeLimit = configuration.GetValue<long>("ImageSizeLimit");
         }
@@ -42,7 +42,28 @@ namespace BLL.Helpers
             return fileName;
         }
 
-        public void DeleteThumbnailFile(string imageToDelete)
+        public async Task<string> CreateImageFiles(IEnumerable<IFormFile> images, string savePath)
+        {
+            StringBuilder imageNames = new StringBuilder();
+
+            foreach (var image in images)
+            {
+                CheckFileExtension(image);
+                CheckFileSize(image);
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName).ToLowerInvariant();
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), savePath, fileName);
+
+                using var outputStream = new FileStream(filePath, FileMode.Create);
+                await image.CopyToAsync(outputStream);
+
+                imageNames.Append(fileName + ";");
+            }
+
+            return imageNames.ToString();
+        }
+
+        public void DeleteImageFile(string imageToDelete)
         {
             if (File.Exists(imageToDelete))
             {
