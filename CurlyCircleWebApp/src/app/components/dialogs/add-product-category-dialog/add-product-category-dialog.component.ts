@@ -26,7 +26,6 @@ export class AddProductCategoryDialogComponent implements OnInit {
             description: this.productCategoryForm.value.description ?? null,
             thumbnailImage: this.productCategoryForm.value.imageFile ?? null
         };
-        console.log(productCategory);
         this.dialogRef.close(productCategory);
     }
 

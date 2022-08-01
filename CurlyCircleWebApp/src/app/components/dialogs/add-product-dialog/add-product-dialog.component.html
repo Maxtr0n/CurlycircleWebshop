@@ -1,1 +1,42 @@
-<p>add-product-dialog works!</p>
+<h2 mat-dialog-title>Termék hozzáadása</h2>
+<mat-dialog-content>
+    <form [formGroup]="productForm" fxLayout="column" fxLayoutAlign="center center">
+        <mat-form-field appearance="outline">
+            <mat-label>Név</mat-label>
+            <input matInput formControlName="name" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Ár</mat-label>
+            <input matInput formControlName="price" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Szín</mat-label>
+            <input matInput formControlName="color" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Minta</mat-label>
+            <input matInput formControlName="pattern" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Anyag</mat-label>
+            <input matInput formControlName="material" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Elérhető</mat-label>
+            <input matInput formControlName="isAvailable" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Leírás</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <ngx-mat-file-input formControlName="imageFile" [multiple]="false" accept=".png, .jpg, .jpeg">
+                <mat-hint>Válassz ki egy képet</mat-hint>
+            </ngx-mat-file-input>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="false">Mégse</button>
+    <button mat-button (click)="clickAdd()" [disabled]="!productForm.valid">Hozzáad</button>
+</mat-dialog-actions>

@@ -25,6 +25,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
     declarations: [],
@@ -54,6 +55,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatDatepickerModule,
         MatDateFnsModule,
         MatDialogModule,
+        MatSelectModule
     ],
     exports: [
         MatSliderModule,
@@ -80,6 +82,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatDatepickerModule,
         MatDateFnsModule,
         MatDialogModule,
+        MatSelectModule
     ],
 })
 export class MaterialModule { }

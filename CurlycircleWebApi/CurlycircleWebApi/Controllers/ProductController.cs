@@ -34,13 +34,14 @@ namespace CurlycircleWebApi.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public Task<EntityCreatedViewModel> CreateProduct([FromBody] ProductUpsertDto productCreateDto)
+        public Task<EntityCreatedViewModel> CreateProduct()
         {
             HttpContext.Response.StatusCode = StatusCodes.Status201Created;
             double price = double.Parse(Request.Form["price"].First());
             string name = Request.Form["name"].First();
+            string description = Request.Form["description"].First();
             int productCategoryId = int.Parse(Request.Form["productCategoryId"].First());
-            Color color = (Color)Enum.Parse(typeof(Color), Request.Form["color"].First());
+            IEnumerable<Color> colors = ConvertToColors(Request.Form["colors"].First());
             Pattern pattern = (Pattern)Enum.Parse(typeof(Color), Request.Form["pattern"].First()); ;
             Material material = (Material)Enum.Parse(typeof(Color), Request.Form["material"].First()); ;
             bool isAvailable = bool.Parse(Request.Form["isAvailable"].First());
@@ -52,16 +53,16 @@ namespace CurlycircleWebApi.Controllers
                 Name = name,
                 Price = price,
                 ProductCategoryId = productCategoryId,
-                Description = productCreateDto.Description,
+                Description = description,
                 Material = material,
-                Color = color,
+                Colors = colors,
                 Pattern = pattern,
                 IsAvailable = isAvailable,
                 ThumbnailImage = thumbnailImage,
                 ProductImages = productImages
             };
 
-            return _productService.CreateProductAsync(productCreateDto);
+            return _productService.CreateProductAsync(productUpsertDto);
         }
 
         [HttpGet]
@@ -78,9 +79,35 @@ namespace CurlycircleWebApi.Controllers
 
         [HttpPut("{productId}")]
         [Authorize(Roles = "Admin")]
-        public Task UpdateProduct([FromRoute] int productId, [FromBody] ProductUpsertDto productUpdateDto)
+        public Task UpdateProduct([FromRoute] int productId)
         {
-            return _productService.UpdateProductAsync(productId, productUpdateDto);
+            HttpContext.Response.StatusCode = StatusCodes.Status201Created;
+            double price = double.Parse(Request.Form["price"].First());
+            string name = Request.Form["name"].First();
+            string description = Request.Form["description"].First();
+            int productCategoryId = int.Parse(Request.Form["productCategoryId"].First());
+            IEnumerable<Color> colors = ConvertToColors(Request.Form["colors"].First());
+            Pattern pattern = (Pattern)Enum.Parse(typeof(Color), Request.Form["pattern"].First()); ;
+            Material material = (Material)Enum.Parse(typeof(Color), Request.Form["material"].First()); ;
+            bool isAvailable = bool.Parse(Request.Form["isAvailable"].First());
+            IFormFile? thumbnailImage = Request.Form.Files.Where(i => i.Name == "thumbnailImage").FirstOrDefault();
+            IEnumerable<IFormFile> productImages = Request.Form.Files.Where(i => i.Name.Contains("productImage")).ToList();
+
+            ProductUpsertDto productUpsertDto = new ProductUpsertDto()
+            {
+                Name = name,
+                Price = price,
+                ProductCategoryId = productCategoryId,
+                Description = description,
+                Material = material,
+                Colors = colors,
+                Pattern = pattern,
+                IsAvailable = isAvailable,
+                ThumbnailImage = thumbnailImage,
+                ProductImages = productImages
+            };
+
+            return _productService.UpdateProductAsync(productId, productUpsertDto);
         }
 
         [HttpDelete("{productId}")]
@@ -90,6 +117,18 @@ namespace CurlycircleWebApi.Controllers
         {
             HttpContext.Response.StatusCode = StatusCodes.Status204NoContent;
             return _productService.DeleteProductAsync(productId);
+        }
+
+        private static IEnumerable<Color> ConvertToColors(string asd)
+        {
+            string[] colorStrings = asd.Split(',');
+            List<Color> colors = new List<Color>();
+            foreach (string colorString in colorStrings)
+            {
+                colors.Add((Color)Enum.Parse(typeof(Color), colorString));
+            }
+
+            return colors;
         }
     }
 }

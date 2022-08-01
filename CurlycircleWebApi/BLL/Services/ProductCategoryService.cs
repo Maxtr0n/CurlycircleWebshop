@@ -26,18 +26,18 @@ namespace BLL.Services
         private readonly IProductCategoryRepository _productCategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ImageHelper _thumbnailImageHelper;
+        private readonly ImageHelper _imageHelper;
 
         public ProductCategoryService(
           IProductCategoryRepository productCategoryRepository,
           IUnitOfWork unitOfWork,
           IMapper mapper,
-          ImageHelper thumbnailImageHelper)
+          ImageHelper imageHelper)
         {
             _productCategoryRepository = productCategoryRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _thumbnailImageHelper = thumbnailImageHelper;
+            _imageHelper = imageHelper;
         }
 
         public async Task<EntityCreatedViewModel> CreateProductCategoryAsync(ProductCategoryUpsertDto productCategoryCreateDto)
@@ -48,7 +48,7 @@ namespace BLL.Services
 
             if (file != null && file.Length > 0)
             {
-                fileName = await _thumbnailImageHelper.CreateThumbnailFile(file, pathToProductCategoryThumbnails);
+                fileName = await _imageHelper.CreateThumbnailFile(file, pathToProductCategoryThumbnails);
             }
 
             ProductCategory productCategory = new()
@@ -89,9 +89,9 @@ namespace BLL.Services
             if (file != null && file.Length > 0)
             {
                 var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, productCategory.ThumbnailImageUrl);
-                _thumbnailImageHelper.DeleteImageFile(imageToDelete);
+                _imageHelper.DeleteImageFile(imageToDelete);
 
-                string fileName = await _thumbnailImageHelper.CreateThumbnailFile(file, pathToProductCategoryThumbnails);
+                string fileName = await _imageHelper.CreateThumbnailFile(file, pathToProductCategoryThumbnails);
                 productCategory.ThumbnailImageUrl = fileName;
             }
 
@@ -102,7 +102,7 @@ namespace BLL.Services
         {
             var productCategory = await _productCategoryRepository.GetProductCategoryByIdAsync(productCategoryId);
             var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, productCategory.ThumbnailImageUrl);
-            _thumbnailImageHelper.DeleteImageFile(imageToDelete);
+            _imageHelper.DeleteImageFile(imageToDelete);
 
             await _productCategoryRepository.DeleteProductCategoryAsync(productCategoryId);
             await _unitOfWork.SaveChangesAsync();
@@ -125,6 +125,4 @@ namespace BLL.Services
             return new EntityCreatedViewModel(product.Id);
         }
     }
-
-    // var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, productCategory.ThumbnailImageUrl);
 }

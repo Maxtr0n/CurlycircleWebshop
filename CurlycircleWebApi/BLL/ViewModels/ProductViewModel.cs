@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using Domain.Entities;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace BLL.ViewModels
 
         public string ThumbnailImageUrl { get; set; } = default!;
 
-        public Color? Color { get; set; } = default!;
+        public IEnumerable<Color> Colors { get; set; } = new List<Color>();
 
         public Pattern? Pattern { get; set; } = default!;
 

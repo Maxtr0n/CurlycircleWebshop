@@ -63,9 +63,9 @@ namespace BLL.Services
                 Description = productUpsertDto.Description,
                 ThumbnailImageUrl = fileName,
                 ImageUrls = imageNames,
-                Color = productUpsertDto.Color ?? Domain.Enums.Color.Other,
-                Pattern = productUpsertDto.Pattern ?? Pattern.Other,
-                Material = productUpsertDto.Material ?? Material.Other,
+                Colors = productUpsertDto.Colors,
+                Pattern = productUpsertDto.Pattern,
+                Material = productUpsertDto.Material,
                 IsAvailable = productUpsertDto.IsAvailable ?? true
             };
 
@@ -92,7 +92,35 @@ namespace BLL.Services
         public async Task UpdateProductAsync(int productId, ProductUpsertDto productUpdateDto)
         {
             var product = await _productRepository.GetProductByIdAsync(productId);
-            product.Update(_mapper.Map<Product>(productUpdateDto));
+
+            product.Price = productUpdateDto.Price;
+            product.Name = productUpdateDto.Name;
+            product.ProductCategoryId = productUpdateDto.ProductCategoryId;
+            product.Description = productUpdateDto.Description;
+            product.Colors = productUpdateDto.Colors;
+            product.Pattern = productUpdateDto.Pattern;
+            product.Material = productUpdateDto.Material;
+            product.IsAvailable = productUpdateDto.IsAvailable ?? true;
+
+            var thumbnailImage = productUpdateDto.ThumbnailImage;
+            if (thumbnailImage != null && thumbnailImage.Length > 0)
+            {
+                var thumbnailToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductThumbnails, product.ThumbnailImageUrl);
+                _imageHelper.DeleteImageFile(thumbnailToDelete);
+
+                string[] imagePaths = product.ImageUrls.Split(';');
+                foreach (var imagePath in imagePaths)
+                {
+                    var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductImages, imagePath);
+                    _imageHelper.DeleteImageFile(imageToDelete);
+                }
+                string fileName = await _imageHelper.CreateThumbnailFile(thumbnailImage, pathToProductThumbnails);
+                string imageNames = await _imageHelper.CreateImageFiles(productUpdateDto.ProductImages, pathToProductImages);
+
+                product.ThumbnailImageUrl = fileName;
+                product.ImageUrls = imageNames;
+            }
+
             await _unitOfWork.SaveChangesAsync();
         }
 

@@ -210,7 +210,7 @@ export interface ProductWithImages {
     description: string | null;
     productImages: File[];
     thumbnailImage: File | null;
-    color: Color | null;
+    colors: Color[];
     pattern: Pattern | null;
     material: Material | null;
     isAvailable: boolean | null;

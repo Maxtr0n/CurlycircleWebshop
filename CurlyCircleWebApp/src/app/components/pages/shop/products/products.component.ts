@@ -7,7 +7,7 @@ import { AddProductDialogComponent } from 'src/app/components/dialogs/add-produc
 import { DeleteProductDialogComponent } from 'src/app/components/dialogs/delete-product-dialog/delete-product-dialog.component';
 import { ModifyProductDialogComponent } from 'src/app/components/dialogs/modify-product-dialog/modify-product-dialog.component';
 import { AppConstants } from 'src/app/core/app-constants';
-import { ProductCategoryViewModel, ProductViewModel } from 'src/app/models/models';
+import { ProductCategoryViewModel, ProductViewModel, ProductWithImages } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -82,6 +82,19 @@ export class ProductsComponent implements OnInit, OnDestroy {
             width: '600px',
             data: { id: id }
         });
+        dialogRef.afterClosed().subscribe({
+            next: (result: ProductWithImages) => {
+                if (result) {
+                    this.productService.updateProduct(id, result)
+                        .subscribe({
+                            next: () => {
+                                this.snackBar.open(result.name + "termék sikeresen módosítva!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-accent'] });
+                                this.getData();
+                            }
+                        });
+                }
+            }
+        });
     }
 
     onProductDeleteClicked(id: number): void {
@@ -106,6 +119,19 @@ export class ProductsComponent implements OnInit, OnDestroy {
     onProductAddClicked(): void {
         let dialogRef = this.dialog.open(AddProductDialogComponent, {
             width: '600px',
+            data: { productCategoryId: this.productCategory?.id }
+        });
+        dialogRef.afterClosed().subscribe({
+            next: (result: ProductWithImages) => {
+                if (result) {
+                    this.productService.createProduct(result).pipe(
+                        tap(() => {
+                            this.snackBar.open(result.name + " hozzáadva!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-accent'] });
+                            this.getData();
+                        })
+                    ).subscribe();
+                }
+            }
         });
     }
 }

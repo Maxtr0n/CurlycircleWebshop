@@ -1,6 +1,7 @@
 ﻿using Domain.Entities.Abstractions;
 using Domain.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace Domain.Entities
 {
@@ -33,27 +34,17 @@ namespace Domain.Entities
 
         public string ThumbnailImageUrl { get; set; } = string.Empty;
 
-        public Color Color { get; set; } = Color.Other;
+        public IEnumerable<Color> Colors { get; set; }
 
-        public Pattern Pattern { get; set; } = Pattern.Other;
+        public Pattern? Pattern { get; set; }
 
-        public Material Material { get; set; } = Material.Other;
+        public Material? Material { get; set; }
 
         public bool IsAvailable { get; set; } = true;
 
         public Product()
         {
-        }
-
-        public void Update(Product updateProduct)
-        {
-            Name = updateProduct.Name;
-            Price = updateProduct.Price;
-            Description = updateProduct.Description;
-            Color = updateProduct.Color;
-            Pattern = updateProduct.Pattern;
-            Material = updateProduct.Material;
-            IsAvailable = updateProduct.IsAvailable;
+            Colors = new List<Color>();
         }
     }
 }
