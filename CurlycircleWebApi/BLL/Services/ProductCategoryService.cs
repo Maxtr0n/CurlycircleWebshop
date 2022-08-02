@@ -101,8 +101,11 @@ namespace BLL.Services
         public async Task DeleteProductCategoryAsync(int productCategoryId)
         {
             var productCategory = await _productCategoryRepository.GetProductCategoryByIdAsync(productCategoryId);
-            var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, productCategory.ThumbnailImageUrl);
-            _imageHelper.DeleteImageFile(imageToDelete);
+            if (productCategory.ThumbnailImageUrl != String.Empty)
+            {
+                var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductCategoryThumbnails, productCategory.ThumbnailImageUrl);
+                _imageHelper.DeleteImageFile(imageToDelete);
+            }
 
             await _productCategoryRepository.DeleteProductCategoryAsync(productCategoryId);
             await _unitOfWork.SaveChangesAsync();

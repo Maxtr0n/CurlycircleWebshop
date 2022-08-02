@@ -87,6 +87,14 @@ namespace BLL
                 .IncludeMembers(u => u.Address);
 
             CreateMap<UserAddress, UserDataViewModel>();
+
+            CreateMap<ColorUpsertDto, Color>();
+            CreateMap<PatternUpsertDto, Pattern>();
+            CreateMap<MaterialUpsertDto, Material>();
+
+            CreateMap<Color, ColorViewModel>();
+            CreateMap<Pattern, PatternViewModel>();
+            CreateMap<Material, MaterialViewModel>();
         }
     }
 }

@@ -13,6 +13,9 @@ namespace DAL
         public DbSet<ProductCategory> ProductCategories => Set<ProductCategory>();
         public DbSet<Order> Orders => Set<Order>();
         public DbSet<Cart> Carts => Set<Cart>();
+        public DbSet<Color> Colors => Set<Color>();
+        public DbSet<Material> Materials => Set<Material>();
+        public DbSet<Pattern> Patterns => Set<Pattern>();
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
