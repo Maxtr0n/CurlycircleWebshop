@@ -279,7 +279,57 @@ namespace DAL.Extensions
 
             #endregion
 
+            #region Colors, Patterns, Materials
 
+            var blueColor = new Color
+            {
+                Id = 1,
+                Name = "Kék"
+            };
+            var redColor = new Color
+            {
+                Id = 2,
+                Name = "Piros"
+            };
+            modelBuilder.Entity<Color>()
+                .HasData(
+                   blueColor,
+                   redColor
+                );
+
+            var blankPattern = new Pattern
+            {
+                Id = 1,
+                Name = "Sima"
+            };
+            var stripedPattern = new Pattern
+            {
+                Id = 2,
+                Name = "Csíkos"
+            };
+            modelBuilder.Entity<Pattern>()
+                .HasData(
+                   blankPattern,
+                   stripedPattern
+                );
+
+            var plasticMaterial = new Material
+            {
+                Id = 1,
+                Name = "Műanyag"
+            };
+            var fabricMaterial = new Material
+            {
+                Id = 2,
+                Name = "Szövet"
+            };
+            modelBuilder.Entity<Material>()
+                .HasData(
+                   plasticMaterial,
+                   fabricMaterial
+                );
+
+            #endregion
 
         }
     }

@@ -25,9 +25,12 @@ namespace DAL.EntityConfigurations
                 .HasForeignKey(nameof(Product.ProductCategoryId))
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(p => p.Colors);
-            builder.HasOne(p => p.Material);
-            builder.HasOne(p => p.Pattern);
+            builder.HasMany(p => p.Colors)
+                .WithMany(c => c.Products);
+            builder.HasOne(p => p.Material)
+                .WithMany(m => m.Products);
+            builder.HasOne(p => p.Pattern)
+                .WithMany(p => p.Products);
         }
     }
 }

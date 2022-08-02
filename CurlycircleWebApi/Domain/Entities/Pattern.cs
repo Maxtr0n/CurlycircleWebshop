@@ -12,5 +12,10 @@ namespace Domain.Entities
         public string Name { get; set; } = null!;
 
         public IEnumerable<Product> Products { get; set; } = default!;
+
+        public Pattern()
+        {
+            Products = new List<Product>();
+        }
     }
 }
