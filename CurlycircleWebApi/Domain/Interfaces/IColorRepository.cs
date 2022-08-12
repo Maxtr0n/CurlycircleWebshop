@@ -15,6 +15,8 @@ namespace Domain.Interfaces
 
         Task<Color> GetColorByIdAsync(int colorId);
 
+        Task<IEnumerable<Color>> GetColorsByIdsAsync(IEnumerable<int> colorIds);
+
         void UpdateColor(Color color);
 
         Task DeleteColorAsync(int colorId);

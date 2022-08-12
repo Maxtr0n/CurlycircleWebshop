@@ -29,9 +29,15 @@ namespace BLL.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ImageHelper _imageHelper;
+        private readonly IMaterialRepository _materialRepository;
+        private readonly IColorRepository _colorRepository;
+        private readonly IPatternRepository _patternRepository;
 
         public ProductService(
             IProductRepository productRepository,
+            IMaterialRepository materialRepository,
+            IColorRepository colorRepository,
+            IPatternRepository patternRepository,
             IUnitOfWork unitOfWork,
             IMapper mapper,
             ImageHelper thumbnailImageHelper
@@ -41,10 +47,21 @@ namespace BLL.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _imageHelper = thumbnailImageHelper;
+            _materialRepository = materialRepository;
+            _colorRepository = colorRepository;
+            _patternRepository = patternRepository;
         }
 
         public async Task<EntityCreatedViewModel> CreateProductAsync(ProductUpsertDto productUpsertDto)
         {
+            Material material;
+            Pattern pattern;
+            IEnumerable<Domain.Entities.Color> colors;
+
+            material = await _materialRepository.GetMaterialByIdAsync(productUpsertDto.MaterialId ?? default(int));
+            pattern = await _patternRepository.GetPatternByIdAsync(productUpsertDto.PatternId ?? default(int));
+            colors = await _colorRepository.GetColorsByIdsAsync(productUpsertDto.ColorIds);
+
             var thumbnailImage = productUpsertDto.ThumbnailImage;
 
             string fileName = string.Empty;
@@ -64,10 +81,10 @@ namespace BLL.Services
                 Description = productUpsertDto.Description,
                 ThumbnailImageUrl = fileName,
                 ImageUrls = imageNames,
-                Colors = productUpsertDto.Colors,
-                Pattern = productUpsertDto.Pattern,
-                Material = productUpsertDto.Material,
-                IsAvailable = productUpsertDto.IsAvailable ?? true
+                Colors = colors,
+                Pattern = pattern,
+                Material = material,
+                IsAvailable = productUpsertDto.IsAvailable
             };
 
 
@@ -92,6 +109,14 @@ namespace BLL.Services
 
         public async Task UpdateProductAsync(int productId, ProductUpsertDto productUpdateDto)
         {
+            Material material;
+            Pattern pattern;
+            IEnumerable<Domain.Entities.Color> colors;
+
+            material = await _materialRepository.GetMaterialByIdAsync(productUpdateDto.MaterialId ?? default(int));
+            pattern = await _patternRepository.GetPatternByIdAsync(productUpdateDto.PatternId ?? default(int));
+            colors = await _colorRepository.GetColorsByIdsAsync(productUpdateDto.ColorIds);
+
             var oldProduct = await _productRepository.GetProductByIdAsync(productId);
 
             var updatedProduct = new Product()
@@ -100,10 +125,10 @@ namespace BLL.Services
                 Name = productUpdateDto.Name,
                 ProductCategoryId = productUpdateDto.ProductCategoryId,
                 Description = productUpdateDto.Description,
-                Colors = productUpdateDto.Colors,
-                Pattern = productUpdateDto.Pattern,
-                Material = productUpdateDto.Material,
-                IsAvailable = productUpdateDto.IsAvailable ?? true,
+                Colors = colors,
+                Pattern = pattern,
+                Material = material,
+                IsAvailable = productUpdateDto.IsAvailable,
 
                 ThumbnailImageUrl = oldProduct.ThumbnailImageUrl,
                 ImageUrls = oldProduct.ImageUrls,

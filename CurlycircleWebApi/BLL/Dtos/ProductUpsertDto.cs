@@ -23,12 +23,12 @@ namespace BLL.Dtos
 
         public IFormFile? ThumbnailImage { get; set; }
 
-        public IEnumerable<Color> Colors { get; set; } = new List<Color>();
+        public IEnumerable<int> ColorIds { get; set; } = new List<int>();
 
-        public Pattern? Pattern { get; set; }
+        public int? PatternId { get; set; }
 
-        public Material? Material { get; set; }
+        public int? MaterialId { get; set; }
 
-        public bool? IsAvailable { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }

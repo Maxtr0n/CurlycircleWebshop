@@ -43,16 +43,9 @@ export interface ChangePasswordDto {
     newPassword: string;
 }
 
-export enum Color {
-    Red,
-    Blue,
-    Green,
-    Yellow,
-    White,
-    Black,
-    Orange,
-    Pink,
-    Other,
+export interface Color {
+    id: number;
+    name: string;
 }
 
 export interface DeleteUserDto {
@@ -70,11 +63,9 @@ export interface LoginDto {
     cartId: number | null;
 }
 
-export enum Material {
-    Fabric,
-    Plastic,
-    Metal,
-    Other,
+export interface Material {
+    id: number;
+    name: string;
 }
 
 export interface OrderAddressViewModel {
@@ -156,12 +147,9 @@ export interface OrderQueryParameters {
     maxOrderDate: string | null;
 }
 
-export enum Pattern {
-    Blank,
-    Dotted,
-    Striped,
-    Checkered,
-    Other,
+export interface Pattern {
+    id: number;
+    name: string;
 }
 
 export enum PaymentMethod {
@@ -197,10 +185,10 @@ export interface ProductUpsertDto {
     name: string;
     productCategoryId: number;
     description: string | null;
-    color: Color | null;
-    pattern: Pattern | null;
-    material: Material | null;
-    isAvailable: boolean | null;
+    colorIds: number[];
+    patternId: number;
+    materialId: number;
+    isAvailable: boolean;
 }
 
 export interface ProductWithImages {
@@ -224,7 +212,7 @@ export interface ProductViewModel {
     description: string | null;
     imageUrls: string[];
     thumbnailImageUrl: string;
-    color: Color;
+    colors: Color[];
     pattern: Pattern;
     material: Material;
     isAvailable: boolean;
@@ -314,3 +302,31 @@ export interface UserDataViewModel {
     line1: string;
     line2: string | null;
 }
+
+export interface ColorViewModel {
+    id: number;
+    name: string;
+}
+
+export interface PatternViewModel {
+    id: number;
+    name: string;
+}
+
+export interface MaterialViewModel {
+    id: number;
+    name: string;
+}
+
+export interface ColorUpsertDto {
+    name: string;
+}
+
+export interface PatternUpsertDto {
+    name: string;
+}
+
+export interface MaterialUpsertDto {
+    name: string;
+}
+

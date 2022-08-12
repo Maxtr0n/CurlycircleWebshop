@@ -25,6 +25,10 @@ namespace DAL.EntityConfigurations
                 .HasForeignKey(nameof(Product.ProductCategoryId))
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Navigation(p => p.Colors).AutoInclude();
+            builder.Navigation(p => p.Material).AutoInclude();
+            builder.Navigation(p => p.Pattern).AutoInclude();
+
             builder.HasMany(p => p.Colors)
                 .WithMany(c => c.Products);
             builder.HasOne(p => p.Material)

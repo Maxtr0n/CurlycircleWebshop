@@ -41,9 +41,9 @@ namespace CurlycircleWebApi.Controllers
             string name = Request.Form["name"].First();
             string description = Request.Form["description"].First();
             int productCategoryId = int.Parse(Request.Form["productCategoryId"].First());
-            IEnumerable<Color> colors = ConvertToColors(Request.Form["colors"].First());
-            Pattern pattern = (Pattern)Enum.Parse(typeof(Color), Request.Form["pattern"].First()); ;
-            Material material = (Material)Enum.Parse(typeof(Color), Request.Form["material"].First()); ;
+            IEnumerable<int> colorIds = ConvertToColorIds(Request.Form["colorIds"].First());
+            int patternId = int.Parse(Request.Form["patternId"].First());
+            int materialId = int.Parse(Request.Form["materialId"].First());
             bool isAvailable = bool.Parse(Request.Form["isAvailable"].First());
             IFormFile? thumbnailImage = Request.Form.Files.Where(i => i.Name == "thumbnailImage").FirstOrDefault();
             IEnumerable<IFormFile> productImages = Request.Form.Files.Where(i => i.Name.Contains("productImage")).ToList();
@@ -54,9 +54,9 @@ namespace CurlycircleWebApi.Controllers
                 Price = price,
                 ProductCategoryId = productCategoryId,
                 Description = description,
-                Material = material,
-                Colors = colors,
-                Pattern = pattern,
+                MaterialId = materialId,
+                ColorIds = colorIds,
+                PatternId = patternId,
                 IsAvailable = isAvailable,
                 ThumbnailImage = thumbnailImage,
                 ProductImages = productImages
@@ -86,9 +86,9 @@ namespace CurlycircleWebApi.Controllers
             string name = Request.Form["name"].First();
             string description = Request.Form["description"].First();
             int productCategoryId = int.Parse(Request.Form["productCategoryId"].First());
-            IEnumerable<Color> colors = ConvertToColors(Request.Form["colors"].First());
-            Pattern pattern = (Pattern)Enum.Parse(typeof(Color), Request.Form["pattern"].First()); ;
-            Material material = (Material)Enum.Parse(typeof(Color), Request.Form["material"].First()); ;
+            IEnumerable<int> colorIds = ConvertToColorIds(Request.Form["colorIds"].First());
+            int patternId = int.Parse(Request.Form["patternId"].First());
+            int materialId = int.Parse(Request.Form["materialId"].First());
             bool isAvailable = bool.Parse(Request.Form["isAvailable"].First());
             IFormFile? thumbnailImage = Request.Form.Files.Where(i => i.Name == "thumbnailImage").FirstOrDefault();
             IEnumerable<IFormFile> productImages = Request.Form.Files.Where(i => i.Name.Contains("productImage")).ToList();
@@ -99,9 +99,9 @@ namespace CurlycircleWebApi.Controllers
                 Price = price,
                 ProductCategoryId = productCategoryId,
                 Description = description,
-                Material = material,
-                Colors = colors,
-                Pattern = pattern,
+                MaterialId = materialId,
+                ColorIds = colorIds,
+                PatternId = patternId,
                 IsAvailable = isAvailable,
                 ThumbnailImage = thumbnailImage,
                 ProductImages = productImages
@@ -119,16 +119,19 @@ namespace CurlycircleWebApi.Controllers
             return _productService.DeleteProductAsync(productId);
         }
 
-        private static IEnumerable<Color> ConvertToColors(string asd)
+        private static IEnumerable<int> ConvertToColorIds(string formString)
         {
-            string[] colorStrings = asd.Split(',');
-            List<Color> colors = new List<Color>();
+            string[] colorStrings = formString.Split(';');
+            List<int> colorIds = new List<int>();
             foreach (string colorString in colorStrings)
             {
-                colors.Add((Color)Enum.Parse(typeof(Color), colorString));
+                if (int.TryParse(colorString, out int colorId))
+                {
+                    colorIds.Add(colorId);
+                }
             }
 
-            return colors;
+            return colorIds;
         }
     }
 }

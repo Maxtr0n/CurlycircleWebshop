@@ -54,6 +54,24 @@ namespace DAL.Repositories
             return color;
         }
 
+        public async Task<IEnumerable<Color>> GetColorsByIdsAsync(IEnumerable<int> colorIds)
+        {
+            List<Color> colors = new List<Color>();
+            foreach (var colorId in colorIds)
+            {
+                var color = await _dbContext.Colors.FindAsync(colorId);
+
+                if (color == null)
+                {
+                    throw new EntityNotFoundException($"Color with id {colorId} not found.");
+                }
+
+                colors.Add(color);
+            }
+
+            return colors;
+        }
+
         public void UpdateColor(Color color)
         {
             _dbContext.Colors.Update(color);

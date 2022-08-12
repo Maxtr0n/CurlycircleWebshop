@@ -38,16 +38,19 @@ export class ProductService {
             formData.append('isAvailable', product.isAvailable.toString());
         }
 
-        if (product.colors) {
-            formData.append('color', product.colors.toString());
+        let colors = '';
+        for (let i = 0; i < product.colors.length; i++) {
+            colors.concat(product.colors[i].id.toString());
         }
 
+        formData.append('colorIds', colors);
+
         if (product.pattern) {
-            formData.append('pattern', product.pattern.toString());
+            formData.append('patternId', product.pattern.id.toString());
         }
 
         if (product.material) {
-            formData.append('material', product.material.toString());
+            formData.append('materialId', product.material.id.toString());
         }
 
         return this.httpClient.postWithFile<EntityCreatedViewModel>(`${this.productsUrl}`, formData);
@@ -75,16 +78,19 @@ export class ProductService {
             formData.append('isAvailable', product.isAvailable.toString());
         }
 
-        if (product.colors) {
-            formData.append('color', product.colors.toString());
+        let colors = '';
+        for (let i = 0; i < product.colors.length; i++) {
+            colors.concat(product.colors[i].id.toString());
         }
 
+        formData.append('colorIds', colors);
+
         if (product.pattern) {
-            formData.append('pattern', product.pattern.toString());
+            formData.append('patternId', product.pattern.id.toString());
         }
 
         if (product.material) {
-            formData.append('material', product.material.toString());
+            formData.append('materialId', product.material.id.toString());
         }
 
         return this.httpClient.putWithFile<void>(`${this.productsUrl}/${productId}`, formData);
