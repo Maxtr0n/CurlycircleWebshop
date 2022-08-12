@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220716105053_ThumbnailImageUrlAdded")]
-    partial class ThumbnailImageUrlAdded
+    [Migration("20220812203434_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,6 +44,21 @@ namespace DAL.Migrations
 
             modelBuilder.HasSequence<int>("productseq")
                 .StartsAt(1000L);
+
+            modelBuilder.Entity("ColorProduct", b =>
+                {
+                    b.Property<int>("ColorsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ColorsId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("ColorProduct");
+                });
 
             modelBuilder.Entity("Domain.Entities.ApplicationRole", b =>
                 {
@@ -78,14 +93,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "8edc03ae-3425-4d56-bcf0-088d6cf5d397",
+                            ConcurrencyStamp = "899a4d87-f548-4807-b23b-d75c70918855",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "c496372b-fd0d-4f4f-ba34-b362c2825ef6",
+                            ConcurrencyStamp = "cbc9a404-d969-4bc9-8cee-921f80c47e97",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -177,7 +192,7 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "26d31aec-4d3a-42dc-a086-21f4aa6b37a3",
+                            ConcurrencyStamp = "f9a26eb2-6359-45e4-b4e2-ee9af48c99a2",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Máté",
@@ -185,10 +200,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFFyTN5nEdasBYOtGHU0bChj5xBdv/9eVfwiniaKWk1Axg5Ru0uqzOYsY3FW/uKXjQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKvEOg7lO2d1tPlS9n5Ul/iGMAz/wUt0PBjC2YRopLXkV6cZR00N+5QKyenyLkA3TA==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b99e1c70-9305-4072-bab3-66a58958b50f",
+                            SecurityStamp = "076fba7b-93a0-478b-9779-293ef1963840",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -196,7 +211,7 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2e427c16-1706-4a99-afac-d84f5eca05b8",
+                            ConcurrencyStamp = "b4af6f4c-3f04-4646-aa91-88811e1461d9",
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "Béla",
@@ -204,10 +219,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEH+FSAssjZX1th+jEa8WWgeESBx58yIs+nJEabr5geTFfq6/dF7gN5qCUd4RhQrr8g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJAnQNhQIVThz9V5B4X9CVrV/Px/Ea4xmezAg1K2McAvhN25lZEBZjGxxoSVWmuAUw==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5c410e62-9b86-4e4d-a3ea-3b8c6220ee37",
+                            SecurityStamp = "f3c9733c-70fe-411f-bbdf-ea8a686b62a1",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });
@@ -242,6 +257,64 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             ApplicationUserId = 2
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.Color", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Colors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Kék"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Piros"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.Material", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Materials");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Műanyag"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Szövet"
                         });
                 });
 
@@ -301,6 +374,35 @@ namespace DAL.Migrations
                     b.ToTable("Orders", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.Pattern", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Patterns");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Sima"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Csíkos"
+                        });
+                });
+
             modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -308,9 +410,6 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "productseq");
-
-                    b.Property<int>("Color")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -322,14 +421,14 @@ namespace DAL.Migrations
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Material")
+                    b.Property<int?>("MaterialId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Pattern")
+                    b.Property<int?>("PatternId")
                         .HasColumnType("int");
 
                     b.Property<double>("Price")
@@ -344,6 +443,10 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MaterialId");
+
+                    b.HasIndex("PatternId");
+
                     b.HasIndex("ProductCategoryId");
 
                     b.ToTable("Products", (string)null);
@@ -352,13 +455,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                             ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
-                            Material = 3,
                             Name = "Curly1",
-                            Pattern = 4,
                             Price = 2500.0,
                             ProductCategoryId = 1,
                             ThumbnailImageUrl = "placeholder.jpg"
@@ -366,13 +466,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 2,
-                            Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                             ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
-                            Material = 3,
                             Name = "Curly2",
-                            Pattern = 4,
                             Price = 3000.0,
                             ProductCategoryId = 1,
                             ThumbnailImageUrl = "placeholder.jpg"
@@ -380,13 +477,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 3,
-                            Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                             ImageUrls = "",
                             IsAvailable = true,
-                            Material = 3,
                             Name = "Curly3",
-                            Pattern = 4,
                             Price = 3000.0,
                             ProductCategoryId = 1,
                             ThumbnailImageUrl = ""
@@ -394,13 +488,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 4,
-                            Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                             ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
-                            Material = 3,
                             Name = "Curly4",
-                            Pattern = 4,
                             Price = 3500.0,
                             ProductCategoryId = 1,
                             ThumbnailImageUrl = "placeholder.jpg"
@@ -408,13 +499,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 5,
-                            Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                             ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
-                            Material = 3,
                             Name = "Curly5",
-                            Pattern = 4,
                             Price = 3500.0,
                             ProductCategoryId = 1,
                             ThumbnailImageUrl = "placeholder.jpg"
@@ -422,13 +510,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 6,
-                            Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                             ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
-                            Material = 3,
                             Name = "Hajcsat1",
-                            Pattern = 4,
                             Price = 4000.0,
                             ProductCategoryId = 2,
                             ThumbnailImageUrl = "placeholder.jpg"
@@ -436,13 +521,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 7,
-                            Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                             ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
-                            Material = 3,
                             Name = "Hajcsat2",
-                            Pattern = 4,
                             Price = 2500.0,
                             ProductCategoryId = 2,
                             ThumbnailImageUrl = "placeholder.jpg"
@@ -450,13 +532,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 8,
-                            Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                             ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
-                            Material = 3,
                             Name = "Hajcsat3",
-                            Pattern = 4,
                             Price = 1500.0,
                             ProductCategoryId = 2,
                             ThumbnailImageUrl = "placeholder.jpg"
@@ -464,13 +543,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 9,
-                            Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                             ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
-                            Material = 3,
                             Name = "Hajgumi1",
-                            Pattern = 4,
                             Price = 2000.0,
                             ProductCategoryId = 3,
                             ThumbnailImageUrl = "placeholder.jpg"
@@ -478,13 +554,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 10,
-                            Color = 8,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.",
                             ImageUrls = "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg",
                             IsAvailable = true,
-                            Material = 3,
                             Name = "Hajgumi2",
-                            Pattern = 4,
                             Price = 3000.0,
                             ProductCategoryId = 3,
                             ThumbnailImageUrl = "placeholder.jpg"
@@ -651,6 +724,21 @@ namespace DAL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("ColorProduct", b =>
+                {
+                    b.HasOne("Domain.Entities.Color", null)
+                        .WithMany()
+                        .HasForeignKey("ColorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.ApplicationUser", b =>
@@ -859,11 +947,23 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
+                    b.HasOne("Domain.Entities.Material", "Material")
+                        .WithMany("Products")
+                        .HasForeignKey("MaterialId");
+
+                    b.HasOne("Domain.Entities.Pattern", "Pattern")
+                        .WithMany("Products")
+                        .HasForeignKey("PatternId");
+
                     b.HasOne("Domain.Entities.ProductCategory", "ProductCategory")
                         .WithMany("Products")
                         .HasForeignKey("ProductCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Material");
+
+                    b.Navigation("Pattern");
 
                     b.Navigation("ProductCategory");
                 });
@@ -925,6 +1025,16 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Material", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Pattern", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Domain.Entities.ProductCategory", b =>

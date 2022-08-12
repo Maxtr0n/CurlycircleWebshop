@@ -91,14 +91,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "14d621fd-1289-4ad4-bf0b-d52084d1d567",
+                            ConcurrencyStamp = "899a4d87-f548-4807-b23b-d75c70918855",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "83bfa89f-7951-4218-8de2-1dcb492363ae",
+                            ConcurrencyStamp = "cbc9a404-d969-4bc9-8cee-921f80c47e97",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -190,7 +190,7 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ef1763c3-7f3c-4d5a-a64f-fd98e448f48c",
+                            ConcurrencyStamp = "f9a26eb2-6359-45e4-b4e2-ee9af48c99a2",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Máté",
@@ -198,10 +198,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKdKG2fcD0A/BqAZLP8bEm7kKmbi+p1qS+M9vongEX/RU/qcWtnDsqL8pKn4163OPA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKvEOg7lO2d1tPlS9n5Ul/iGMAz/wUt0PBjC2YRopLXkV6cZR00N+5QKyenyLkA3TA==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b728bcf0-d7b9-4bc9-ba04-595a38ad3f4a",
+                            SecurityStamp = "076fba7b-93a0-478b-9779-293ef1963840",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -209,7 +209,7 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "077f79b1-32db-4e4d-b986-248820c62c12",
+                            ConcurrencyStamp = "b4af6f4c-3f04-4646-aa91-88811e1461d9",
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "Béla",
@@ -217,10 +217,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDjs448nJv7gHWnz6N3z5YjUk789nTAs7tMUOXN6SfLhqjESXSthqwub9JJaxofhKQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJAnQNhQIVThz9V5B4X9CVrV/Px/Ea4xmezAg1K2McAvhN25lZEBZjGxxoSVWmuAUw==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f133a87b-a1b0-4703-860e-a3b15c3f4788",
+                            SecurityStamp = "f3c9733c-70fe-411f-bbdf-ea8a686b62a1",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });
@@ -272,7 +272,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Color");
+                    b.ToTable("Colors");
 
                     b.HasData(
                         new
@@ -301,7 +301,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Material");
+                    b.ToTable("Materials");
 
                     b.HasData(
                         new
@@ -386,7 +386,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pattern");
+                    b.ToTable("Patterns");
 
                     b.HasData(
                         new

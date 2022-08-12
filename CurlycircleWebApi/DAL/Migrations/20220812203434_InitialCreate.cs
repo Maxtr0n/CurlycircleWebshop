@@ -11,18 +11,15 @@ namespace DAL.Migrations
         {
             migrationBuilder.CreateSequence<int>(
                 name: "cartitemseq",
-                startValue: 1000L,
-                incrementBy: 10);
+                startValue: 1000L);
 
             migrationBuilder.CreateSequence<int>(
                 name: "cartseq",
-                startValue: 1000L,
-                incrementBy: 10);
+                startValue: 1000L);
 
             migrationBuilder.CreateSequence<int>(
                 name: "orderitemseq",
-                startValue: 1000L,
-                incrementBy: 10);
+                startValue: 1000L);
 
             migrationBuilder.CreateSequence<int>(
                 name: "OrderNumbers",
@@ -30,18 +27,15 @@ namespace DAL.Migrations
 
             migrationBuilder.CreateSequence<int>(
                 name: "orderseq",
-                startValue: 1000L,
-                incrementBy: 10);
+                startValue: 1000L);
 
             migrationBuilder.CreateSequence<int>(
                 name: "productcategoryseq",
-                startValue: 1000L,
-                incrementBy: 10);
+                startValue: 1000L);
 
             migrationBuilder.CreateSequence<int>(
                 name: "productseq",
-                startValue: 1000L,
-                incrementBy: 10);
+                startValue: 1000L);
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
@@ -59,13 +53,52 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Colors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Colors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Materials",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Materials", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Patterns",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patterns", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageUrls = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ThumbnailImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -137,14 +170,24 @@ namespace DAL.Migrations
                     ProductCategoryId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageUrls = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Color = table.Column<int>(type: "int", nullable: false),
-                    Pattern = table.Column<int>(type: "int", nullable: false),
-                    Material = table.Column<int>(type: "int", nullable: false),
+                    ThumbnailImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PatternId = table.Column<int>(type: "int", nullable: true),
+                    MaterialId = table.Column<int>(type: "int", nullable: true),
                     IsAvailable = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Materials_MaterialId",
+                        column: x => x.MaterialId,
+                        principalTable: "Materials",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Products_Patterns_PatternId",
+                        column: x => x.PatternId,
+                        principalTable: "Patterns",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Products_ProductCategories_ProductCategoryId",
                         column: x => x.ProductCategoryId,
@@ -289,6 +332,30 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ColorProduct",
+                columns: table => new
+                {
+                    ColorsId = table.Column<int>(type: "int", nullable: false),
+                    ProductsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ColorProduct", x => new { x.ColorsId, x.ProductsId });
+                    table.ForeignKey(
+                        name: "FK_ColorProduct_Colors_ColorsId",
+                        column: x => x.ColorsId,
+                        principalTable: "Colors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ColorProduct_Products_ProductsId",
+                        column: x => x.ProductsId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CartItem",
                 columns: table => new
                 {
@@ -348,18 +415,45 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "a0023800-d12c-425a-83d8-3b3988e240c3", "Admin", "ADMIN" },
-                    { 2, "76f1ddbd-201e-4821-96eb-4e15e9d594a5", "User", "USER" }
+                    { 1, "899a4d87-f548-4807-b23b-d75c70918855", "Admin", "ADMIN" },
+                    { 2, "cbc9a404-d969-4bc9-8cee-921f80c47e97", "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Colors",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Kék" },
+                    { 2, "Piros" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Materials",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Műanyag" },
+                    { 2, "Szövet" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Patterns",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Sima" },
+                    { 2, "Csíkos" }
                 });
 
             migrationBuilder.InsertData(
                 table: "ProductCategories",
-                columns: new[] { "Id", "Description", "ImageUrls", "Name" },
+                columns: new[] { "Id", "Description", "Name", "ThumbnailImageUrl" },
                 values: new object[,]
                 {
-                    { 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg", "Curly hajgöndörítők" },
-                    { 2, "Donec tincidunt nunc ac sapien blandit pellentesque. Nulla tincidunt dui vitae nibh aliquet, et efficitur dui dignissim.", "placeholder2.jpeg", "Hajcsatok" },
-                    { 3, "Vestibulum aliquam gravida dui, ut volutpat nisi semper quis. ", "placeholder3.jpeg", "Hajgumik" }
+                    { 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "Curly hajgöndörítők", "placeholder.jpg" },
+                    { 2, "Donec tincidunt nunc ac sapien blandit pellentesque. Nulla tincidunt dui vitae nibh aliquet, et efficitur dui dignissim.", "Hajcsatok", "placeholder2.jpeg" },
+                    { 3, "Vestibulum aliquam gravida dui, ut volutpat nisi semper quis. ", "Hajgumik", "placeholder3.jpeg" }
                 });
 
             migrationBuilder.InsertData(
@@ -367,8 +461,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SecurityStamp", "TwoFactorEnabled", "UserName", "City", "Line1", "Line2", "ZipCode" },
                 values: new object[,]
                 {
-                    { 1, 0, "6c7f22fe-1b79-4555-9e56-e99d0dc98414", "admin@admin.com", false, "Máté", "Schütz", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEA0W1egr+i9yj/oSmfKBzGfF7U5Z7aQJaggqPH9zHTQv7pgfAFKLmOjErlLhCGCBrg==", "06302217831", false, null, null, "bb196ef3-00fe-4439-aa4c-c66c57a50a77", false, "admin", "Göd", "Sajó utca 19.", null, "2131" },
-                    { 2, 0, "e85ad6ec-e1a7-4658-9a0c-996e319c6713", "user@user.com", false, "Béla", "Kovács", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEKFRA0DLQcxS3HhQOMhjU+k5HjsXGwO4HGpRClK9fDZe5Tr1bXYvQHEx0B1AvgtJzw==", "06302217831", false, null, null, "8b012450-b364-4493-99fa-f2d5f31d432f", false, "user", "Göd", "Sajó utca 19.", "Fsz.", "2131" }
+                    { 1, 0, "f9a26eb2-6359-45e4-b4e2-ee9af48c99a2", "admin@admin.com", false, "Máté", "Schütz", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEKvEOg7lO2d1tPlS9n5Ul/iGMAz/wUt0PBjC2YRopLXkV6cZR00N+5QKyenyLkA3TA==", "06302217831", false, null, null, "076fba7b-93a0-478b-9779-293ef1963840", false, "admin", "Göd", "Sajó utca 19.", null, "2131" },
+                    { 2, 0, "b4af6f4c-3f04-4646-aa91-88811e1461d9", "user@user.com", false, "Béla", "Kovács", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEJAnQNhQIVThz9V5B4X9CVrV/Px/Ea4xmezAg1K2McAvhN25lZEBZjGxxoSVWmuAUw==", "06302217831", false, null, null, "f3c9733c-70fe-411f-bbdf-ea8a686b62a1", false, "user", "Göd", "Sajó utca 19.", "Fsz.", "2131" }
                 });
 
             migrationBuilder.InsertData(
@@ -391,19 +485,19 @@ namespace DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Color", "Description", "ImageUrls", "IsAvailable", "Material", "Name", "Pattern", "Price", "ProductCategoryId" },
+                columns: new[] { "Id", "Description", "ImageUrls", "IsAvailable", "MaterialId", "Name", "PatternId", "Price", "ProductCategoryId", "ThumbnailImageUrl" },
                 values: new object[,]
                 {
-                    { 1, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Curly1", 4, 2500.0, 1 },
-                    { 2, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Curly2", 4, 3000.0, 1 },
-                    { 3, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "", true, 3, "Curly3", 4, 3000.0, 1 },
-                    { 4, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Curly4", 4, 3500.0, 1 },
-                    { 5, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Curly5", 4, 3500.0, 1 },
-                    { 6, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Hajcsat1", 4, 4000.0, 2 },
-                    { 7, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Hajcsat2", 4, 2500.0, 2 },
-                    { 8, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Hajcsat3", 4, 1500.0, 2 },
-                    { 9, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Hajgumi1", 4, 2000.0, 3 },
-                    { 10, 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, 3, "Hajgumi2", 4, 3000.0, 3 }
+                    { 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, null, "Curly1", null, 2500.0, 1, "placeholder.jpg" },
+                    { 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, null, "Curly2", null, 3000.0, 1, "placeholder.jpg" },
+                    { 3, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "", true, null, "Curly3", null, 3000.0, 1, "" },
+                    { 4, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, null, "Curly4", null, 3500.0, 1, "placeholder.jpg" },
+                    { 5, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, null, "Curly5", null, 3500.0, 1, "placeholder.jpg" },
+                    { 6, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, null, "Hajcsat1", null, 4000.0, 2, "placeholder.jpg" },
+                    { 7, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, null, "Hajcsat2", null, 2500.0, 2, "placeholder.jpg" },
+                    { 8, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, null, "Hajcsat3", null, 1500.0, 2, "placeholder.jpg" },
+                    { 9, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, null, "Hajgumi1", null, 2000.0, 3, "placeholder.jpg" },
+                    { 10, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum metus nisi, nec rutrum erat pretium vitae.", "placeholder.jpg;placeholder2.jpeg;placeholder3.jpeg", true, null, "Hajgumi2", null, 3000.0, 3, "placeholder.jpg" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -451,6 +545,11 @@ namespace DAL.Migrations
                 filter: "[ApplicationUserId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ColorProduct_ProductsId",
+                table: "ColorProduct",
+                column: "ProductsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderItem_OrderId",
                 table: "OrderItem",
                 column: "OrderId");
@@ -464,6 +563,16 @@ namespace DAL.Migrations
                 name: "IX_Orders_ApplicationUserId",
                 table: "Orders",
                 column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_MaterialId",
+                table: "Products",
+                column: "MaterialId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_PatternId",
+                table: "Products",
+                column: "PatternId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductCategoryId",
@@ -504,6 +613,9 @@ namespace DAL.Migrations
                 name: "CartItem");
 
             migrationBuilder.DropTable(
+                name: "ColorProduct");
+
+            migrationBuilder.DropTable(
                 name: "OrderItem");
 
             migrationBuilder.DropTable(
@@ -513,6 +625,9 @@ namespace DAL.Migrations
                 name: "Carts");
 
             migrationBuilder.DropTable(
+                name: "Colors");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
@@ -520,6 +635,12 @@ namespace DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Materials");
+
+            migrationBuilder.DropTable(
+                name: "Patterns");
 
             migrationBuilder.DropTable(
                 name: "ProductCategories");
