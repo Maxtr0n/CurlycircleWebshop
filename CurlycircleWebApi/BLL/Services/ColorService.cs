@@ -49,10 +49,10 @@ namespace BLL.Services
             return colorViewModel;
         }
 
-        public async Task<IEnumerable<ColorViewModel>> GetAllColorsAsync()
+        public async Task<ColorsViewModel> GetAllColorsAsync()
         {
             var colors = await _colorRepository.GetAllAsync();
-            var colorsViewModel = _mapper.Map<IEnumerable<ColorViewModel>>(colors);
+            var colorsViewModel = _mapper.Map<ColorsViewModel>(colors);
             return colorsViewModel;
         }
 

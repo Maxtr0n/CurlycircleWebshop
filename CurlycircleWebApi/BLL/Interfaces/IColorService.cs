@@ -12,7 +12,7 @@ namespace BLL.Interfaces
     {
         Task<EntityCreatedViewModel> CreateColorAsync(ColorUpsertDto colorCreateDto);
 
-        Task<IEnumerable<ColorViewModel>> GetAllColorsAsync();
+        Task<ColorsViewModel> GetAllColorsAsync();
 
         Task<ColorViewModel> FindColorByIdAsync(int colorId);
 

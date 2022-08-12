@@ -93,8 +93,16 @@ namespace BLL
             CreateMap<MaterialUpsertDto, Material>();
 
             CreateMap<Color, ColorViewModel>();
+            CreateMap<IEnumerable<Color>, ColorsViewModel>()
+                 .ForMember(c => c.Colors, options => options.MapFrom(x => x));
+
             CreateMap<Pattern, PatternViewModel>();
+            CreateMap<IEnumerable<Pattern>, PatternsViewModel>()
+                 .ForMember(c => c.Patterns, options => options.MapFrom(x => x));
+
             CreateMap<Material, MaterialViewModel>();
+            CreateMap<IEnumerable<Material>, MaterialsViewModel>()
+                 .ForMember(c => c.Materials, options => options.MapFrom(x => x));
         }
     }
 }

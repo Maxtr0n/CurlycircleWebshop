@@ -308,15 +308,28 @@ export interface ColorViewModel {
     name: string;
 }
 
+export interface ColorsViewModel {
+    colors: ColorViewModel[];
+}
+
 export interface PatternViewModel {
     id: number;
     name: string;
+}
+
+export interface PatternsViewModel {
+    patterns: PatternViewModel[];
 }
 
 export interface MaterialViewModel {
     id: number;
     name: string;
 }
+
+export interface MaterialsViewModel {
+    materials: MaterialViewModel[];
+}
+
 
 export interface ColorUpsertDto {
     name: string;

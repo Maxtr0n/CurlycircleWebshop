@@ -52,6 +52,7 @@ import { DeleteProductDialogComponent } from './components/dialogs/delete-produc
 import { AddProductDialogComponent } from './components/dialogs/add-product-dialog/add-product-dialog.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { ProductCategoryCardComponent } from './components/shared/product-category-card/product-category-card.component';
+import { AdminColorsPatternsMaterialsComponent } from './components/pages/admin/admin-colors-patterns-materials/admin-colors-patterns-materials.component';
 
 @NgModule({
     declarations: [
@@ -89,6 +90,7 @@ import { ProductCategoryCardComponent } from './components/shared/product-catego
         DeleteProductDialogComponent,
         AddProductDialogComponent,
         ProductCategoryCardComponent,
+        AdminColorsPatternsMaterialsComponent,
     ],
     imports: [
         BrowserModule,

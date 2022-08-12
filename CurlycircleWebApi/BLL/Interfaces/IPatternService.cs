@@ -12,7 +12,7 @@ namespace BLL.Interfaces
     {
         Task<EntityCreatedViewModel> CreatePatternAsync(PatternUpsertDto patternCreateDto);
 
-        Task<IEnumerable<PatternViewModel>> GetAllPatternsAsync();
+        Task<PatternsViewModel> GetAllPatternsAsync();
 
         Task<PatternViewModel> FindPatternByIdAsync(int patternId);
 

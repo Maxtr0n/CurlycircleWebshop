@@ -48,10 +48,10 @@ namespace BLL.Services
             return materialViewModel;
         }
 
-        public async Task<IEnumerable<MaterialViewModel>> GetAllMaterialsAsync()
+        public async Task<MaterialsViewModel> GetAllMaterialsAsync()
         {
             var materials = await _materialRepository.GetAllAsync();
-            var materialsViewModel = _mapper.Map<IEnumerable<MaterialViewModel>>(materials);
+            var materialsViewModel = _mapper.Map<MaterialsViewModel>(materials);
             return materialsViewModel;
         }
 

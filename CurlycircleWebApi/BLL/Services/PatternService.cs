@@ -49,10 +49,10 @@ namespace BLL.Services
             return patternViewModel;
         }
 
-        public async Task<IEnumerable<PatternViewModel>> GetAllPatternsAsync()
+        public async Task<PatternsViewModel> GetAllPatternsAsync()
         {
             var patterns = await _patternRepository.GetAllAsync();
-            var patternsViewModel = _mapper.Map<IEnumerable<PatternViewModel>>(patterns);
+            var patternsViewModel = _mapper.Map<PatternsViewModel>(patterns);
             return patternsViewModel;
         }
 

@@ -12,7 +12,7 @@ namespace BLL.Interfaces
     {
         Task<EntityCreatedViewModel> CreateMaterialAsync(MaterialUpsertDto materialCreateDto);
 
-        Task<IEnumerable<MaterialViewModel>> GetAllMaterialsAsync();
+        Task<MaterialsViewModel> GetAllMaterialsAsync();
 
         Task<MaterialViewModel> FindMaterialByIdAsync(int materialId);
 
