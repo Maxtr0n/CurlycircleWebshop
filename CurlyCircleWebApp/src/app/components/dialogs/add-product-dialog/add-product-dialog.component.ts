@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Color, Material, Pattern, ProductWithImages } from 'src/app/models/models';
+import { ColorViewModel, MaterialViewModel, PatternViewModel, ProductWithImages } from 'src/app/models/models';
 
 @Component({
     selector: 'app-add-product-dialog',
@@ -16,9 +16,9 @@ export class AddProductDialogComponent implements OnInit {
         description: new FormControl<string | null>(''),
         thumbnail: new FormControl<File | null>(null),
         productImages: new FormControl<File[]>([]),
-        colors: new FormControl<Color[]>([]),
-        pattern: new FormControl<Pattern | null>(null),
-        material: new FormControl<Material | null>(null),
+        colors: new FormControl<ColorViewModel[]>([]),
+        pattern: new FormControl<PatternViewModel | null>(null),
+        material: new FormControl<MaterialViewModel | null>(null),
         isAvailable: new FormControl<boolean | null>(null),
     });
 

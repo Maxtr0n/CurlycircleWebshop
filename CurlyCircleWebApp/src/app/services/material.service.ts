@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppHttpClient } from '../core/app-http-client';
-import { MaterialViewModel } from '../models/models';
+import { MaterialsViewModel, MaterialUpsertDto, MaterialViewModel } from '../models/models';
 
 @Injectable({
     providedIn: 'root'
@@ -15,11 +15,11 @@ export class MaterialService {
         return this.httpClient.get<MaterialViewModel>(`${this.materialsUrl}/${materialId}`);
     }
 
-    public createMaterial(material: MaterialViewModel): Observable<MaterialViewModel> {
+    public createMaterial(material: MaterialUpsertDto): Observable<MaterialViewModel> {
         return this.httpClient.post<MaterialViewModel>(`${this.materialsUrl}`, material);
     }
 
-    public updateMaterial(materialId: number, material: MaterialViewModel): Observable<void> {
+    public updateMaterial(materialId: number, material: MaterialUpsertDto): Observable<void> {
         return this.httpClient.put<void>(`${this.materialsUrl}/${materialId}`, material);
     }
 
@@ -27,7 +27,7 @@ export class MaterialService {
         return this.httpClient.delete<void>(`${this.materialsUrl}/${materialId}`);
     }
 
-    public getMaterials(): Observable<MaterialViewModel[]> {
-        return this.httpClient.get<MaterialViewModel[]>(`${this.materialsUrl}`);
+    public getMaterials(): Observable<MaterialsViewModel> {
+        return this.httpClient.get<MaterialsViewModel>(`${this.materialsUrl}`);
     }
 }

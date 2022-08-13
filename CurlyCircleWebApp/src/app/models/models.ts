@@ -43,11 +43,6 @@ export interface ChangePasswordDto {
     newPassword: string;
 }
 
-export interface Color {
-    id: number;
-    name: string;
-}
-
 export interface DeleteUserDto {
     id: number;
     password: string;
@@ -61,11 +56,6 @@ export interface LoginDto {
     email: string;
     password: string;
     cartId: number | null;
-}
-
-export interface Material {
-    id: number;
-    name: string;
 }
 
 export interface OrderAddressViewModel {
@@ -147,11 +137,6 @@ export interface OrderQueryParameters {
     maxOrderDate: string | null;
 }
 
-export interface Pattern {
-    id: number;
-    name: string;
-}
-
 export enum PaymentMethod {
     MoneyTransfer,
     CashOnDelivery,
@@ -198,9 +183,9 @@ export interface ProductWithImages {
     description: string | null;
     productImages: File[];
     thumbnailImage: File | null;
-    colors: Color[];
-    pattern: Pattern | null;
-    material: Material | null;
+    colors: ColorViewModel[];
+    pattern: PatternViewModel | null;
+    material: MaterialViewModel | null;
     isAvailable: boolean | null;
 }
 
@@ -212,9 +197,9 @@ export interface ProductViewModel {
     description: string | null;
     imageUrls: string[];
     thumbnailImageUrl: string;
-    colors: Color[];
-    pattern: Pattern;
-    material: Material;
+    colors: ColorViewModel[];
+    pattern: PatternViewModel | null;
+    material: MaterialViewModel | null;
     isAvailable: boolean;
 }
 

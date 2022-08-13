@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppHttpClient } from '../core/app-http-client';
-import { ColorViewModel } from '../models/models';
+import { ColorsViewModel, ColorUpsertDto, ColorViewModel } from '../models/models';
 
 @Injectable({
     providedIn: 'root'
@@ -15,11 +15,11 @@ export class ColorService {
         return this.httpClient.get<ColorViewModel>(`${this.colorsUrl}/${colorId}`);
     }
 
-    public createColor(color: ColorViewModel): Observable<ColorViewModel> {
+    public createColor(color: ColorUpsertDto): Observable<ColorViewModel> {
         return this.httpClient.post<ColorViewModel>(`${this.colorsUrl}`, color);
     }
 
-    public updateColor(colorId: number, color: ColorViewModel): Observable<void> {
+    public updateColor(colorId: number, color: ColorUpsertDto): Observable<void> {
         return this.httpClient.put<void>(`${this.colorsUrl}/${colorId}`, color);
     }
 
@@ -27,7 +27,7 @@ export class ColorService {
         return this.httpClient.delete<void>(`${this.colorsUrl}/${colorId}`);
     }
 
-    public getColors(): Observable<ColorViewModel[]> {
-        return this.httpClient.get<ColorViewModel[]>(`${this.colorsUrl}`);
+    public getColors(): Observable<ColorsViewModel> {
+        return this.httpClient.get<ColorsViewModel>(`${this.colorsUrl}`);
     }
 }

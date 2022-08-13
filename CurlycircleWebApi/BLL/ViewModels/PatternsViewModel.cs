@@ -8,6 +8,6 @@ namespace BLL.ViewModels
 {
     public class PatternsViewModel
     {
-        public IEnumerable<PatternsViewModel> Patterns { get; set; } = default!;
+        public IEnumerable<PatternViewModel> Patterns { get; set; } = default!;
     }
 }

@@ -26,6 +26,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
     declarations: [],
@@ -55,7 +56,8 @@ import { MatSelectModule } from '@angular/material/select';
         MatDatepickerModule,
         MatDateFnsModule,
         MatDialogModule,
-        MatSelectModule
+        MatSelectModule,
+        MatChipsModule
     ],
     exports: [
         MatSliderModule,
@@ -82,7 +84,8 @@ import { MatSelectModule } from '@angular/material/select';
         MatDatepickerModule,
         MatDateFnsModule,
         MatDialogModule,
-        MatSelectModule
+        MatSelectModule,
+        MatChipsModule
     ],
 })
 export class MaterialModule { }
