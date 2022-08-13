@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220812203434_InitialCreate")]
+    [Migration("20220813114024_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,6 +30,12 @@ namespace DAL.Migrations
             modelBuilder.HasSequence<int>("cartseq")
                 .StartsAt(1000L);
 
+            modelBuilder.HasSequence<int>("colorseq")
+                .StartsAt(1000L);
+
+            modelBuilder.HasSequence<int>("materialseq")
+                .StartsAt(1000L);
+
             modelBuilder.HasSequence<int>("orderitemseq")
                 .StartsAt(1000L);
 
@@ -37,6 +43,9 @@ namespace DAL.Migrations
                 .StartsAt(100000L);
 
             modelBuilder.HasSequence<int>("orderseq")
+                .StartsAt(1000L);
+
+            modelBuilder.HasSequence<int>("patternseq")
                 .StartsAt(1000L);
 
             modelBuilder.HasSequence<int>("productcategoryseq")
@@ -93,14 +102,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "899a4d87-f548-4807-b23b-d75c70918855",
+                            ConcurrencyStamp = "2e3c3bf3-d033-41ac-99ca-a94ea6af3682",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "cbc9a404-d969-4bc9-8cee-921f80c47e97",
+                            ConcurrencyStamp = "62c8ab52-c8a7-4f5f-8067-7feb6772d7a6",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -192,7 +201,7 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f9a26eb2-6359-45e4-b4e2-ee9af48c99a2",
+                            ConcurrencyStamp = "5f717ed3-a3f7-43f8-ac12-a6a1285f511f",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Máté",
@@ -200,10 +209,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKvEOg7lO2d1tPlS9n5Ul/iGMAz/wUt0PBjC2YRopLXkV6cZR00N+5QKyenyLkA3TA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ/oRxoeGpFzwN13oHR9tP9Y7pF2oahnEmx17mJN9JLU999i23cT7rQp9MtqsGcRig==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "076fba7b-93a0-478b-9779-293ef1963840",
+                            SecurityStamp = "1823f5ff-70c4-42b7-b160-38c8eb3a57ba",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -211,7 +220,7 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b4af6f4c-3f04-4646-aa91-88811e1461d9",
+                            ConcurrencyStamp = "7ec7d9ee-fa12-4e0f-80b4-b1ca9e8034f5",
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "Béla",
@@ -219,10 +228,10 @@ namespace DAL.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJAnQNhQIVThz9V5B4X9CVrV/Px/Ea4xmezAg1K2McAvhN25lZEBZjGxxoSVWmuAUw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJoMj+tTqJ5E/UrkwKNWNpkit5Lc8sBEXK63wb0psp3iFxQOjMphofFWb/UnHrvPDw==",
                             PhoneNumber = "06302217831",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f3c9733c-70fe-411f-bbdf-ea8a686b62a1",
+                            SecurityStamp = "df4e605b-963a-4941-8520-4b3a77d6af26",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });
@@ -266,7 +275,7 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "colorseq");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -274,7 +283,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colors");
+                    b.ToTable("Colors", (string)null);
 
                     b.HasData(
                         new
@@ -295,7 +304,7 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "materialseq");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -303,7 +312,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Materials");
+                    b.ToTable("Materials", (string)null);
 
                     b.HasData(
                         new
@@ -380,7 +389,7 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "patternseq");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -388,7 +397,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Patterns");
+                    b.ToTable("Patterns", (string)null);
 
                     b.HasData(
                         new

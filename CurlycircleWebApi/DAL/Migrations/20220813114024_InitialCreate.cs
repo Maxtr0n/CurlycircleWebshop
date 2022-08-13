@@ -18,6 +18,14 @@ namespace DAL.Migrations
                 startValue: 1000L);
 
             migrationBuilder.CreateSequence<int>(
+                name: "colorseq",
+                startValue: 1000L);
+
+            migrationBuilder.CreateSequence<int>(
+                name: "materialseq",
+                startValue: 1000L);
+
+            migrationBuilder.CreateSequence<int>(
                 name: "orderitemseq",
                 startValue: 1000L);
 
@@ -27,6 +35,10 @@ namespace DAL.Migrations
 
             migrationBuilder.CreateSequence<int>(
                 name: "orderseq",
+                startValue: 1000L);
+
+            migrationBuilder.CreateSequence<int>(
+                name: "patternseq",
                 startValue: 1000L);
 
             migrationBuilder.CreateSequence<int>(
@@ -56,8 +68,7 @@ namespace DAL.Migrations
                 name: "Colors",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -69,8 +80,7 @@ namespace DAL.Migrations
                 name: "Materials",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -82,8 +92,7 @@ namespace DAL.Migrations
                 name: "Patterns",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -415,8 +424,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "899a4d87-f548-4807-b23b-d75c70918855", "Admin", "ADMIN" },
-                    { 2, "cbc9a404-d969-4bc9-8cee-921f80c47e97", "User", "USER" }
+                    { 1, "2e3c3bf3-d033-41ac-99ca-a94ea6af3682", "Admin", "ADMIN" },
+                    { 2, "62c8ab52-c8a7-4f5f-8067-7feb6772d7a6", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
@@ -461,8 +470,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SecurityStamp", "TwoFactorEnabled", "UserName", "City", "Line1", "Line2", "ZipCode" },
                 values: new object[,]
                 {
-                    { 1, 0, "f9a26eb2-6359-45e4-b4e2-ee9af48c99a2", "admin@admin.com", false, "Máté", "Schütz", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEKvEOg7lO2d1tPlS9n5Ul/iGMAz/wUt0PBjC2YRopLXkV6cZR00N+5QKyenyLkA3TA==", "06302217831", false, null, null, "076fba7b-93a0-478b-9779-293ef1963840", false, "admin", "Göd", "Sajó utca 19.", null, "2131" },
-                    { 2, 0, "b4af6f4c-3f04-4646-aa91-88811e1461d9", "user@user.com", false, "Béla", "Kovács", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEJAnQNhQIVThz9V5B4X9CVrV/Px/Ea4xmezAg1K2McAvhN25lZEBZjGxxoSVWmuAUw==", "06302217831", false, null, null, "f3c9733c-70fe-411f-bbdf-ea8a686b62a1", false, "user", "Göd", "Sajó utca 19.", "Fsz.", "2131" }
+                    { 1, 0, "5f717ed3-a3f7-43f8-ac12-a6a1285f511f", "admin@admin.com", false, "Máté", "Schütz", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEJ/oRxoeGpFzwN13oHR9tP9Y7pF2oahnEmx17mJN9JLU999i23cT7rQp9MtqsGcRig==", "06302217831", false, null, null, "1823f5ff-70c4-42b7-b160-38c8eb3a57ba", false, "admin", "Göd", "Sajó utca 19.", null, "2131" },
+                    { 2, 0, "7ec7d9ee-fa12-4e0f-80b4-b1ca9e8034f5", "user@user.com", false, "Béla", "Kovács", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEJoMj+tTqJ5E/UrkwKNWNpkit5Lc8sBEXK63wb0psp3iFxQOjMphofFWb/UnHrvPDw==", "06302217831", false, null, null, "df4e605b-963a-4941-8520-4b3a77d6af26", false, "user", "Göd", "Sajó utca 19.", "Fsz.", "2131" }
                 });
 
             migrationBuilder.InsertData(
@@ -652,6 +661,12 @@ namespace DAL.Migrations
                 name: "cartseq");
 
             migrationBuilder.DropSequence(
+                name: "colorseq");
+
+            migrationBuilder.DropSequence(
+                name: "materialseq");
+
+            migrationBuilder.DropSequence(
                 name: "orderitemseq");
 
             migrationBuilder.DropSequence(
@@ -659,6 +674,9 @@ namespace DAL.Migrations
 
             migrationBuilder.DropSequence(
                 name: "orderseq");
+
+            migrationBuilder.DropSequence(
+                name: "patternseq");
 
             migrationBuilder.DropSequence(
                 name: "productcategoryseq");

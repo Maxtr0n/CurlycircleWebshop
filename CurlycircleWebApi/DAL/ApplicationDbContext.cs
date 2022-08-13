@@ -63,11 +63,26 @@ namespace DAL
                .StartsAt(1000)
                .IncrementsBy(1);
 
+            modelBuilder.HasSequence<int>("colorseq")
+               .StartsAt(1000)
+               .IncrementsBy(1);
+
+            modelBuilder.HasSequence<int>("materialseq")
+               .StartsAt(1000)
+               .IncrementsBy(1);
+
+            modelBuilder.HasSequence<int>("patternseq")
+               .StartsAt(1000)
+               .IncrementsBy(1);
+
             modelBuilder.ApplyConfiguration(new ApplicationUserEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OrderEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ProductCategoryEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ProductEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CartEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ColorEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new PatternEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new MaterialEntityTypeConfiguration());
 
             modelBuilder.Seed();
         }
