@@ -7,6 +7,9 @@ import { PatternService } from 'src/app/services/pattern.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ColorsViewModel, ColorUpsertDto, ColorViewModel, MaterialsViewModel, MaterialViewModel, PatternsViewModel, PatternViewModel } from 'src/app/models/models';
+import { AddColorDialogComponent } from 'src/app/components/dialogs/add-color-dialog/add-color-dialog.component';
+import { tap } from 'rxjs';
+import { DeleteColorDialogComponent } from 'src/app/components/dialogs/delete-color-dialog/delete-color-dialog.component';
 
 @Component({
     selector: 'app-admin-colors-patterns-materials',
@@ -54,34 +57,46 @@ export class AdminColorsPatternsMaterialsComponent implements OnInit {
             });
     }
 
-    addColor(event: MatChipInputEvent): void {
-        const value = (event.value || '').trim();
-        const color: ColorUpsertDto = {
-            name: value,
-        };
-        console.log(color);
+    addColorClicked(): void {
+        let dialogRef = this.dialog.open(AddColorDialogComponent, {
+            width: '600px',
+        });
 
-        if (value) {
-            this.colorService.createColor(color)
-                .subscribe({
-                    next: (color: ColorViewModel) => {
-                        this.snackBar.open(`${color.name} sikeresen hozzáadva!`, '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'] });
-                        this.getData();
-                    }
-                });
-        }
-
-        event.chipInput!.clear();
+        dialogRef.afterClosed().subscribe({
+            next: (color: ColorUpsertDto) => {
+                if (color) {
+                    this.colorService.createColor(color).pipe(
+                        tap(() => {
+                            this.getData();
+                            this.snackBar.open(color.name + " hozzáadva", '', {
+                                duration: 3000,
+                                panelClass: ['mat-toolbar', 'mat-accent']
+                            });
+                        })
+                    ).subscribe();
+                }
+            }
+        });
     }
 
-    removeColor(color: ColorViewModel): void {
-        this.colorService.deleteColor(color.id)
-            .subscribe({
-                next: () => {
-                    this.snackBar.open(`${color.name} sikeresen törölve!`, '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'] });
-                    this.getData();
+    deleteColorClicked(id: number): void {
+        let dialogRef = this.dialog.open(DeleteColorDialogComponent, {
+            width: '600px',
+            data: { id: id }
+        });
+
+        dialogRef.afterClosed().subscribe({
+            next: (result) => {
+                if (result) {
+                    this.colorService.deleteColor(id).pipe(
+                        tap(() => {
+                            this.snackBar.open("A szín törölve!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-accent'] });
+                            this.getData();
+                        })
+                    ).subscribe();
                 }
-            });
+            }
+        });
     }
 
     addMaterial(event: MatChipInputEvent): void {

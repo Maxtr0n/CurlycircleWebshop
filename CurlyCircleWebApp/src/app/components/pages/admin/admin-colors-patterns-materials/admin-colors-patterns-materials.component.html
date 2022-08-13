@@ -4,17 +4,18 @@
         <mat-form-field class="colors-chip-list" appearance="fill">
             <mat-label>Színek</mat-label>
             <mat-chip-list #chipList aria-label="Színek">
-                <mat-chip *ngFor="let color of colors" (removed)="removeColor(color)">
+                <mat-chip *ngFor="let color of colors" (removed)="deleteColorClicked(color.id)" color="accent" selected>
                     {{color.name}}
                     <button matChipRemove>
                         <mat-icon>cancel</mat-icon>
                     </button>
                 </mat-chip>
-                <input placeholder="Új szín..." [matChipInputFor]="chipList"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                    (matChipInputTokenEnd)="addColor($event)">
             </mat-chip-list>
         </mat-form-field>
+        <button mat-raised-button color="accent" (click)="addColorClicked()">
+            <mat-icon>add</mat-icon>
+            <span>Szín hozzáadása</span>
+        </button>
     </div>
     <div class="materials">
         <h2>Anyagok</h2>
