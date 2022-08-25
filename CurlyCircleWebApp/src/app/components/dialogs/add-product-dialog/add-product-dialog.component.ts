@@ -2,6 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ColorViewModel, MaterialViewModel, PatternViewModel, ProductWithImages } from 'src/app/models/models';
+import { ColorService } from 'src/app/services/color.service';
+import { MaterialService } from 'src/app/services/material.service';
+import { PatternService } from 'src/app/services/pattern.service';
 
 @Component({
     selector: 'app-add-product-dialog',
@@ -24,7 +27,10 @@ export class AddProductDialogComponent implements OnInit {
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: { productCategoryId: number; },
-        public dialogRef: MatDialogRef<AddProductDialogComponent>
+        public dialogRef: MatDialogRef<AddProductDialogComponent>,
+        private readonly colorService: ColorService,
+        private readonly materialService: MaterialService,
+        private readonly patternService: PatternService
     ) { }
 
     ngOnInit(): void {

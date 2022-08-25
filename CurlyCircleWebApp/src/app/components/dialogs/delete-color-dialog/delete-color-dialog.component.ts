@@ -23,5 +23,4 @@ export class DeleteColorDialogComponent implements OnInit {
                 }
             });
     }
-
 }

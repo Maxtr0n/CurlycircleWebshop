@@ -55,6 +55,10 @@ import { ProductCategoryCardComponent } from './components/shared/product-catego
 import { AdminColorsPatternsMaterialsComponent } from './components/pages/admin/admin-colors-patterns-materials/admin-colors-patterns-materials.component';
 import { AddColorDialogComponent } from './components/dialogs/add-color-dialog/add-color-dialog.component';
 import { DeleteColorDialogComponent } from './components/dialogs/delete-color-dialog/delete-color-dialog.component';
+import { DeleteMaterialDialogComponent } from './components/dialogs/delete-material-dialog/delete-material-dialog.component';
+import { AddMaterialDialogComponent } from './components/dialogs/add-material-dialog/add-material-dialog.component';
+import { AddPatternDialogComponent } from './components/dialogs/add-pattern-dialog/add-pattern-dialog.component';
+import { DeletePatternDialogComponent } from './components/dialogs/delete-pattern-dialog/delete-pattern-dialog.component';
 
 @NgModule({
     declarations: [
@@ -95,6 +99,10 @@ import { DeleteColorDialogComponent } from './components/dialogs/delete-color-di
         AdminColorsPatternsMaterialsComponent,
         AddColorDialogComponent,
         DeleteColorDialogComponent,
+        DeleteMaterialDialogComponent,
+        AddMaterialDialogComponent,
+        AddPatternDialogComponent,
+        DeletePatternDialogComponent,
     ],
     imports: [
         BrowserModule,

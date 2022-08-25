@@ -1,9 +1,10 @@
-<div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="1em" class="container mat-elevation-z8">
+<div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="1em"
+    class="colors-patterns-materials-container mat-elevation-z8">
     <div class="colors">
         <h2>Színek</h2>
         <mat-form-field class="colors-chip-list" appearance="fill">
             <mat-label>Színek</mat-label>
-            <mat-chip-list #chipList aria-label="Színek">
+            <mat-chip-list #chipList aria-label="Színek" selectable="false">
                 <mat-chip *ngFor="let color of colors" (removed)="deleteColorClicked(color.id)" color="accent" selected>
                     {{color.name}}
                     <button matChipRemove>
@@ -21,35 +22,38 @@
         <h2>Anyagok</h2>
         <mat-form-field class="materials-chip-list" appearance="fill">
             <mat-label>Anyagok</mat-label>
-            <mat-chip-list #chipList aria-label="Anyagok">
-                <mat-chip *ngFor="let material of materials" (removed)="removeMaterial(material)" color="accent"
-                    selected>
+            <mat-chip-list #chipList aria-label="Anyagok" selectable="false">
+                <mat-chip *ngFor="let material of materials" (removed)="deleteMaterialClicked(material.id)"
+                    color="accent" selected>
                     {{material.name}}
                     <button matChipRemove>
                         <mat-icon>cancel</mat-icon>
                     </button>
                 </mat-chip>
-                <input placeholder="Új anyag..." [matChipInputFor]="chipList"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                    (matChipInputTokenEnd)="addMaterial($event)">
             </mat-chip-list>
         </mat-form-field>
+        <button mat-raised-button color="accent" (click)="addMaterialClicked()">
+            <mat-icon>add</mat-icon>
+            <span>Anyag hozzáadása</span>
+        </button>
     </div>
     <div class="patterns">
         <h2>Minták</h2>
         <mat-form-field class="patterns-chip-list" appearance="fill">
             <mat-label>Minták</mat-label>
-            <mat-chip-list #chipList aria-label="Minták">
-                <mat-chip *ngFor="let pattern of patterns" (removed)="removePattern(pattern)" color="accent" selected>
+            <mat-chip-list #chipList aria-label="Minták" selectable="false">
+                <mat-chip *ngFor="let pattern of patterns" (removed)="deletePatternClicked(pattern.id)" color="accent"
+                    selected>
                     {{pattern.name}}
                     <button matChipRemove>
                         <mat-icon>cancel</mat-icon>
                     </button>
                 </mat-chip>
-                <input placeholder="Új minta..." [matChipInputFor]="chipList"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                    (matChipInputTokenEnd)="addPattern($event)">
             </mat-chip-list>
         </mat-form-field>
+        <button mat-raised-button color="accent" (click)="addPatternClicked()">
+            <mat-icon>add</mat-icon>
+            <span>Minta hozzáadása</span>
+        </button>
     </div>
 </div>

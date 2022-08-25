@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Minta hozzáadása</h2>
+<mat-dialog-content>
+    <form [formGroup]="patternForm" fxLayout="column" fxLayoutAlign="center center">
+        <mat-form-field appearance="outline">
+            <mat-label>Név</mat-label>
+            <input matInput formControlName="name" />
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="false">Mégse</button>
+    <button mat-button (click)="clickAdd()" [disabled]="!patternForm.valid">Hozzáad</button>
+</mat-dialog-actions>

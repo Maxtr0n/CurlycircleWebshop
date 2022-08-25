@@ -6,10 +6,14 @@ import { MaterialService } from 'src/app/services/material.service';
 import { PatternService } from 'src/app/services/pattern.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { ColorsViewModel, ColorUpsertDto, ColorViewModel, MaterialsViewModel, MaterialViewModel, PatternsViewModel, PatternViewModel } from 'src/app/models/models';
+import { ColorsViewModel, ColorUpsertDto, ColorViewModel, MaterialsViewModel, MaterialUpsertDto, MaterialViewModel, PatternsViewModel, PatternUpsertDto, PatternViewModel } from 'src/app/models/models';
 import { AddColorDialogComponent } from 'src/app/components/dialogs/add-color-dialog/add-color-dialog.component';
 import { tap } from 'rxjs';
 import { DeleteColorDialogComponent } from 'src/app/components/dialogs/delete-color-dialog/delete-color-dialog.component';
+import { AddMaterialDialogComponent } from 'src/app/components/dialogs/add-material-dialog/add-material-dialog.component';
+import { AddPatternDialogComponent } from 'src/app/components/dialogs/add-pattern-dialog/add-pattern-dialog.component';
+import { DeleteMaterialDialogComponent } from 'src/app/components/dialogs/delete-material-dialog/delete-material-dialog.component';
+import { DeletePatternDialogComponent } from 'src/app/components/dialogs/delete-pattern-dialog/delete-pattern-dialog.component';
 
 @Component({
     selector: 'app-admin-colors-patterns-materials',
@@ -99,15 +103,87 @@ export class AdminColorsPatternsMaterialsComponent implements OnInit {
         });
     }
 
-    addMaterial(event: MatChipInputEvent): void {
+    addMaterialClicked(): void {
+        let dialogRef = this.dialog.open(AddMaterialDialogComponent, {
+            width: '600px',
+        });
+
+        dialogRef.afterClosed().subscribe({
+            next: (material: MaterialUpsertDto) => {
+                if (material) {
+                    this.materialService.createMaterial(material).pipe(
+                        tap(() => {
+                            this.getData();
+                            this.snackBar.open(material.name + " hozzáadva", '', {
+                                duration: 3000,
+                                panelClass: ['mat-toolbar', 'mat-accent']
+                            });
+                        })
+                    ).subscribe();
+                }
+            }
+        });
     }
 
-    removeMaterial(material: MaterialViewModel): void {
+    deleteMaterialClicked(id: number): void {
+        let dialogRef = this.dialog.open(DeleteMaterialDialogComponent, {
+            width: '600px',
+            data: { id: id }
+        });
+
+        dialogRef.afterClosed().subscribe({
+            next: (result) => {
+                if (result) {
+                    this.materialService.deleteMaterial(id).pipe(
+                        tap(() => {
+                            this.snackBar.open("Az anyag törölve!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-accent'] });
+                            this.getData();
+                        })
+                    ).subscribe();
+                }
+            }
+        });
     }
 
-    addPattern(event: MatChipInputEvent): void {
+    addPatternClicked(): void {
+        let dialogRef = this.dialog.open(AddPatternDialogComponent, {
+            width: '600px',
+        });
+
+        dialogRef.afterClosed().subscribe({
+            next: (pattern: PatternUpsertDto) => {
+                if (pattern) {
+                    this.patternService.createPattern(pattern).pipe(
+                        tap(() => {
+                            this.getData();
+                            this.snackBar.open(pattern.name + " hozzáadva", '', {
+                                duration: 3000,
+                                panelClass: ['mat-toolbar', 'mat-accent']
+                            });
+                        })
+                    ).subscribe();
+                }
+            }
+        });
     }
 
-    removePattern(pattern: PatternViewModel): void {
+    deletePatternClicked(id: number): void {
+        let dialogRef = this.dialog.open(DeletePatternDialogComponent, {
+            width: '600px',
+            data: { id: id }
+        });
+
+        dialogRef.afterClosed().subscribe({
+            next: (result) => {
+                if (result) {
+                    this.patternService.deletePattern(id).pipe(
+                        tap(() => {
+                            this.snackBar.open("A minta törölve!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-accent'] });
+                            this.getData();
+                        })
+                    ).subscribe();
+                }
+            }
+        });
     }
 }
