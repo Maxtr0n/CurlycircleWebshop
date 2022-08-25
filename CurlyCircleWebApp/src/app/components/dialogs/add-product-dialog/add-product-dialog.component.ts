@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ColorViewModel, MaterialViewModel, PatternViewModel, ProductWithImages } from 'src/app/models/models';
+import { ColorsViewModel, ColorViewModel, MaterialsViewModel, MaterialViewModel, PatternsViewModel, PatternViewModel, ProductWithImages } from 'src/app/models/models';
 import { ColorService } from 'src/app/services/color.service';
 import { MaterialService } from 'src/app/services/material.service';
 import { PatternService } from 'src/app/services/pattern.service';
@@ -12,6 +12,9 @@ import { PatternService } from 'src/app/services/pattern.service';
     styleUrls: ['./add-product-dialog.component.scss']
 })
 export class AddProductDialogComponent implements OnInit {
+    materials: MaterialViewModel[] = [];
+    colors: ColorViewModel[] = [];
+    patterns: PatternViewModel[] = [];
 
     productForm = new FormGroup({
         price: new FormControl<number | null>(0, [Validators.required]),
@@ -19,9 +22,9 @@ export class AddProductDialogComponent implements OnInit {
         description: new FormControl<string | null>(''),
         thumbnail: new FormControl<File | null>(null),
         productImages: new FormControl<File[]>([]),
-        colors: new FormControl<ColorViewModel[]>([]),
-        pattern: new FormControl<PatternViewModel | null>(null),
-        material: new FormControl<MaterialViewModel | null>(null),
+        colors: new FormControl<number[]>([]),
+        pattern: new FormControl<number | null>(null),
+        material: new FormControl<number | null>(null),
         isAvailable: new FormControl<boolean | null>(null),
     });
 
@@ -34,6 +37,24 @@ export class AddProductDialogComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.materialService.getMaterials()
+            .subscribe({
+                next: (materialsViewModel: MaterialsViewModel) => {
+                    this.materials = materialsViewModel.materials;
+                }
+            });
+        this.colorService.getColors()
+            .subscribe({
+                next: (colorsViewModel: ColorsViewModel) => {
+                    this.colors = colorsViewModel.colors;
+                }
+            });
+        this.patternService.getPatterns()
+            .subscribe({
+                next: (patternsViewModel: PatternsViewModel) => {
+                    this.patterns = patternsViewModel.patterns;
+                }
+            });
     }
 
     clickAdd(): void {
@@ -44,10 +65,10 @@ export class AddProductDialogComponent implements OnInit {
             description: this.productForm.value.description ?? null,
             thumbnailImage: this.productForm.value.thumbnail ?? null,
             productImages: this.productForm.value.productImages ?? [],
-            colors: this.productForm.value.colors ?? [],
-            pattern: this.productForm.value.pattern ?? null,
-            material: this.productForm.value.material ?? null,
-            isAvailable: this.productForm.value.isAvailable ?? null,
+            colorIds: this.productForm.value.colors ?? [],
+            patternId: this.productForm.value.pattern ?? null,
+            materialId: this.productForm.value.material ?? null,
+            isAvailable: this.productForm.value.isAvailable ?? true,
         };
         this.dialogRef.close(product);
     }

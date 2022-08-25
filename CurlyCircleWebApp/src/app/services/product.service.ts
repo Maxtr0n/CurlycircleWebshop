@@ -39,18 +39,18 @@ export class ProductService {
         }
 
         let colors = '';
-        for (let i = 0; i < product.colors.length; i++) {
-            colors.concat(product.colors[i].id.toString());
+        for (let i = 0; i < product.colorIds.length; i++) {
+            colors.concat(product.colorIds[i].toString());
         }
 
         formData.append('colorIds', colors);
 
-        if (product.pattern) {
-            formData.append('patternId', product.pattern.id.toString());
+        if (product.patternId) {
+            formData.append('patternId', product.patternId.toString());
         }
 
-        if (product.material) {
-            formData.append('materialId', product.material.id.toString());
+        if (product.materialId) {
+            formData.append('materialId', product.materialId.toString());
         }
 
         return this.httpClient.postWithFile<EntityCreatedViewModel>(`${this.productsUrl}`, formData);
@@ -79,18 +79,18 @@ export class ProductService {
         }
 
         let colors = '';
-        for (let i = 0; i < product.colors.length; i++) {
-            colors.concat(product.colors[i].id.toString());
+        for (let i = 0; i < product.colorIds.length; i++) {
+            colors.concat(product.colorIds[i].toString());
         }
 
         formData.append('colorIds', colors);
 
-        if (product.pattern) {
-            formData.append('patternId', product.pattern.id.toString());
+        if (product.patternId) {
+            formData.append('patternId', product.patternId.toString());
         }
 
-        if (product.material) {
-            formData.append('materialId', product.material.id.toString());
+        if (product.materialId) {
+            formData.append('materialId', product.materialId.toString());
         }
 
         return this.httpClient.putWithFile<void>(`${this.productsUrl}/${productId}`, formData);

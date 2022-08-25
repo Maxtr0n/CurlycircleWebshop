@@ -183,10 +183,10 @@ export interface ProductWithImages {
     description: string | null;
     productImages: File[];
     thumbnailImage: File | null;
-    colors: ColorViewModel[];
-    pattern: PatternViewModel | null;
-    material: MaterialViewModel | null;
-    isAvailable: boolean | null;
+    colorIds: number[];
+    patternId: number | null;
+    materialId: number | null;
+    isAvailable: boolean;
 }
 
 export interface ProductViewModel {

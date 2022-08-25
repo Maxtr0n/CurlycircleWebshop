@@ -11,18 +11,21 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Szín</mat-label>
-            <mat-select>
-                <!-- <mat-option *ngFor="let color of colors" [value]="color.id">{{color.name}}</mat-option> -->
+            <mat-select [multiple]="true">
+                <mat-option *ngFor="let color of colors" [value]="color.id">{{color.name}}</mat-option>
             </mat-select>
-            <input matInput formControlName="color" />
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Minta</mat-label>
-            <input matInput formControlName="pattern" />
+            <mat-select>
+                <mat-option *ngFor="let pattern of patterns" [value]="pattern.id">{{pattern.name}}</mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Anyag</mat-label>
-            <input matInput formControlName="material" />
+            <mat-select>
+                <mat-option *ngFor="let material of materials" [value]="material.id">{{material.name}}</mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Elérhető</mat-label>
