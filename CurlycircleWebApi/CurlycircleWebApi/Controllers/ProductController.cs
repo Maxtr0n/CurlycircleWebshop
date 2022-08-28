@@ -39,11 +39,13 @@ namespace CurlycircleWebApi.Controllers
             HttpContext.Response.StatusCode = StatusCodes.Status201Created;
             double price = double.Parse(Request.Form["price"].First());
             string name = Request.Form["name"].First();
-            string description = Request.Form["description"].First();
+            string? description = Request.Form["description"].FirstOrDefault();
             int productCategoryId = int.Parse(Request.Form["productCategoryId"].First());
-            IEnumerable<int> colorIds = ConvertToColorIds(Request.Form["colorIds"].First());
-            int patternId = int.Parse(Request.Form["patternId"].First());
-            int materialId = int.Parse(Request.Form["materialId"].First());
+            IEnumerable<int> colorIds = ConvertToColorIds(Request.Form["colorIds"].FirstOrDefault());
+            int patternId = 0;
+            int.TryParse(Request.Form["patternId"].FirstOrDefault(), out patternId);
+            int materialId = 0;
+            int.TryParse(Request.Form["materialId"].FirstOrDefault(), out materialId);
             bool isAvailable = bool.Parse(Request.Form["isAvailable"].First());
             IFormFile? thumbnailImage = Request.Form.Files.Where(i => i.Name == "thumbnailImage").FirstOrDefault();
             IEnumerable<IFormFile> productImages = Request.Form.Files.Where(i => i.Name.Contains("productImage")).ToList();
@@ -54,9 +56,9 @@ namespace CurlycircleWebApi.Controllers
                 Price = price,
                 ProductCategoryId = productCategoryId,
                 Description = description,
-                MaterialId = materialId,
+                MaterialId = materialId != 0 ? materialId : null,
                 ColorIds = colorIds,
-                PatternId = patternId,
+                PatternId = patternId != 0 ? patternId : null,
                 IsAvailable = isAvailable,
                 ThumbnailImage = thumbnailImage,
                 ProductImages = productImages
@@ -119,8 +121,13 @@ namespace CurlycircleWebApi.Controllers
             return _productService.DeleteProductAsync(productId);
         }
 
-        private static IEnumerable<int> ConvertToColorIds(string formString)
+        private static IEnumerable<int> ConvertToColorIds(string? formString)
         {
+            if (formString == null)
+            {
+                return Enumerable.Empty<int>();
+            }
+
             string[] colorStrings = formString.Split(';');
             List<int> colorIds = new List<int>();
             foreach (string colorString in colorStrings)

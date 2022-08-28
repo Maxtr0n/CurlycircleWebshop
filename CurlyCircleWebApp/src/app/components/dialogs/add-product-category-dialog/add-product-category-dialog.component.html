@@ -10,8 +10,9 @@
             <textarea matInput formControlName="description"></textarea>
         </mat-form-field>
         <mat-form-field appearance="outline">
-            <ngx-mat-file-input formControlName="imageFile" [multiple]="false" accept=".png, .jpg, .jpeg">
-                <mat-hint>Válassz ki egy képet</mat-hint>
+            <mat-label>Add meg a kategória thumbnail-jét</mat-label>
+            <ngx-mat-file-input placeholder="Add meg a kategória thumbnail-jét" formControlName="imageFile"
+                [multiple]="false" accept=".png, .jpg, .jpeg">
             </ngx-mat-file-input>
         </mat-form-field>
     </form>

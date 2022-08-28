@@ -17,15 +17,15 @@ export class AddProductDialogComponent implements OnInit {
     patterns: PatternViewModel[] = [];
 
     productForm = new FormGroup({
-        price: new FormControl<number | null>(0, [Validators.required]),
+        price: new FormControl<number | null>(null, [Validators.required]),
         name: new FormControl<string | null>('', [Validators.required]),
         description: new FormControl<string | null>(''),
         thumbnail: new FormControl<File | null>(null),
         productImages: new FormControl<File[]>([]),
-        colors: new FormControl<number[]>([]),
-        pattern: new FormControl<number | null>(null),
-        material: new FormControl<number | null>(null),
-        isAvailable: new FormControl<boolean | null>(null),
+        colorIds: new FormControl<number[]>([]),
+        patternId: new FormControl<number | null>(null),
+        materialId: new FormControl<number | null>(null),
+        isAvailable: new FormControl<boolean>(true),
     });
 
     constructor(
@@ -65,9 +65,9 @@ export class AddProductDialogComponent implements OnInit {
             description: this.productForm.value.description ?? null,
             thumbnailImage: this.productForm.value.thumbnail ?? null,
             productImages: this.productForm.value.productImages ?? [],
-            colorIds: this.productForm.value.colors ?? [],
-            patternId: this.productForm.value.pattern ?? null,
-            materialId: this.productForm.value.material ?? null,
+            colorIds: this.productForm.value.colorIds ?? [],
+            patternId: this.productForm.value.patternId ?? null,
+            materialId: this.productForm.value.materialId ?? null,
             isAvailable: this.productForm.value.isAvailable ?? true,
         };
         this.dialogRef.close(product);

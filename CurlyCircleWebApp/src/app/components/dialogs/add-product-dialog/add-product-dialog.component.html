@@ -11,33 +11,44 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Szín</mat-label>
-            <mat-select [multiple]="true">
+            <mat-select [multiple]="true" formControlName="colorIds">
                 <mat-option *ngFor="let color of colors" [value]="color.id">{{color.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Minta</mat-label>
-            <mat-select>
+            <mat-select formControlName="patternId">
+                <mat-option [value]="">-</mat-option>
                 <mat-option *ngFor="let pattern of patterns" [value]="pattern.id">{{pattern.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Anyag</mat-label>
-            <mat-select>
+            <mat-select formControlName="materialId">
+                <mat-option [value]="">-</mat-option>
                 <mat-option *ngFor="let material of materials" [value]="material.id">{{material.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Elérhető</mat-label>
-            <input matInput formControlName="isAvailable" />
+            <mat-select formControlName="isAvailable">
+                <mat-option [value]="true">Igen</mat-option>
+                <mat-option [value]="false">Nem</mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Leírás</mat-label>
             <textarea matInput formControlName="description"></textarea>
         </mat-form-field>
         <mat-form-field appearance="outline">
-            <ngx-mat-file-input formControlName="imageFile" [multiple]="false" accept=".png, .jpg, .jpeg">
-                <mat-hint>Válassz ki egy képet</mat-hint>
+            <mat-label>Add meg a termék thumbnail-jét</mat-label>
+            <ngx-mat-file-input placeholder="Add meg a termék thumbnail-jét" formControlName="thumbnail"
+                [multiple]="false" accept=".png, .jpg, .jpeg">
+            </ngx-mat-file-input>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Add meg a termék képeket</mat-label>
+            <ngx-mat-file-input formControlName="productImages" [multiple]="true" accept=".png, .jpg, .jpeg">
             </ngx-mat-file-input>
         </mat-form-field>
     </form>

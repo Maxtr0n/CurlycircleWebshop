@@ -40,9 +40,10 @@ export class ProductService {
 
         let colors = '';
         for (let i = 0; i < product.colorIds.length; i++) {
-            colors.concat(product.colorIds[i].toString());
+            colors = colors.concat(product.colorIds[i].toString() + ';');
         }
 
+        console.log(colors);
         formData.append('colorIds', colors);
 
         if (product.patternId) {

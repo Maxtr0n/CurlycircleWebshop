@@ -54,12 +54,20 @@ namespace BLL.Services
 
         public async Task<EntityCreatedViewModel> CreateProductAsync(ProductUpsertDto productUpsertDto)
         {
-            Material material;
-            Pattern pattern;
+            Material? material = null;
+            Pattern? pattern = null;
             IEnumerable<Domain.Entities.Color> colors;
 
-            material = await _materialRepository.GetMaterialByIdAsync(productUpsertDto.MaterialId ?? default(int));
-            pattern = await _patternRepository.GetPatternByIdAsync(productUpsertDto.PatternId ?? default(int));
+            if (productUpsertDto.MaterialId != null)
+            {
+                material = await _materialRepository.GetMaterialByIdAsync(productUpsertDto.MaterialId ?? default);
+            }
+
+            if (productUpsertDto.PatternId != null)
+            {
+                pattern = await _patternRepository.GetPatternByIdAsync(productUpsertDto.PatternId ?? default);
+            }
+
             colors = await _colorRepository.GetColorsByIdsAsync(productUpsertDto.ColorIds);
 
             var thumbnailImage = productUpsertDto.ThumbnailImage;

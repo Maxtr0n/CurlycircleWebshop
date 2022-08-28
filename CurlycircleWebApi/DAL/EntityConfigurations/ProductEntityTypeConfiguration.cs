@@ -32,9 +32,9 @@ namespace DAL.EntityConfigurations
             builder.HasMany(p => p.Colors)
                 .WithMany(c => c.Products);
             builder.HasOne(p => p.Material)
-                .WithMany(m => m.Products);
+                .WithMany();
             builder.HasOne(p => p.Pattern)
-                .WithMany(p => p.Products);
+                .WithMany();
         }
     }
 }
