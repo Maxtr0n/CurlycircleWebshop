@@ -43,7 +43,6 @@ export class ProductService {
             colors = colors.concat(product.colorIds[i].toString() + ';');
         }
 
-        console.log(colors);
         formData.append('colorIds', colors);
 
         if (product.patternId) {

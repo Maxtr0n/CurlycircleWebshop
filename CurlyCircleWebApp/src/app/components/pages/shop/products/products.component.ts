@@ -64,6 +64,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
             switchMap(params => this.productCategoryService.getProductCategoryProducts(params['productCategoryId']))
         ).subscribe({
             next: (productsViewModel) => {
+                console.log(productsViewModel.products);
                 this.products = productsViewModel.products;
             },
             error: (error) => {
