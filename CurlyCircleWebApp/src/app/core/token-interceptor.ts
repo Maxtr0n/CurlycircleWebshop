@@ -17,16 +17,19 @@ import {
 } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { RefreshDto, TokenViewModel } from '../models/models';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
 })
 export class TokenInterceptor implements HttpInterceptor {
     private isRefreshing = false;
-    private refreshTokenSubject: BehaviorSubject<any> =
+    private accessTokenSubject: BehaviorSubject<any> =
         new BehaviorSubject<any>(null);
 
-    constructor(private readonly authService: AuthService) { }
+    constructor(
+        private readonly authService: AuthService,
+        private readonly router: Router) { }
 
     intercept(
         req: HttpRequest<any>,
@@ -46,28 +49,31 @@ export class TokenInterceptor implements HttpInterceptor {
         }));
     }
 
-    private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+    private handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (!this.isRefreshing) {
             this.isRefreshing = true;
-            this.refreshTokenSubject.next(null);
+            this.accessTokenSubject.next(null);
             const token = this.authService.getRefreshToken();
             if (token)
                 return this.authService.refreshToken().pipe(
                     switchMap((token: TokenViewModel) => {
                         this.isRefreshing = false;
-                        this.refreshTokenSubject.next(token.refreshToken);
+                        this.accessTokenSubject.next(token.accessToken);
+                        console.log("Token interceptor: Refresh - Új access token megszerezve");
 
                         return next.handle(this.addTokenHeader(request, token.accessToken));
                     }),
                     catchError((err) => {
-                        this.isRefreshing = false;
+                        console.log("Token interceptor: catchError " + err);
 
+                        this.isRefreshing = false;
                         this.authService.logout();
+                        this.router.navigate(['login']);
                         return throwError(() => new Error(err));
                     })
                 );
         }
-        return this.refreshTokenSubject.pipe(
+        return this.accessTokenSubject.pipe(
             filter(token => token !== null),
             take(1),
             switchMap((token) => next.handle(this.addTokenHeader(request, token)))

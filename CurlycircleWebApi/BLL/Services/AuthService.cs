@@ -135,14 +135,14 @@ namespace BLL.Services
 
             if (user.RefreshToken != refreshToken)
             {
-                throw new ValidationAppException("Refresh attempt failed.", new[]
+                throw new NoAccessException("Refresh attempt failed.", new[]
                 {
                     "Refresh tokens do not match."
                 });
             }
             else if (user.RefreshTokenExpiryTime <= DateTime.Now)
             {
-                throw new ValidationAppException("Refresh attempt failed.", new[]
+                throw new NoAccessException("Refresh attempt failed.", new[]
                 {
                     "Refresh token is expired."
                 });

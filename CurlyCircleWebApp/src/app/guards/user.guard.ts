@@ -27,31 +27,12 @@ export class UserGuard implements CanActivate {
         | Promise<boolean | UrlTree>
         | boolean
         | UrlTree {
-        const jwtHelper = new JwtHelperService();
         const currentUser = this.authService.currentUserValue;
 
-        if (currentUser !== null && !jwtHelper.isTokenExpired(currentUser.accessToken)) {
-            console.log('nincs lejárva az access token');
+        if (currentUser !== null) {
             return true;
         }
-
-        return this.authService.refreshToken().pipe(
-            map((token) => {
-                if (token) {
-                    return true;
-                }
-                console.log('nem sikeres a frissítés -> logout');
-                this.authService.logout();
-                this.router.navigate(['login']);
-                return false;
-            }),
-            catchError(() => {
-                console.log('nem sikeres a frissítés -> logout');
-                this.authService.logout();
-                this.router.navigate(['login']);
-                return of(false);
-            })
-        );
-
+        this.router.navigate(['login']);
+        return false;
     }
 }

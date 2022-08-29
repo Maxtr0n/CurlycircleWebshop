@@ -50,6 +50,10 @@ export class AuthService {
         return this.currentUserSubject.value;
     }
 
+    public get isAdminValue(): boolean {
+        return this.isAdminSubject.value;
+    }
+
     public login(loginDto: LoginDto): Observable<UserViewModel> {
         return this.httpClient
             .post<UserViewModel>(`${this.authUrl}/login`, loginDto)

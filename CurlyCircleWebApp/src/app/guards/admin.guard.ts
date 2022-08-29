@@ -28,28 +28,13 @@ export class AdminGuard implements CanActivate {
         | Promise<boolean | UrlTree>
         | boolean
         | UrlTree {
-        const jwtHelper = new JwtHelperService();
-        const currentUser = this.authService.currentUserValue;
+        const isAdmin = this.authService.isAdminValue;
 
-        if (currentUser !== null && currentUser.role === Role.Admin && !jwtHelper.isTokenExpired(currentUser.accessToken)) {
-            console.log('nincs lejárva az access token');
+        if (isAdmin) {
             return true;
         }
 
-        return this.authService.refreshToken().pipe(
-            map((token) => {
-                if (token) {
-                    return true;
-                }
-                this.authService.logout();
-                this.router.navigate(['login']);
-                return false;
-            }),
-            catchError(() => {
-                this.authService.logout();
-                this.router.navigate(['login']);
-                return of(false);
-            })
-        );
+        this.router.navigate(['login']);
+        return false;
     }
 }
