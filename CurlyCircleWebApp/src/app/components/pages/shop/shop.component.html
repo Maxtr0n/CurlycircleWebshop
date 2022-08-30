@@ -1,7 +1,13 @@
-<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em" class="shop-container">
-    <xng-breadcrumb [separator]="iconTemplate"></xng-breadcrumb>
-    <ng-template #iconTemplate>
-        <mat-icon>chevron_right</mat-icon>
-    </ng-template>
-    <router-outlet></router-outlet>
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center" fxLayoutGap="2em" class="shop-container">
+    <div class="filters-container mat-elevation-z8" fxFlex="0 0 300px" fxFlex.lt-md="1 1 auto">
+        <app-product-filters></app-product-filters>
+    </div>
+    <div class="products-container" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="1em" fxFlex="1 1 0"
+        fxFlexAlign="center">
+        <xng-breadcrumb [separator]="iconTemplate"></xng-breadcrumb>
+        <ng-template #iconTemplate>
+            <mat-icon>chevron_right</mat-icon>
+        </ng-template>
+        <router-outlet></router-outlet>
+    </div>
 </div>

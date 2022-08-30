@@ -59,6 +59,7 @@ import { DeleteMaterialDialogComponent } from './components/dialogs/delete-mater
 import { AddMaterialDialogComponent } from './components/dialogs/add-material-dialog/add-material-dialog.component';
 import { AddPatternDialogComponent } from './components/dialogs/add-pattern-dialog/add-pattern-dialog.component';
 import { DeletePatternDialogComponent } from './components/dialogs/delete-pattern-dialog/delete-pattern-dialog.component';
+import { ProductFiltersComponent } from './components/pages/shop/product-filters/product-filters.component';
 
 @NgModule({
     declarations: [
@@ -103,6 +104,7 @@ import { DeletePatternDialogComponent } from './components/dialogs/delete-patter
         AddMaterialDialogComponent,
         AddPatternDialogComponent,
         DeletePatternDialogComponent,
+        ProductFiltersComponent,
     ],
     imports: [
         BrowserModule,
