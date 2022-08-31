@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, switchMap, tap } from 'rxjs';
@@ -8,6 +9,7 @@ import { DeleteProductDialogComponent } from 'src/app/components/dialogs/delete-
 import { ModifyProductDialogComponent } from 'src/app/components/dialogs/modify-product-dialog/modify-product-dialog.component';
 import { AppConstants } from 'src/app/core/app-constants';
 import { ProductCategoryViewModel, ProductViewModel, ProductWithImages } from 'src/app/models/models';
+import { ProductsDataSource } from 'src/app/models/ProductsDataSource';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -24,6 +26,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
     products: ProductViewModel[] | null = [];
     productCategory$: Subscription = new Subscription;
     products$: Subscription = new Subscription;
+    dataSource: ProductsDataSource;
+    resultsLength: number = 0;
+
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     constructor(
         private readonly productCategoryService: ProductCategoryService,
@@ -34,7 +40,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
         private readonly breadcrumbService: BreadcrumbService,
         private readonly authService: AuthService,
         private readonly dialog: MatDialog
-    ) { }
+    ) {
+        this.dataSource = new ProductsDataSource(this.productService);
+        this.dataSource.resultsLength$.subscribe(resultsLength => this.resultsLength = resultsLength);
+    }
 
 
     ngOnInit(): void {
@@ -52,6 +61,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }
 
     getData(): void {
+        this.dataSource.loadProducts();
         this.productCategory$ = this.route.params.pipe(
             switchMap(params => this.productCategoryService.getProductCategory(params['productCategoryId']))
         ).subscribe({
