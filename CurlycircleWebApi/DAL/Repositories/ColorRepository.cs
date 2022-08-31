@@ -56,7 +56,7 @@ namespace DAL.Repositories
 
         public async Task<IEnumerable<Color>> GetColorsByIdsAsync(IEnumerable<int> colorIds)
         {
-            List<Color> colors = new List<Color>();
+            List<Color> colors = new();
             foreach (var colorId in colorIds)
             {
                 var color = await _dbContext.Colors.FindAsync(colorId);

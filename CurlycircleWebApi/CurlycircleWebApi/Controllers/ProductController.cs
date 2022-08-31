@@ -5,6 +5,7 @@ using BLL.ViewModels;
 using CurlycircleWebApi.Common;
 using DAL;
 using Domain.Entities;
+using Domain.Entities.QueryParameters;
 using Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -68,9 +69,9 @@ namespace CurlycircleWebApi.Controllers
         }
 
         [HttpGet]
-        public Task<ProductsViewModel> GetProducts()
+        public Task<PagedProductsViewModel> GetProducts([FromQuery] ProductQueryParameters productQueryParameters)
         {
-            return _productService.GetAllProductsAsync();
+            return _productService.GetAllProductsAsync(productQueryParameters);
         }
 
         [HttpGet("{productId}")]

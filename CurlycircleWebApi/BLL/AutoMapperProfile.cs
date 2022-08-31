@@ -63,6 +63,15 @@ namespace BLL
                .ForMember(ovm => ovm.HasNextPage, options => options.MapFrom(x => x.HasNextPage))
                .ForMember(ovm => ovm.HasPreviousPage, options => options.MapFrom(x => x.HasPreviousPage));
 
+            CreateMap<PagedList<Product>, PagedProductsViewModel>()
+               .ForMember(pvm => pvm.Products, options => options.MapFrom(x => x))
+               .ForMember(pvm => pvm.PageSize, options => options.MapFrom(x => x.PageSize))
+               .ForMember(pvm => pvm.PageIndex, options => options.MapFrom(x => x.PageIndex))
+               .ForMember(pvm => pvm.TotalCount, options => options.MapFrom(x => x.TotalCount))
+               .ForMember(pvm => pvm.TotalPages, options => options.MapFrom(x => x.TotalPages))
+               .ForMember(pvm => pvm.HasNextPage, options => options.MapFrom(x => x.HasNextPage))
+               .ForMember(pvm => pvm.HasPreviousPage, options => options.MapFrom(x => x.HasPreviousPage));
+
             CreateMap<IEnumerable<Order>, OrdersViewModel>()
                 .ForMember(ovm => ovm.Orders, options => options.MapFrom(x => x));
 

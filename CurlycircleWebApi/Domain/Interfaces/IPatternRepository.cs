@@ -15,6 +15,8 @@ namespace Domain.Interfaces
 
         Task<Pattern> GetPatternByIdAsync(int patternId);
 
+        Task<IEnumerable<Pattern>> GetPatternsByIdAsync(IEnumerable<int> patternIds);
+
         void UpdatePattern(Pattern pattern);
 
         Task DeletePatternAsync(int patternId);

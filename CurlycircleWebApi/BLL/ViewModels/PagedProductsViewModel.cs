@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BLL.ViewModels
 {
-    public class PagedOrdersViewModel : PagedEntityViewModel
+    public class PagedProductsViewModel : PagedEntityViewModel
     {
-        public IEnumerable<OrderViewModel> Orders { get; set; } = default!;
+        public IEnumerable<ProductViewModel> Products { get; set; } = default!;
     }
 }

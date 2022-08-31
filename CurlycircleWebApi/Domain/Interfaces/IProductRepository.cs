@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.QueryParameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Domain.Interfaces
     {
         int AddProduct(Product product);
 
-        Task<IEnumerable<Product>> GetAllAsync();
+        Task<PagedList<Product>> GetAllAsync(ProductQueryParameters productQueryParameters);
 
         Task<Product> GetProductByIdAsync(int productId);
 

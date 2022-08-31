@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.QueryParameters;
 using Domain.Exceptions;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,21 @@ namespace DAL.Repositories
     public class ProductRepository : IProductRepository
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly IColorRepository _colorRepository;
+        private readonly IMaterialRepository _materialRepository;
+        private readonly IPatternRepository _patternRepository;
 
-        public ProductRepository(ApplicationDbContext dbContext)
+        public ProductRepository(
+            ApplicationDbContext dbContext,
+            IColorRepository colorRepository,
+            IPatternRepository patternRepository,
+            IMaterialRepository materialRepository
+            )
         {
             this._dbContext = dbContext;
+            this._colorRepository = colorRepository;
+            this._patternRepository = patternRepository;
+            this._materialRepository = materialRepository;
         }
 
         public int AddProduct(Product product)
@@ -25,12 +37,50 @@ namespace DAL.Repositories
             return product.Id;
         }
 
-        public async Task<IEnumerable<Product>> GetAllAsync()
+        public async Task<PagedList<Product>> GetAllAsync(ProductQueryParameters productQueryParameters)
         {
-            var products = await _dbContext.Products
-                .Include(o => o.ProductCategory)
-                .ToListAsync();
-            return products;
+            if (!productQueryParameters.ValidPriceRange)
+            {
+                throw new BadParameterException("Max price of product cannot be less than min price of product.");
+            }
+
+            var products = _dbContext.Products
+                .Include(p => p.Colors)
+                .Include(p => p.Material)
+                .Include(p => p.Pattern)
+                .Where(p => p.Price >= productQueryParameters.MinPrice && p.Price <= productQueryParameters.MaxPrice);
+
+            var colors = await _colorRepository.GetColorsByIdsAsync(productQueryParameters.ColorIds);
+            var materials = await _materialRepository.GetMaterialsByIdAsync(productQueryParameters.MaterialIds);
+            var patterns = await _patternRepository.GetPatternsByIdAsync(productQueryParameters.PatternIds);
+
+            SearchByColor(ref products, colors);
+            SearchByPattern(ref products, patterns);
+            SearchByMaterial(ref products, materials);
+
+            return await PagedList<Product>.CreateAsync(products, productQueryParameters.PageIndex, productQueryParameters.PageSize);
+        }
+
+        private void SearchByMaterial(ref IQueryable<Product> products, IEnumerable<Material>? materials)
+        {
+            if (!products.Any() || materials == null || !materials.Any())
+                return;
+            products = products.Where(p => p.Material != null && materials.Contains(p.Material));
+        }
+
+        private void SearchByPattern(ref IQueryable<Product> products, IEnumerable<Pattern>? patterns)
+        {
+            if (!products.Any() || patterns == null || !patterns.Any())
+                return;
+            products = products.Where(p => p.Pattern != null && patterns.Contains(p.Pattern));
+        }
+
+        private void SearchByColor(ref IQueryable<Product> products, IEnumerable<Color>? colors)
+        {
+            if (!products.Any() || colors == null || !colors.Any())
+                return;
+
+            products = products.Where(p => p.Colors.Intersect(colors).Any());
         }
 
         public async Task<Product> GetProductByIdAsync(int productId)

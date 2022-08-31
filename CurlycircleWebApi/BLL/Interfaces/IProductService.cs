@@ -1,5 +1,6 @@
 ﻿using BLL.Dtos;
 using BLL.ViewModels;
+using Domain.Entities.QueryParameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace BLL.Interfaces
     {
         Task<EntityCreatedViewModel> CreateProductAsync(ProductUpsertDto productUpsertDto);
 
-        Task<ProductsViewModel> GetAllProductsAsync();
+        Task<PagedProductsViewModel> GetAllProductsAsync(ProductQueryParameters productQueryParameters);
 
         Task<ProductViewModel> FindProductByIdAsync(int productId);
 

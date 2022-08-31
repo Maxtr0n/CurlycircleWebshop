@@ -54,6 +54,24 @@ namespace DAL.Repositories
             return pattern;
         }
 
+        public async Task<IEnumerable<Pattern>> GetPatternsByIdAsync(IEnumerable<int> patternIds)
+        {
+            List<Pattern> patterns = new();
+            foreach (var patternId in patternIds)
+            {
+                var pattern = await _dbContext.Patterns.FindAsync(patternId);
+
+                if (pattern == null)
+                {
+                    throw new EntityNotFoundException($"Pattern with id {patternId} not found.");
+                }
+
+                patterns.Add(pattern);
+            }
+
+            return patterns;
+        }
+
         public void UpdatePattern(Pattern pattern)
         {
             _dbContext.Patterns.Update(pattern);

@@ -128,6 +128,16 @@ export interface PagedOrdersViewModel {
     hasNextPage: boolean;
 }
 
+export interface PagedProductsViewModel {
+    products: ProductViewModel[];
+    pageIndex: number;
+    pageSize: number;
+    totalCount: number;
+    totalPages: number;
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+}
+
 export interface OrderQueryParameters {
     pageIndex: number;
     pageSize: number;
@@ -135,6 +145,16 @@ export interface OrderQueryParameters {
     sortDirection: string;
     minOrderDate: string | null;
     maxOrderDate: string | null;
+}
+
+export interface ProductQueryParameters {
+    pageIndex: number;
+    pageSize: number;
+    colorId: number | null;
+    patternId: number | null;
+    materialId: number | null;
+    minPrice: string | null;
+    maxPrice: string | null;
 }
 
 export enum PaymentMethod {

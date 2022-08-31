@@ -15,6 +15,8 @@ namespace Domain.Interfaces
 
         Task<Material> GetMaterialByIdAsync(int materialId);
 
+        Task<IEnumerable<Material>> GetMaterialsByIdAsync(IEnumerable<int> materialIds);
+
         void UpdateMaterial(Material material);
 
         Task DeleteMaterialAsync(int materialId);

@@ -54,6 +54,24 @@ namespace DAL.Repositories
             return material;
         }
 
+        public async Task<IEnumerable<Material>> GetMaterialsByIdAsync(IEnumerable<int> materialIds)
+        {
+            List<Material> materials = new();
+            foreach (var materialId in materialIds)
+            {
+                var material = await _dbContext.Materials.FindAsync(materialId);
+
+                if (material == null)
+                {
+                    throw new EntityNotFoundException($"Material with id {materialId} not found.");
+                }
+
+                materials.Add(material);
+            }
+
+            return materials;
+        }
+
         public void UpdateMaterial(Material material)
         {
             _dbContext.Materials.Update(material);

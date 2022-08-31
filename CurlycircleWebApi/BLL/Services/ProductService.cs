@@ -5,6 +5,7 @@ using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.ViewModels;
 using Domain.Entities;
+using Domain.Entities.QueryParameters;
 using Domain.Enums;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -101,10 +102,10 @@ namespace BLL.Services
             return new EntityCreatedViewModel(id);
         }
 
-        public async Task<ProductsViewModel> GetAllProductsAsync()
+        public async Task<PagedProductsViewModel> GetAllProductsAsync(ProductQueryParameters productQueryParameters)
         {
-            var products = await _productRepository.GetAllAsync();
-            var productsViewModel = _mapper.Map<ProductsViewModel>(products);
+            var products = await _productRepository.GetAllAsync(productQueryParameters);
+            var productsViewModel = _mapper.Map<PagedProductsViewModel>(products);
             return productsViewModel;
         }
 
