@@ -111,13 +111,6 @@ namespace BLL.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<ProductsViewModel> GetAllProductCategoryProductsAsync(int productCategoryId)
-        {
-            var productCategory = await _productCategoryRepository.GetProductCategoryByIdAsync(productCategoryId);
-            var productsViewModel = _mapper.Map<ProductsViewModel>(productCategory.Products);
-            return productsViewModel;
-        }
-
         public async Task<EntityCreatedViewModel> AddProductAsync(int productCategoryId, ProductUpsertDto productCreateDto)
         {
             var productCategory = await _productCategoryRepository.GetProductCategoryByIdAsync(productCategoryId);

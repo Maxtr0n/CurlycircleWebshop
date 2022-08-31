@@ -1,8 +1,8 @@
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { format } from "date-fns";
 import { BehaviorSubject, catchError, Observable, of, finalize } from "rxjs";
-import { OrderQueryParameters, OrderViewModel } from "src/app/models/models";
-import { OrderService } from "src/app/services/order.service";
+import { OrderQueryParameters, OrderViewModel, PagedOrdersViewModel } from "./models";
+import { OrderService } from "../services/order.service";
 
 export class OrdersDataSource implements DataSource<OrderViewModel> {
 
@@ -49,7 +49,7 @@ export class OrdersDataSource implements DataSource<OrderViewModel> {
         };
 
         this.orderService.getOrderPage(orderQueryParameters).subscribe({
-            next: (pagedOrdersViewModel) => {
+            next: (pagedOrdersViewModel: PagedOrdersViewModel) => {
                 this.loadingSubject.next(false);
                 this.resultsLengthSubject.next(pagedOrdersViewModel.totalCount);
                 this.ordersSubject.next(pagedOrdersViewModel.orders);

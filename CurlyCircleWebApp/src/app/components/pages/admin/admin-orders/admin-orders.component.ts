@@ -9,7 +9,7 @@ import { Subject, debounceTime, distinctUntilChanged, tap, merge } from 'rxjs';
 import { OrdersViewModel, OrderViewModel } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
-import { OrdersDataSource } from '../OrdersDataSource';
+import { OrdersDataSource } from '../../../../models/OrdersDataSource';
 
 @Component({
     selector: 'app-admin-orders',

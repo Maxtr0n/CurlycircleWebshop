@@ -54,33 +54,12 @@ namespace DAL.Repositories
             var materials = await _materialRepository.GetMaterialsByIdAsync(productQueryParameters.MaterialIds);
             var patterns = await _patternRepository.GetPatternsByIdAsync(productQueryParameters.PatternIds);
 
+            SearchByProductCategoryId(ref products, productQueryParameters.ProductCategoryId);
             SearchByColor(ref products, colors);
             SearchByPattern(ref products, patterns);
             SearchByMaterial(ref products, materials);
 
             return await PagedList<Product>.CreateAsync(products, productQueryParameters.PageIndex, productQueryParameters.PageSize);
-        }
-
-        private void SearchByMaterial(ref IQueryable<Product> products, IEnumerable<Material>? materials)
-        {
-            if (!products.Any() || materials == null || !materials.Any())
-                return;
-            products = products.Where(p => p.Material != null && materials.Contains(p.Material));
-        }
-
-        private void SearchByPattern(ref IQueryable<Product> products, IEnumerable<Pattern>? patterns)
-        {
-            if (!products.Any() || patterns == null || !patterns.Any())
-                return;
-            products = products.Where(p => p.Pattern != null && patterns.Contains(p.Pattern));
-        }
-
-        private void SearchByColor(ref IQueryable<Product> products, IEnumerable<Color>? colors)
-        {
-            if (!products.Any() || colors == null || !colors.Any())
-                return;
-
-            products = products.Where(p => p.Colors.Intersect(colors).Any());
         }
 
         public async Task<Product> GetProductByIdAsync(int productId)
@@ -109,6 +88,35 @@ namespace DAL.Repositories
             {
                 _dbContext.Products.Remove(product);
             }
+        }
+
+        private void SearchByProductCategoryId(ref IQueryable<Product> products, int? productCategoryId)
+        {
+            if (!products.Any() || productCategoryId == null)
+                return;
+            products = products.Where(p => p.ProductCategoryId == productCategoryId);
+        }
+
+        private void SearchByMaterial(ref IQueryable<Product> products, IEnumerable<Material>? materials)
+        {
+            if (!products.Any() || materials == null || !materials.Any())
+                return;
+            products = products.Where(p => p.Material != null && materials.Contains(p.Material));
+        }
+
+        private void SearchByPattern(ref IQueryable<Product> products, IEnumerable<Pattern>? patterns)
+        {
+            if (!products.Any() || patterns == null || !patterns.Any())
+                return;
+            products = products.Where(p => p.Pattern != null && patterns.Contains(p.Pattern));
+        }
+
+        private void SearchByColor(ref IQueryable<Product> products, IEnumerable<Color>? colors)
+        {
+            if (!products.Any() || colors == null || !colors.Any())
+                return;
+
+            products = products.Where(p => p.Colors.Intersect(colors).Any());
         }
     }
 }

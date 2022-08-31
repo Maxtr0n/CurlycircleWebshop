@@ -1,7 +1,8 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppHttpClient } from '../core/app-http-client';
-import { EntityCreatedViewModel, ProductViewModel, ProductWithImages } from '../models/models';
+import { EntityCreatedViewModel, PagedProductsViewModel, ProductQueryParameters, ProductViewModel, ProductWithImages } from '../models/models';
 
 @Injectable({
     providedIn: 'root'
@@ -13,6 +14,29 @@ export class ProductService {
 
     public getProduct(productId: number): Observable<ProductViewModel> {
         return this.httpClient.get<ProductViewModel>(`${this.productsUrl}/${productId}`);
+    }
+
+    public getProductPage(productQueryParameters: ProductQueryParameters): Observable<PagedProductsViewModel> {
+        let httpParams = new HttpParams()
+            .set('pageIndex', productQueryParameters.pageIndex.toString())
+            .set('pageSize', productQueryParameters.pageSize.toString())
+            .set('colorIds', productQueryParameters.colorIds.toString())
+            .set('materialIds', productQueryParameters.materialIds.toString())
+            .set('patternIds', productQueryParameters.patternIds.toString());
+
+        if (productQueryParameters.productCategoryId !== null) {
+            httpParams = httpParams.set('productCategoryId', productQueryParameters.productCategoryId);
+        }
+
+        if (productQueryParameters.minPrice !== null) {
+            httpParams = httpParams.set('minPrice', productQueryParameters.minPrice);
+        }
+
+        if (productQueryParameters.maxPrice !== null) {
+            httpParams = httpParams.set('maxPrice', productQueryParameters.maxPrice);
+        }
+
+        return this.httpClient.getWithParams<PagedProductsViewModel>(this.productsUrl, httpParams);
     }
 
     public createProduct(product: ProductWithImages): Observable<EntityCreatedViewModel> {

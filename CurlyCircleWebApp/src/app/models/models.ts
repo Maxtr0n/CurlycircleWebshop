@@ -150,11 +150,12 @@ export interface OrderQueryParameters {
 export interface ProductQueryParameters {
     pageIndex: number;
     pageSize: number;
-    colorId: number | null;
-    patternId: number | null;
-    materialId: number | null;
-    minPrice: string | null;
-    maxPrice: string | null;
+    productCategoryId: number | null;
+    colorIds: number[];
+    patternIds: number[];
+    materialIds: number[];
+    minPrice: number | null;
+    maxPrice: number | null;
 }
 
 export enum PaymentMethod {

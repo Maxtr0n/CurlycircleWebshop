@@ -19,10 +19,6 @@ export class ProductCategoryService {
         return this.httpClient.get<ProductCategoryViewModel>(`${this.productCategoriesUrl}/${productCategoryId}`);
     }
 
-    public getProductCategoryProducts(productCategoryId: number): Observable<ProductsViewModel> {
-        return this.httpClient.get<ProductsViewModel>(`${this.productCategoriesUrl}/${productCategoryId}/products`);
-    }
-
     public deleteProductCategory(productCategoryId: number): Observable<void> {
         return this.httpClient.delete<void>(`${this.productCategoriesUrl}/${productCategoryId}`);
     }

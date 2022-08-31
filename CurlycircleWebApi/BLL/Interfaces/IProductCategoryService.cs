@@ -21,8 +21,6 @@ namespace BLL.Interfaces
 
         Task DeleteProductCategoryAsync(int productCategoryId);
 
-        Task<ProductsViewModel> GetAllProductCategoryProductsAsync(int productCategoryId);
-
         Task<EntityCreatedViewModel> AddProductAsync(int productCategoryId, ProductUpsertDto productCreateDto);
     }
 }

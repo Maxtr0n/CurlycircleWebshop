@@ -89,11 +89,5 @@ namespace CurlycircleWebApi.Controllers
             HttpContext.Response.StatusCode = StatusCodes.Status201Created;
             return _productCategoryService.AddProductAsync(productCategoryId, productCreateDto);
         }
-
-        [HttpGet("{productCategoryId}/products")]
-        public Task<ProductsViewModel> GetProducts([FromRoute] int productCategoryId)
-        {
-            return _productCategoryService.GetAllProductCategoryProductsAsync(productCategoryId);
-        }
     }
 }

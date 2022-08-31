@@ -8,6 +8,8 @@ namespace Domain.Entities.QueryParameters
 {
     public class ProductQueryParameters : QueryParameters
     {
+        public int? ProductCategoryId { get; set; }
+
         public IEnumerable<int> ColorIds { get; set; } = Enumerable.Empty<int>();
 
         public IEnumerable<int> PatternIds { get; set; } = Enumerable.Empty<int>();
