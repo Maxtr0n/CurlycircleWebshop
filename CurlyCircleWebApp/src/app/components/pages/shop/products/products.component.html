@@ -1,13 +1,21 @@
-<div fxLayout="row wrap" fxLayoutGap="2em grid" fxLayoutAlign="center stretch">
-    <ng-container *ngFor="let product of products">
-        <app-product-card [item]="product" (onCardClickedEvent)="onProductClicked($event)"
-            (onAdminModifyClickedEvent)="onProductModifyClicked($event)"
-            (onAdminDeleteClickedEvent)="onProductDeleteClicked($event)" fxFlex="25%" fxFlex.md="33%" fxFlex.sm="50%"
-            fxFlex.xs="100%" fxLayoutAlign="center stretch"></app-product-card>
-    </ng-container>
-    <div fxFlexAlign="center">
-        <button (click)="onProductAddClicked()" mat-fab class="product-add-button" color="primary" *ngIf="isAdmin">
-            <mat-icon>add</mat-icon>
-        </button>
+<div>
+    <div class="filters-container mat-elevation-z8" fxFlex="0 0 300px" fxFlex.lt-md="1 1 auto">
+        <app-product-filters></app-product-filters>
     </div>
+    <div fxLayout="row wrap" fxLayoutGap="2em grid" fxLayoutAlign="center stretch">
+        <ng-container *ngFor="let product of products">
+            <app-product-card [item]="product" (onCardClickedEvent)="onProductClicked($event)"
+                (onAdminModifyClickedEvent)="onProductModifyClicked($event)"
+                (onAdminDeleteClickedEvent)="onProductDeleteClicked($event)" fxFlex="25%" fxFlex.md="33%"
+                fxFlex.sm="50%" fxFlex.xs="100%" fxLayoutAlign="center stretch"></app-product-card>
+        </ng-container>
+        <div fxFlexAlign="center">
+            <button (click)="onProductAddClicked()" mat-fab class="product-add-button" color="primary" *ngIf="isAdmin">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+    <mat-paginator [length]="resultsLength" [pageSize]="10" [hidePageSize]="true"
+        aria-label="Válaszd ki a termékek oldalát">
+    </mat-paginator>
 </div>

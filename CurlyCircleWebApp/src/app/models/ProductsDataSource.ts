@@ -11,6 +11,7 @@ export class ProductsDataSource implements DataSource<ProductViewModel> {
 
     public resultsLength$ = this.resultsLengthSubject.asObservable();
     public loading$ = this.loadingSubject.asObservable();
+    public products$ = this.productsSubject.asObservable();
 
     constructor(private productService: ProductService) { }
 
@@ -22,14 +23,14 @@ export class ProductsDataSource implements DataSource<ProductViewModel> {
         this.loadingSubject.complete();
     }
 
-    loadProducts(productCategoryId: number | null = null, pageIndex = 0, pageSize = 10,
+    loadProducts(productCategoryId: number | null = null, pageIndex = 0,
         minPrice: number | null = null, maxPrice: number | null = null, colorIds: number[] = [],
         materialIds: number[] = [], patternIds: number[] = []): void {
         this.loadingSubject.next(true);
 
         const productQueryParameters: ProductQueryParameters = {
             pageIndex,
-            pageSize,
+            pageSize: 10,
             productCategoryId,
             minPrice,
             maxPrice,

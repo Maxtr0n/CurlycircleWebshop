@@ -32,7 +32,7 @@ export class ProductCategoriesComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.breadcrumbService.set('@ProductCategories', 'Kezdőoldal');
+        this.breadcrumbService.set('@ProductCategories', 'Kategóriák');
         this.authService.isAdmin$.subscribe((isAdmin) => {
             this.isAdmin = isAdmin;
         });

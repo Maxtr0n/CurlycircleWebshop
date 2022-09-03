@@ -4,7 +4,7 @@ using BLL.ViewModels;
 using CurlycircleWebApi.Common;
 using DAL;
 using Domain.Entities;
-using Domain.Entities.QueryParameters;
+using Domain.QueryParameters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

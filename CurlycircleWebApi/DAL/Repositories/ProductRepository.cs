@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
-using Domain.Entities.QueryParameters;
 using Domain.Exceptions;
 using Domain.Interfaces;
+using Domain.QueryParameters;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

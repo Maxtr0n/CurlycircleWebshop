@@ -1,6 +1,6 @@
 ﻿using BLL.Dtos;
 using BLL.ViewModels;
-using Domain.Entities.QueryParameters;
+using Domain.QueryParameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;

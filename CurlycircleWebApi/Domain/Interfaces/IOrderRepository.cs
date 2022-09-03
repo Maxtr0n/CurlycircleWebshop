@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using Domain.Entities.QueryParameters;
+using Domain.QueryParameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;

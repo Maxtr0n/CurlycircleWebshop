@@ -8,7 +8,7 @@ import { AddProductDialogComponent } from 'src/app/components/dialogs/add-produc
 import { DeleteProductDialogComponent } from 'src/app/components/dialogs/delete-product-dialog/delete-product-dialog.component';
 import { ModifyProductDialogComponent } from 'src/app/components/dialogs/modify-product-dialog/modify-product-dialog.component';
 import { AppConstants } from 'src/app/core/app-constants';
-import { ProductCategoryViewModel, ProductViewModel, ProductWithImages } from 'src/app/models/models';
+import { ProductCategoryViewModel, ProductQueryParameters, ProductViewModel, ProductWithImages } from 'src/app/models/models';
 import { ProductsDataSource } from 'src/app/models/ProductsDataSource';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
@@ -71,17 +71,21 @@ export class ProductsComponent implements OnInit, OnDestroy {
             }
         });
         this.products$ = this.route.params.pipe(
-            switchMap(params => this.productService.getProductPage(params['productCategoryId']))
+            tap((params) => this.dataSource.loadProducts(params['productCategoryId']))
         ).subscribe({
-            next: (productsViewModel) => {
-                console.log(productsViewModel.products);
-                this.products = productsViewModel.products;
+            next: () => {
             },
             error: (error) => {
                 console.log(error);
                 this.snackBar.open("A termékek betöltése sikertelen. Kérlek próbálkozz újra!", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-warn'] });
             }
         });
+    }
+
+    loadProductsPage(): void {
+        this.dataSource.loadProducts(
+
+        );
     }
 
     onProductClicked(id: number): void {
