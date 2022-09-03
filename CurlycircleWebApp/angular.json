@@ -32,7 +32,10 @@
                         ],
                         "styles": [
                             "src/styles.scss",
-                            "node_modules/bootstrap/dist/css/bootstrap.css"
+                            "node_modules/bootstrap/dist/css/bootstrap.css",
+                            "node_modules/primeng/resources/primeng.min.css",
+                            "node_modules/primeicons/primeicons.css",
+                            "node_modules/primeng/resources/themes/saga-green/theme.css"
                         ],
                         "scripts": []
                     },
@@ -109,6 +112,6 @@
         }
     },
     "cli": {
-      "analytics": false
+        "analytics": false
     }
 }

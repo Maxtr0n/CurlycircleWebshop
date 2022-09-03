@@ -17,4 +17,8 @@
             {{material.name}}
         </div>
     </div>
+    <div>
+        <h2>Ár: {{priceValues[0] + ' Ft - ' + priceValues[1] + ' Ft'}}</h2>
+        <p-slider [(ngModel)]="priceValues" [range]="true" [min]="0" [max]="20000" [step]="1000"></p-slider>
+    </div>
 </div>

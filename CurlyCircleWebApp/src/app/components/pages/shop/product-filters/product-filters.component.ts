@@ -15,6 +15,7 @@ export class ProductFiltersComponent implements OnInit {
     colors: ColorViewModel[] = [];
     patterns: PatternViewModel[] = [];
     materials: MaterialViewModel[] = [];
+    priceValues: number[] = [0, 20000];
 
     constructor(
         private readonly colorService: ColorService,

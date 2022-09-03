@@ -61,6 +61,9 @@ import { AddPatternDialogComponent } from './components/dialogs/add-pattern-dial
 import { DeletePatternDialogComponent } from './components/dialogs/delete-pattern-dialog/delete-pattern-dialog.component';
 import { ProductFiltersComponent } from './components/pages/shop/product-filters/product-filters.component';
 
+import { SliderModule } from 'primeng/slider';
+import { PaginatorModule } from 'primeng/paginator';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -119,6 +122,8 @@ import { ProductFiltersComponent } from './components/pages/shop/product-filters
         NgbModule,
         FontAwesomeModule,
         NgxMatFileInputModule,
+        SliderModule,
+        PaginatorModule
     ],
     providers: [
         httpInterceptorProviders,
