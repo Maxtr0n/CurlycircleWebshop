@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { tap } from 'rxjs';
 import { ColorsViewModel, ColorViewModel, MaterialsViewModel, MaterialViewModel, PatternsViewModel, PatternViewModel } from 'src/app/models/models';
 import { ColorService } from 'src/app/services/color.service';
+import { FilterService } from 'src/app/services/filter.service';
 import { MaterialService } from 'src/app/services/material.service';
 import { PatternService } from 'src/app/services/pattern.service';
 
@@ -19,6 +20,7 @@ export class ProductFiltersComponent implements OnInit {
         private readonly colorService: ColorService,
         private readonly materialService: MaterialService,
         private readonly patternService: PatternService,
+        private readonly filterService: FilterService,
     ) { }
 
     ngOnInit(): void {

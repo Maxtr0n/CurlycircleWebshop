@@ -19,10 +19,11 @@ export class ProductService {
     public getProductPage(productQueryParameters: ProductQueryParameters): Observable<PagedProductsViewModel> {
         let httpParams = new HttpParams()
             .set('pageIndex', productQueryParameters.pageIndex.toString())
-            .set('pageSize', productQueryParameters.pageSize.toString())
-            .set('colorIds', productQueryParameters.colorIds.toString())
-            .set('materialIds', productQueryParameters.materialIds.toString())
-            .set('patternIds', productQueryParameters.patternIds.toString());
+            .set('pageSize', productQueryParameters.pageSize.toString());
+
+        console.log(productQueryParameters.colorIds.toString());
+        console.log(productQueryParameters.materialIds.toString());
+        console.log(productQueryParameters.patternIds.toString());
 
         if (productQueryParameters.productCategoryId !== null) {
             httpParams = httpParams.set('productCategoryId', productQueryParameters.productCategoryId);
@@ -34,6 +35,24 @@ export class ProductService {
 
         if (productQueryParameters.maxPrice !== null) {
             httpParams = httpParams.set('maxPrice', productQueryParameters.maxPrice);
+        }
+
+        if (productQueryParameters.colorIds !== null && productQueryParameters.colorIds.length > 0) {
+            for (let colorId in productQueryParameters.colorIds) {
+                httpParams = httpParams.set('colorIds', colorId);
+            }
+        }
+
+        if (productQueryParameters.materialIds !== null && productQueryParameters.materialIds.length > 0) {
+            for (let materialId in productQueryParameters.materialIds) {
+                httpParams = httpParams.set('materialIds', materialId);
+            }
+        }
+
+        if (productQueryParameters.patternIds !== null && productQueryParameters.patternIds.length > 0) {
+            for (let patternId in productQueryParameters.patternIds) {
+                httpParams = httpParams.set('patternIds', patternId);
+            }
         }
 
         return this.httpClient.getWithParams<PagedProductsViewModel>(this.productsUrl, httpParams);

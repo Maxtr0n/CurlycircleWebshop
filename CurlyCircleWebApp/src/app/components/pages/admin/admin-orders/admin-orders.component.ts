@@ -46,7 +46,6 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-
         //reset paginator after sorting
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
