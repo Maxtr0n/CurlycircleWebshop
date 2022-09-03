@@ -21,15 +21,13 @@ import { BreadcrumbService } from 'xng-breadcrumb';
     templateUrl: './products.component.html',
     styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ProductsComponent implements OnInit, OnDestroy {
     isAdmin: boolean = false;
     productCategory: ProductCategoryViewModel | null = null;
     products: ProductViewModel[] | null = [];
     routeParams$: Subscription = new Subscription;
     dataSource: ProductsDataSource;
     resultsLength: number = 0;
-
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     constructor(
         private readonly productCategoryService: ProductCategoryService,
@@ -56,16 +54,14 @@ export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
 
         merge(this.filterService.selectedColors$, this.filterService.selectedMaterials$, this.filterService.selectedPatterns$).pipe(
-            tap(() => this.loadProductsPage())
+            tap(() => this.loadProductsPage(0))
         ).subscribe();
 
         this.getData();
     }
 
-    ngAfterViewInit(): void {
-        this.paginator.page.pipe(
-            tap(() => this.loadProductsPage())
-        ).subscribe();
+    paginate(event: any) {
+        this.loadProductsPage(event.page);
     }
 
     ngOnDestroy(): void {
@@ -88,14 +84,14 @@ export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
 
-    loadProductsPage(): void {
+    loadProductsPage(pageIndex: number): void {
         if (!this.productCategory) {
             return;
         }
 
         this.dataSource.loadProducts(
             this.productCategory?.id,
-            this.paginator.pageIndex,
+            pageIndex,
             this.filterService.selectedPricesValue[0],
             this.filterService.selectedPricesValue[1],
             this.filterService.selectedColorsValue,
@@ -105,13 +101,12 @@ export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     filter(): void {
-        this.paginator.pageIndex = 0;
-        this.loadProductsPage();
+        this.loadProductsPage(0);
     }
 
     clearFilters() {
         // TODO
-        this.loadProductsPage();
+        this.loadProductsPage(0);
     }
 
     onProductClicked(id: number): void {

@@ -17,8 +17,7 @@
                 </button>
             </div>
         </div>
-        <mat-paginator class="mat-elevation-z8" [length]="resultsLength" [pageSize]="6" [hidePageSize]="true"
-            aria-label="Válaszd ki a termékek oldalát">
-        </mat-paginator>
+        <p-paginator [rows]="2" [totalRecords]="resultsLength" (onPageChange)="paginate($event)"
+            [showFirstLastIcon]="false"></p-paginator>
     </div>
 </div>
