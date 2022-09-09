@@ -38,19 +38,19 @@ export class ProductService {
         }
 
         if (productQueryParameters.colorIds !== null && productQueryParameters.colorIds.length > 0) {
-            for (let colorId in productQueryParameters.colorIds) {
+            for (let colorId of productQueryParameters.colorIds) {
                 httpParams = httpParams.set('colorIds', colorId);
             }
         }
 
         if (productQueryParameters.materialIds !== null && productQueryParameters.materialIds.length > 0) {
-            for (let materialId in productQueryParameters.materialIds) {
+            for (let materialId of productQueryParameters.materialIds) {
                 httpParams = httpParams.set('materialIds', materialId);
             }
         }
 
         if (productQueryParameters.patternIds !== null && productQueryParameters.patternIds.length > 0) {
-            for (let patternId in productQueryParameters.patternIds) {
+            for (let patternId of productQueryParameters.patternIds) {
                 httpParams = httpParams.set('patternIds', patternId);
             }
         }
@@ -101,6 +101,7 @@ export class ProductService {
 
     public updateProduct(productId: number, product: ProductWithImages): Observable<void> {
         const formData = new FormData();
+
         formData.append('name', product.name);
         formData.append('price', product.price.toString());
         formData.append('productCategoryId', product.productCategoryId.toString());
@@ -123,7 +124,7 @@ export class ProductService {
 
         let colors = '';
         for (let i = 0; i < product.colorIds.length; i++) {
-            colors.concat(product.colorIds[i].toString());
+            colors = colors.concat(product.colorIds[i].toString() + ';');
         }
 
         formData.append('colorIds', colors);

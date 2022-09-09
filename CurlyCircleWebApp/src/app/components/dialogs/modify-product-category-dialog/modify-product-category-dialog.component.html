@@ -10,13 +10,13 @@
             <textarea matInput formControlName="description"></textarea>
         </mat-form-field>
         <mat-form-field appearance="outline">
+            <mat-label>Add meg a kategória thumbnail-jét</mat-label>
             <ngx-mat-file-input formControlName="imageFile" [multiple]="false" accept=".png, .jpg, .jpeg">
-                <mat-hint>Válassz ki egy képet</mat-hint>
             </ngx-mat-file-input>
         </mat-form-field>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="false">Mégse</button>
-    <button mat-button (click)="clickModify()" [disabled]="!productCategoryForm.valid" cdkFocusInitial>Rendben</button>
+    <button mat-button (click)="clickModify()" [disabled]="!productCategoryForm.valid" cdkFocusInitial>Módosít</button>
 </mat-dialog-actions>

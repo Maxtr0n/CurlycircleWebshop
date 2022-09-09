@@ -79,6 +79,10 @@ namespace BLL.Services
             if (thumbnailImage != null && thumbnailImage.Length > 0)
             {
                 fileName = await _imageHelper.CreateThumbnailFile(thumbnailImage, pathToProductThumbnails);
+            }
+
+            if (productUpsertDto.ProductImages != null && productUpsertDto.ProductImages.Any())
+            {
                 imageNames = await _imageHelper.CreateImageFiles(productUpsertDto.ProductImages, pathToProductImages);
             }
 
@@ -118,30 +122,31 @@ namespace BLL.Services
 
         public async Task UpdateProductAsync(int productId, ProductUpsertDto productUpdateDto)
         {
-            Material material;
-            Pattern pattern;
+            Material? material = null;
+            Pattern? pattern = null;
             IEnumerable<Domain.Entities.Color> colors;
 
-            material = await _materialRepository.GetMaterialByIdAsync(productUpdateDto.MaterialId ?? default(int));
-            pattern = await _patternRepository.GetPatternByIdAsync(productUpdateDto.PatternId ?? default(int));
+            if (productUpdateDto.MaterialId != null)
+            {
+                material = await _materialRepository.GetMaterialByIdAsync(productUpdateDto.MaterialId ?? default);
+            }
+
+            if (productUpdateDto.PatternId != null)
+            {
+                pattern = await _patternRepository.GetPatternByIdAsync(productUpdateDto.PatternId ?? default);
+            }
+
             colors = await _colorRepository.GetColorsByIdsAsync(productUpdateDto.ColorIds);
 
             var oldProduct = await _productRepository.GetProductByIdAsync(productId);
 
-            var updatedProduct = new Product()
-            {
-                Price = productUpdateDto.Price,
-                Name = productUpdateDto.Name,
-                ProductCategoryId = productUpdateDto.ProductCategoryId,
-                Description = productUpdateDto.Description,
-                Colors = colors,
-                Pattern = pattern,
-                Material = material,
-                IsAvailable = productUpdateDto.IsAvailable,
-
-                ThumbnailImageUrl = oldProduct.ThumbnailImageUrl,
-                ImageUrls = oldProduct.ImageUrls,
-            };
+            oldProduct.Name = productUpdateDto.Name;
+            oldProduct.Price = productUpdateDto.Price;
+            oldProduct.Description = productUpdateDto.Description;
+            oldProduct.Colors = colors;
+            oldProduct.Material = material;
+            oldProduct.Pattern = pattern;
+            oldProduct.IsAvailable = productUpdateDto.IsAvailable;
 
             var thumbnailImage = productUpdateDto.ThumbnailImage;
             if (thumbnailImage != null && thumbnailImage.Length > 0)
@@ -149,20 +154,27 @@ namespace BLL.Services
                 var thumbnailToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductThumbnails, oldProduct.ThumbnailImageUrl);
                 _imageHelper.DeleteImageFile(thumbnailToDelete);
 
+
+                string fileName = await _imageHelper.CreateThumbnailFile(thumbnailImage, pathToProductThumbnails);
+
+                oldProduct.ThumbnailImageUrl = fileName;
+            }
+
+            var productImages = productUpdateDto.ProductImages;
+            if (productImages != null && productImages.Any())
+            {
                 string[] imagePaths = oldProduct.ImageUrls.Split(';');
                 foreach (var imagePath in imagePaths)
                 {
                     var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductImages, imagePath);
                     _imageHelper.DeleteImageFile(imageToDelete);
                 }
-                string fileName = await _imageHelper.CreateThumbnailFile(thumbnailImage, pathToProductThumbnails);
+
                 string imageNames = await _imageHelper.CreateImageFiles(productUpdateDto.ProductImages, pathToProductImages);
 
-                updatedProduct.ThumbnailImageUrl = fileName;
-                updatedProduct.ImageUrls = imageNames;
+                oldProduct.ImageUrls = imageNames;
             }
 
-            _productRepository.UpdateProduct(updatedProduct);
             await _unitOfWork.SaveChangesAsync();
         }
 
