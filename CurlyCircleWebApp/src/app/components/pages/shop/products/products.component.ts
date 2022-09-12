@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { merge, Subscription, switchMap, tap } from 'rxjs';
+import { debounce, debounceTime, merge, Subscription, switchMap, tap } from 'rxjs';
 import { AddProductDialogComponent } from 'src/app/components/dialogs/add-product-dialog/add-product-dialog.component';
 import { DeleteProductDialogComponent } from 'src/app/components/dialogs/delete-product-dialog/delete-product-dialog.component';
 import { ModifyProductDialogComponent } from 'src/app/components/dialogs/modify-product-dialog/modify-product-dialog.component';
@@ -53,11 +53,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
             this.isAdmin = isAdmin;
         });
 
+        this.getData();
+
         merge(this.filterService.selectedColors$, this.filterService.selectedMaterials$, this.filterService.selectedPatterns$, this.filterService.selectedPrices$).pipe(
+            debounceTime(100),
             tap(() => this.loadProductsPage(0))
         ).subscribe();
-
-        this.getData();
     }
 
     paginate(event: any) {

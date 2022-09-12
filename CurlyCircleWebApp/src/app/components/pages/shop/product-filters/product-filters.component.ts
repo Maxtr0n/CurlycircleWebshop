@@ -36,30 +36,32 @@ export class ProductFiltersComponent implements OnInit {
         this.getData();
         this.filterForm.controls.colorsFormArray.valueChanges.subscribe({
             next: (newValue) => {
-                const selectedColors = newValue.map((checked, i) => checked ? this.colors[i].id : null).filter(v => v !== null);
-                console.log(selectedColors);
+                const selectedColors: number[] = newValue.map((checked, i) => checked ? this.colors[i].id : 0).filter(v => v !== 0);
+                this.filterService.updateSelectedColors(selectedColors);
             }
         });
         this.filterForm.controls.materialsFormArray.valueChanges.subscribe({
             next: (newValue) => {
-                const selectedMaterials = newValue.map((checked, i) => checked ? this.materials[i].id : null).filter(v => v !== null);
-                console.log(selectedMaterials);
+                const selectedMaterials: number[] = newValue.map((checked, i) => checked ? this.materials[i].id : 0).filter(v => v !== 0);
+                this.filterService.updateSelectedMaterials(selectedMaterials);
             }
         });
         this.filterForm.controls.patternsFormArray.valueChanges.subscribe({
             next: (newValue) => {
-                const selectedPatterns = newValue.map((checked, i) => checked ? this.patterns[i].id : null).filter(v => v !== null);
-                console.log(selectedPatterns);
+                const selectedPatterns: number[] = newValue.map((checked, i) => checked ? this.patterns[i].id : 0).filter(v => v !== 0);
+                this.filterService.updateSelectedMaterials(selectedPatterns);
             }
         });
         this.filterForm.controls.priceValues.valueChanges.pipe(
             debounceTime(500)
-        )
-            .subscribe({
-                next: (newValue) => {
-                    console.log(newValue);
+        ).subscribe({
+            next: (newValue) => {
+                if (!newValue) {
+                    return;
                 }
-            });
+                this.filterService.updateSelectedPrices(newValue);
+            }
+        });
     }
 
     get colorsFormArray() {

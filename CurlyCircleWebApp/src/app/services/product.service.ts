@@ -21,10 +21,6 @@ export class ProductService {
             .set('pageIndex', productQueryParameters.pageIndex.toString())
             .set('pageSize', productQueryParameters.pageSize.toString());
 
-        console.log(productQueryParameters.colorIds.toString());
-        console.log(productQueryParameters.materialIds.toString());
-        console.log(productQueryParameters.patternIds.toString());
-
         if (productQueryParameters.productCategoryId !== null) {
             httpParams = httpParams.set('productCategoryId', productQueryParameters.productCategoryId);
         }
@@ -54,6 +50,9 @@ export class ProductService {
                 httpParams = httpParams.set('patternIds', patternId);
             }
         }
+
+        //TO DELETE
+        console.log("getProducts called");
 
         return this.httpClient.getWithParams<PagedProductsViewModel>(this.productsUrl, httpParams);
     }
