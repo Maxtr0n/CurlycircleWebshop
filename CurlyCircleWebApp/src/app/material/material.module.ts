@@ -27,6 +27,7 @@ import { MatDateFnsModule } from '@angular/material-date-fns-adapter';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
     declarations: [],
@@ -57,7 +58,8 @@ import { MatChipsModule } from '@angular/material/chips';
         MatDateFnsModule,
         MatDialogModule,
         MatSelectModule,
-        MatChipsModule
+        MatChipsModule,
+        MatCheckboxModule
     ],
     exports: [
         MatSliderModule,
@@ -85,7 +87,8 @@ import { MatChipsModule } from '@angular/material/chips';
         MatDateFnsModule,
         MatDialogModule,
         MatSelectModule,
-        MatChipsModule
+        MatChipsModule,
+        MatCheckboxModule
     ],
 })
 export class MaterialModule { }

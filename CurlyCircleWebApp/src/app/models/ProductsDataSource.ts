@@ -30,7 +30,7 @@ export class ProductsDataSource implements DataSource<ProductViewModel> {
 
         const productQueryParameters: ProductQueryParameters = {
             pageIndex,
-            pageSize: 2,
+            pageSize: 6,
             productCategoryId,
             minPrice,
             maxPrice,

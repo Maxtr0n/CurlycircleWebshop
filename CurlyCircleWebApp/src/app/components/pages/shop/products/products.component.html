@@ -7,17 +7,16 @@
             <ng-container *ngFor="let product of products">
                 <app-product-card [item]="product" (onCardClickedEvent)="onProductClicked($event)"
                     (onAdminModifyClickedEvent)="onProductModifyClicked($event)"
-                    (onAdminDeleteClickedEvent)="onProductDeleteClicked($event)" fxFlex="25%" fxFlex.md="33%"
-                    fxFlex.sm="50%" fxFlex.xs="100%" fxLayoutAlign="center stretch"></app-product-card>
+                    (onAdminDeleteClickedEvent)="onProductDeleteClicked($event)" fxFlex="360px"
+                    fxLayoutAlign="center stretch"></app-product-card>
             </ng-container>
-            <div fxFlexAlign="center">
-                <button (click)="onProductAddClicked()" mat-fab class="product-add-button" color="primary"
-                    *ngIf="isAdmin">
+            <div fxFlexAlign="center" *ngIf="isAdmin">
+                <button (click)="onProductAddClicked()" mat-fab class="product-add-button" color="primary">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
         </div>
-        <p-paginator [rows]="2" [totalRecords]="resultsLength" (onPageChange)="paginate($event)"
+        <p-paginator [rows]="6" [totalRecords]="resultsLength" (onPageChange)="paginate($event)"
             [showFirstLastIcon]="false"></p-paginator>
     </div>
 </div>

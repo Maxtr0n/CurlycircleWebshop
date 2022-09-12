@@ -53,7 +53,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
             this.isAdmin = isAdmin;
         });
 
-        merge(this.filterService.selectedColors$, this.filterService.selectedMaterials$, this.filterService.selectedPatterns$).pipe(
+        merge(this.filterService.selectedColors$, this.filterService.selectedMaterials$, this.filterService.selectedPatterns$, this.filterService.selectedPrices$).pipe(
             tap(() => this.loadProductsPage(0))
         ).subscribe();
 
@@ -90,7 +90,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         }
 
         this.dataSource.loadProducts(
-            this.productCategory?.id,
+            this.productCategory.id,
             pageIndex,
             this.filterService.selectedPricesValue[0],
             this.filterService.selectedPricesValue[1],
@@ -98,10 +98,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
             this.filterService.selectedMaterialsValue,
             this.filterService.selectedPatternsValue
         );
-    }
-
-    filter(): void {
-        this.loadProductsPage(0);
     }
 
     clearFilters() {

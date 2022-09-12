@@ -1,24 +1,38 @@
-<div>
-    <div class="colors-filters">
+<div fxLayout="column" [formGroup]="filterForm">
+    <div class="colors-filters" formArrayName="colorsFormArray">
         <h2>Szín:</h2>
-        <div *ngFor="let color of colors">
-            {{color.name}}
-        </div>
+        <ul>
+            <li *ngFor="let color of colorsFormArray.controls; let i=index">
+                <mat-checkbox [formControlName]="i">
+                    {{colors[i].name}}
+                </mat-checkbox>
+            </li>
+        </ul>
     </div>
-    <div class="pattern-filters">
+    <div class="pattern-filters" formArrayName="patternsFormArray">
         <h2>Minta:</h2>
-        <div *ngFor="let pattern of patterns">
-            {{pattern.name}}
-        </div>
+        <ul>
+            <li *ngFor="let pattern of patterns; let i=index">
+                <mat-checkbox [formControlName]="i">
+                    {{patterns[i].name}}
+                </mat-checkbox>
+            </li>
+        </ul>
     </div>
-    <div class="material-filters">
+    <div class="material-filters" formArrayName="materialsFormArray">
         <h2>Anyag:</h2>
-        <div *ngFor="let material of materials">
-            {{material.name}}
-        </div>
+        <ul>
+            <li *ngFor="let material of materials; let i=index">
+                <mat-checkbox [formControlName]="i">
+                    {{materials[i].name}}
+                </mat-checkbox>
+            </li>
+        </ul>
     </div>
     <div>
-        <h2>Ár: {{priceValues[0] + ' Ft - ' + priceValues[1] + ' Ft'}}</h2>
-        <p-slider [(ngModel)]="priceValues" [range]="true" [min]="0" [max]="20000" [step]="1000"></p-slider>
+        <h2>Ár: {{priceValues.value[0] + ' Ft - ' + priceValues.value[1] + '
+            Ft'}}</h2>
+        <p-slider formControlName="priceValues" [range]="true" [min]="0" [max]="20000" [step]="1000"></p-slider>
     </div>
+    <button fxFlexAlign="end" color="warn" mat-button>Szűrők törlése</button>
 </div>
