@@ -56,7 +56,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.getData();
 
         merge(this.filterService.selectedColors$, this.filterService.selectedMaterials$, this.filterService.selectedPatterns$, this.filterService.selectedPrices$).pipe(
-            debounceTime(100),
+            //maybe not needed
+            //debounceTime(100),
             tap(() => this.loadProductsPage(0))
         ).subscribe();
     }

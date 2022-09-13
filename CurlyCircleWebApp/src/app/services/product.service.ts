@@ -53,6 +53,7 @@ export class ProductService {
 
         //TO DELETE
         console.log("getProducts called");
+        console.log(httpParams);
 
         return this.httpClient.getWithParams<PagedProductsViewModel>(this.productsUrl, httpParams);
     }

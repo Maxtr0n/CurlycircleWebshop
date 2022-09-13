@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl } from '@angular/forms';
-import { debounce, debounceTime, interval, tap } from 'rxjs';
+import { debounce, debounceTime, interval, Subscription, tap } from 'rxjs';
 import { ColorsViewModel, ColorViewModel, MaterialsViewModel, MaterialViewModel, PatternsViewModel, PatternViewModel } from 'src/app/models/models';
 import { ColorService } from 'src/app/services/color.service';
 import { FilterService } from 'src/app/services/filter.service';
@@ -12,10 +12,15 @@ import { PatternService } from 'src/app/services/pattern.service';
     templateUrl: './product-filters.component.html',
     styleUrls: ['./product-filters.component.scss']
 })
-export class ProductFiltersComponent implements OnInit {
+export class ProductFiltersComponent implements OnInit, OnDestroy {
     colors: ColorViewModel[] = [];
     patterns: PatternViewModel[] = [];
     materials: MaterialViewModel[] = [];
+
+    colorsValueChanges$: Subscription = new Subscription;
+    materialsValueChanges$: Subscription = new Subscription;
+    patternsValueChanges$: Subscription = new Subscription;
+    pricesValueChanges$: Subscription = new Subscription;
 
     filterForm = this.fb.group({
         colorsFormArray: this.fb.array([]),
@@ -32,26 +37,18 @@ export class ProductFiltersComponent implements OnInit {
         private readonly fb: FormBuilder,
     ) { }
 
+
+    ngOnDestroy(): void {
+        this.colorsValueChanges$.unsubscribe();
+        this.materialsValueChanges$.unsubscribe();
+        this.patternsValueChanges$.unsubscribe();
+        this.pricesValueChanges$.unsubscribe();
+    }
+
     ngOnInit(): void {
         this.getData();
-        this.filterForm.controls.colorsFormArray.valueChanges.subscribe({
-            next: (newValue) => {
-                const selectedColors: number[] = newValue.map((checked, i) => checked ? this.colors[i].id : 0).filter(v => v !== 0);
-                this.filterService.updateSelectedColors(selectedColors);
-            }
-        });
-        this.filterForm.controls.materialsFormArray.valueChanges.subscribe({
-            next: (newValue) => {
-                const selectedMaterials: number[] = newValue.map((checked, i) => checked ? this.materials[i].id : 0).filter(v => v !== 0);
-                this.filterService.updateSelectedMaterials(selectedMaterials);
-            }
-        });
-        this.filterForm.controls.patternsFormArray.valueChanges.subscribe({
-            next: (newValue) => {
-                const selectedPatterns: number[] = newValue.map((checked, i) => checked ? this.patterns[i].id : 0).filter(v => v !== 0);
-                this.filterService.updateSelectedMaterials(selectedPatterns);
-            }
-        });
+
+        //subscribe to price range slider changes
         this.filterForm.controls.priceValues.valueChanges.pipe(
             debounceTime(500)
         ).subscribe({
@@ -84,21 +81,51 @@ export class ProductFiltersComponent implements OnInit {
         this.colorService.getColors().subscribe({
             next: (result: ColorsViewModel) => {
                 this.colors = result.colors;
+
+                //build checkbox form based on http result
                 result.colors.forEach(() => this.colorsFormArray.push(new FormControl(false)));
+
+                //subscribe to get checbox changes
+                this.colorsValueChanges$ = this.filterForm.controls.colorsFormArray.valueChanges.subscribe({
+                    next: (newValue) => {
+                        const selectedColors: number[] = newValue.map((checked, i) => checked ? this.colors[i].id : 0).filter(v => v !== 0);
+                        this.filterService.updateSelectedColors(selectedColors);
+                    }
+                });
             }
         });
 
         this.patternService.getPatterns().subscribe({
             next: (result: PatternsViewModel) => {
                 this.patterns = result.patterns;
+
+                //build checkbox form based on http result
                 result.patterns.forEach(() => this.patternsFormArray.push(new FormControl(false)));
+
+                //subscribe to get checbox changes
+                this.filterForm.controls.patternsFormArray.valueChanges.subscribe({
+                    next: (newValue) => {
+                        const selectedPatterns: number[] = newValue.map((checked, i) => checked ? this.patterns[i].id : 0).filter(v => v !== 0);
+                        this.filterService.updateSelectedMaterials(selectedPatterns);
+                    }
+                });
             }
         });
 
         this.materialService.getMaterials().subscribe({
             next: (result: MaterialsViewModel) => {
                 this.materials = result.materials;
+
+                //build checkbox form based on http result
                 result.materials.forEach(() => this.materialsFormArray.push(new FormControl(false)));
+
+                //subscribe to get checbox changes
+                this.materialsValueChanges$ = this.filterForm.controls.materialsFormArray.valueChanges.subscribe({
+                    next: (newValue) => {
+                        const selectedMaterials: number[] = newValue.map((checked, i) => checked ? this.materials[i].id : 0).filter(v => v !== 0);
+                        this.filterService.updateSelectedMaterials(selectedMaterials);
+                    }
+                });
             }
         });
     }
