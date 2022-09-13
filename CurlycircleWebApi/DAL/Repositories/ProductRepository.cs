@@ -116,7 +116,8 @@ namespace DAL.Repositories
             if (!products.Any() || colors == null || !colors.Any())
                 return;
 
-            products = products.Where(p => p.Colors.Intersect(colors).Any());
+            // get those products, where the product have any of the selected colors
+            products = products.Where(p => p.Colors.Any(c => colors.Contains(c)));
         }
     }
 }
