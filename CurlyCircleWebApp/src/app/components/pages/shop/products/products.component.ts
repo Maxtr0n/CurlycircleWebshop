@@ -21,13 +21,15 @@ import { BreadcrumbService } from 'xng-breadcrumb';
     templateUrl: './products.component.html',
     styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
     isAdmin: boolean = false;
     productCategory: ProductCategoryViewModel | null = null;
     products: ProductViewModel[] | null = [];
-    routeParams$: Subscription = new Subscription;
     dataSource: ProductsDataSource;
     resultsLength: number = 0;
+
+    routeParams$: Subscription = new Subscription;
+    filterService$: Subscription = new Subscription;
 
     constructor(
         private readonly productCategoryService: ProductCategoryService,
@@ -54,8 +56,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
         });
 
         this.getData();
+    }
 
-        merge(this.filterService.selectedColors$, this.filterService.selectedMaterials$, this.filterService.selectedPatterns$, this.filterService.selectedPrices$).pipe(
+    ngAfterViewInit(): void {
+        this.filterService$ = merge(this.filterService.selectedColors$, this.filterService.selectedMaterials$, this.filterService.selectedPatterns$, this.filterService.selectedPrices$).pipe(
             //maybe not needed
             //debounceTime(100),
             tap(() => this.loadProductsPage(0))
@@ -68,6 +72,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.routeParams$.unsubscribe();
+        this.filterService$.unsubscribe();
     }
 
     getData(): void {

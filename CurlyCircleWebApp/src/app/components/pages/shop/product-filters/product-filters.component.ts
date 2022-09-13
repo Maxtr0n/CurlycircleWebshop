@@ -49,7 +49,7 @@ export class ProductFiltersComponent implements OnInit, OnDestroy {
         this.getData();
 
         //subscribe to price range slider changes
-        this.filterForm.controls.priceValues.valueChanges.pipe(
+        this.pricesValueChanges$ = this.filterForm.controls.priceValues.valueChanges.pipe(
             debounceTime(500)
         ).subscribe({
             next: (newValue) => {
@@ -89,6 +89,10 @@ export class ProductFiltersComponent implements OnInit, OnDestroy {
                 this.colorsValueChanges$ = this.filterForm.controls.colorsFormArray.valueChanges.subscribe({
                     next: (newValue) => {
                         const selectedColors: number[] = newValue.map((checked, i) => checked ? this.colors[i].id : 0).filter(v => v !== 0);
+
+                        //TO DELETE
+                        console.log("color value changed: " + selectedColors);
+
                         this.filterService.updateSelectedColors(selectedColors);
                     }
                 });
@@ -103,10 +107,10 @@ export class ProductFiltersComponent implements OnInit, OnDestroy {
                 result.patterns.forEach(() => this.patternsFormArray.push(new FormControl(false)));
 
                 //subscribe to get checbox changes
-                this.filterForm.controls.patternsFormArray.valueChanges.subscribe({
+                this.patternsValueChanges$ = this.filterForm.controls.patternsFormArray.valueChanges.subscribe({
                     next: (newValue) => {
                         const selectedPatterns: number[] = newValue.map((checked, i) => checked ? this.patterns[i].id : 0).filter(v => v !== 0);
-                        this.filterService.updateSelectedMaterials(selectedPatterns);
+                        this.filterService.updateSelectedPatterns(selectedPatterns);
                     }
                 });
             }

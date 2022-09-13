@@ -10,11 +10,11 @@ namespace Domain.QueryParameters
     {
         public int? ProductCategoryId { get; set; }
 
-        public IEnumerable<int> ColorIds { get; set; } = Enumerable.Empty<int>();
+        public IEnumerable<int> ColorIds { get; set; } = new List<int>();
 
-        public IEnumerable<int> PatternIds { get; set; } = Enumerable.Empty<int>();
+        public IEnumerable<int> PatternIds { get; set; } = new List<int>();
 
-        public IEnumerable<int> MaterialIds { get; set; } = Enumerable.Empty<int>();
+        public IEnumerable<int> MaterialIds { get; set; } = new List<int>();
 
         public int MinPrice { get; set; } = 0;
 
