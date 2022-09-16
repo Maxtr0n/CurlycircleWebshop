@@ -32,7 +32,9 @@
     <div>
         <h2>Ár: {{priceValues.value[0] + ' Ft - ' + priceValues.value[1] + '
             Ft'}}</h2>
-        <p-slider formControlName="priceValues" [range]="true" [min]="0" [max]="20000" [step]="1000"></p-slider>
+        <div class="price-slider-container">
+            <p-slider formControlName="priceValues" [range]="true" [min]="0" [max]="20000" [step]="1000"></p-slider>
+        </div>
     </div>
     <button fxFlexAlign="end" color="warn" (click)="clearFilters()" mat-button>Szűrők törlése</button>
 </div>
