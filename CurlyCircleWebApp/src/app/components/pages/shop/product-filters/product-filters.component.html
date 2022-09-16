@@ -34,5 +34,5 @@
             Ft'}}</h2>
         <p-slider formControlName="priceValues" [range]="true" [min]="0" [max]="20000" [step]="1000"></p-slider>
     </div>
-    <button fxFlexAlign="end" color="warn" mat-button>Szűrők törlése</button>
+    <button fxFlexAlign="end" color="warn" (click)="clearFilters()" mat-button>Szűrők törlése</button>
 </div>

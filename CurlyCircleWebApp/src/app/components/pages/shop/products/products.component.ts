@@ -60,8 +60,8 @@ export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.filterService$ = merge(this.filterService.selectedColors$, this.filterService.selectedMaterials$, this.filterService.selectedPatterns$, this.filterService.selectedPrices$).pipe(
-            //maybe not needed
-            //debounceTime(100),
+            //debounce values that come in too fast because of the range slider and filter clearing
+            debounceTime(200),
             tap(() => this.loadProductsPage(0))
         ).subscribe();
     }

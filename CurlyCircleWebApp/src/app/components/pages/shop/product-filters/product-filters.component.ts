@@ -49,9 +49,7 @@ export class ProductFiltersComponent implements OnInit, OnDestroy {
         this.getData();
 
         //subscribe to price range slider changes
-        this.pricesValueChanges$ = this.filterForm.controls.priceValues.valueChanges.pipe(
-            debounceTime(500)
-        ).subscribe({
+        this.pricesValueChanges$ = this.filterForm.controls.priceValues.valueChanges.subscribe({
             next: (newValue) => {
                 if (!newValue) {
                     return;
@@ -89,10 +87,6 @@ export class ProductFiltersComponent implements OnInit, OnDestroy {
                 this.colorsValueChanges$ = this.filterForm.controls.colorsFormArray.valueChanges.subscribe({
                     next: (newValue) => {
                         const selectedColors: number[] = newValue.map((checked, i) => checked ? this.colors[i].id : 0).filter(v => v !== 0);
-
-                        //TO DELETE
-                        console.log("color value changed: " + selectedColors);
-
                         this.filterService.updateSelectedColors(selectedColors);
                     }
                 });
@@ -132,6 +126,13 @@ export class ProductFiltersComponent implements OnInit, OnDestroy {
                 });
             }
         });
+    }
+
+    clearFilters(): void {
+        this.colorsFormArray.reset();
+        this.materialsFormArray.reset();
+        this.patternsFormArray.reset();
+        this.priceValues.setValue([0, 20000]);
     }
 }
 

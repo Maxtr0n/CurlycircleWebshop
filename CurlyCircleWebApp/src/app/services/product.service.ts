@@ -35,25 +35,25 @@ export class ProductService {
 
         if (productQueryParameters.colorIds !== null && productQueryParameters.colorIds.length > 0) {
             for (let colorId of productQueryParameters.colorIds) {
-                httpParams = httpParams.set('colorIds', colorId);
+                httpParams = httpParams.append('colorIds', colorId);
             }
         }
 
         if (productQueryParameters.materialIds !== null && productQueryParameters.materialIds.length > 0) {
             for (let materialId of productQueryParameters.materialIds) {
-                httpParams = httpParams.set('materialIds', materialId);
+                httpParams = httpParams.append('materialIds', materialId);
             }
         }
 
         if (productQueryParameters.patternIds !== null && productQueryParameters.patternIds.length > 0) {
             for (let patternId of productQueryParameters.patternIds) {
-                httpParams = httpParams.set('patternIds', patternId);
+                httpParams = httpParams.append('patternIds', patternId);
             }
         }
 
         //TO DELETE
         console.log("getProducts called");
-        console.log(httpParams);
+        console.log(httpParams.toString());
 
         return this.httpClient.getWithParams<PagedProductsViewModel>(this.productsUrl, httpParams);
     }
