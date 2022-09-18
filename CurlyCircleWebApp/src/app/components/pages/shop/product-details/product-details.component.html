@@ -22,6 +22,24 @@
         <h1>{{product.name}}</h1>
         <h2>{{product.price | huf}}</h2>
         <p>{{product.description}}</p>
+        <p>
+            <span class="product-attribute-title">Színek: </span>
+            <ng-container *ngFor="let color of product.colors, last as isLast">
+                <span *ngIf="!isLast">{{color.name}}, </span>
+                <span *ngIf="isLast">{{color.name}}</span>
+            </ng-container>
+            <span *ngIf="product.colors.length == 0">-</span>
+        </p>
+        <p>
+            <span class="product-attribute-title">Minta: </span>
+            <span>{{product.pattern?.name}}</span>
+            <span *ngIf="!product.pattern">-</span>
+        </p>
+        <p>
+            <span class="product-attribute-title">Anyag: </span>
+            <span>{{product.material?.name}}</span>
+            <span *ngIf="!product.material">-</span>
+        </p>
         <div fxlayout="row inline" fxLayoutGap="1em">
             <button [disabled]="quantity<=1" (click)="decreaseQuantity()" mat-icon-button color="primary">
                 <mat-icon>

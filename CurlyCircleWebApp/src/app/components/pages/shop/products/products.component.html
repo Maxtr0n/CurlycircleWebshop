@@ -1,14 +1,17 @@
-<div fxLayout="row" fxLayoutGap="1em" fxLayout.lt-md="column">
-    <div class="filters-container mat-elevation-z8" fxFlex="0 0 20%" fxFlex.lt-md="1 1 auto" fxFlexAlign="start">
+<div fxLayout="row" fxLayoutGap="2em" fxLayout.lt-md="column" fxLayoutAlign="start"
+    fxLayoutAlign.lt-md="center stretch">
+    <div class="filters-container mat-elevation-z8" fxFlex="300px" fxFlex.sm="100%" fxFlex.xs="100%" fxFlexAlign="start"
+        fxFlexAlign.lt-md="stretch">
         <app-product-filters></app-product-filters>
     </div>
-    <div fxLayout="column" class="products-container" fxFlex="0 0 80%">
-        <div fxLayout="row wrap" fxLayoutGap="2em grid" fxLayoutAlign="center stretch">
+    <div fxLayout="column" class="products-container" fxLayoutAlign="space-between">
+        <div fxLayout="row wrap" fxLayoutGap="2em grid" fxLayoutAlign="start stretch"
+            fxLayoutAlign.lt-md="center stretch">
             <ng-container *ngFor="let product of products">
                 <app-product-card [item]="product" (onCardClickedEvent)="onProductClicked($event)"
                     (onAdminModifyClickedEvent)="onProductModifyClicked($event)"
-                    (onAdminDeleteClickedEvent)="onProductDeleteClicked($event)" fxFlex="360px"
-                    fxLayoutAlign="center stretch"></app-product-card>
+                    (onAdminDeleteClickedEvent)="onProductDeleteClicked($event)" fxFlex="33%" fxFlex.md="50%"
+                    fxFlex.sm="50%" fxFlex.xs="100%" fxLayoutAlign="center stretch"></app-product-card>
             </ng-container>
             <div fxFlexAlign="center" *ngIf="isAdmin">
                 <button (click)="onProductAddClicked()" mat-fab class="product-add-button" color="primary">

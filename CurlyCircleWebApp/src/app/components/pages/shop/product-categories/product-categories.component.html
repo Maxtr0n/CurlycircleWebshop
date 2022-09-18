@@ -2,8 +2,8 @@
     <ng-container *ngFor="let productCategory of productCategories">
         <app-product-category-card [item]="productCategory" (onCardClickedEvent)="onProductCategoryClicked($event)"
             (onAdminModifyClickedEvent)="onProductCategoryModifyClicked($event)"
-            (onAdminDeleteClickedEvent)="onProductCategoryDeleteClicked($event)" fxFlex="400px"
-            fxLayoutAlign="center stretch">
+            (onAdminDeleteClickedEvent)="onProductCategoryDeleteClicked($event)" fxFlex="33%" fxFlex.md="50%"
+            fxFlex.sm="50%" fxFlex.xs="100%" fxLayoutAlign="center stretch">
         </app-product-category-card>
     </ng-container>
     <div fxFlexAlign="center">

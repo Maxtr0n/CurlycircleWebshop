@@ -1,9 +1,10 @@
 <div fxLayout="column" fxLayoutAlign="center space-between" fxLayoutGap="1em" class="cart-container mat-elevation-z8">
     <ng-container *ngIf="dataSource.data.length <= 0;">
-        <h2>Üres a kosarad.</h2>
+        <h1 fxFlexAlign="center">Üres a kosarad.</h1>
     </ng-container>
 
     <ng-container *ngIf="dataSource.data.length > 0">
+        <h1 fxFlexAlign="center" class="title">Kosarad</h1>
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="product">
                 <th mat-header-cell *matHeaderCellDef>Termék</th>
