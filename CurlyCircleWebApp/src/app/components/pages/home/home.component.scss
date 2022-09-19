@@ -1,0 +1,22 @@
+#showcase {
+    h1 {
+        margin: 0px;
+    }
+
+    h2 {
+        margin: 0px;
+    }
+
+    background-image: url('../../../../assets/images/home-screen-picture1.jpeg');
+    background-size: cover;
+    background-position: center;
+    height: calc(100vh - 64px);
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0 20px;
+}

@@ -3,10 +3,18 @@
 @use "@angular/material" as mat;
 // Plus imports for other components in your app.
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat.core();
+//define typography
+$my-typography: mat.define-typography-config(
+    $font-family: 'Abhaya Libre, serif',
+    $body-1: mat.define-typography-level($font-size: 18px),
+    $body-2: mat.define-typography-level($font-size: 18px),
+    $headline: mat.define-typography-level($font-size: 28px),
+    $title: mat.define-typography-level($font-size: 24px),
+    $button: mat.define-typography-level($font-size: 18px),
+    $caption: mat.define-typography-level($font-size: 16px),
+);
+
+@include mat.core($my-typography);
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
@@ -58,7 +66,7 @@ body {
     margin: 0;
 }
 body {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: 'Abhaya Libre', serif;
 }
 
 // Icon sizing styles

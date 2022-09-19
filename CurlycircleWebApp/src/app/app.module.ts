@@ -60,9 +60,7 @@ import { AddMaterialDialogComponent } from './components/dialogs/add-material-di
 import { AddPatternDialogComponent } from './components/dialogs/add-pattern-dialog/add-pattern-dialog.component';
 import { DeletePatternDialogComponent } from './components/dialogs/delete-pattern-dialog/delete-pattern-dialog.component';
 import { ProductFiltersComponent } from './components/pages/shop/product-filters/product-filters.component';
-
-import { SliderModule } from 'primeng/slider';
-import { PaginatorModule } from 'primeng/paginator';
+import { PrimengModule } from './primeng/primeng.module';
 
 @NgModule({
     declarations: [
@@ -122,8 +120,7 @@ import { PaginatorModule } from 'primeng/paginator';
         NgbModule,
         FontAwesomeModule,
         NgxMatFileInputModule,
-        SliderModule,
-        PaginatorModule
+        PrimengModule
     ],
     providers: [
         httpInterceptorProviders,
