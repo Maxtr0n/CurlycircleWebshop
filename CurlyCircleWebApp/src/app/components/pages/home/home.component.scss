@@ -1,3 +1,5 @@
+@use '../../../../styles.scss';
+
 #showcase {
     h1 {
         margin: 0px;
@@ -6,17 +8,30 @@
     h2 {
         margin: 0px;
     }
+    
+    a {
+        margin-top: 1em;
+        text-decoration: none;
+    }
 
     background-image: url('../../../../assets/images/home-screen-picture1.jpeg');
     background-size: cover;
     background-position: center;
-    height: calc(100vh - 64px);
+    height: calc(100vh - 80px);
     color: white;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
 
     padding: 0 20px;
+}
+
+#contact {
+    text-align: center;
+    padding: 2em 2em;
+    background-color: styles.$primary-color;
+    color: white;
 }

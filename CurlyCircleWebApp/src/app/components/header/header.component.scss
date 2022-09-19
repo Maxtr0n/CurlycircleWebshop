@@ -22,3 +22,13 @@ a:active {
 .nav-icon-button:hover {
     color: styles.$hover-color;
 }
+
+#header {
+    height: 80px;
+}
+
+#logo {
+    float: left;
+    width: 100px;
+    height: 100px;
+}

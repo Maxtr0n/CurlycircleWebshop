@@ -1,11 +1,13 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" id="header">
     <div fxHide.gt-sm>
         <button mat-icon-button (click)="onToggleSidenav()">
             <mat-icon>menu</mat-icon>
         </button>
     </div>
     <div>
-        <a routerLink="/home">Curlycircle Webshop</a>
+        <a routerLink="/home">
+            <img id="logo" src="../../../assets/images/logo-small.png" alt="Logo">
+        </a>
     </div>
 
     <div fxFlex fxLayout fxLayoutAlign="start" fxHide.lt-md>
