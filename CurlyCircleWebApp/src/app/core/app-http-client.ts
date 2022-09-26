@@ -1,14 +1,15 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { OrderQueryParameters } from "../models/models";
+import { environment } from "../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AppHttpClient {
 
-    private apiUrl = 'http://localhost:5000';
+
+    private apiUrl = environment.baseUrl;
 
     public constructor(private readonly http: HttpClient) {
     }
