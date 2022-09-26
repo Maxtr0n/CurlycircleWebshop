@@ -84,7 +84,7 @@ namespace DAL
             modelBuilder.ApplyConfiguration(new PatternEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new MaterialEntityTypeConfiguration());
 
-            modelBuilder.Seed();
+            //modelBuilder.Seed();
         }
     }
 }

@@ -165,6 +165,13 @@ namespace CurlycircleWebApi
 
             app.UseRouting();
 
+
+            if (!env.IsDevelopment())
+            {
+                app.UseHsts();
+                app.UseHttpsRedirection();
+            }
+
             app.UseStaticFiles();
 
             app.UseCors("AllowAngularClient");
