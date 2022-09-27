@@ -7,6 +7,7 @@ import { ProductViewModel } from 'src/app/models/models';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { ProductService } from 'src/app/services/product.service';
+import { environment } from 'src/environments/environment';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
@@ -19,8 +20,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     product$: Subscription = new Subscription;
     product: ProductViewModel | null = null;
     quantity: number = 1;
-    imagesBaseUrl: string = AppConstants.PRODUCT_IMAGES_URL;
-    noImageUrl: string = AppConstants.NO_IMAGE_URL;
+    imagesBaseUrl: string = environment.baseUrl + AppConstants.PRODUCT_IMAGES_URL;
+    noImageUrl: string = environment.baseUrl + AppConstants.NO_IMAGE_URL;
 
     constructor(
         private readonly productCategoryService: ProductCategoryService,

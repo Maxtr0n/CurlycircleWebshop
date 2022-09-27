@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AppConstants } from 'src/app/core/app-constants';
 import { ProductCategoryViewModel, ProductViewModel, Role, UserViewModel } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-product-card',
@@ -10,8 +11,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ProductCardComponent implements OnInit {
     isAdmin: boolean = false;
-    imagesBaseUrl: string = AppConstants.PRODUCT_THUMBNAILS_URL;
-    noImageUrl: string = AppConstants.NO_IMAGE_URL;
+    imagesBaseUrl: string = environment.baseUrl + AppConstants.PRODUCT_THUMBNAILS_URL;
+    noImageUrl: string = environment.baseUrl + AppConstants.NO_IMAGE_URL;
 
     @Input()
     item!: ProductViewModel;

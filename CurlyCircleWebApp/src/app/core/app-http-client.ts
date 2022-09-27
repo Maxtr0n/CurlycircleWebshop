@@ -8,8 +8,7 @@ import { environment } from "../../environments/environment";
 })
 export class AppHttpClient {
 
-
-    private apiUrl = environment.baseUrl;
+    public apiUrl = environment.baseUrl;
 
     public constructor(private readonly http: HttpClient) {
     }

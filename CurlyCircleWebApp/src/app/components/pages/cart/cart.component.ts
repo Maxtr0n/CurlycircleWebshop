@@ -7,6 +7,7 @@ import { AppConstants } from 'src/app/core/app-constants';
 import { CartItemViewModel, CartViewModel } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-cart',
@@ -17,8 +18,8 @@ export class CartComponent implements OnInit {
 
     displayedColumns: string[] = ['product', 'price', 'quantity', 'total', 'delete'];
     dataSource = new MatTableDataSource<CartItemViewModel>([]);
-    imagesBaseUrl: string = AppConstants.PRODUCT_THUMBNAILS_URL;
-    noImageUrl: string = AppConstants.NO_IMAGE_URL;
+    imagesBaseUrl: string = environment.baseUrl + AppConstants.PRODUCT_THUMBNAILS_URL;
+    noImageUrl: string = environment.baseUrl + AppConstants.NO_IMAGE_URL;
     total: number = 0;
 
     constructor(

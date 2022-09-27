@@ -6,6 +6,7 @@ import { AppConstants } from 'src/app/core/app-constants';
 import { OrderViewModel } from 'src/app/models/models';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-admin-order-details',
@@ -13,8 +14,8 @@ import { UserService } from 'src/app/services/user.service';
     styleUrls: ['./admin-order-details.component.scss']
 })
 export class AdminOrderDetailsComponent implements OnInit, OnDestroy {
-    imagesBaseUrl: string = AppConstants.PRODUCT_THUMBNAILS_URL;
-    noImageUrl: string = AppConstants.NO_IMAGE_URL;
+    imagesBaseUrl: string = environment.baseUrl + AppConstants.PRODUCT_THUMBNAILS_URL;
+    noImageUrl: string = environment.baseUrl + AppConstants.NO_IMAGE_URL;
     order$: Subscription = new Subscription;
     order: OrderViewModel | null = null;
     orderUserEmail: string | null = null;
