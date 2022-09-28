@@ -22,6 +22,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     quantity: number = 1;
     imagesBaseUrl: string = environment.baseUrl + AppConstants.PRODUCT_IMAGES_URL;
     noImageUrl: string = environment.baseUrl + AppConstants.NO_IMAGE_URL;
+    noImageArray: string[] = [""];
 
     constructor(
         private readonly productCategoryService: ProductCategoryService,

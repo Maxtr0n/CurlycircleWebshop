@@ -28,7 +28,6 @@ import { ProductCategoriesComponent } from './components/pages/shop/product-cate
 import { ProductsComponent } from './components/pages/shop/products/products.component';
 import { ProductDetailsComponent } from './components/pages/shop/product-details/product-details.component';
 import { ShopComponent } from './components/pages/shop/shop.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductCardComponent } from './components/shared/product-card/product-card.component';
 import { CartComponent } from './components/pages/cart/cart.component';
 import { OrderComponent } from './components/pages/order/order.component';
@@ -117,7 +116,6 @@ import { PrimengModule } from './primeng/primeng.module';
         ReactiveFormsModule,
         FormsModule,
         BreadcrumbModule,
-        NgbModule,
         FontAwesomeModule,
         NgxMatFileInputModule,
         PrimengModule

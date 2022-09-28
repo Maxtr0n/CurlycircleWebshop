@@ -1,22 +1,19 @@
 <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="2em" *ngIf="product">
     <div class="carousel-container">
-        <ngb-carousel>
-            <ng-container *ngIf="product.imageUrls.length <= 0;">
-                <ng-template ngbSlide>
-                    <div class="picsum-img-wrapper carousel-image-container">
-                        <img [src]="noImageUrl" class="w-100">
-                    </div>
+        <ng-container *ngIf="product.imageUrls.length <= 0;">
+            <p-galleria [value]="noImageArray" [showThumbnails]="false" [showIndicators]="true">
+                <ng-template pTemplate="item" let-item>
+                    <img [src]="noImageUrl" class="product-img" />
                 </ng-template>
-            </ng-container>
-            <ng-container *ngIf="product.imageUrls.length > 0">
-                <ng-template ngbSlide *ngFor="let image of product?.imageUrls; let index=index">
-                    <div class="picsum-img-wrapper carousel-image-container">
-                        <img [src]="imagesBaseUrl + image" class="w-100">
-                        <img *ngIf="image.length <= 0" [src]="noImageUrl" class="w-100">
-                    </div>
+            </p-galleria>
+        </ng-container>
+        <ng-container *ngIf="product.imageUrls.length > 0">
+            <p-galleria [value]="product.imageUrls" [showThumbnails]="false" [showIndicators]="true">
+                <ng-template pTemplate="item" let-item>
+                    <img [src]="imagesBaseUrl + item" class="product-img" />
                 </ng-template>
-            </ng-container>
-        </ngb-carousel>
+            </p-galleria>
+        </ng-container>
     </div>
     <div fxLayout="column" fxLayoutGap="1em">
         <h1>{{product.name}}</h1>
