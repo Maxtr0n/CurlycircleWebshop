@@ -1,4 +1,4 @@
-@use '../../../styles';
+@use '../../variables';
 
 .quick-links-container {
     width: 100%;
@@ -6,13 +6,13 @@
 }
 
 .footer-top-section {
-    background-color: styles.$footer-background-light-color;
+    background-color: variables.$footer-background-light-color;
     padding-top: 1em;
     padding-bottom: 1em;
 }
 
 .footer-bottom-section {
-    background-color: styles.$footer-background-dark-color;
+    background-color: variables.$footer-background-dark-color;
     color: white;
 
     p {
@@ -29,7 +29,7 @@
         }
 
         a:hover {
-            color: styles.$hover-color;
+            color: variables.$hover-color;
         }
     }
 }

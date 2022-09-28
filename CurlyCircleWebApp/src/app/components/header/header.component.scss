@@ -1,4 +1,4 @@
-@use '../../../styles';
+@use '../../variables';
 
 a {
     text-decoration: none;
@@ -7,7 +7,7 @@ a {
 
 a:hover,
 a:active {
-    color: styles.$hover-color;
+    color: variables.$hover-color;
 }
 
 .navigation-items {
@@ -20,7 +20,7 @@ a:active {
 }
 
 .nav-icon-button:hover {
-    color: styles.$hover-color;
+    color: variables.$hover-color;
 }
 
 #header {

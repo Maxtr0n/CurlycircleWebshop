@@ -1,8 +1,8 @@
-@use '../../../../styles';
+@use '../../../variables';
 
 .product-card:hover {
     cursor: pointer;
-    background-color: styles.$hover-color;
+    background-color: variables.$hover-color;
 }
 
 .product-image {

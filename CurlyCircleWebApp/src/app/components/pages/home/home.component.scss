@@ -1,4 +1,4 @@
-@use '../../../../styles.scss';
+@use '../../../variables';
 
 #showcase {
     h1 {
@@ -32,6 +32,6 @@
 #contact {
     text-align: center;
     padding: 2em 2em;
-    background-color: styles.$primary-color;
+    background-color: variables.$primary-color;
     color: white;
 }
