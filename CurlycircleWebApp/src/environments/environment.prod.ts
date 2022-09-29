@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    baseUrl: "https://curlycircle.azurewebsites.net"
+    baseUrl: "https://curlycircleapi.azurewebsites.net"
 };

@@ -73,10 +73,18 @@ namespace CurlycircleWebApi
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAngularClient",
+                options.AddPolicy("AllowLocalAngularClient",
                     builder =>
                     {
                         builder.WithOrigins("http://localhost:4200")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+
+                options.AddPolicy("AllowAngularClient",
+                    builder =>
+                    {
+                        builder.WithOrigins("https://curlycircle.azurewebsites.net")
                             .AllowAnyMethod()
                             .AllowAnyHeader();
                     });
@@ -177,6 +185,7 @@ namespace CurlycircleWebApi
             app.UseStaticFiles();
 
             app.UseCors("AllowAngularClient");
+            app.UseCors("AllowLocalAngularClient");
 
             app.UseAuthentication();
 
