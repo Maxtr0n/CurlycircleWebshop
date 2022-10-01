@@ -11,7 +11,7 @@
                 <td mat-cell *matCellDef="let element">
                     <div class="product-container">
                         <img *ngIf="element.product.imageUrls.length > 0; else noImageBlock"
-                            [src]="imagesBaseUrl + element.product.imageUrls[0]" class="product-image">
+                            [src]="thumbnailImagesBaseUrl + element.product.thumbnailImageUrl" class="product-image">
                         <ng-template #noImageBlock>
                             <img [src]="noImageUrl" class="product-image">
                         </ng-template>
