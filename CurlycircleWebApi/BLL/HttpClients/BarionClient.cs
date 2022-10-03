@@ -1,4 +1,5 @@
 ﻿using BLL.Interfaces;
+using Domain.QueryParameters.Barion;
 using Microsoft.Extensions.Configuration;
 using RestSharp;
 using System;
@@ -25,10 +26,16 @@ namespace BLL.HttpClients
             _client = new RestClient(options);
         }
 
-        public async Task<string> StartPayment(string paymentStartJson)
+        public async Task<StartPaymentResponse> StartPayment(StartPaymentRequest startPaymentRequest)
         {
 
-            var response = await _client.PostJsonAsync<string, string>("/v2/Payment/Start", "asd");
+            var response = await _client.PostJsonAsync<StartPaymentRequest, StartPaymentResponse>("/v2/Payment/Start", startPaymentRequest);
+            return response!;
+        }
+
+        public async Task<GetPaymentStateResponse> GetPaymentState(GetPaymentStateRequest getPaymentStateRequest)
+        {
+            var response = await _client.PostJsonAsync<GetPaymentStateRequest, GetPaymentStateResponse>("/v2/Payment/GetPaymentState", getPaymentStateRequest);
             return response!;
         }
 
