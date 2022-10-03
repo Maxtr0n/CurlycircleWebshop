@@ -3,8 +3,10 @@ using BLL.Dtos;
 using BLL.Interfaces;
 using BLL.ViewModels;
 using Domain.Entities;
+using Domain.Enums;
 using Domain.Interfaces;
 using Domain.QueryParameters;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,22 +21,36 @@ namespace BLL.Services
         private readonly ICartRepository _cartRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IBarionClient _barionClient;
+
+        private IConfiguration Configuration { get; }
 
         public OrderService(
           IOrderRepository orderRepository,
           ICartRepository cartRepository,
           IUnitOfWork unitOfWork,
-          IMapper mapper)
+          IMapper mapper,
+          IConfiguration configuration,
+          IBarionClient barionClient
+          )
         {
             _orderRepository = orderRepository;
             _cartRepository = cartRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            Configuration = configuration;
+            _barionClient = barionClient;
         }
 
         public async Task<EntityCreatedViewModel> CreateOrderAsync(OrderUpsertDto orderUpsertDto)
         {
             var order = _mapper.Map<Order>(orderUpsertDto);
+
+            if (orderUpsertDto.PaymentMethod == PaymentMethod.WebPayment)
+            {
+                HandleWebPayment(orderUpsertDto);
+            }
+
             var userCart = await _cartRepository.GetCartByIdAsync(orderUpsertDto.CartId);
             order.OrderDateTime = DateTime.Now;
             order.Total = 0;
@@ -54,6 +70,13 @@ namespace BLL.Services
             var id = _orderRepository.AddOrder(order);
             await _unitOfWork.SaveChangesAsync();
             return new EntityCreatedViewModel(id);
+        }
+
+        private bool HandleWebPayment(OrderUpsertDto orderUpsertDto)
+        {
+
+
+            return true;
         }
 
         public async Task<PagedOrdersViewModel> GetAllOrdersAsync(OrderQueryParameters orderQueryParameters)

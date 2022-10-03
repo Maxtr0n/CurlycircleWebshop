@@ -1,5 +1,6 @@
 using Autofac;
 using BLL;
+using BLL.Interfaces;
 using CurlycircleWebApi.Common;
 using CurlycircleWebApi.Infrastructure;
 using DAL;
