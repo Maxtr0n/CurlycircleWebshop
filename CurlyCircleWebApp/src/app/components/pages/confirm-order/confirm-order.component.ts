@@ -33,7 +33,7 @@ export class ConfirmOrderComponent implements OnInit {
 
         this.orderService.placeOrder(this.order).subscribe({
             next: (order) => {
-                this.cartService.clearCart().subscribe();
+                this.cartService.refreshCurrentCart().subscribe();
                 this.router.navigate(['/order-success']);
             },
             error: (err) => {

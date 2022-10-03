@@ -68,6 +68,8 @@ namespace BLL.Services
             }
 
             var id = _orderRepository.AddOrder(order);
+            userCart.ClearCart();
+
             await _unitOfWork.SaveChangesAsync();
             return new EntityCreatedViewModel(id);
         }

@@ -98,6 +98,17 @@ export class CartService {
         return JSON.parse(currentLocalCart);
     }
 
+    public refreshCurrentCart(): Observable<CartViewModel> {
+        const cartId = this.currentCartValue?.id;
+        if (!cartId) {
+            return of();
+        }
+
+        return this.getCartById(cartId).pipe(
+            tap(cart => this.currentCartSubject.next(cart))
+        );
+    }
+
     private setCurrentLocalCart(localCart: LocalCart): void {
         localStorage.setItem(LOCAL_CART_KEY, JSON.stringify(localCart));
     }
