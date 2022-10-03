@@ -185,8 +185,15 @@ namespace CurlycircleWebApi
 
             app.UseStaticFiles();
 
-            app.UseCors("AllowAngularClient");
-            app.UseCors("AllowLocalAngularClient");
+            if (env.IsDevelopment())
+            {
+                app.UseCors("AllowLocalAngularClient");
+            }
+            else
+            {
+                app.UseCors("AllowAngularClient");
+
+            }
 
             app.UseAuthentication();
 
