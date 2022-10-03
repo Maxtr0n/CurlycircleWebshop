@@ -28,17 +28,17 @@ namespace BLL.HttpClients
 
         public async Task<StartPaymentResponse> StartPayment(StartPaymentRequest startPaymentRequest)
         {
-
             var response = await _client.PostJsonAsync<StartPaymentRequest, StartPaymentResponse>("/v2/Payment/Start", startPaymentRequest);
             return response!;
         }
 
         public async Task<GetPaymentStateResponse> GetPaymentState(GetPaymentStateRequest getPaymentStateRequest)
         {
-            var response = await _client.PostJsonAsync<GetPaymentStateRequest, GetPaymentStateResponse>("/v2/Payment/GetPaymentState", getPaymentStateRequest);
-            return response!;
+            var request = new RestRequest("/v2/Payment/GetPaymentState")
+                .AddJsonBody(getPaymentStateRequest);
+            var response = await _client.ExecuteGetAsync<GetPaymentStateResponse>(request);
+            return response.Data!;
         }
-
 
         public void Dispose()
         {

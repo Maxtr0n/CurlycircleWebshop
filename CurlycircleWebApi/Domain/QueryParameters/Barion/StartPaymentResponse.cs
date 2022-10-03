@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.QueryParameters.Barion
 {
-    public class StartPaymentResponse
+    public class StartPaymentResponse : BarionResponse
     {
         public Guid PaymentId { get; set; }
 
