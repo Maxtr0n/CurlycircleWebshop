@@ -181,20 +181,8 @@ namespace BLL.Services
         public async Task DeleteProductAsync(int productId)
         {
             var product = await _productRepository.GetProductByIdAsync(productId);
-            if (product.ThumbnailImageUrl != string.Empty)
-            {
-                var thumbnailToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductThumbnails, product.ThumbnailImageUrl);
-                _imageHelper.DeleteImageFile(thumbnailToDelete);
-            }
+            product.IsAvailable = false;
 
-            string[] imagePaths = product.ImageUrls.Split(';');
-            foreach (var imagePath in imagePaths)
-            {
-                var imageToDelete = Path.Combine(Directory.GetCurrentDirectory(), pathToProductImages, imagePath);
-                _imageHelper.DeleteImageFile(imageToDelete);
-            }
-
-            await _productRepository.DeleteProductAsync(productId);
             await _unitOfWork.SaveChangesAsync();
         }
     }

@@ -78,6 +78,7 @@ namespace DAL.Repositories
             var orders = await dbContext.Orders
                 .Include(o => o.OrderItems)
                 .Where(o => o.ApplicationUserId == userId)
+                .OrderByDescending(o => o.OrderDateTime)
                 .ToListAsync();
             return orders;
         }

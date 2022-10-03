@@ -48,7 +48,7 @@ namespace DAL.Repositories
                 .Include(p => p.Colors)
                 .Include(p => p.Material)
                 .Include(p => p.Pattern)
-                .Where(p => p.Price >= productQueryParameters.MinPrice && p.Price <= productQueryParameters.MaxPrice);
+                .Where(p => p.Price >= productQueryParameters.MinPrice && p.Price <= productQueryParameters.MaxPrice && p.IsAvailable);
 
             var colors = await _colorRepository.GetColorsByIdsAsync(productQueryParameters.ColorIds);
             var materials = await _materialRepository.GetMaterialsByIdAsync(productQueryParameters.MaterialIds);
