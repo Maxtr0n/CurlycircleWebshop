@@ -184,6 +184,7 @@ export interface ProductCategoryViewModel {
     name: string;
     description: string | null;
     thumbnailImageUrl: string;
+    isAvailable: boolean;
 }
 
 export interface ProductUpsertDto {

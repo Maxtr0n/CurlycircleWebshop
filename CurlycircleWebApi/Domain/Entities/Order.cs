@@ -35,6 +35,10 @@ namespace Domain.Entities
 
         public string? Note { get; set; }
 
+        public int? WebPaymentId { get; set; }
+
+        public WebPayment? WebPayment { get; set; }
+
         public Order()
         {
             OrderItems = new List<OrderItem>();

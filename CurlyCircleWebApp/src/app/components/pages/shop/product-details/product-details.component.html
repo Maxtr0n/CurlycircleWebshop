@@ -16,7 +16,12 @@
         </ng-container>
     </div>
     <div fxLayout="column" fxLayoutGap="1em">
-        <h1>{{product.name}}</h1>
+        <ng-container *ngIf="product.isAvailable">
+            <h1>{{product.name}}</h1>
+        </ng-container>
+        <ng-container *ngIf="!product.isAvailable">
+            <h1>{{product.name}} (Nem elérhető)</h1>
+        </ng-container>
         <h2>{{product.price | huf}}</h2>
         <p>{{product.description}}</p>
         <p>
@@ -53,7 +58,8 @@
                 </mat-icon>
             </button>
         </div>
-        <button (click)="addToCart()" mat-raised-button color="primary" class="cart-button">Kosárba</button>
+        <button (click)="addToCart()" [disabled]="!product.isAvailable" mat-raised-button color="primary"
+            class="cart-button">Kosárba</button>
     </div>
 
 </div>

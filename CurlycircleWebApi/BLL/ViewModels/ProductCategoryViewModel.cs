@@ -15,5 +15,7 @@ namespace BLL.ViewModels
         public string Description { get; set; } = default!;
 
         public string ThumbnailImageUrl { get; set; } = default!;
+
+        public bool IsAvailable { get; set; } = true;
     }
 }

@@ -10,7 +10,7 @@ namespace Domain.QueryParameters.Barion
     {
         public string POSTransactionId { get; set; } = string.Empty;
 
-        public string Payee { get; set; } = string.Empty;
+        public string Payee { get; set; } = "schutz.mate2@gmail.com";
 
         public decimal Total { get; set; }
 

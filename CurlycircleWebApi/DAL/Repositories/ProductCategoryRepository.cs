@@ -27,6 +27,7 @@ namespace DAL.Repositories
         public async Task<IEnumerable<ProductCategory>> GetAllAsync()
         {
             var productCategories = await dbContext.ProductCategories
+                .Where(pc => pc.IsAvailable)
                 .ToListAsync();
             return productCategories;
         }
@@ -34,6 +35,7 @@ namespace DAL.Repositories
         public async Task<ProductCategory> GetProductCategoryByIdAsync(int productCategoryId)
         {
             var productCategory = await dbContext.ProductCategories
+                .Include(pc => pc.Products)
                 .FirstOrDefaultAsync(p => p.Id == productCategoryId);
 
             if (productCategory == null)
