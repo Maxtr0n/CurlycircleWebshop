@@ -9,7 +9,7 @@ namespace Domain.QueryParameters.Barion
 {
     public class StartPaymentRequest
     {
-        public Guid POSKey { get; set; }
+        public string POSKey { get; set; } = string.Empty;
 
         public string PaymentType { get; set; } = "Immediate";
 

@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Abstractions;
+using Domain.QueryParameters.Barion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +27,16 @@ namespace Domain.Entities
             set => _orderId = value;
         }
 
-        public string POSTransactionId { get; set; } = Guid.NewGuid().ToString();
+        public string POSTransactionId { get; set; } = "1";
 
-        public string Status { get; set; } = string.Empty;
+        public string? BarionPaymentId { get; set; }
+
+        public double Total { get; set; }
+
+        public PaymentStatus PaymentStatus { get; set; }
+
+        public WebPayment()
+        {
+        }
     }
 }

@@ -35,7 +35,7 @@ import { HufPipe } from './utilities/pipes/huf-pipe';
 import { QuantityPickerComponent } from './components/shared/quantity-picker/quantity-picker.component';
 import { OrderOptionsComponent } from './components/pages/order-options/order-options.component';
 import { ConfirmOrderComponent } from './components/pages/confirm-order/confirm-order.component';
-import { OrderSuccessComponent } from './components/pages/order-success/order-success.component';
+import { OrderCompleteComponent } from './components/pages/order-complete/order-complete.component';
 import { AdminOrdersComponent } from './components/pages/admin/admin-orders/admin-orders.component';
 import { AdminOrderDetailsComponent } from './components/pages/admin/admin-order-details/admin-order-details.component';
 import { ShippingMethodPipe } from './utilities/pipes/shipping-method-pipe';
@@ -87,7 +87,7 @@ import { PrimengModule } from './primeng/primeng.module';
         QuantityPickerComponent,
         OrderOptionsComponent,
         ConfirmOrderComponent,
-        OrderSuccessComponent,
+        OrderCompleteComponent,
         AdminOrdersComponent,
         AdminOrderDetailsComponent,
         AddProductCategoryDialogComponent,

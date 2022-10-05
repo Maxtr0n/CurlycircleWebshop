@@ -14,13 +14,10 @@ namespace BLL.HttpClients
     {
         private readonly RestClient _client;
         private readonly string _url;
-        private readonly string _secretKey;
-
 
         public BarionClient(IConfiguration configuration)
         {
             _url = configuration["Barion:BaseUrl"];
-            _secretKey = configuration["Barion:SecretKey"];
             var options = new RestClientOptions(_url);
 
             _client = new RestClient(options);

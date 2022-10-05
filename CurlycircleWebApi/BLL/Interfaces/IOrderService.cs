@@ -13,6 +13,8 @@ namespace BLL.Interfaces
     {
         Task<EntityCreatedViewModel> CreateOrderAsync(OrderUpsertDto orderUpsertDto);
 
+        Task<WebPaymentRequestViewModel> CreateWebPaymentRequestAsync(OrderUpsertDto orderUpsertDto);
+
         Task<PagedOrdersViewModel> GetAllOrdersAsync(OrderQueryParameters orderQueryParameters);
 
         Task<OrderViewModel> FindOrderByIdAsync(int orderId);

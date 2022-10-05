@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using BLL.Dtos;
+using BLL.Exceptions;
 using BLL.Interfaces;
 using BLL.ViewModels;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Interfaces;
 using Domain.QueryParameters;
+using Domain.QueryParameters.Barion;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,7 @@ namespace BLL.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly ICartRepository _cartRepository;
+        private readonly IWebPaymentRepository _webPaymentRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IBarionClient _barionClient;
@@ -28,6 +31,7 @@ namespace BLL.Services
         public OrderService(
           IOrderRepository orderRepository,
           ICartRepository cartRepository,
+          IWebPaymentRepository webPaymentRepository,
           IUnitOfWork unitOfWork,
           IMapper mapper,
           IConfiguration configuration,
@@ -36,6 +40,7 @@ namespace BLL.Services
         {
             _orderRepository = orderRepository;
             _cartRepository = cartRepository;
+            _webPaymentRepository = webPaymentRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             Configuration = configuration;
@@ -45,27 +50,8 @@ namespace BLL.Services
         public async Task<EntityCreatedViewModel> CreateOrderAsync(OrderUpsertDto orderUpsertDto)
         {
             var order = _mapper.Map<Order>(orderUpsertDto);
-
-            if (orderUpsertDto.PaymentMethod == PaymentMethod.WebPayment)
-            {
-                HandleWebPayment(orderUpsertDto);
-            }
-
             var userCart = await _cartRepository.GetCartByIdAsync(orderUpsertDto.CartId);
-            order.OrderDateTime = DateTime.Now;
-            order.Total = 0;
-
-            foreach (var cartItem in userCart.CartItems)
-            {
-                var orderItem = new OrderItem
-                {
-                    ProductId = cartItem.ProductId,
-                    Price = cartItem.Price,
-                    Quantity = cartItem.Quantity,
-                };
-                order.OrderItems.Add(orderItem);
-                order.Total += cartItem.Quantity * cartItem.Price;
-            }
+            PrepareOrder(order, userCart);
 
             var id = _orderRepository.AddOrder(order);
             userCart.ClearCart();
@@ -74,11 +60,36 @@ namespace BLL.Services
             return new EntityCreatedViewModel(id);
         }
 
-        private bool HandleWebPayment(OrderUpsertDto orderUpsertDto)
+        public async Task<WebPaymentRequestViewModel> CreateWebPaymentRequestAsync(OrderUpsertDto orderUpsertDto)
         {
+            if (orderUpsertDto.PaymentMethod != PaymentMethod.WebPayment)
+            {
+                throw new ValidationAppException("Web payment attempt failed.", new[]
+                {
+                    "Web payment was not choosen as payment method."
+                });
+            }
+
+            var order = _mapper.Map<Order>(orderUpsertDto);
+            var userCart = await _cartRepository.GetCartByIdAsync(orderUpsertDto.CartId);
+
+            PrepareOrder(order, userCart);
+            var orderId = _orderRepository.AddOrder(order);
+
+            WebPayment webPayment = new()
+            {
+                OrderId = orderId,
+                Total = order.Total,
+                PaymentStatus = PaymentStatus.Prepared
+            };
+
+            var webPaymentId = _webPaymentRepository.AddWebPayment(webPayment);
+            var request = PrepareWebPaymentRequest(order, userCart, orderId, webPaymentId);
+
+            var response = await _barionClient.StartPayment(request);
 
 
-            return true;
+
         }
 
         public async Task<PagedOrdersViewModel> GetAllOrdersAsync(OrderQueryParameters orderQueryParameters)
@@ -121,6 +132,62 @@ namespace BLL.Services
             var orders = await _orderRepository.GetUserOrdersAsync(userId);
             var ordersViewModel = _mapper.Map<OrdersViewModel>(orders);
             return ordersViewModel;
+        }
+
+        private static void PrepareOrder(Order order, Cart userCart)
+        {
+            order.OrderDateTime = DateTime.Now;
+            order.Total = 0;
+
+            foreach (var cartItem in userCart.CartItems)
+            {
+                var orderItem = new OrderItem
+                {
+                    ProductId = cartItem.ProductId,
+                    Price = cartItem.Price,
+                    Quantity = cartItem.Quantity,
+                };
+                order.OrderItems.Add(orderItem);
+                order.Total += cartItem.Quantity * cartItem.Price;
+            }
+        }
+
+        private StartPaymentRequest PrepareWebPaymentRequest(Order order, Cart userCart, int orderId, int webPaymentId)
+        {
+            List<Item> items = new();
+
+            foreach (var orderItem in order.OrderItems)
+            {
+                var item = new Item
+                {
+                    Name = orderItem.Product.Name,
+                    Description = orderItem.Product.Description ?? string.Empty,
+                    Quantity = orderItem.Quantity,
+                    UnitPrice = (decimal)orderItem.Price,
+                    ItemTotal = (decimal)(orderItem.Quantity * orderItem.Price)
+                };
+
+                items.Add(item);
+            }
+
+            PaymentTransaction paymentTransaction = new()
+            {
+                POSTransactionId = Guid.NewGuid().ToString(),
+                Total = (decimal)order.Total,
+                Items = items
+            };
+
+            StartPaymentRequest request = new()
+            {
+                POSKey = Configuration["Barion:SecretKey"],
+                PaymentRequestId = webPaymentId.ToString(),
+                Transactions = new List<PaymentTransaction> { paymentTransaction },
+                RedirectUrl = Configuration["RedirectUrlBase"],
+                CallbackUrl = Configuration["CallbackUrl"],
+                OrderNumber = orderId.ToString(),
+            };
+
+            return request;
         }
     }
 }

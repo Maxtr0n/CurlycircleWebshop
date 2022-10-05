@@ -16,6 +16,7 @@ namespace DAL
         public DbSet<Color> Colors => Set<Color>();
         public DbSet<Material> Materials => Set<Material>();
         public DbSet<Pattern> Patterns => Set<Pattern>();
+        public DbSet<WebPayment> WebPayments => Set<WebPayment>();
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -33,6 +34,11 @@ namespace DAL
             modelBuilder
                 .Entity<Order>()
                 .Property(o => o.ShippingMethod)
+                .HasConversion<string>();
+
+            modelBuilder
+                .Entity<WebPayment>()
+                .Property(wp => wp.PaymentStatus)
                 .HasConversion<string>();
 
             modelBuilder.HasSequence<int>("OrderNumbers")
@@ -75,6 +81,10 @@ namespace DAL
                .StartsAt(1000)
                .IncrementsBy(1);
 
+            modelBuilder.HasSequence<int>("webpaymentseq")
+               .StartsAt(1000)
+               .IncrementsBy(1);
+
             modelBuilder.ApplyConfiguration(new ApplicationUserEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OrderEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ProductCategoryEntityTypeConfiguration());
@@ -83,6 +93,7 @@ namespace DAL
             modelBuilder.ApplyConfiguration(new ColorEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PatternEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new MaterialEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new WebPaymentEntityTypeConfiguration());
 
             modelBuilder.Seed();
         }

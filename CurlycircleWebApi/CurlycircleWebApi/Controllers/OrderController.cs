@@ -37,6 +37,14 @@ namespace CurlycircleWebApi.Controllers
             return _orderService.CreateOrderAsync(orderCreateDto);
         }
 
+        [HttpPost("/webpayment")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public Task<WebPaymentRequestViewModel> CreateWebPaymentOrder([FromBody] OrderUpsertDto orderCreateDto)
+        {
+            HttpContext.Response.StatusCode = StatusCodes.Status201Created;
+            return _orderService.CreateWebPaymentRequestAsync(orderCreateDto);
+        }
+
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public Task<PagedOrdersViewModel> GetOrders([FromQuery] OrderQueryParameters orderQueryParameters)
