@@ -350,3 +350,25 @@ export interface MaterialUpsertDto {
     name: string;
 }
 
+export interface WebPaymentRequestViewModel {
+    paymentId: string;
+    paymentRequestId: string;
+    paymentStatus: PaymentStatus;
+    gatewayUrl: string;
+}
+
+export enum PaymentStatus {
+    Prepared = 10,
+    Started = 20,
+    InProgress = 21,
+    Waiting = 22,
+    Reserved = 25,
+    Authorized = 26,
+    Canceled = 30,
+    Succeeded = 40,
+    Failed = 50,
+    PartiallySucceeded = 60,
+    Expired = 70
+}
+
+

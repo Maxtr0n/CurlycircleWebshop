@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { OrderUpsertDto } from 'src/app/models/models';
+import { OrderUpsertDto, PaymentMethod } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { OrderService } from 'src/app/services/order.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
     selector: 'app-confirm-order',
@@ -19,7 +20,8 @@ export class ConfirmOrderComponent implements OnInit {
         private readonly orderService: OrderService,
         private readonly authService: AuthService,
         private readonly router: Router,
-        private readonly snackbar: MatSnackBar
+        private readonly snackbar: MatSnackBar,
+        @Inject(DOCUMENT) private document: Document
     ) { }
 
     ngOnInit(): void {
@@ -31,15 +33,23 @@ export class ConfirmOrderComponent implements OnInit {
             return;
         }
 
-        this.orderService.placeOrder(this.order).subscribe({
-            next: (order) => {
-                this.cartService.refreshCurrentCart().subscribe();
-                this.router.navigate(['/order-success']);
-            },
-            error: (err) => {
-                console.log(err);
-                this.snackbar.open('Nem sikerült leadni a rendelésed, kérlek próbálkozz később.', '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-warn'] });
-            }
-        });
+        if (PaymentMethod[this.order.paymentMethod].toString() === PaymentMethod.WebPayment.toString()) {
+            this.orderService.placeWebPaymentOrder(this.order).subscribe({
+                next: (webPaymentRequestViewModel) => {
+                    this.document.location.href = webPaymentRequestViewModel.gatewayUrl;
+                }
+            });
+        } else {
+            this.orderService.placeOrder(this.order).subscribe({
+                next: (entityCreatedViewModel) => {
+                    this.cartService.refreshCurrentCart().subscribe();
+                    this.router.navigate(['/order-success']);
+                },
+                error: (err) => {
+                    console.log(err);
+                    this.snackbar.open('Nem sikerült leadni a rendelésed, kérlek próbálkozz később.', '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-warn'] });
+                }
+            });
+        }
     }
 }

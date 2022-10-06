@@ -16,9 +16,5 @@ namespace Domain.QueryParameters.Barion
 
         public string GatewayUrl { get; set; } = string.Empty;
 
-        public string CallbackUrl { get; set; } = string.Empty;
-
-        public string RedirectUrl { get; set; } = string.Empty;
-
     }
 }

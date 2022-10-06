@@ -45,6 +45,14 @@ namespace CurlycircleWebApi.Controllers
             return _orderService.CreateWebPaymentRequestAsync(orderCreateDto);
         }
 
+        [HttpPost("/webpaymentnotification")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public Task NotifyWebPaymentStatusChanged(Guid paymentId)
+        {
+            HttpContext.Response.StatusCode = StatusCodes.Status200OK;
+            return _orderService.
+        }
+
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public Task<PagedOrdersViewModel> GetOrders([FromQuery] OrderQueryParameters orderQueryParameters)

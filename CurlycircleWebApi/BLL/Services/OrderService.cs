@@ -74,21 +74,56 @@ namespace BLL.Services
             var userCart = await _cartRepository.GetCartByIdAsync(orderUpsertDto.CartId);
 
             PrepareOrder(order, userCart);
-            var orderId = _orderRepository.AddOrder(order);
-
-            WebPayment webPayment = new()
+            order.WebPayment = new()
             {
-                OrderId = orderId,
                 Total = order.Total,
                 PaymentStatus = PaymentStatus.Prepared
             };
 
-            var webPaymentId = _webPaymentRepository.AddWebPayment(webPayment);
-            var request = PrepareWebPaymentRequest(order, userCart, orderId, webPaymentId);
+            var orderId = _orderRepository.AddOrder(order);
+            var request = PrepareWebPaymentRequest(order);
 
-            var response = await _barionClient.StartPayment(request);
+            StartPaymentResponse? startPaymentResponse = await _barionClient.StartPayment(request);
 
+            if (startPaymentResponse == null)
+            {
+                order.WebPayment.PaymentStatus = PaymentStatus.Failed;
 
+                throw new WebPaymentException("Web payment attempt failed.", new[]
+                {
+                    "Barion server is unresponsive."
+                });
+            }
+
+            if (startPaymentResponse.Errors.Count > 0)
+            {
+                order.WebPayment.PaymentStatus = PaymentStatus.Failed;
+
+                var errors = new List<string>();
+                foreach (var error in startPaymentResponse.Errors)
+                {
+                    errors.Add(error.Title);
+                }
+
+                throw new WebPaymentException("Web payment attempt failed.", errors);
+            }
+
+            order.WebPayment.PaymentStatus = startPaymentResponse.Status;
+
+            WebPaymentRequestViewModel webPaymentRequestViewModel = new()
+            {
+                PaymentId = startPaymentResponse.PaymentId,
+                PaymentRequestId = startPaymentResponse.PaymentRequestId,
+                Status = startPaymentResponse.Status,
+                GatewayUrl = startPaymentResponse.GatewayUrl
+            };
+
+            await _unitOfWork.SaveChangesAsync();
+            return webPaymentRequestViewModel;
+        }
+
+        public async Task HandleWebPaymentStatusChanged(Guid paymentId)
+        {
 
         }
 
@@ -152,7 +187,7 @@ namespace BLL.Services
             }
         }
 
-        private StartPaymentRequest PrepareWebPaymentRequest(Order order, Cart userCart, int orderId, int webPaymentId)
+        private StartPaymentRequest PrepareWebPaymentRequest(Order order)
         {
             List<Item> items = new();
 
@@ -180,11 +215,11 @@ namespace BLL.Services
             StartPaymentRequest request = new()
             {
                 POSKey = Configuration["Barion:SecretKey"],
-                PaymentRequestId = webPaymentId.ToString(),
+                PaymentRequestId = order.WebPayment?.Id.ToString() ?? string.Empty,
                 Transactions = new List<PaymentTransaction> { paymentTransaction },
                 RedirectUrl = Configuration["RedirectUrlBase"],
                 CallbackUrl = Configuration["CallbackUrl"],
-                OrderNumber = orderId.ToString(),
+                OrderNumber = order.Id.ToString(),
             };
 
             return request;
