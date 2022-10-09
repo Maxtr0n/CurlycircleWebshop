@@ -112,6 +112,8 @@ namespace BLL
             CreateMap<Material, MaterialViewModel>();
             CreateMap<IEnumerable<Material>, MaterialsViewModel>()
                  .ForMember(c => c.Materials, options => options.MapFrom(x => x));
+
+            CreateMap<WebPayment, WebPaymentResultViewModel>();
         }
     }
 }

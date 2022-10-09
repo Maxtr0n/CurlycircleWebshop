@@ -109,6 +109,7 @@ namespace BLL.Services
             }
 
             order.WebPayment.PaymentStatus = startPaymentResponse.Status;
+            order.WebPayment.BarionPaymentId = startPaymentResponse.PaymentId;
 
             WebPaymentRequestViewModel webPaymentRequestViewModel = new()
             {
@@ -124,7 +125,53 @@ namespace BLL.Services
 
         public async Task HandleWebPaymentStatusChanged(Guid paymentId)
         {
+            GetPaymentStateRequest getPaymentStateRequest = new()
+            {
+                POSKey = Configuration["Barion:SecretKey"],
+                PaymentId = paymentId
+            };
 
+            var response = await _barionClient.GetPaymentState(getPaymentStateRequest);
+
+            if (response == null)
+            {
+                throw new WebPaymentException("Web payment attempt failed.", new[]
+                {
+                    "Barion server is unresponsive."
+                });
+            }
+
+            if (response.Errors.Count > 0)
+            {
+                var errors = new List<string>();
+                foreach (var error in response.Errors)
+                {
+                    errors.Add(error.Title);
+                }
+
+                throw new WebPaymentException("Web payment attempt failed.", errors);
+            }
+
+            if (!int.TryParse(response.PaymentRequestId, out int webPaymentId))
+            {
+                throw new ValidationAppException("PaymentRequestId is not a valid identifier.", new[]
+                {
+                    "PaymentRequestId should be an integer number."
+                });
+            }
+
+            var webPayment = await _webPaymentRepository.GetWebPaymentByIdAsync(webPaymentId);
+            webPayment.PaymentStatus = response.Status;
+
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task<WebPaymentResultViewModel> GetWebPaymentResult(Guid barionPaymentId)
+        {
+            var webPayment = await _webPaymentRepository.GetWebPaymentByBarionPaymentId(barionPaymentId);
+
+            var webPaymentResultViewModel = _mapper.Map<WebPaymentResultViewModel>(webPayment);
+            return webPaymentResultViewModel;
         }
 
         public async Task<PagedOrdersViewModel> GetAllOrdersAsync(OrderQueryParameters orderQueryParameters)
@@ -196,7 +243,7 @@ namespace BLL.Services
                 var item = new Item
                 {
                     Name = orderItem.Product.Name,
-                    Description = orderItem.Product.Description ?? string.Empty,
+                    Description = orderItem.Product.Description ?? "Nincs leírás az adott termékhez.",
                     Quantity = orderItem.Quantity,
                     UnitPrice = (decimal)orderItem.Price,
                     ItemTotal = (decimal)(orderItem.Quantity * orderItem.Price)
@@ -217,7 +264,7 @@ namespace BLL.Services
                 POSKey = Configuration["Barion:SecretKey"],
                 PaymentRequestId = order.WebPayment?.Id.ToString() ?? string.Empty,
                 Transactions = new List<PaymentTransaction> { paymentTransaction },
-                RedirectUrl = Configuration["RedirectUrlBase"],
+                RedirectUrl = Configuration["RedirectUrl"],
                 CallbackUrl = Configuration["CallbackUrl"],
                 OrderNumber = order.Id.ToString(),
             };

@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppHttpClient } from '../core/app-http-client';
-import { EntityCreatedViewModel, OrderQueryParameters, OrdersViewModel, OrderUpsertDto, OrderViewModel, PagedOrdersViewModel, WebPaymentRequestViewModel } from '../models/models';
+import { EntityCreatedViewModel, OrderQueryParameters, OrdersViewModel, OrderUpsertDto, OrderViewModel, PagedOrdersViewModel, WebPaymentRequestViewModel, WebPaymentResultViewModel } from '../models/models';
 
 @Injectable({
     providedIn: 'root'
@@ -34,6 +34,10 @@ export class OrderService {
 
     public placeWebPaymentOrder(order: OrderUpsertDto): Observable<WebPaymentRequestViewModel> {
         return this.httpClient.post<WebPaymentRequestViewModel>(`${this.ordersUrl}/webpayment`, order);
+    }
+
+    public getWebPaymentResult(paymentId: string): Observable<WebPaymentResultViewModel> {
+        return this.httpClient.get<WebPaymentResultViewModel>(`${this.ordersUrl}/webpayment/${paymentId}`);
     }
 
     public getOrderPage(orderQueryParameters: OrderQueryParameters): Observable<PagedOrdersViewModel> {

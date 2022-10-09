@@ -45,5 +45,19 @@ namespace DAL.Repositories
 
             return webPayment;
         }
+
+        public async Task<WebPayment> GetWebPaymentByBarionPaymentId(Guid barionPaymentId)
+        {
+            var webPayment = await _dbContext.WebPayments
+                .Include(wp => wp.Order)
+                .FirstOrDefaultAsync(wp => wp.BarionPaymentId == barionPaymentId);
+
+            if (webPayment == null)
+            {
+                throw new EntityNotFoundException($"Web payment with Barion PaymentId {barionPaymentId} not found.");
+            }
+
+            return webPayment;
+        }
     }
 }

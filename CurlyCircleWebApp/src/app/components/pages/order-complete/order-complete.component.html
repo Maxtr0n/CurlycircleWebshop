@@ -1,1 +1,12 @@
-<p>Rendelésed rögzítettük. Köszönjük, hogy nálunk vásároltál!</p>
+<div *ngIf="hasWebPayment; else notWebPayment">
+    <div *ngIf="isWebPaymentSuccessful; else webPaymentFailed">
+        <p>Sikeres webes fizetés, rendelésed rögzítettük. Köszönjük, hogy nálunk vásároltál! Rendelési azonosítód:
+            {{orderId}}</p>
+    </div>
+    <ng-template #webPaymentFailed>
+        <p>Sikertelen webes fizetés. Kérlek próbálkozz újra a rendelés leadásával.</p>
+    </ng-template>
+</div>
+<ng-template #notWebPayment>
+    <p>Rendelésed rögzítettük. Köszönjük, hogy nálunk vásároltál! Rendelési azonosítód: {{orderId}}</p>
+</ng-template>

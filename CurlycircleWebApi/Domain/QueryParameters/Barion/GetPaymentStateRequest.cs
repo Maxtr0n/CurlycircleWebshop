@@ -8,7 +8,7 @@ namespace Domain.QueryParameters.Barion
 {
     public class GetPaymentStateRequest
     {
-        public Guid POSKey { get; set; }
+        public string POSKey { get; set; } = default!;
 
         public Guid PaymentId { get; set; }
     }

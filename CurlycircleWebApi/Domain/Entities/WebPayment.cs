@@ -29,7 +29,7 @@ namespace Domain.Entities
 
         public string POSTransactionId { get; set; } = "1";
 
-        public string? BarionPaymentId { get; set; }
+        public Guid? BarionPaymentId { get; set; }
 
         public double Total { get; set; }
 

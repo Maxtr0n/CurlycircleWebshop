@@ -357,6 +357,12 @@ export interface WebPaymentRequestViewModel {
     gatewayUrl: string;
 }
 
+export interface WebPaymentResultViewModel {
+    orderId: number;
+    id: number;
+    paymentStatus: PaymentStatus;
+}
+
 export enum PaymentStatus {
     Prepared = 10,
     Started = 20,
