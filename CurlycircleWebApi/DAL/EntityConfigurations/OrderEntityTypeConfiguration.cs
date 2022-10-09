@@ -41,6 +41,8 @@ namespace DAL.EntityConfigurations
                 a.Property(a => a.Line1).HasColumnName("Line1");
                 a.Property(a => a.Line2).HasColumnName("Line2");
             });
+
+            orderConfiguration.HasOne(o => o.WebPayment).WithOne(wp => wp.Order).HasForeignKey<WebPayment>(wp => wp.OrderId);
         }
     }
 }
