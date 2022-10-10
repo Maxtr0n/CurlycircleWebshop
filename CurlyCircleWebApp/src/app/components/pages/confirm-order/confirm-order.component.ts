@@ -33,7 +33,7 @@ export class ConfirmOrderComponent implements OnInit {
             return;
         }
 
-        if (PaymentMethod[this.order.paymentMethod].toString() === PaymentMethod.WebPayment.toString()) {
+        if (this.order.paymentMethod.toString() === PaymentMethod.WebPayment.toString()) {
             this.orderService.placeWebPaymentOrder(this.order).subscribe({
                 next: (webPaymentRequestViewModel) => {
                     this.document.location.href = webPaymentRequestViewModel.gatewayUrl;

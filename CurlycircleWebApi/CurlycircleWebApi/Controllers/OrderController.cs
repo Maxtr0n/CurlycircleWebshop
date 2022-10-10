@@ -37,7 +37,7 @@ namespace CurlycircleWebApi.Controllers
             return _orderService.CreateOrderAsync(orderCreateDto);
         }
 
-        [HttpPost("/webpayment")]
+        [HttpPost("webpayment")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public Task<WebPaymentRequestViewModel> CreateWebPaymentOrder([FromBody] OrderUpsertDto orderCreateDto)
         {
@@ -45,7 +45,7 @@ namespace CurlycircleWebApi.Controllers
             return _orderService.CreateWebPaymentRequestAsync(orderCreateDto);
         }
 
-        [HttpPost("/webpaymentnotification")]
+        [HttpPost("webpaymentnotification")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public Task NotifyWebPaymentStatusChanged(Guid paymentId)
         {
@@ -53,7 +53,7 @@ namespace CurlycircleWebApi.Controllers
             return _orderService.HandleWebPaymentStatusChanged(paymentId);
         }
 
-        [HttpGet("/webpayment/{paymentId}")]
+        [HttpGet("webpayment/{paymentId}")]
         public Task<WebPaymentResultViewModel> GetWebPaymentResult([FromRoute] Guid paymentId)
         {
             return _orderService.GetWebPaymentResult(paymentId);

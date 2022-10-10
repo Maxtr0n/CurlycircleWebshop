@@ -27,7 +27,7 @@ namespace Domain.Entities
             set => _orderId = value;
         }
 
-        public string POSTransactionId { get; set; } = "1";
+        public Guid POSTransactionId { get; set; } = Guid.NewGuid();
 
         public Guid? BarionPaymentId { get; set; }
 

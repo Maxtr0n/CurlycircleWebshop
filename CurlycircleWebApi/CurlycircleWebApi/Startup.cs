@@ -74,20 +74,26 @@ namespace CurlycircleWebApi
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowLocalAngularClient",
+                options.AddPolicy("DevelopmentCORSPolicy",
                     builder =>
                     {
                         builder.WithOrigins("http://localhost:4200")
                             .AllowAnyMethod()
                             .AllowAnyHeader();
+                        builder.WithOrigins("https://api.test.barion.com")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
                     });
 
-                options.AddPolicy("AllowAngularClient",
+                options.AddPolicy("ProductionCORSPolicy",
                     builder =>
                     {
                         builder.WithOrigins("https://curlycircle.azurewebsites.net")
                             .AllowAnyMethod()
                             .AllowAnyHeader();
+                        builder.WithOrigins("https://api.test.barion.com")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
                     });
             });
 
@@ -187,11 +193,11 @@ namespace CurlycircleWebApi
 
             if (env.IsDevelopment())
             {
-                app.UseCors("AllowLocalAngularClient");
+                app.UseCors("DevelopmentCORSPolicy");
             }
             else
             {
-                app.UseCors("AllowAngularClient");
+                app.UseCors("ProductionCORSPolicy");
 
             }
 

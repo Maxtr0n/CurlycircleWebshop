@@ -8,7 +8,7 @@ namespace Domain.QueryParameters.Barion
 {
     public class PaymentTransaction
     {
-        public string POSTransactionId { get; set; } = string.Empty;
+        public Guid POSTransactionId { get; set; }
 
         public string Payee { get; set; } = "schutz.mate2@gmail.com";
 

@@ -254,7 +254,7 @@ namespace BLL.Services
 
             PaymentTransaction paymentTransaction = new()
             {
-                POSTransactionId = Guid.NewGuid().ToString(),
+                POSTransactionId = order.WebPayment?.POSTransactionId ?? Guid.NewGuid(),
                 Total = (decimal)order.Total,
                 Items = items
             };
@@ -264,8 +264,8 @@ namespace BLL.Services
                 POSKey = Configuration["Barion:SecretKey"],
                 PaymentRequestId = order.WebPayment?.Id.ToString() ?? string.Empty,
                 Transactions = new List<PaymentTransaction> { paymentTransaction },
-                RedirectUrl = Configuration["RedirectUrl"],
-                CallbackUrl = Configuration["CallbackUrl"],
+                RedirectUrl = Configuration["Barion:RedirectUrl"],
+                CallbackUrl = Configuration["Barion:CallbackUrl"],
                 OrderNumber = order.Id.ToString(),
             };
 
