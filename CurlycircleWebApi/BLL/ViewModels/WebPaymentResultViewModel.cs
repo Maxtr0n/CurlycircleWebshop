@@ -11,7 +11,7 @@ namespace BLL.ViewModels
     {
         public int OrderId { get; set; }
 
-        public PaymentStatus PaymentStatus { get; set; }
+        public string PaymentStatus { get; set; } = string.Empty;
 
         public int Id { get; set; }
     }

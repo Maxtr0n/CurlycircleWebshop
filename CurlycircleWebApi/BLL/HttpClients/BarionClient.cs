@@ -1,11 +1,14 @@
-﻿using BLL.Interfaces;
+﻿using BLL.Exceptions;
+using BLL.Interfaces;
 using Domain.QueryParameters.Barion;
 using Microsoft.Extensions.Configuration;
 using RestSharp;
+using RestSharp.Serializers.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BLL.HttpClients
@@ -25,8 +28,20 @@ namespace BLL.HttpClients
 
         public async Task<StartPaymentResponse> StartPayment(StartPaymentRequest startPaymentRequest)
         {
-            var response = await _client.PostJsonAsync<StartPaymentRequest, StartPaymentResponse>("/v2/Payment/Start", startPaymentRequest);
-            return response!;
+            var request = new RestRequest("/v2/Payment/Start", Method.Post)
+                .AddJsonBody(startPaymentRequest);
+
+            var response = await _client.ExecuteAsync<StartPaymentResponse>(request);
+
+            if (!response.IsSuccessful)
+            {
+                throw new WebPaymentException("Web payment attempt failed.", new[]
+                {
+                    response.ErrorMessage ?? "Barion API error"
+                });
+            }
+
+            return response.Data!;
         }
 
         public async Task<GetPaymentStateResponse> GetPaymentState(GetPaymentStateRequest getPaymentStateRequest)
@@ -34,6 +49,15 @@ namespace BLL.HttpClients
             var request = new RestRequest("/v2/Payment/GetPaymentState")
                 .AddJsonBody(getPaymentStateRequest);
             var response = await _client.ExecuteGetAsync<GetPaymentStateResponse>(request);
+
+            if (!response.IsSuccessful)
+            {
+                throw new WebPaymentException("Web payment attempt failed.", new[]
+                {
+                    response.ErrorMessage ?? "Barion API error"
+                });
+            }
+
             return response.Data!;
         }
 

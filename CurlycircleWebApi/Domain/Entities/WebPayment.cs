@@ -29,11 +29,11 @@ namespace Domain.Entities
 
         public Guid POSTransactionId { get; set; } = Guid.NewGuid();
 
-        public Guid? BarionPaymentId { get; set; }
+        public string? BarionPaymentId { get; set; }
 
         public double Total { get; set; }
 
-        public PaymentStatus PaymentStatus { get; set; }
+        public string PaymentStatus { get; set; } = default!;
 
         public WebPayment()
         {

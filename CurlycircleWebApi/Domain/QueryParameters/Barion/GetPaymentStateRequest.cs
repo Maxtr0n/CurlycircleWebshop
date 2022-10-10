@@ -10,6 +10,6 @@ namespace Domain.QueryParameters.Barion
     {
         public string POSKey { get; set; } = default!;
 
-        public Guid PaymentId { get; set; }
+        public string PaymentId { get; set; } = default!;
     }
 }

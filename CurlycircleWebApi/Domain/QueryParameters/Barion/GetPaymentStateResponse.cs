@@ -12,7 +12,7 @@ namespace Domain.QueryParameters.Barion
 
         public string PaymentRequestId { get; set; } = string.Empty;
 
-        public PaymentStatus Status { get; set; }
+        public string Status { get; set; } = string.Empty;
 
         public DateTime CompletedAt { get; set; }
 

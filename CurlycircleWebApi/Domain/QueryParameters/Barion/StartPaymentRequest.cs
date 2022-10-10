@@ -15,7 +15,7 @@ namespace Domain.QueryParameters.Barion
 
         public bool GuestCheckout { get; set; } = true;
 
-        public List<string> FundingSources { get; set; } = new List<string> { "Bank card", "Barion balance", "Apple Pay", "Google Pay" };
+        public List<string> FundingSources { get; set; } = new List<string> { "BankCard", "Balance", "ApplePay", "GooglePay" };
 
         // A WebPayment entitás Id-ja, minden payment request-hez saját identifier, egy orderhez 0 vagy 1 tartozik (ha webes fizetés akkor 1)
         public string PaymentRequestId { get; set; } = string.Empty;

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { filter, Subscription, switchMap } from 'rxjs';
-import { PaymentStatus } from 'src/app/models/models';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
@@ -33,9 +32,8 @@ export class OrderCompleteComponent implements OnInit, OnDestroy {
         ).subscribe({
             next: (webPayment) => {
                 this.hasWebPayment = true;
-                this.isWebPaymentSuccessful = PaymentStatus[webPayment.paymentStatus].toString() === PaymentStatus.Succeeded.toString();
+                this.isWebPaymentSuccessful = webPayment.paymentStatus === "Succeeded";
                 this.orderId = webPayment.orderId;
-                console.log("WEB PAYMENT: " + webPayment);
             }
         });
     }

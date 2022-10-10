@@ -77,7 +77,7 @@ namespace BLL.Services
             order.WebPayment = new()
             {
                 Total = order.Total,
-                PaymentStatus = PaymentStatus.Prepared
+                PaymentStatus = "Created"
             };
 
             var orderId = _orderRepository.AddOrder(order);
@@ -87,7 +87,7 @@ namespace BLL.Services
 
             if (startPaymentResponse == null)
             {
-                order.WebPayment.PaymentStatus = PaymentStatus.Failed;
+                order.WebPayment.PaymentStatus = "Failed";
 
                 throw new WebPaymentException("Web payment attempt failed.", new[]
                 {
@@ -97,7 +97,7 @@ namespace BLL.Services
 
             if (startPaymentResponse.Errors.Count > 0)
             {
-                order.WebPayment.PaymentStatus = PaymentStatus.Failed;
+                order.WebPayment.PaymentStatus = "Failed";
 
                 var errors = new List<string>();
                 foreach (var error in startPaymentResponse.Errors)
@@ -123,7 +123,7 @@ namespace BLL.Services
             return webPaymentRequestViewModel;
         }
 
-        public async Task HandleWebPaymentStatusChanged(Guid paymentId)
+        public async Task HandleWebPaymentStatusChanged(string paymentId)
         {
             GetPaymentStateRequest getPaymentStateRequest = new()
             {
@@ -166,7 +166,7 @@ namespace BLL.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<WebPaymentResultViewModel> GetWebPaymentResult(Guid barionPaymentId)
+        public async Task<WebPaymentResultViewModel> GetWebPaymentResult(string barionPaymentId)
         {
             var webPayment = await _webPaymentRepository.GetWebPaymentByBarionPaymentId(barionPaymentId);
 

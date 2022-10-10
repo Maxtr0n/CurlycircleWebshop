@@ -15,6 +15,6 @@ namespace Domain.Interfaces
 
         Task<WebPayment> GetWebPaymentByIdAsync(int webPaymentId);
 
-        Task<WebPayment> GetWebPaymentByBarionPaymentId(Guid barionPaymentId);
+        Task<WebPayment> GetWebPaymentByBarionPaymentId(string barionPaymentId);
     }
 }

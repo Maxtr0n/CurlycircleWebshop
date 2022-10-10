@@ -46,7 +46,7 @@ namespace DAL.Repositories
             return webPayment;
         }
 
-        public async Task<WebPayment> GetWebPaymentByBarionPaymentId(Guid barionPaymentId)
+        public async Task<WebPayment> GetWebPaymentByBarionPaymentId(string barionPaymentId)
         {
             var webPayment = await _dbContext.WebPayments
                 .Include(wp => wp.Order)

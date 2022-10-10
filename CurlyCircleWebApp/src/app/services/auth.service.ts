@@ -39,9 +39,6 @@ export class AuthService {
         this.currentUser$.subscribe((user) => {
             if (user) {
                 this.isAdminSubject.next(Role[user.role].toString() === Role.Admin.toString());
-                console.log(user.role);
-                console.log(Role[user.role].toString());
-                console.log(Role.Admin.toString());
             } else {
                 this.isAdminSubject.next(false);
             }
