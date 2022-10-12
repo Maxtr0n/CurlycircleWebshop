@@ -8,7 +8,7 @@ namespace Domain.QueryParameters.Barion
 {
     public class GetPaymentStateResponse : BarionResponse
     {
-        public Guid PaymentId { get; set; }
+        public string PaymentId { get; set; } = string.Empty;
 
         public string PaymentRequestId { get; set; } = string.Empty;
 

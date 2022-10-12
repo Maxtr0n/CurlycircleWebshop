@@ -152,15 +152,7 @@ namespace BLL.Services
                 throw new WebPaymentException("Web payment attempt failed.", errors);
             }
 
-            if (!int.TryParse(response.PaymentRequestId, out int webPaymentId))
-            {
-                throw new ValidationAppException("PaymentRequestId is not a valid identifier.", new[]
-                {
-                    "PaymentRequestId should be an integer number."
-                });
-            }
-
-            var webPayment = await _webPaymentRepository.GetWebPaymentByIdAsync(webPaymentId);
+            var webPayment = await _webPaymentRepository.GetWebPaymentByBarionPaymentId(response.PaymentId);
             webPayment.PaymentStatus = response.Status;
 
             await _unitOfWork.SaveChangesAsync();
