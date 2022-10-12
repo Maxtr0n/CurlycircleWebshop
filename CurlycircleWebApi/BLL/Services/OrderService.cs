@@ -123,7 +123,7 @@ namespace BLL.Services
             return webPaymentRequestViewModel;
         }
 
-        public async Task HandleWebPaymentStatusChanged(string paymentId)
+        public async Task HandleWebPaymentStatusChangedAsync(string paymentId)
         {
             GetPaymentStateRequest getPaymentStateRequest = new()
             {
@@ -152,15 +152,15 @@ namespace BLL.Services
                 throw new WebPaymentException("Web payment attempt failed.", errors);
             }
 
-            var webPayment = await _webPaymentRepository.GetWebPaymentByBarionPaymentId(response.PaymentId);
+            var webPayment = await _webPaymentRepository.GetWebPaymentByBarionPaymentIdAsync(response.PaymentId);
             webPayment.PaymentStatus = response.Status;
 
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<WebPaymentResultViewModel> GetWebPaymentResult(string barionPaymentId)
+        public async Task<WebPaymentResultViewModel> GetWebPaymentResultAsync(string barionPaymentId)
         {
-            var webPayment = await _webPaymentRepository.GetWebPaymentByBarionPaymentId(barionPaymentId);
+            var webPayment = await _webPaymentRepository.GetWebPaymentByBarionPaymentIdAsync(barionPaymentId);
 
             var webPaymentResultViewModel = _mapper.Map<WebPaymentResultViewModel>(webPayment);
             return webPaymentResultViewModel;

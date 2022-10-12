@@ -15,9 +15,9 @@ namespace BLL.Interfaces
 
         Task<WebPaymentRequestViewModel> CreateWebPaymentRequestAsync(OrderUpsertDto orderUpsertDto);
 
-        Task HandleWebPaymentStatusChanged(string paymentId);
+        Task HandleWebPaymentStatusChangedAsync(string paymentId);
 
-        Task<WebPaymentResultViewModel> GetWebPaymentResult(string barionPaymentId);
+        Task<WebPaymentResultViewModel> GetWebPaymentResultAsync(string barionPaymentId);
 
         Task<PagedOrdersViewModel> GetAllOrdersAsync(OrderQueryParameters orderQueryParameters);
 

@@ -50,13 +50,13 @@ namespace CurlycircleWebApi.Controllers
         public Task NotifyWebPaymentStatusChanged(string paymentId)
         {
             HttpContext.Response.StatusCode = StatusCodes.Status200OK;
-            return _orderService.HandleWebPaymentStatusChanged(paymentId);
+            return _orderService.HandleWebPaymentStatusChangedAsync(paymentId);
         }
 
         [HttpGet("webpayment/{paymentId}")]
         public Task<WebPaymentResultViewModel> GetWebPaymentResult([FromRoute] string paymentId)
         {
-            return _orderService.GetWebPaymentResult(paymentId);
+            return _orderService.GetWebPaymentResultAsync(paymentId);
         }
 
         [HttpGet]
