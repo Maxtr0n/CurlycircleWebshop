@@ -1,2 +1,18 @@
-<p>Leadod a rendelésed?</p>
-<button mat-raised-button appearance="outline" color="primary" (click)="placeOrder()">Megrendelem</button>
+<div fxLayout="column" fxLayoutALign="center" class="confirm-order-container">
+    <h1>Rendelés összegző</h1>
+    <div id="order-details" *ngIf="order">
+        <p>Név: {{order.lastName + ' ' + order.firstName}}</p>
+        <p>Email: {{order.email}}</p>
+        <p>Telefonszám: {{order.phoneNumber}}</p>
+        <p>Cím: {{order.zipCode + ' ' + order.city + ', ' + order.line1 + ' ' +
+            order.line2}}</p>
+        <p>Fizetési mód: {{order.paymentMethod | payment}}</p>
+        <p>Szállítási mód: {{order.shippingMethod | shipping}}</p>
+        <p>Megjegyzés: {{order.note}}</p>
+        <p>Összeg: {{total | huf}}</p>
+    </div>
+    <div id="button-container" fxLayout="row" fxLayoutALign="space-between" fxFlex="1 1 100%">
+        <button mat-button appearance="outline" color="primary" (click)="cancel()">Vissza</button>
+        <button mat-raised-button appearance="outline" color="primary" (click)="placeOrder()">Megrendelem</button>
+    </div>
+</div>

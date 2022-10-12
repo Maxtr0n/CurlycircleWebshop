@@ -65,4 +65,8 @@ export class OrderService {
         return this.httpClient.get<OrderViewModel>(`${this.ordersUrl}/${id}`);
     }
 
+    public clearOrder(): void {
+        this.currentOrderSubject.next(null);
+    }
+
 }

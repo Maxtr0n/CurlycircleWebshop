@@ -4,7 +4,6 @@ import { PaymentMethod } from "src/app/models/models";
 @Pipe({ name: 'payment' })
 export class PaymentMethodPipe implements PipeTransform {
     transform(value: PaymentMethod): string {
-        console.log(value);
         switch (PaymentMethod[value].toString()) {
             case PaymentMethod.MoneyTransfer.toString():
                 return 'Átutalás';

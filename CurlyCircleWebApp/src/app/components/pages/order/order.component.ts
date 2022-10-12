@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { OrderUpsertDto } from 'src/app/models/models';
+import { OrderUpsertDto, ShippingMethod, PaymentMethod } from 'src/app/models/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { OrderService } from 'src/app/services/order.service';
@@ -28,13 +28,12 @@ export class OrderComponent implements OnInit {
         note: [''],
     });
 
-    shippingFormGroup: UntypedFormGroup = this.formBuilder.group({
-        shippingMethod: ['', Validators.required]
-
+    shippingFormGroup = new FormGroup({
+        shippingMethod: new FormControl<ShippingMethod | null>(null, [Validators.required])
     });
 
-    paymentFormGroup: UntypedFormGroup = this.formBuilder.group({
-        paymentMethod: ['', Validators.required]
+    paymentFormGroup = new FormGroup({
+        paymentMethod: new FormControl<PaymentMethod | null>(null, [Validators.required])
     });
 
     constructor(
@@ -48,7 +47,12 @@ export class OrderComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        if (this.authService.currentUserValue) {
+        if (this.orderService.currentOrderValue) {
+            this.personalDataFormGroup.patchValue(this.orderService.currentOrderValue);
+            this.shippingFormGroup.patchValue(this.orderService.currentOrderValue);
+            this.paymentFormGroup.patchValue(this.orderService.currentOrderValue);
+        }
+        else if (this.authService.currentUserValue) {
             this.personalDataFormGroup.patchValue(this.authService.currentUserValue);
         }
     }
@@ -62,11 +66,12 @@ export class OrderComponent implements OnInit {
         let order: OrderUpsertDto = {
             cartId: this.currentCart.id,
             applicationUserId: this.authService.currentUserValue?.id ?? null,
+            shippingMethod: this.shippingMethod?.value,
+            paymentMethod: this.paymentMethod?.value,
             ...this.personalDataFormGroup.value,
-            ...this.shippingFormGroup.value,
-            ...this.paymentFormGroup.value,
 
         };
+
         this.orderService.setCurrentOrder(order);
         this.router.navigate(['/confirm-order']);
     }
