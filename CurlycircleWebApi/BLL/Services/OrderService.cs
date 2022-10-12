@@ -81,6 +81,7 @@ namespace BLL.Services
             };
 
             var orderId = _orderRepository.AddOrder(order);
+            userCart.ClearCart();
             var request = PrepareWebPaymentRequest(order);
 
             StartPaymentResponse? startPaymentResponse = await _barionClient.StartPayment(request);

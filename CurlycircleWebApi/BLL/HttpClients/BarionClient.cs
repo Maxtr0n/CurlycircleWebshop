@@ -46,9 +46,9 @@ namespace BLL.HttpClients
 
         public async Task<GetPaymentStateResponse> GetPaymentState(GetPaymentStateRequest getPaymentStateRequest)
         {
-            var request = new RestRequest("/v2/Payment/GetPaymentState")
+            var request = new RestRequest("/v2/Payment/GetPaymentState", Method.Get)
                 .AddJsonBody(getPaymentStateRequest);
-            var response = await _client.ExecuteGetAsync<GetPaymentStateResponse>(request);
+            var response = await _client.ExecuteAsync<GetPaymentStateResponse>(request);
 
             if (!response.IsSuccessful)
             {
