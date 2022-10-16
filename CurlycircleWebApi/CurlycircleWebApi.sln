@@ -11,7 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{31F3DC3E-F9E0-45EE-BC10-46E6B5CE2330}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{B9634AA9-28B5-4284-A06B-7B0F38F6AA07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{B9634AA9-28B5-4284-A06B-7B0F38F6AA07}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C2634FDC-934F-495D-9C29-54DAC940A350} = {C2634FDC-934F-495D-9C29-54DAC940A350}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
