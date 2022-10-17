@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using BLL.Dtos;
+using BLL.Exceptions;
+using BLL.Interfaces;
 using BLL.Services;
 using BLL.ViewModels;
 using Domain.Entities;
 using Domain.Enums;
+using Domain.Exceptions;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -53,10 +56,8 @@ namespace UnitTests.Services
                 _configurationStub.Object, _cartRepositoryStub.Object);
         }
 
-
-
         [Fact]
-        public async Task LoginAsync_WithValidDto_ReturnsCorrectUserViewModel()
+        public async Task LoginAsync_AdminWithCorrectPassword_ReturnsUserViewModel()
         {
             //Arrange
             var loginDto = new LoginDto()
@@ -95,6 +96,115 @@ namespace UnitTests.Services
             Assert.Equal(Role.Admin, result.Role);
         }
 
+        [Fact]
+        public async Task LoginAsync_AdminWithWrongPassword_ReturnsUserViewModel()
+        {
+            //Arrange
+            var loginDto = new LoginDto()
+            {
+                Email = "testadmin@gmail.com",
+                Password = "abc124",
+                CartId = 1
+            };
+
+            //Act & Assert
+            await Assert.ThrowsAsync<ValidationAppException>(() => _authService.LoginAsync(loginDto));
+        }
+
+        [Fact]
+        public async Task LoginAsync_UserWithCorrectPassword_ReturnsUserViewModel()
+        {
+            //Arrange
+            var loginDto = new LoginDto()
+            {
+                Email = "testuser@gmail.com",
+                Password = "abc123",
+                CartId = 2
+            };
+
+            var userViewModel = new UserViewModel()
+            {
+                Id = 2,
+                CartId = 2,
+                Email = "testuser@gmail.com"
+            };
+
+            var userCart = new Cart()
+            {
+                Id = 2,
+                ApplicationUserId = 2,
+                ApplicationUser = _users[1],
+            };
+
+            _cartRepositoryStub.Setup(c => c.GetUserCartAsync(2).Result)
+                .Returns(userCart);
+            _mapperStub.Setup(m => m.Map<UserViewModel>(_users[1]))
+                .Returns(userViewModel);
+
+            //Act
+            var result = await _authService.LoginAsync(loginDto);
+
+            //Assert
+            Assert.Equal(2, result.Id);
+            Assert.Equal("testuser@gmail.com", result.Email);
+            Assert.Equal(2, result.CartId);
+            Assert.Equal(Role.User, result.Role);
+        }
+
+        [Fact]
+        public async Task LoginAsync_UserWithWrongPassword_ReturnsUserViewModel()
+        {
+            //Arrange
+            var loginDto = new LoginDto()
+            {
+                Email = "testuser@gmail.com",
+                Password = "abc124",
+                CartId = 2
+            };
+
+            //Act & Assert
+            await Assert.ThrowsAsync<ValidationAppException>(() => _authService.LoginAsync(loginDto));
+        }
+
+        [Fact]
+        public async Task LoginAsync_UserWithCorrectPassword_ReturnsUserViewModel()
+        {
+            //Arrange
+            var loginDto = new LoginDto()
+            {
+                Email = "testuser@gmail.com",
+                Password = "abc123",
+                CartId = 2
+            };
+
+            var userViewModel = new UserViewModel()
+            {
+                Id = 2,
+                CartId = 2,
+                Email = "testuser@gmail.com"
+            };
+
+            var userCart = new Cart()
+            {
+                Id = 2,
+                ApplicationUserId = 2,
+                ApplicationUser = _users[1],
+            };
+
+            _cartRepositoryStub.Setup(c => c.GetUserCartAsync(2).Result)
+                .Returns(userCart);
+            _mapperStub.Setup(m => m.Map<UserViewModel>(_users[1]))
+                .Returns(userViewModel);
+
+            //Act
+            var result = await _authService.LoginAsync(loginDto);
+
+            //Assert
+            Assert.Equal(2, result.Id);
+            Assert.Equal("testuser@gmail.com", result.Email);
+            Assert.Equal(2, result.CartId);
+            Assert.Equal(Role.User, result.Role);
+        }
 
         // UserManager does not have an empty constructor, so I need to create the mocked version here
         private static Mock<UserManager<TUser>> MockUserManager<TUser>(List<TUser> ls) where TUser : class
