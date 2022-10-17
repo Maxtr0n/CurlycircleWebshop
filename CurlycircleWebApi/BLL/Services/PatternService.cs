@@ -55,11 +55,5 @@ namespace BLL.Services
             var patternsViewModel = _mapper.Map<PatternsViewModel>(patterns);
             return patternsViewModel;
         }
-
-        public async Task UpdatePatternAsync(int patternId, PatternUpsertDto patternUpdateDto)
-        {
-            _patternRepository.UpdatePattern(_mapper.Map<Pattern>(patternUpdateDto));
-            await _unitOfWork.SaveChangesAsync();
-        }
     }
 }

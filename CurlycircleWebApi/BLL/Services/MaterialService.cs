@@ -54,11 +54,5 @@ namespace BLL.Services
             var materialsViewModel = _mapper.Map<MaterialsViewModel>(materials);
             return materialsViewModel;
         }
-
-        public async Task UpdateMaterialAsync(int materialId, MaterialUpsertDto materialUpdateDto)
-        {
-            _materialRepository.UpdateMaterial(_mapper.Map<Material>(materialUpdateDto));
-            await _unitOfWork.SaveChangesAsync();
-        }
     }
 }

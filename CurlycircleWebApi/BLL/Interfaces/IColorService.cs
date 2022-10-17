@@ -16,8 +16,6 @@ namespace BLL.Interfaces
 
         Task<ColorViewModel> FindColorByIdAsync(int colorId);
 
-        Task UpdateColorAsync(int colorId, ColorUpsertDto colorUpdateDto);
-
         Task DeleteColorAsync(int colorId);
     }
 }

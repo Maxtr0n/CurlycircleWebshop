@@ -16,8 +16,6 @@ namespace BLL.Interfaces
 
         Task<PatternViewModel> FindPatternByIdAsync(int patternId);
 
-        Task UpdatePatternAsync(int patternId, PatternUpsertDto patternUpdateDto);
-
         Task DeletePatternAsync(int patternId);
     }
 }

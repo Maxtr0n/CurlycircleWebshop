@@ -40,13 +40,6 @@ namespace CurlycircleWebApi.Controllers
             return _patternService.FindPatternByIdAsync(patternId);
         }
 
-        [HttpPut("{patternId}")]
-        [Authorize(Roles = "Admin")]
-        public Task UpdatePattern([FromRoute] int patternId, [FromBody] PatternUpsertDto patternUpsertDto)
-        {
-            return _patternService.UpdatePatternAsync(patternId, patternUpsertDto);
-        }
-
         [HttpDelete("{patternId}")]
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

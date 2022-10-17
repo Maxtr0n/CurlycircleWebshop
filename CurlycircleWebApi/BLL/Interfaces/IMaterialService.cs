@@ -16,8 +16,6 @@ namespace BLL.Interfaces
 
         Task<MaterialViewModel> FindMaterialByIdAsync(int materialId);
 
-        Task UpdateMaterialAsync(int materialId, MaterialUpsertDto materialUpdateDto);
-
         Task DeleteMaterialAsync(int materialId);
     }
 }

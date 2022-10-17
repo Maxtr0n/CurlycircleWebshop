@@ -39,13 +39,6 @@ namespace CurlycircleWebApi.Controllers
             return _colorService.FindColorByIdAsync(colorId);
         }
 
-        [HttpPut("{colorId}")]
-        [Authorize(Roles = "Admin")]
-        public Task UpdateColor([FromRoute] int colorId, [FromBody] ColorUpsertDto colorUpsertDto)
-        {
-            return _colorService.UpdateColorAsync(colorId, colorUpsertDto);
-        }
-
         [HttpDelete("{colorId}")]
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

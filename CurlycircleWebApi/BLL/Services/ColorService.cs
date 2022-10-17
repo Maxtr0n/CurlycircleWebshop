@@ -55,11 +55,5 @@ namespace BLL.Services
             var colorsViewModel = _mapper.Map<ColorsViewModel>(colors);
             return colorsViewModel;
         }
-
-        public async Task UpdateColorAsync(int colorId, ColorUpsertDto colorUpdateDto)
-        {
-            _colorRepository.UpdateColor(_mapper.Map<Color>(colorUpdateDto));
-            await _unitOfWork.SaveChangesAsync();
-        }
     }
 }

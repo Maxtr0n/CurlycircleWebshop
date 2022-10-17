@@ -40,13 +40,6 @@ namespace CurlycircleWebApi.Controllers
             return _materialService.FindMaterialByIdAsync(materialId);
         }
 
-        [HttpPut("{materialId}")]
-        [Authorize(Roles = "Admin")]
-        public Task UpdateMaterial([FromRoute] int materialId, [FromBody] MaterialUpsertDto materialUpsertDto)
-        {
-            return _materialService.UpdateMaterialAsync(materialId, materialUpsertDto);
-        }
-
         [HttpDelete("{materialId}")]
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
