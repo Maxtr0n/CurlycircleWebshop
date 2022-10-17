@@ -22,7 +22,7 @@ namespace BLL
               .Where(type => type.Name.EndsWith("Service"))
               .AsImplementedInterfaces()
               .InstancePerLifetimeScope();
-            builder.RegisterType<ImageHelper>();
+            builder.RegisterType<ImageHelper>().As<IImageHelper>();
             builder.RegisterType<BarionClient>().As<IBarionClient>().SingleInstance();
         }
     }

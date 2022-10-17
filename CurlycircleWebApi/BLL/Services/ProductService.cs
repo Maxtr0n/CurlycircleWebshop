@@ -29,7 +29,7 @@ namespace BLL.Services
         private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ImageHelper _imageHelper;
+        private readonly IImageHelper _imageHelper;
         private readonly IMaterialRepository _materialRepository;
         private readonly IColorRepository _colorRepository;
         private readonly IPatternRepository _patternRepository;
@@ -41,7 +41,7 @@ namespace BLL.Services
             IPatternRepository patternRepository,
             IUnitOfWork unitOfWork,
             IMapper mapper,
-            ImageHelper thumbnailImageHelper
+            IImageHelper thumbnailImageHelper
             )
         {
             _productRepository = productRepository;

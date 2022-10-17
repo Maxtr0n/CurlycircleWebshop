@@ -113,10 +113,6 @@ namespace BLL.Services
 
             //Handle roles
             var roleResult = await _userManager.AddToRoleAsync(user, "User");
-            if (!result.Succeeded)
-            {
-                throw new ValidationAppException("User registration failed.", result.Errors.Select(ent => ent.Description));
-            }
 
             await _unitOfWork.SaveChangesAsync();
 

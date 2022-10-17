@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Helpers
 {
-    public class ImageHelper
+    public class ImageHelper : IImageHelper
     {
         private readonly long _fileSizeLimit;
 

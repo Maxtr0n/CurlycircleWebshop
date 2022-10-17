@@ -26,13 +26,13 @@ namespace BLL.Services
         private readonly IProductCategoryRepository _productCategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ImageHelper _imageHelper;
+        private readonly IImageHelper _imageHelper;
 
         public ProductCategoryService(
           IProductCategoryRepository productCategoryRepository,
           IUnitOfWork unitOfWork,
           IMapper mapper,
-          ImageHelper imageHelper)
+          IImageHelper imageHelper)
         {
             _productCategoryRepository = productCategoryRepository;
             _unitOfWork = unitOfWork;
