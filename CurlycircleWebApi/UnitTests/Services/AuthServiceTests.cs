@@ -167,14 +167,14 @@ namespace UnitTests.Services
         }
 
         [Fact]
-        public async Task LoginAsync_UserWithCorrectPassword_ReturnsUserViewModel()
+        public async Task LoginAsync_UserWithNewCart_MergesCartsAndReturnsUserViewModel()
         {
             //Arrange
             var loginDto = new LoginDto()
             {
                 Email = "testuser@gmail.com",
                 Password = "abc123",
-                CartId = 2
+                CartId = 3
             };
 
             var userViewModel = new UserViewModel()
@@ -191,8 +191,31 @@ namespace UnitTests.Services
                 ApplicationUser = _users[1],
             };
 
+            userCart.CartItems.Add(new CartItem()
+            {
+                Id = 2,
+                Price = 2000
+            }); ;
+
+            var cartBeforeLogin = new Cart()
+            {
+                Id = 3
+            };
+
+            cartBeforeLogin.CartItems.Add(new CartItem()
+            {
+                Id = 1,
+                Price = 1000
+            });
+
             _cartRepositoryStub.Setup(c => c.GetUserCartAsync(2).Result)
                 .Returns(userCart);
+            _cartRepositoryStub.Setup(c => c.GetCartByIdAsync(3).Result)
+                .Returns(cartBeforeLogin);
+            _cartRepositoryStub.Setup(c => c.AddCartItemAsync(2, cartBeforeLogin.CartItems[0])).Callback(() =>
+            {
+                userCart.CartItems.Add(cartBeforeLogin.CartItems[0]);
+            });
             _mapperStub.Setup(m => m.Map<UserViewModel>(_users[1]))
                 .Returns(userViewModel);
 
@@ -204,6 +227,47 @@ namespace UnitTests.Services
             Assert.Equal("testuser@gmail.com", result.Email);
             Assert.Equal(2, result.CartId);
             Assert.Equal(Role.User, result.Role);
+            Assert.Equal(2, userCart.CartItems.Count);
+        }
+
+        [Fact]
+        public async Task RegisterAsync_ValidDto_ReturnsEntityCreatedViewModel()
+        {
+            //Arrange
+            var registerDto = new RegisterDto()
+            {
+                Email = "testuser2@gmail.com",
+
+            };
+
+            var user = new ApplicationUser()
+            {
+                Id = 3,
+                Email = "testuser2@gmail.com",
+            };
+
+            _mapperStub.Setup(m => m.Map<ApplicationUser>(registerDto))
+                .Returns(user);
+            //Act
+            var result = await _authService.RegisterAsync(registerDto);
+
+            //Assert
+            Assert.Equal(3, result.Id);
+            Assert.Equal(3, _users.Count);
+        }
+
+        [Fact]
+        public async Task RegisterAsync_EmailTaken_ThrowsValidationAppException()
+        {
+            //Arrange
+            var registerDto = new RegisterDto()
+            {
+                Email = "testuser@gmail.com",
+
+            };
+
+            //Act & Assert
+            await Assert.ThrowsAsync<ValidationAppException>(() => _authService.RegisterAsync(registerDto));
         }
 
         // UserManager does not have an empty constructor, so I need to create the mocked version here
