@@ -43,11 +43,13 @@ namespace UnitTests.Services
                     Id = 1,
                     UserName = "TestAdmin",
                     Email = "testadmin@gmail.com",
+                    Address = new UserAddress()
                 },
                 new ApplicationUser() {
                     Id = 2,
                     UserName = "TestUser",
-                    Email = "testuser@gmail.com"
+                    Email = "testuser@gmail.com",
+                    Address = new UserAddress()
                 }
             };
             _userManagerStub = MockUserManager(_users);
@@ -270,6 +272,74 @@ namespace UnitTests.Services
             await Assert.ThrowsAsync<ValidationAppException>(() => _authService.RegisterAsync(registerDto));
         }
 
+        [Fact]
+        public async Task UpdateUserAsync_ValidDto_UpdatesUserData()
+        {
+            //Arrange
+            var updateDto = new UserUpdateDto()
+            {
+                UserId = 1,
+                FirstName = "NewFirstName",
+                LastName = "NewLastName",
+                PhoneNumber = "1",
+                City = "NewCity"
+            };
+
+            var userDataViewModel = new UserDataViewModel()
+            {
+                FirstName = "NewFirstName",
+                LastName = "NewLastName",
+                PhoneNumber = "1",
+                City = "NewCity"
+            };
+
+            _mapperStub.Setup(m => m.Map<UserDataViewModel>(_users[0]))
+                .Returns(userDataViewModel);
+
+            //Act
+            var result = await _authService.UpdateUserAsync(updateDto);
+
+            //Assert
+            Assert.Equal("NewFirstName", result.FirstName);
+            Assert.Equal("NewLastName", result.LastName);
+            Assert.Equal("1", result.PhoneNumber);
+            Assert.Equal("NewCity", result.City);
+        }
+
+        [Fact]
+        public async Task ChangePasswordAsync_WithCorrectPassword_ChangesPassword()
+        {
+            //Arrange
+            var changePasswordDto = new ChangePasswordDto()
+            {
+                Email = "testuser@gmail.com",
+                OldPassword = "abc123",
+                NewPassword = "abc234"
+            };
+
+            //Act
+            await _authService.ChangePasswordAsync(changePasswordDto);
+
+            //Assert
+            _userManagerStub.Verify(u => u.CheckPasswordAsync(_users[1], changePasswordDto.OldPassword), Times.Once);
+            _userManagerStub.Verify(u => u.ChangePasswordAsync(_users[1], changePasswordDto.OldPassword, changePasswordDto.NewPassword), Times.Once);
+        }
+
+        [Fact]
+        public async Task ChangePasswordAsync_WithInvalidPassword_ThrowsValidationAppException()
+        {
+            //Arrange
+            var changePasswordDto = new ChangePasswordDto()
+            {
+                Email = "testuser@gmail.com",
+                OldPassword = "abc121",
+                NewPassword = "abc234"
+            };
+
+            //Act & Assert
+            await Assert.ThrowsAsync<ValidationAppException>(() => _authService.ChangePasswordAsync(changePasswordDto));
+        }
+
         // UserManager does not have an empty constructor, so I need to create the mocked version here
         private static Mock<UserManager<TUser>> MockUserManager<TUser>(List<TUser> ls) where TUser : class
         {
@@ -281,6 +351,7 @@ namespace UnitTests.Services
             mgr.Setup(x => x.DeleteAsync(It.IsAny<TUser>())).ReturnsAsync(IdentityResult.Success);
             mgr.Setup(x => x.CreateAsync(It.IsAny<TUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success).Callback<TUser, string>((x, y) => ls.Add(x));
             mgr.Setup(x => x.UpdateAsync(It.IsAny<TUser>())).ReturnsAsync(IdentityResult.Success);
+            mgr.Setup(x => x.ChangePasswordAsync(It.IsAny<TUser>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
 
             mgr.Setup(u => u.FindByEmailAsync("testadmin@gmail.com").Result)
                .Returns(ls[0]);
