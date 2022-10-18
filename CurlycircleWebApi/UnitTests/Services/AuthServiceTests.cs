@@ -340,6 +340,54 @@ namespace UnitTests.Services
             await Assert.ThrowsAsync<ValidationAppException>(() => _authService.ChangePasswordAsync(changePasswordDto));
         }
 
+        [Fact]
+        public async Task DeleteUserAsync_WithValidPassword_DeletesCorrectUser()
+        {
+            var deleteUsertDto = new DeleteUserDto()
+            {
+                Id = 2,
+                Password = "abc123"
+            };
+
+            await _authService.DeleteUserAsync(deleteUsertDto);
+
+            _userManagerStub.Verify(u => u.DeleteAsync(_users[1]), Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteUserAsync_WithWrongPassword_DeletesCorrectUser()
+        {
+            var deleteUsertDto = new DeleteUserDto()
+            {
+                Id = 2,
+                Password = "abd123"
+            };
+
+            await Assert.ThrowsAsync<ValidationAppException>(() => _authService.DeleteUserAsync(deleteUsertDto));
+        }
+
+        [Fact]
+        public async Task GetUserDataAsync_WithValidUserId_ReturnsUserData()
+        {
+            var userDataViewModel = new UserDataViewModel()
+            {
+                Email = "testuser@gmail.com"
+            };
+
+            _mapperStub.Setup(m => m.Map<UserDataViewModel>(_users[1]))
+                .Returns(userDataViewModel);
+
+            var result = await _authService.GetUserDataAsync(2);
+
+            Assert.Equal("testuser@gmail.com", result.Email);
+        }
+
+        [Fact]
+        public async Task GetUserDataAsync_WithWrongUserId_ReturnsUserData()
+        {
+            await Assert.ThrowsAsync<EntityNotFoundException>(() => _authService.GetUserDataAsync(3));
+        }
+
         // UserManager does not have an empty constructor, so I need to create the mocked version here
         private static Mock<UserManager<TUser>> MockUserManager<TUser>(List<TUser> ls) where TUser : class
         {
