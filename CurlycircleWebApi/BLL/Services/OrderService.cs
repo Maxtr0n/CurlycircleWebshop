@@ -81,7 +81,6 @@ namespace BLL.Services
             };
 
             var orderId = _orderRepository.AddOrder(order);
-            userCart.ClearCart();
             var request = PrepareWebPaymentRequest(order);
 
             StartPaymentResponse? startPaymentResponse = await _barionClient.StartPayment(request);
@@ -111,6 +110,7 @@ namespace BLL.Services
 
             order.WebPayment.PaymentStatus = startPaymentResponse.Status;
             order.WebPayment.BarionPaymentId = startPaymentResponse.PaymentId;
+            userCart.ClearCart();
 
             WebPaymentRequestViewModel webPaymentRequestViewModel = new()
             {
@@ -185,7 +185,7 @@ namespace BLL.Services
         public async Task UpdateOrderAsync(int orderId, OrderUpsertDto orderUpdateDto)
         {
             var order = await _orderRepository.GetOrderByIdAsync(orderId);
-            //order.Update(_mapper.Map<Order>(orderUpdateDto));
+            order = _mapper.Map<Order>(orderUpdateDto);
             await _unitOfWork.SaveChangesAsync();
         }
 
@@ -219,6 +219,7 @@ namespace BLL.Services
                 var orderItem = new OrderItem
                 {
                     ProductId = cartItem.ProductId,
+                    Product = cartItem.Product,
                     Price = cartItem.Price,
                     Quantity = cartItem.Quantity,
                 };

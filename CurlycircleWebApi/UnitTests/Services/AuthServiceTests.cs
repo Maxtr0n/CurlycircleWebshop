@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BLL.Dtos;
 using BLL.Exceptions;
-using BLL.Interfaces;
 using BLL.Services;
 using BLL.ViewModels;
 using Domain.Entities;
@@ -11,11 +10,6 @@ using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnitTests.Services
 {
@@ -23,8 +17,8 @@ namespace UnitTests.Services
     {
         private readonly Mock<IUnitOfWork> _unitOfWorkStub;
         private readonly Mock<IMapper> _mapperStub;
-        private readonly Mock<ICartRepository> _cartRepositoryStub;
-        private readonly Mock<UserManager<ApplicationUser>> _userManagerStub;
+        private readonly Mock<ICartRepository> _cartRepositoryMock;
+        private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
         private readonly Mock<IConfiguration> _configurationStub;
         private readonly List<ApplicationUser> _users;
 
@@ -34,7 +28,7 @@ namespace UnitTests.Services
         {
             _unitOfWorkStub = new Mock<IUnitOfWork>();
             _mapperStub = new Mock<IMapper>();
-            _cartRepositoryStub = new Mock<ICartRepository>();
+            _cartRepositoryMock = new Mock<ICartRepository>();
             _configurationStub = MockConfiguration();
 
             _users = new List<ApplicationUser>
@@ -52,10 +46,10 @@ namespace UnitTests.Services
                     Address = new UserAddress()
                 }
             };
-            _userManagerStub = MockUserManager(_users);
+            _userManagerMock = MockUserManager(_users);
 
-            _authService = new AuthService(_userManagerStub.Object, _unitOfWorkStub.Object, _mapperStub.Object,
-                _configurationStub.Object, _cartRepositoryStub.Object);
+            _authService = new AuthService(_userManagerMock.Object, _unitOfWorkStub.Object, _mapperStub.Object,
+                _configurationStub.Object, _cartRepositoryMock.Object);
         }
 
         [Fact]
@@ -83,7 +77,7 @@ namespace UnitTests.Services
                 ApplicationUser = _users[0],
             };
 
-            _cartRepositoryStub.Setup(c => c.GetUserCartAsync(1).Result)
+            _cartRepositoryMock.Setup(c => c.GetUserCartAsync(1).Result)
                 .Returns(userCart);
             _mapperStub.Setup(m => m.Map<UserViewModel>(_users[0]))
                 .Returns(userViewModel);
@@ -138,7 +132,7 @@ namespace UnitTests.Services
                 ApplicationUser = _users[1],
             };
 
-            _cartRepositoryStub.Setup(c => c.GetUserCartAsync(2).Result)
+            _cartRepositoryMock.Setup(c => c.GetUserCartAsync(2).Result)
                 .Returns(userCart);
             _mapperStub.Setup(m => m.Map<UserViewModel>(_users[1]))
                 .Returns(userViewModel);
@@ -210,11 +204,11 @@ namespace UnitTests.Services
                 Price = 1000
             });
 
-            _cartRepositoryStub.Setup(c => c.GetUserCartAsync(2).Result)
+            _cartRepositoryMock.Setup(c => c.GetUserCartAsync(2).Result)
                 .Returns(userCart);
-            _cartRepositoryStub.Setup(c => c.GetCartByIdAsync(3).Result)
+            _cartRepositoryMock.Setup(c => c.GetCartByIdAsync(3).Result)
                 .Returns(cartBeforeLogin);
-            _cartRepositoryStub.Setup(c => c.AddCartItemAsync(2, cartBeforeLogin.CartItems[0])).Callback(() =>
+            _cartRepositoryMock.Setup(c => c.AddCartItemAsync(2, cartBeforeLogin.CartItems[0])).Callback(() =>
             {
                 userCart.CartItems.Add(cartBeforeLogin.CartItems[0]);
             });
@@ -321,8 +315,8 @@ namespace UnitTests.Services
             await _authService.ChangePasswordAsync(changePasswordDto);
 
             //Assert
-            _userManagerStub.Verify(u => u.CheckPasswordAsync(_users[1], changePasswordDto.OldPassword), Times.Once);
-            _userManagerStub.Verify(u => u.ChangePasswordAsync(_users[1], changePasswordDto.OldPassword, changePasswordDto.NewPassword), Times.Once);
+            _userManagerMock.Verify(u => u.CheckPasswordAsync(_users[1], changePasswordDto.OldPassword), Times.Once);
+            _userManagerMock.Verify(u => u.ChangePasswordAsync(_users[1], changePasswordDto.OldPassword, changePasswordDto.NewPassword), Times.Once);
         }
 
         [Fact]
@@ -351,7 +345,7 @@ namespace UnitTests.Services
 
             await _authService.DeleteUserAsync(deleteUsertDto);
 
-            _userManagerStub.Verify(u => u.DeleteAsync(_users[1]), Times.Once);
+            _userManagerMock.Verify(u => u.DeleteAsync(_users[1]), Times.Once);
         }
 
         [Fact]

@@ -20,18 +20,18 @@ namespace UnitTests.Services
     {
         private readonly Mock<IUnitOfWork> _unitOfWorkStub;
         private readonly Mock<IMapper> _mapperStub;
-        private readonly Mock<IProductCategoryRepository> _productCategoryRepositoryStub;
-        private readonly Mock<IImageHelper> _imageHelperStub;
+        private readonly Mock<IProductCategoryRepository> _productCategoryRepositoryMock;
+        private readonly Mock<IImageHelper> _imageHelperMock;
         private readonly ProductCategoryService _productCategoryService;
 
         public ProductCategoryServiceTests()
         {
             _unitOfWorkStub = new Mock<IUnitOfWork>();
             _mapperStub = new Mock<IMapper>();
-            _productCategoryRepositoryStub = new Mock<IProductCategoryRepository>();
-            _imageHelperStub = new Mock<IImageHelper>();
-            _productCategoryService = new ProductCategoryService(_productCategoryRepositoryStub.Object, _unitOfWorkStub.Object,
-                _mapperStub.Object, _imageHelperStub.Object);
+            _productCategoryRepositoryMock = new Mock<IProductCategoryRepository>();
+            _imageHelperMock = new Mock<IImageHelper>();
+            _productCategoryService = new ProductCategoryService(_productCategoryRepositoryMock.Object, _unitOfWorkStub.Object,
+                _mapperStub.Object, _imageHelperMock.Object);
         }
 
         [Fact]
@@ -47,15 +47,15 @@ namespace UnitTests.Services
                 ThumbnailImage = thumbNailImageMock.Object,
             };
 
-            _imageHelperStub.Setup(i => i.CreateThumbnailFile(dto.ThumbnailImage, It.IsAny<string>()).Result)
+            _imageHelperMock.Setup(i => i.CreateThumbnailFile(dto.ThumbnailImage, It.IsAny<string>()).Result)
                 .Returns("TestFilePath");
-            _productCategoryRepositoryStub.Setup(p => p.AddProductCategory(It.IsAny<ProductCategory>()))
+            _productCategoryRepositoryMock.Setup(p => p.AddProductCategory(It.IsAny<ProductCategory>()))
                 .Returns(1);
 
             var result = await _productCategoryService.CreateProductCategoryAsync(dto);
 
             Assert.Equal(1, result.Id);
-            _imageHelperStub.Verify(i => i.CreateThumbnailFile(dto.ThumbnailImage, It.IsAny<string>()), Times.Once);
+            _imageHelperMock.Verify(i => i.CreateThumbnailFile(dto.ThumbnailImage, It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace UnitTests.Services
                 Description = "Test",
             };
 
-            _productCategoryRepositoryStub.Setup(p => p.AddProductCategory(It.IsAny<ProductCategory>()))
+            _productCategoryRepositoryMock.Setup(p => p.AddProductCategory(It.IsAny<ProductCategory>()))
                 .Returns(1);
 
             var result = await _productCategoryService.CreateProductCategoryAsync(dto);
@@ -89,7 +89,7 @@ namespace UnitTests.Services
                 new ProductCategoryViewModel() { Id = 2, Name = "Test2" },
             };
 
-            _productCategoryRepositoryStub.Setup(p => p.GetAllAsync().Result)
+            _productCategoryRepositoryMock.Setup(p => p.GetAllAsync().Result)
                 .Returns(productCategoryList);
             _mapperStub.Setup(m => m.Map<ProductCategoriesViewModel>(productCategoryList))
                 .Returns(
@@ -121,7 +121,7 @@ namespace UnitTests.Services
                 Name = "Test"
             };
 
-            _productCategoryRepositoryStub.Setup(p => p.GetProductCategoryByIdAsync(1).Result)
+            _productCategoryRepositoryMock.Setup(p => p.GetProductCategoryByIdAsync(1).Result)
                 .Returns(productCategory);
             _mapperStub.Setup(m => m.Map<ProductCategoryViewModel>(productCategory))
                 .Returns(vm);
@@ -135,7 +135,7 @@ namespace UnitTests.Services
         [Fact]
         public async Task FindProductCategoryByIdAsync_WithInvalidId_ThrowsEntityNotFoundException()
         {
-            _productCategoryRepositoryStub.Setup(p => p.GetProductCategoryByIdAsync(2))
+            _productCategoryRepositoryMock.Setup(p => p.GetProductCategoryByIdAsync(2))
                 .ThrowsAsync(new EntityNotFoundException("Test"));
 
             await Assert.ThrowsAsync<EntityNotFoundException>(() => _productCategoryService.FindProductCategoryByIdAsync(2));
@@ -161,13 +161,13 @@ namespace UnitTests.Services
                 ThumbnailImageUrl = "Test"
             };
 
-            _productCategoryRepositoryStub.Setup(p => p.GetProductCategoryByIdAsync(1).Result)
+            _productCategoryRepositoryMock.Setup(p => p.GetProductCategoryByIdAsync(1).Result)
                 .Returns(pr);
 
             await _productCategoryService.UpdateProductCategoryAsync(1, dto);
 
-            _imageHelperStub.Verify(i => i.CreateThumbnailFile(dto.ThumbnailImage, It.IsAny<string>()), Times.Once);
-            _imageHelperStub.Verify(i => i.DeleteImageFile(It.IsAny<string>()), Times.Once);
+            _imageHelperMock.Verify(i => i.CreateThumbnailFile(dto.ThumbnailImage, It.IsAny<string>()), Times.Once);
+            _imageHelperMock.Verify(i => i.DeleteImageFile(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
@@ -180,19 +180,19 @@ namespace UnitTests.Services
                 ThumbnailImageUrl = "Test"
             };
 
-            _productCategoryRepositoryStub.Setup(p => p.GetProductCategoryByIdAsync(1).Result)
+            _productCategoryRepositoryMock.Setup(p => p.GetProductCategoryByIdAsync(1).Result)
                 .Returns(pr);
 
             await _productCategoryService.DeleteProductCategoryAsync(1);
 
-            _productCategoryRepositoryStub.Verify(p => p.GetProductCategoryByIdAsync(1), Times.Once);
+            _productCategoryRepositoryMock.Verify(p => p.GetProductCategoryByIdAsync(1), Times.Once);
             Assert.False(pr.IsAvailable);
         }
 
         [Fact]
         public async Task DeleteProductCategoryAsync_WithInvalidId_ThrowsEntityNotFoundException()
         {
-            _productCategoryRepositoryStub.Setup(p => p.GetProductCategoryByIdAsync(2)).ThrowsAsync(new EntityNotFoundException("Test"));
+            _productCategoryRepositoryMock.Setup(p => p.GetProductCategoryByIdAsync(2)).ThrowsAsync(new EntityNotFoundException("Test"));
             await Assert.ThrowsAsync<EntityNotFoundException>(() => _productCategoryService.DeleteProductCategoryAsync(2));
         }
 
@@ -219,7 +219,7 @@ namespace UnitTests.Services
                 ThumbnailImageUrl = "Test"
             };
 
-            _productCategoryRepositoryStub.Setup(p => p.GetProductCategoryByIdAsync(1).Result)
+            _productCategoryRepositoryMock.Setup(p => p.GetProductCategoryByIdAsync(1).Result)
                 .Returns(productCategory);
             _mapperStub.Setup(m => m.Map<Product>(productCreateDto))
                 .Returns(product);
@@ -238,7 +238,7 @@ namespace UnitTests.Services
                 Price = 3000
             };
 
-            _productCategoryRepositoryStub.Setup(p => p.GetProductCategoryByIdAsync(2))
+            _productCategoryRepositoryMock.Setup(p => p.GetProductCategoryByIdAsync(2))
                 .ThrowsAsync(new EntityNotFoundException("Test"));
 
             await Assert.ThrowsAsync<EntityNotFoundException>(() => _productCategoryService.AddProductAsync(2, productCreateDto));

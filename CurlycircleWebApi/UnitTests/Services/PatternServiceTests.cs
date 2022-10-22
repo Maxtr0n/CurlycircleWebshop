@@ -16,17 +16,17 @@ namespace UnitTests.Services
 {
     public class PatternServiceTests
     {
-        private readonly Mock<IPatternRepository> _patternRepositoryStub;
+        private readonly Mock<IPatternRepository> _patternRepositoryMock;
         private readonly Mock<IUnitOfWork> _unitOfWorkStub;
         private readonly Mock<IMapper> _mapperStub;
         private readonly PatternService _patternService;
 
         public PatternServiceTests()
         {
-            _patternRepositoryStub = new Mock<IPatternRepository>();
+            _patternRepositoryMock = new Mock<IPatternRepository>();
             _unitOfWorkStub = new Mock<IUnitOfWork>();
             _mapperStub = new Mock<IMapper>();
-            _patternService = new PatternService(_patternRepositoryStub.Object, _unitOfWorkStub.Object, _mapperStub.Object);
+            _patternService = new PatternService(_patternRepositoryMock.Object, _unitOfWorkStub.Object, _mapperStub.Object);
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace UnitTests.Services
             };
 
 
-            _patternRepositoryStub.Setup(repo => repo.GetAllAsync().Result)
+            _patternRepositoryMock.Setup(repo => repo.GetAllAsync().Result)
                 .Returns(patterns);
 
             _mapperStub.Setup(mapper => mapper.Map<PatternsViewModel>(patterns))
@@ -69,7 +69,7 @@ namespace UnitTests.Services
             // Arrange
             var pattern = new Pattern() { Id = 1, Name = "Csíkos" };
 
-            _patternRepositoryStub.Setup(repo => repo.GetPatternByIdAsync(1).Result)
+            _patternRepositoryMock.Setup(repo => repo.GetPatternByIdAsync(1).Result)
                 .Returns(pattern);
 
             var patternViewModel = new PatternViewModel() { Id = 1, Name = "Csíkos" };
@@ -90,7 +90,7 @@ namespace UnitTests.Services
         public async Task FindPatternByIdAsync_WithInvalidId_ThrowsEntityNotFoundException()
         {
             //Arrange
-            _patternRepositoryStub.Setup(repo => repo.GetPatternByIdAsync(1).Result)
+            _patternRepositoryMock.Setup(repo => repo.GetPatternByIdAsync(1).Result)
                 .Throws(new EntityNotFoundException($"Pattern with id {1} not found."));
 
             //Act & Assert
@@ -104,7 +104,7 @@ namespace UnitTests.Services
             var patternDto = new PatternUpsertDto() { Name = "Csíkos" };
             var pattern = new Pattern() { Id = 1, Name = "Csíkos" };
 
-            _patternRepositoryStub.Setup(repo => repo.AddPattern(pattern))
+            _patternRepositoryMock.Setup(repo => repo.AddPattern(pattern))
                 .Returns(1);
 
             _mapperStub.Setup(mapper => mapper.Map<Pattern>(patternDto))
@@ -127,7 +127,7 @@ namespace UnitTests.Services
             await _patternService.DeletePatternAsync(1);
 
             //Assert
-            _patternRepositoryStub.Verify(c => c.DeletePatternAsync(1), Times.Once);
+            _patternRepositoryMock.Verify(c => c.DeletePatternAsync(1), Times.Once);
         }
     }
 }

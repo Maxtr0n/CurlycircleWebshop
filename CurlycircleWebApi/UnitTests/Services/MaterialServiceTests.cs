@@ -16,17 +16,17 @@ namespace UnitTests.Services
 {
     public class MaterialServiceTests
     {
-        private readonly Mock<IMaterialRepository> _materialRepositoryStub;
+        private readonly Mock<IMaterialRepository> _materialRepositoryMock;
         private readonly Mock<IUnitOfWork> _unitOfWorkStub;
         private readonly Mock<IMapper> _mapperStub;
         private readonly MaterialService _materialService;
 
         public MaterialServiceTests()
         {
-            _materialRepositoryStub = new Mock<IMaterialRepository>();
+            _materialRepositoryMock = new Mock<IMaterialRepository>();
             _unitOfWorkStub = new Mock<IUnitOfWork>();
             _mapperStub = new Mock<IMapper>();
-            _materialService = new MaterialService(_materialRepositoryStub.Object, _unitOfWorkStub.Object, _mapperStub.Object);
+            _materialService = new MaterialService(_materialRepositoryMock.Object, _unitOfWorkStub.Object, _mapperStub.Object);
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace UnitTests.Services
             };
 
 
-            _materialRepositoryStub.Setup(repo => repo.GetAllAsync().Result)
+            _materialRepositoryMock.Setup(repo => repo.GetAllAsync().Result)
                 .Returns(materials);
 
             _mapperStub.Setup(mapper => mapper.Map<MaterialsViewModel>(materials))
@@ -69,7 +69,7 @@ namespace UnitTests.Services
             // Arrange
             var material = new Material() { Id = 1, Name = "Szövet" };
 
-            _materialRepositoryStub.Setup(repo => repo.GetMaterialByIdAsync(1).Result)
+            _materialRepositoryMock.Setup(repo => repo.GetMaterialByIdAsync(1).Result)
                 .Returns(material);
 
             var materialViewModel = new MaterialViewModel() { Id = 1, Name = "Szövet" };
@@ -90,7 +90,7 @@ namespace UnitTests.Services
         public async Task FindMaterialByIdAsync_WithInvalidId_ThrowsEntityNotFoundException()
         {
             //Arrange
-            _materialRepositoryStub.Setup(repo => repo.GetMaterialByIdAsync(1).Result)
+            _materialRepositoryMock.Setup(repo => repo.GetMaterialByIdAsync(1).Result)
                 .Throws(new EntityNotFoundException($"Material with id {1} not found."));
 
             //Act & Assert
@@ -104,7 +104,7 @@ namespace UnitTests.Services
             var materialDto = new MaterialUpsertDto() { Name = "Szövet" };
             var material = new Material() { Id = 1, Name = "Szövet" };
 
-            _materialRepositoryStub.Setup(repo => repo.AddMaterial(material))
+            _materialRepositoryMock.Setup(repo => repo.AddMaterial(material))
                 .Returns(1);
 
             _mapperStub.Setup(mapper => mapper.Map<Material>(materialDto))
@@ -127,7 +127,7 @@ namespace UnitTests.Services
             await _materialService.DeleteMaterialAsync(1);
 
             //Assert
-            _materialRepositoryStub.Verify(c => c.DeleteMaterialAsync(1), Times.Once);
+            _materialRepositoryMock.Verify(c => c.DeleteMaterialAsync(1), Times.Once);
         }
     }
 }

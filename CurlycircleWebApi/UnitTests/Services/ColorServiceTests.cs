@@ -17,17 +17,17 @@ namespace UnitTests.Services
 {
     public class ColorServiceTests
     {
-        private readonly Mock<IColorRepository> _colorRepositoryStub;
+        private readonly Mock<IColorRepository> _colorRepositoryMock;
         private readonly Mock<IUnitOfWork> _unitOfWorkStub;
         private readonly Mock<IMapper> _mapperStub;
         private readonly ColorService _colorService;
 
         public ColorServiceTests()
         {
-            _colorRepositoryStub = new Mock<IColorRepository>();
+            _colorRepositoryMock = new Mock<IColorRepository>();
             _unitOfWorkStub = new Mock<IUnitOfWork>();
             _mapperStub = new Mock<IMapper>();
-            _colorService = new ColorService(_colorRepositoryStub.Object, _unitOfWorkStub.Object, _mapperStub.Object);
+            _colorService = new ColorService(_colorRepositoryMock.Object, _unitOfWorkStub.Object, _mapperStub.Object);
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace UnitTests.Services
             };
 
 
-            _colorRepositoryStub.Setup(repo => repo.GetAllAsync().Result)
+            _colorRepositoryMock.Setup(repo => repo.GetAllAsync().Result)
                 .Returns(colors);
 
             _mapperStub.Setup(mapper => mapper.Map<ColorsViewModel>(colors))
@@ -70,7 +70,7 @@ namespace UnitTests.Services
             // Arrange
             var color = new Color() { Id = 1, Name = "Kék" };
 
-            _colorRepositoryStub.Setup(repo => repo.GetColorByIdAsync(1).Result)
+            _colorRepositoryMock.Setup(repo => repo.GetColorByIdAsync(1).Result)
                 .Returns(color);
 
             var colorViewModel = new ColorViewModel() { Id = 1, Name = "Kék" };
@@ -91,7 +91,7 @@ namespace UnitTests.Services
         public async Task FindColorByIdAsync_WithInvalidId_ThrowsEntityNotFoundException()
         {
             //Arrange
-            _colorRepositoryStub.Setup(repo => repo.GetColorByIdAsync(1).Result)
+            _colorRepositoryMock.Setup(repo => repo.GetColorByIdAsync(1).Result)
                 .Throws(new EntityNotFoundException($"Color with id {1} not found."));
 
             //Act & Assert
@@ -105,7 +105,7 @@ namespace UnitTests.Services
             var colorDto = new ColorUpsertDto() { Name = "Kék" };
             var color = new Color() { Id = 1, Name = "Kék" };
 
-            _colorRepositoryStub.Setup(repo => repo.AddColor(color))
+            _colorRepositoryMock.Setup(repo => repo.AddColor(color))
                 .Returns(1);
 
             _mapperStub.Setup(mapper => mapper.Map<Color>(colorDto))
@@ -128,7 +128,7 @@ namespace UnitTests.Services
             await _colorService.DeleteColorAsync(1);
 
             //Assert
-            _colorRepositoryStub.Verify(c => c.DeleteColorAsync(1), Times.Once);
+            _colorRepositoryMock.Verify(c => c.DeleteColorAsync(1), Times.Once);
         }
     }
 }

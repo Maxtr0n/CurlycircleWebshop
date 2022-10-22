@@ -20,7 +20,7 @@ namespace DAL.Repositories
             this.dbContext = dbContext;
         }
 
-        public int CreateCartAsync(Cart cart)
+        public int CreateCart(Cart cart)
         {
             dbContext.Carts.Add(cart);
             return cart.Id;

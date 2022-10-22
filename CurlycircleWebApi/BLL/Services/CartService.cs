@@ -47,7 +47,7 @@ namespace BLL.Services
         public async Task<EntityCreatedViewModel> CreateCartAsync()
         {
             Cart cart = new Cart();
-            var id = _cartRepository.CreateCartAsync(cart);
+            var id = _cartRepository.CreateCart(cart);
             await _unitOfWork.SaveChangesAsync();
             return new EntityCreatedViewModel(id);
         }

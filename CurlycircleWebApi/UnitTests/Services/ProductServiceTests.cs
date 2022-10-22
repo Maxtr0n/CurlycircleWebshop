@@ -21,10 +21,10 @@ namespace UnitTests.Services
     {
         private readonly Mock<IUnitOfWork> _unitOfWorkStub;
         private readonly Mock<IMapper> _mapperStub;
-        private readonly Mock<IProductRepository> _productRepositoryStub;
-        private readonly Mock<IMaterialRepository> _materialRepositoryStub;
-        private readonly Mock<IPatternRepository> _patternRepositoryStub;
-        private readonly Mock<IColorRepository> _colorRepositoryStub;
+        private readonly Mock<IProductRepository> _productRepositoryMock;
+        private readonly Mock<IMaterialRepository> _materialRepositoryMock;
+        private readonly Mock<IPatternRepository> _patternRepositoryMock;
+        private readonly Mock<IColorRepository> _colorRepositoryMock;
         private readonly Mock<IImageHelper> _imageHelperStub;
         private readonly ProductService _productService;
 
@@ -32,13 +32,13 @@ namespace UnitTests.Services
         {
             _unitOfWorkStub = new Mock<IUnitOfWork>();
             _mapperStub = new Mock<IMapper>();
-            _productRepositoryStub = new Mock<IProductRepository>();
-            _materialRepositoryStub = new Mock<IMaterialRepository>();
-            _patternRepositoryStub = new Mock<IPatternRepository>();
-            _colorRepositoryStub = new Mock<IColorRepository>();
+            _productRepositoryMock = new Mock<IProductRepository>();
+            _materialRepositoryMock = new Mock<IMaterialRepository>();
+            _patternRepositoryMock = new Mock<IPatternRepository>();
+            _colorRepositoryMock = new Mock<IColorRepository>();
             _imageHelperStub = new Mock<IImageHelper>();
-            _productService = new ProductService(_productRepositoryStub.Object, _materialRepositoryStub.Object,
-                _colorRepositoryStub.Object, _patternRepositoryStub.Object, _unitOfWorkStub.Object,
+            _productService = new ProductService(_productRepositoryMock.Object, _materialRepositoryMock.Object,
+                _colorRepositoryMock.Object, _patternRepositoryMock.Object, _unitOfWorkStub.Object,
                 _mapperStub.Object, _imageHelperStub.Object);
         }
 
@@ -67,13 +67,13 @@ namespace UnitTests.Services
             };
 
 
-            _materialRepositoryStub.Setup(m => m.GetMaterialByIdAsync(1).Result)
+            _materialRepositoryMock.Setup(m => m.GetMaterialByIdAsync(1).Result)
                 .Returns(material);
-            _patternRepositoryStub.Setup(m => m.GetPatternByIdAsync(1).Result)
+            _patternRepositoryMock.Setup(m => m.GetPatternByIdAsync(1).Result)
                 .Returns(pattern);
-            _colorRepositoryStub.Setup(m => m.GetColorsByIdsAsync(new List<int>() { 1 }).Result)
+            _colorRepositoryMock.Setup(m => m.GetColorsByIdsAsync(new List<int>() { 1 }).Result)
                 .Returns(colorList);
-            _productRepositoryStub.Setup(p => p.AddProduct(It.IsAny<Product>()))
+            _productRepositoryMock.Setup(p => p.AddProduct(It.IsAny<Product>()))
                 .Returns(1);
 
             var result = await _productService.CreateProductAsync(dto);
@@ -108,7 +108,7 @@ namespace UnitTests.Services
                 PageSize = 1,
             };
 
-            _productRepositoryStub.Setup(p => p.GetAllAsync(productQueryParameters).Result)
+            _productRepositoryMock.Setup(p => p.GetAllAsync(productQueryParameters).Result)
                 .Returns(pagedProducts);
             _mapperStub.Setup(m => m.Map<PagedProductsViewModel>(pagedProducts))
                 .Returns(vm);
@@ -135,7 +135,7 @@ namespace UnitTests.Services
                 Id = 1
             };
 
-            _productRepositoryStub.Setup(p => p.GetProductByIdAsync(1).Result)
+            _productRepositoryMock.Setup(p => p.GetProductByIdAsync(1).Result)
                 .Returns(product);
             _mapperStub.Setup(m => m.Map<ProductViewModel>(product))
                 .Returns(vm);
@@ -148,7 +148,7 @@ namespace UnitTests.Services
         [Fact]
         public async Task FindProductByIdAsync_WithInalidId_ThrowsEntityNotFoundException()
         {
-            _productRepositoryStub.Setup(p => p.GetProductByIdAsync(1))
+            _productRepositoryMock.Setup(p => p.GetProductByIdAsync(1))
                 .ThrowsAsync(new EntityNotFoundException("Test"));
 
             await Assert.ThrowsAsync<EntityNotFoundException>(() => _productService.FindProductByIdAsync(1));
@@ -182,21 +182,21 @@ namespace UnitTests.Services
             };
 
 
-            _materialRepositoryStub.Setup(m => m.GetMaterialByIdAsync(1).Result)
+            _materialRepositoryMock.Setup(m => m.GetMaterialByIdAsync(1).Result)
                 .Returns(material);
-            _patternRepositoryStub.Setup(m => m.GetPatternByIdAsync(1).Result)
+            _patternRepositoryMock.Setup(m => m.GetPatternByIdAsync(1).Result)
                 .Returns(pattern);
-            _colorRepositoryStub.Setup(m => m.GetColorsByIdsAsync(new List<int>() { 1 }).Result)
+            _colorRepositoryMock.Setup(m => m.GetColorsByIdsAsync(new List<int>() { 1 }).Result)
                 .Returns(colorList);
-            _productRepositoryStub.Setup(p => p.GetProductByIdAsync(1).Result)
+            _productRepositoryMock.Setup(p => p.GetProductByIdAsync(1).Result)
                 .Returns(new Product());
 
             await _productService.UpdateProductAsync(1, dto);
 
-            _materialRepositoryStub.Verify(m => m.GetMaterialByIdAsync(1), Times.Once);
-            _patternRepositoryStub.Verify(m => m.GetPatternByIdAsync(1), Times.Once);
-            _colorRepositoryStub.Verify(m => m.GetColorsByIdsAsync(It.IsAny<List<int>>()), Times.Once);
-            _productRepositoryStub.Verify(p => p.GetProductByIdAsync(1), Times.Once);
+            _materialRepositoryMock.Verify(m => m.GetMaterialByIdAsync(1), Times.Once);
+            _patternRepositoryMock.Verify(m => m.GetPatternByIdAsync(1), Times.Once);
+            _colorRepositoryMock.Verify(m => m.GetColorsByIdsAsync(It.IsAny<List<int>>()), Times.Once);
+            _productRepositoryMock.Verify(p => p.GetProductByIdAsync(1), Times.Once);
         }
 
         [Fact]
@@ -208,12 +208,12 @@ namespace UnitTests.Services
                 IsAvailable = true
             };
 
-            _productRepositoryStub.Setup(p => p.GetProductByIdAsync(1).Result)
+            _productRepositoryMock.Setup(p => p.GetProductByIdAsync(1).Result)
                 .Returns(product);
 
             await _productService.DeleteProductAsync(1);
 
-            _productRepositoryStub.Verify(p => p.GetProductByIdAsync(1), Times.Once);
+            _productRepositoryMock.Verify(p => p.GetProductByIdAsync(1), Times.Once);
             Assert.False(product.IsAvailable);
         }
     }

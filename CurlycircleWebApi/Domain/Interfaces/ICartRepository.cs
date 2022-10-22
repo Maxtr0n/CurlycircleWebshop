@@ -9,7 +9,7 @@ namespace Domain.Interfaces
 {
     public interface ICartRepository
     {
-        int CreateCartAsync(Cart cart);
+        int CreateCart(Cart cart);
 
         Task<Cart> GetCartByIdAsync(int cartId);
 
