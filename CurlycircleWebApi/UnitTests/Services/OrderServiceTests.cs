@@ -50,6 +50,20 @@ namespace UnitTests.Services
         [Fact]
         public async Task CreateOrderAsync_WithValidDto_CreatesOrder()
         {
+            var product1 = new Product()
+            {
+                Id = 1,
+                Name = "Test",
+                Description = "Test",
+            };
+
+            var product2 = new Product()
+            {
+                Id = 2,
+                Name = "Test",
+                Description = "Test",
+            };
+
             var order = new Order()
             {
                 Id = 1,
@@ -69,12 +83,14 @@ namespace UnitTests.Services
                     new CartItem()
                     {
                         ProductId = 1,
+                        Product = product1,
                         Quantity = 2,
                         Price = 1000
                     },
                     new CartItem()
                     {
                         ProductId = 2,
+                        Product = product2,
                         Quantity = 1,
                         Price = 3000
                     }
