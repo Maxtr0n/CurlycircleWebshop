@@ -38,7 +38,7 @@ export class ConfirmOrderComponent implements OnInit {
             return;
         }
 
-        if (this.order.paymentMethod.toString() === PaymentMethod.WebPayment.toString()) {
+        if (PaymentMethod[this.order.paymentMethod].toString() === PaymentMethod.WebPayment.toString()) {
             this.orderService.placeWebPaymentOrder(this.order).subscribe({
                 next: (webPaymentRequestViewModel) => {
                     this.orderService.clearOrder();
