@@ -39,6 +39,7 @@ export class ProductFiltersComponent implements OnInit, OnDestroy {
 
 
     ngOnDestroy(): void {
+        this.clearFilters();
         this.colorsValueChanges$.unsubscribe();
         this.materialsValueChanges$.unsubscribe();
         this.patternsValueChanges$.unsubscribe();
@@ -128,7 +129,7 @@ export class ProductFiltersComponent implements OnInit, OnDestroy {
         });
     }
 
-    clearFilters(): void {
+    public clearFilters(): void {
         this.colorsFormArray.reset();
         this.materialsFormArray.reset();
         this.patternsFormArray.reset();
