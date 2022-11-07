@@ -22,6 +22,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import hu.schutz.curlycircleandroidapp.ui.AccountScreen
 import hu.schutz.curlycircleandroidapp.ui.CartScreen
+import hu.schutz.curlycircleandroidapp.ui.CurlyCircleBottomNavigation
 import hu.schutz.curlycircleandroidapp.ui.ShopScreen
 import hu.schutz.curlycircleandroidapp.ui.theme.CurlyCircleAndroidAppTheme
 
@@ -49,65 +50,6 @@ fun CurlyCircleApp() {
         }
     }
 }
-
-
-@Composable
-fun CurlyCircleNavHost(
-    navController: NavHostController,
-    modifier: Modifier = Modifier
-) {
-    NavHost(
-        navController = navController,
-        startDestination = Screen.Shop.route,
-        modifier = modifier
-    ) {
-        composable(route = Screen.Shop.route) {
-            ShopScreen()
-        }
-        composable(route = Screen.Cart.route) {
-            CartScreen()
-        }
-        composable(route = Screen.Account.route) {
-            AccountScreen()
-        }
-    }
-}
-
-@Composable
-fun CurlyCircleBottomNavigation(
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-    ) {
-    BottomNavigation(
-        modifier = modifier,
-    ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination
-
-       bottomNavScreens.forEach{ screen ->
-           BottomNavigationItem(
-               icon = { Icon(imageVector = screen.icon, contentDescription = null)},
-               label = { Text(stringResource(id = screen.resourceId))},
-               selected = currentDestination?.hierarchy?.any { it.route == screen.route} == true,
-               onClick = {
-                   navController.navigate(screen.route) {
-                       // Pop up to the start destination of the graph to
-                       // avoid building up a large stack of destinations
-                       // on the back stack as users select items
-                       popUpTo(navController.graph.findStartDestination().id) {
-                           saveState = true
-                       }
-                       // Avoid multiple copies of the same destination when
-                       // reselecting the same item
-                       launchSingleTop = true
-                       // Restore state when reselecting a previously selected item
-                       restoreState = true
-                   }
-               })
-       }
-    }
-}
-
 
 @Preview(
     showBackground = true,
