@@ -9,11 +9,11 @@ import javax.inject.Singleton
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class RemoteTasksDataSource
+annotation class RemoteProductCategoriesDataSource
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class LocalTasksDataSource
+annotation class LocalProductCategoriesDataSource
 
 @Module
 @InstallIn(SingletonComponent::class)

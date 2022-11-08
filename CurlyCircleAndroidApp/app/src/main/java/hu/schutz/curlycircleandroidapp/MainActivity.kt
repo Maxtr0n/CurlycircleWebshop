@@ -20,12 +20,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import hu.schutz.curlycircleandroidapp.ui.AccountScreen
 import hu.schutz.curlycircleandroidapp.ui.CartScreen
 import hu.schutz.curlycircleandroidapp.ui.CurlyCircleBottomNavigation
 import hu.schutz.curlycircleandroidapp.ui.ShopScreen
 import hu.schutz.curlycircleandroidapp.ui.theme.CurlyCircleAndroidAppTheme
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
