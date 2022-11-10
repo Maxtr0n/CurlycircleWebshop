@@ -16,8 +16,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 
 private val LightColors = lightColors(
-    surface = DarkGreen,
-    onSurface = White,
+    surface = White,
+    onSurface = DarkGreen,
     primary = Green,
     onPrimary = White,
     secondary = Amber,

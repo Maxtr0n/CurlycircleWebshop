@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import hu.schutz.curlycircleandroidapp.data.source.remote.ProductCategoriesApi
+import hu.schutz.curlycircleandroidapp.data.source.remote.CurlyCircleApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -16,13 +16,13 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder().baseUrl(ProductCategoriesApi.BASE_URL)
+        return Retrofit.Builder().baseUrl(CurlyCircleApi.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideStandingsApi(retrofit: Retrofit): ProductCategoriesApi =
-        retrofit.create(ProductCategoriesApi::class.java)
+    fun provideCurlyCircleApi(retrofit: Retrofit): CurlyCircleApi =
+        retrofit.create(CurlyCircleApi::class.java)
 }

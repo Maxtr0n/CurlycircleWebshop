@@ -4,19 +4,19 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Qualifier
-import javax.inject.Singleton
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class RemoteProductCategoriesDataSource
-
-@Qualifier
-@Retention(AnnotationRetention.RUNTIME)
-annotation class LocalProductCategoriesDataSource
+annotation class IoDispatcher
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+object CoroutinesModule {
 
+    @Provides
+    @IoDispatcher
+    fun providesIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 }

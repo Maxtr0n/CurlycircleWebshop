@@ -13,3 +13,7 @@ data class ProductCategory(
     ) {
 
 }
+
+data class  ProductCategoriesViewModel(
+    var productCategories: List<ProductCategory>
+)

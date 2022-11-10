@@ -1,5 +1,6 @@
 package hu.schutz.curlycircleandroidapp
 
+import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -12,6 +13,7 @@ import hu.schutz.curlycircleandroidapp.ui.ShopScreen
 @Composable
 fun CurlyCircleNavHost(
     navController: NavHostController,
+    scaffoldState: ScaffoldState,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -20,7 +22,10 @@ fun CurlyCircleNavHost(
         modifier = modifier
     ) {
         composable(route = Screen.Shop.route) {
-            ShopScreen()
+            ShopScreen(
+                onProductCategoryClick = {},
+                scaffoldState = scaffoldState
+            )
         }
         composable(route = Screen.Cart.route) {
             CartScreen()

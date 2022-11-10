@@ -11,6 +11,15 @@ plugins {
     id 'com.google.dagger.hilt.android' version '2.44' apply false
 }
 
+subprojects {
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            freeCompilerArgs += '-opt-in=kotlin.RequiresOptIn'
+            freeCompilerArgs += '-opt-in=kotlin.Experimental'
+        }
+    }
+}
+
 ext {
     compose_version = '1.3.0'
     roomVersion = '2.4.3'

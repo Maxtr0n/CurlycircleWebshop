@@ -41,12 +41,15 @@ class MainActivity : ComponentActivity() {
 fun CurlyCircleApp() {
     CurlyCircleAndroidAppTheme {
         val navController = rememberNavController()
+        val scaffoldState = rememberScaffoldState()
 
         Scaffold(
+            scaffoldState = scaffoldState,
             bottomBar = { CurlyCircleBottomNavigation(navController = navController) }
         ) { innerPadding ->
             CurlyCircleNavHost(
                 navController = navController,
+                scaffoldState = scaffoldState,
                 modifier = Modifier.padding(innerPadding)
             )
         }

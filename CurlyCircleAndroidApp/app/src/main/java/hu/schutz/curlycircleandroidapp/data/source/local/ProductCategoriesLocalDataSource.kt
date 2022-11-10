@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 class ProductCategoriesLocalDataSource internal constructor(
     private val dao: ProductCategoriesDao,
@@ -20,5 +21,26 @@ class ProductCategoriesLocalDataSource internal constructor(
             Success(it)
         }
     }
+
+    override suspend fun getProductCategories(): Result<List<ProductCategory>> = withContext(ioDispatcher) {
+        return@withContext try {
+            Success(dao.getProductCategories())
+        } catch (e: Exception) {
+            Error(e)
+        }
+    }
+
+    override suspend fun refreshProductCategories() {
+        // NO-OP
+    }
+
+    override suspend fun saveProductCategory(productCategory: ProductCategory) {
+        dao.insertProductCategory(productCategory)
+    }
+
+    override suspend fun deleteAllProductCategories() {
+        dao.deleteProductCategories()
+    }
+
 
 }
