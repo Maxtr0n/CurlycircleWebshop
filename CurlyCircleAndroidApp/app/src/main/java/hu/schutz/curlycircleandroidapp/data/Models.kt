@@ -9,7 +9,7 @@ data class ProductCategory(
     var description: String = "",
     var thumbnailImageUrl: String = "",
     var isAvailable: Boolean = true,
-    @PrimaryKey var id: String = ""
+    @PrimaryKey var id: Int
     ) {
 
 }

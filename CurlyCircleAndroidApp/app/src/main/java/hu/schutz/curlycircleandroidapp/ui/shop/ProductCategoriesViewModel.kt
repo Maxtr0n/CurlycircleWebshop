@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hu.schutz.curlycircleandroidapp.R
-import hu.schutz.curlycircleandroidapp.Screen
 import hu.schutz.curlycircleandroidapp.data.ProductCategory
 import hu.schutz.curlycircleandroidapp.data.Result
 import hu.schutz.curlycircleandroidapp.data.repository.ProductCategoriesRepository
@@ -21,7 +20,7 @@ data class ShopUiState(
 )
 
 @HiltViewModel
-class ShopViewModel @Inject constructor(
+class ProductCategoriesViewModel @Inject constructor(
     private val productCategoriesRepository: ProductCategoriesRepository
 ) : ViewModel() {
 

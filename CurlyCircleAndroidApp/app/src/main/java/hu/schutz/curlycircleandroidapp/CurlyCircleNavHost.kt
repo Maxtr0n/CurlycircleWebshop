@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import hu.schutz.curlycircleandroidapp.ui.AccountScreen
 import hu.schutz.curlycircleandroidapp.ui.CartScreen
-import hu.schutz.curlycircleandroidapp.ui.ShopScreen
+import hu.schutz.curlycircleandroidapp.ui.shop.ShopScreen
 
 @Composable
 fun CurlyCircleNavHost(
@@ -18,19 +18,18 @@ fun CurlyCircleNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Shop.route,
+        startDestination = BottomNavScreen.Shop.route,
         modifier = modifier
     ) {
-        composable(route = Screen.Shop.route) {
+        composable(route = BottomNavScreen.Shop.route) {
             ShopScreen(
-                onProductCategoryClick = {},
                 scaffoldState = scaffoldState
             )
         }
-        composable(route = Screen.Cart.route) {
+        composable(route = BottomNavScreen.Cart.route) {
             CartScreen()
         }
-        composable(route = Screen.Account.route) {
+        composable(route = BottomNavScreen.Account.route) {
             AccountScreen()
         }
     }
