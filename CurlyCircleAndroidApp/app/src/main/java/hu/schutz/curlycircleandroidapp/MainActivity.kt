@@ -7,11 +7,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import hu.schutz.curlycircleandroidapp.ui.CurlyCircleBottomNavigation
+import hu.schutz.curlycircleandroidapp.ui.CurlyCircleTopAppBar
 import hu.schutz.curlycircleandroidapp.ui.theme.CurlyCircleAndroidAppTheme
 
 @AndroidEntryPoint
@@ -30,9 +34,35 @@ fun CurlyCircleApp() {
         val navController = rememberNavController()
         val scaffoldState = rememberScaffoldState()
 
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+
         Scaffold(
             scaffoldState = scaffoldState,
-            bottomBar = { CurlyCircleBottomNavigation(navController = navController) }
+            topBar = { CurlyCircleTopAppBar(
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = { navController.navigateUp() }
+            ) },
+            bottomBar = {
+                CurlyCircleBottomNavigation(
+                    currentDestination = currentDestination,
+                    onNavigationItemClick = { screen ->
+                        navController.navigate(screen.route) {
+                            // Pop up to the start destination of the graph to
+                            // avoid building up a large stack of destinations
+                            // on the back stack as users select items
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            // Avoid multiple copies of the same destination when
+                            // reselecting the same item
+                            launchSingleTop = true
+                            // Restore state when reselecting a previously selected item
+                            restoreState = true
+                        }
+                    }
+                )
+            }
         ) { innerPadding ->
             CurlyCircleNavHost(
                 navController = navController,

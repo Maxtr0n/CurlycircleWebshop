@@ -5,4 +5,6 @@
     <string name="bottom_navigation_account">Profil</string>
     <string name="product_category_loading_error">A termék kategóriák betöltése nem sikerült</string>
     <string name="product_categories_label">Kategóriák</string>
+    <string name="no_data_product_categories">Nincsenek termék kategóriák.</string>
+    <string name="back">Vissza</string>
 </resources>
