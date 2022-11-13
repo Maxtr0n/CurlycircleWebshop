@@ -1,4 +1,4 @@
-package hu.schutz.curlycircleandroidapp.ui.shop
+package hu.schutz.curlycircleandroidapp.ui.shop.productcategories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

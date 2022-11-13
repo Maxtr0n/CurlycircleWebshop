@@ -1,4 +1,4 @@
-package hu.schutz.curlycircleandroidapp.ui.shop
+package hu.schutz.curlycircleandroidapp.ui.shop.productdetails
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

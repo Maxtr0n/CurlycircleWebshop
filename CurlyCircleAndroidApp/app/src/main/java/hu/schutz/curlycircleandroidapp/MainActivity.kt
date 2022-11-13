@@ -39,10 +39,10 @@ fun CurlyCircleApp() {
 
         Scaffold(
             scaffoldState = scaffoldState,
-            topBar = { CurlyCircleTopAppBar(
+            /*topBar = { CurlyCircleTopAppBar(
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() }
-            ) },
+            ) },*/
             bottomBar = {
                 CurlyCircleBottomNavigation(
                     currentDestination = currentDestination,

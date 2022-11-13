@@ -1,4 +1,4 @@
-package hu.schutz.curlycircleandroidapp.ui.shop
+package hu.schutz.curlycircleandroidapp.ui.shop.products
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

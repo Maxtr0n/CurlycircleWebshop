@@ -12,6 +12,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import hu.schutz.curlycircleandroidapp.ui.shop.ShopDestinationArgs.PRODUCT_CATEGORY_ID_ARG
 import hu.schutz.curlycircleandroidapp.ui.shop.ShopDestinationArgs.PRODUCT_ID_ARG
+import hu.schutz.curlycircleandroidapp.ui.shop.productcategories.ProductCategoriesScreen
+import hu.schutz.curlycircleandroidapp.ui.shop.productdetails.ProductDetailsScreen
+import hu.schutz.curlycircleandroidapp.ui.shop.products.ProductsScreen
 
 @Composable
 fun ShopNavHost(
