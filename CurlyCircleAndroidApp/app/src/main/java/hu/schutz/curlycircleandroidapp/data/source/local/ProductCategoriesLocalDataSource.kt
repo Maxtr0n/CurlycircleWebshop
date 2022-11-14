@@ -30,10 +30,6 @@ class ProductCategoriesLocalDataSource internal constructor(
         }
     }
 
-    override suspend fun refreshProductCategories() {
-        // NO-OP
-    }
-
     override suspend fun saveProductCategory(productCategory: ProductCategory) {
         dao.insertProductCategory(productCategory)
     }

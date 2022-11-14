@@ -31,10 +31,6 @@ class DefaultProductCategoriesRepository(
         return productCategoriesLocalDataSource.getProductCategories()
     }
 
-    override suspend fun refreshProductCategories() {
-        updateProductCategoriesFromRemoteDataSource()
-    }
-
     private suspend fun updateProductCategoriesFromRemoteDataSource() {
         val remoteProductCategories = productCategoriesRemoteDataSource.getProductCategories()
 

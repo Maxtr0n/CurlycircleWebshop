@@ -41,7 +41,7 @@ class ProductCategoriesViewModel @Inject constructor(
         .onStart<Async<List<ProductCategory>>> { emit(Async.Loading) }
 
     init {
-        refreshProductCategories()
+        getProductCategories()
     }
 
     val uiState: StateFlow<ShopUiState> = combine(
@@ -68,10 +68,10 @@ class ProductCategoriesViewModel @Inject constructor(
         )
 
 
-    fun refreshProductCategories() {
+    private fun getProductCategories() {
         _isLoading.value = true
         viewModelScope.launch {
-            productCategoriesRepository.refreshProductCategories()
+            productCategoriesRepository.getProductCategories(true)
             _isLoading.value = false
         }
     }

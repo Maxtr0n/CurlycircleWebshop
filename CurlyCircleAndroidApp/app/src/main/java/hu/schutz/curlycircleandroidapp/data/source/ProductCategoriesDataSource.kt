@@ -10,8 +10,6 @@ interface ProductCategoriesDataSource {
 
     suspend fun getProductCategories(): Result<List<ProductCategory>>
 
-    suspend fun refreshProductCategories()
-
     suspend fun saveProductCategory(productCategory: ProductCategory)
 
     suspend fun deleteAllProductCategories()

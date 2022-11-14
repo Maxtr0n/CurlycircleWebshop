@@ -9,6 +9,4 @@ interface ProductCategoriesRepository {
     fun getProductCategoriesStream(): Flow<Result<List<ProductCategory>>>
 
     suspend fun getProductCategories(forceUpdate: Boolean = false): Result<List<ProductCategory>>
-
-    suspend fun refreshProductCategories()
 }

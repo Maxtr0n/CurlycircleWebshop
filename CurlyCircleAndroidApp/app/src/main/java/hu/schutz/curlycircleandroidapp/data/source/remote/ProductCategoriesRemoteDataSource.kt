@@ -31,10 +31,6 @@ class ProductCategoriesRemoteDataSource (
                 }
         }
 
-        override suspend fun refreshProductCategories() {
-                observableProductCategories.value = getProductCategories()
-        }
-
         override suspend fun saveProductCategory(productCategory: ProductCategory) {
                 // NO-OP
         }
