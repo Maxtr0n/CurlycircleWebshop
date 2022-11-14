@@ -5,6 +5,7 @@ import hu.schutz.curlycircleandroidapp.data.Result
 import hu.schutz.curlycircleandroidapp.data.Result.Success
 import hu.schutz.curlycircleandroidapp.data.Result.Error
 import hu.schutz.curlycircleandroidapp.data.source.ProductCategoriesDataSource
+import hu.schutz.curlycircleandroidapp.data.source.local.dao.ProductCategoriesDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +18,7 @@ class ProductCategoriesLocalDataSource internal constructor(
 ) : ProductCategoriesDataSource {
 
     override fun getProductCategoriesStream(): Flow<Result<List<ProductCategory>>> {
-        return dao.observeProductCategories().map {
+        return dao.getProductCategoriesStream().map {
             Success(it)
         }
     }

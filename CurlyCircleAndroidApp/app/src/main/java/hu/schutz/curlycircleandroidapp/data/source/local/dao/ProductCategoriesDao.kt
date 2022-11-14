@@ -1,4 +1,4 @@
-package hu.schutz.curlycircleandroidapp.data.source.local
+package hu.schutz.curlycircleandroidapp.data.source.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface ProductCategoriesDao {
 
     @Query("SELECT * FROM productCategories")
-    fun observeProductCategories(): Flow<List<ProductCategory>>
+    fun getProductCategoriesStream(): Flow<List<ProductCategory>>
 
     @Query("SELECT * FROM productCategories")
     fun getProductCategories(): List<ProductCategory>

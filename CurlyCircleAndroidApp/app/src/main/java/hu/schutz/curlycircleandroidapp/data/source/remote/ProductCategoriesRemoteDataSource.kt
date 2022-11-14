@@ -17,10 +17,10 @@ class ProductCategoriesRemoteDataSource (
         private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
         ) : ProductCategoriesDataSource {
 
-        private val observableProductCategories = MutableStateFlow(runBlocking { getProductCategories() })
-
         override fun getProductCategoriesStream(): Flow<Result<List<ProductCategory>>> {
-                return observableProductCategories
+                return MutableStateFlow(
+                        runBlocking { getProductCategories() }
+                )
         }
 
         override suspend fun getProductCategories(): Result<List<ProductCategory>> = withContext(ioDispatcher) {
