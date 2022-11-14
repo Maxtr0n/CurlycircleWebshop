@@ -1,10 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace BLL.ViewModels
 {
@@ -24,11 +18,11 @@ namespace BLL.ViewModels
 
         public string ThumbnailImageUrl { get; set; } = default!;
 
-        public IEnumerable<Color> Colors { get; set; } = new List<Color>();
+        public IEnumerable<ColorViewModel> Colors { get; set; } = new List<ColorViewModel>();
 
-        public Pattern? Pattern { get; set; } = default!;
+        public PatternViewModel? Pattern { get; set; } = default!;
 
-        public Material? Material { get; set; } = default!;
+        public MaterialViewModel? Material { get; set; } = default!;
 
         public bool IsAvailable { get; set; }
     }
