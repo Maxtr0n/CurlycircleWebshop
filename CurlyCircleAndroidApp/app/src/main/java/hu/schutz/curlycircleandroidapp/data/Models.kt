@@ -24,11 +24,11 @@ data class Product(
     var price: Double,
     var productCategoryId: Int,
     var thumbnailImageUrl: String = "",
-    var imageUrls: List<String>,
+    var imageUrls: List<String> = emptyList(),
     var isAvailable: Boolean = true,
-    var material: String,
-    var pattern: String,
-    var colors: List<String>
+    var material: String = "",
+    var pattern: String = "",
+    var colors: List<String> = emptyList()
 )
 
 @Entity(tableName = "colors")
@@ -56,11 +56,11 @@ data class ProductViewModel(
     var price: Double,
     var productCategoryId: Int,
     var thumbnailImageUrl: String = "",
-    var imageUrls: List<String>,
+    var imageUrls: List<String> = emptyList(),
     var isAvailable: Boolean = true,
-    var material: Material,
-    var pattern: Pattern,
-    var colors: List<Color>
+    var material: Material? = null,
+    var pattern: Pattern? = null,
+    var colors: List<Color> = emptyList()
 )
 
 data class PagedProductsViewModel(
@@ -75,13 +75,13 @@ data class PagedProductsViewModel(
 
 data class ProductQueryParameters(
     var productCategoryId: Int,
-    var minPrice: Int?,
-    var maxPrice: Int?,
-    var colorIds: List<Int>,
-    var patternIds: List<Int>,
-    var materialIds: List<Int>,
-    var pageIndex: Int?,
-    var pageSize: Int?
+    var minPrice: Int? = null,
+    var maxPrice: Int? = null,
+    var colorIds: List<Int> = emptyList(),
+    var patternIds: List<Int> = emptyList(),
+    var materialIds: List<Int> = emptyList(),
+    var pageIndex: Int? = null,
+    var pageSize: Int? = null
 )
 
 data class ColorsViewModel(

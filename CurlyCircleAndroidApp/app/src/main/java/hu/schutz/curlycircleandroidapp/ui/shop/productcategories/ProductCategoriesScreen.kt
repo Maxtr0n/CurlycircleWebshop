@@ -2,12 +2,9 @@ package hu.schutz.curlycircleandroidapp.ui.shop.productcategories
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +24,7 @@ import hu.schutz.curlycircleandroidapp.R
 import hu.schutz.curlycircleandroidapp.data.ProductCategory
 import hu.schutz.curlycircleandroidapp.ui.theme.CurlyCircleAndroidAppTheme
 import hu.schutz.curlycircleandroidapp.util.Constants.API_BASE_URL
+import hu.schutz.curlycircleandroidapp.util.Constants.NO_IMAGE_URL
 import hu.schutz.curlycircleandroidapp.util.Constants.PRODUCT_CATEGORIES_THUMBNAILS_URL
 import hu.schutz.curlycircleandroidapp.util.LoadingContent
 
@@ -50,7 +48,7 @@ fun ProductCategoriesScreen(
         val snackBarText = stringResource(id = message)
         LaunchedEffect(scaffoldState, viewModel, message, snackBarText) {
             scaffoldState.snackbarHostState.showSnackbar(snackBarText)
-            viewModel.snackbarMessageShown()
+            viewModel.snackBarMessageShown()
         }
     }
 }
@@ -74,11 +72,16 @@ fun ProductCategoriesContent(
     LoadingContent(
         loading = loading, 
         empty = empty, 
-        emptyContent = { 
-            Text(
-                text = stringResource(R.string.no_data_product_categories),
-                modifier = commonModifier
-            )
+        emptyContent = {
+            Box(
+                modifier = commonModifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.no_data_product_categories),
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         }) {
         Column(
             modifier = commonModifier
@@ -133,7 +136,9 @@ fun ProductCategoryItem(
                 style = MaterialTheme.typography.h6,
                 )
             AsyncImage(
-                model =  API_BASE_URL + PRODUCT_CATEGORIES_THUMBNAILS_URL +
+                model = if (productCategory.thumbnailImageUrl == "") API_BASE_URL
+                        + NO_IMAGE_URL
+                    else API_BASE_URL + PRODUCT_CATEGORIES_THUMBNAILS_URL +
                         productCategory.thumbnailImageUrl,
                 contentDescription = "${productCategory.name} termék kategória képe.",
                 placeholder = painterResource(id = R.drawable.placeholder3),
@@ -166,6 +171,21 @@ private fun ProductCategoriesContentPreview() {
                     ProductCategory(id = 4, name = "Name4", description = "Lorem ipsum 4"),
                     ProductCategory(id = 5, name = "Name5", description = "Lorem ipsum 5"),
                 ),
+                onProductCategoryClick = {}
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ProductCategoriesContentEmptyPreview() {
+    CurlyCircleAndroidAppTheme {
+        Surface {
+            ProductCategoriesContent(
+                loading = false,
+                empty = true,
+                productCategories = listOf(),
                 onProductCategoryClick = {}
             )
         }

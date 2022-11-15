@@ -26,14 +26,16 @@ class ProductsRemoteDataSource(
 
     override suspend fun getProducts(productQueryParameters: ProductQueryParameters): Result<List<Product>> = withContext(ioDispatcher) {
         return@withContext try {
-            val productViewModels = api.getProducts(productQueryParameters).products
+            val productViewModels = api.getProducts(
+                productQueryParameters.productCategoryId
+            ).products
             val products: List<Product> = productViewModels.map { productViewModel ->
                 Product(
                     id = productViewModel.id,
                     name = productViewModel.name,
                     description = productViewModel.description,
-                    material = productViewModel.material.name,
-                    pattern = productViewModel.pattern.name,
+                    material = productViewModel.material?.name ?: "",
+                    pattern = productViewModel.pattern?.name ?: "",
                     colors = productViewModel.colors.map { it.name },
                     thumbnailImageUrl = productViewModel.thumbnailImageUrl,
                     imageUrls = productViewModel.imageUrls,
@@ -63,8 +65,8 @@ class ProductsRemoteDataSource(
                 id = productViewModel.id,
                 name = productViewModel.name,
                 description = productViewModel.description,
-                material = productViewModel.material.name,
-                pattern = productViewModel.pattern.name,
+                material = productViewModel.material?.name ?: "",
+                pattern = productViewModel.pattern?.name ?: "",
                 colors = productViewModel.colors.map { it.name },
                 thumbnailImageUrl = productViewModel.thumbnailImageUrl,
                 imageUrls = productViewModel.imageUrls,

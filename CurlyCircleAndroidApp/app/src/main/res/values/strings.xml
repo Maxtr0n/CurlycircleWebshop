@@ -7,4 +7,10 @@
     <string name="product_categories_label">Kategóriák</string>
     <string name="no_data_product_categories">Nincsenek termék kategóriák.</string>
     <string name="back">Vissza</string>
+    <string name="products_loading_error">A termékek betöltése sikertelen</string>
+    <string name="no_data_products">Nincsenek termékek.</string>
+    <string name="products_label">Termékek</string>
+    <string name="product_loading_error">A termék betöltése sikertelen.</string>
+    <string name="no_data_product">Nincsen ilyen termék.</string>
+    <string name="to_cart_button_text">Kosárba</string>
 </resources>

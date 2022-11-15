@@ -8,7 +8,7 @@ import hu.schutz.curlycircleandroidapp.data.*
 import hu.schutz.curlycircleandroidapp.data.source.local.dao.*
 import hu.schutz.curlycircleandroidapp.util.Converters
 
-@Database(entities = [ProductCategory::class, Product::class, Color::class, Material::class, Pattern::class], version = 3, exportSchema = false)
+@Database(entities = [ProductCategory::class, Product::class, Color::class, Material::class, Pattern::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class CurlyCircleDatabase : RoomDatabase() {
 

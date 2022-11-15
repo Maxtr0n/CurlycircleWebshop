@@ -16,7 +16,15 @@ interface CurlyCircleApi {
     suspend fun getProductCategories(): ProductCategoriesViewModel
 
     @GET("product")
-    suspend fun getProducts(@Query("productQueryParameters") productQueryParameters: ProductQueryParameters): PagedProductsViewModel
+    suspend fun getProducts(
+        @Query("productCategoryId") productCategoryId: Int,
+        @Query("minPrice") minPrice: Int? = null,
+        @Query("maxPrice") maxPrice: Int? = null,
+        @Query("colorIds") colorIds: List<Int> = emptyList(),
+        @Query("patternIds") patternIds: List<Int> = emptyList(),
+        @Query("materialIds") materialIds: List<Int> = emptyList(),
+
+    ): PagedProductsViewModel
 
     @GET("product/{productId}")
     suspend fun getProductById(@Path("productId") id: Int): ProductViewModel

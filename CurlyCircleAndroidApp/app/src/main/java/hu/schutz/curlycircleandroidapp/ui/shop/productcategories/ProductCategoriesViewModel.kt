@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hu.schutz.curlycircleandroidapp.R
+import hu.schutz.curlycircleandroidapp.data.Product
 import hu.schutz.curlycircleandroidapp.data.ProductCategory
 import hu.schutz.curlycircleandroidapp.data.Result
 import hu.schutz.curlycircleandroidapp.data.repository.ProductCategoriesRepository
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class ShopUiState(
+data class ProductCategoriesUiState(
     val productCategories: List<ProductCategory> = emptyList(),
     val isLoading: Boolean = false,
     val userMessage: Int? = null
@@ -27,32 +28,22 @@ class ProductCategoriesViewModel @Inject constructor(
     private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
     private  val _isLoading = MutableStateFlow(false)
     private val _productCategoriesAsync = productCategoriesRepository.getProductCategoriesStream()
-        .map { result ->
-        if (result is Result.Success) {
-            result.data
-        } else {
-            showSnackbarMessage(R.string.product_category_loading_error)
-            emptyList()
-        }
-    }
-        .map { productCategories ->
-        Async.Success(productCategories)
-    }
-        .onStart<Async<List<ProductCategory>>> { emit(Async.Loading) }
+        .map { handleResult(it) }
+        .onStart { emit(Async.Loading) }
 
     init {
         getProductCategories()
     }
 
-    val uiState: StateFlow<ShopUiState> = combine(
+    val uiState: StateFlow<ProductCategoriesUiState> = combine(
         _isLoading, _userMessage, _productCategoriesAsync
     ) { isLoading, userMessage, productCategoriesAsync ->
         when (productCategoriesAsync) {
             Async.Loading -> {
-                ShopUiState(isLoading = true)
+                ProductCategoriesUiState(isLoading = true)
             }
             is Async.Success -> {
-                ShopUiState(
+                ProductCategoriesUiState(
                     productCategories = productCategoriesAsync.data,
                     isLoading = isLoading,
                     userMessage = userMessage
@@ -64,7 +55,7 @@ class ProductCategoriesViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = WhileUiSubscribed,
-            initialValue = ShopUiState(isLoading = true)
+            initialValue = ProductCategoriesUiState(isLoading = true)
         )
 
 
@@ -76,11 +67,19 @@ class ProductCategoriesViewModel @Inject constructor(
         }
     }
 
-    fun snackbarMessageShown() {
+    fun snackBarMessageShown() {
         _userMessage.value = null
     }
 
-    private fun showSnackbarMessage(message: Int) {
+    private fun showSnackBarMessage(message: Int) {
         _userMessage.value = message
     }
+
+    private fun handleResult(productCategoriesResult: Result<List<ProductCategory>>): Async<List<ProductCategory>> =
+        if (productCategoriesResult is Result.Success) {
+            Async.Success(productCategoriesResult.data)
+        } else {
+            showSnackBarMessage(R.string.product_category_loading_error)
+            Async.Success(emptyList())
+        }
 }

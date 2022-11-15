@@ -21,6 +21,8 @@ object DatabaseModule {
             context.applicationContext,
             CurlyCircleDatabase::class.java,
             "CurlyCircle.db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }
