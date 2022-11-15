@@ -1,7 +1,6 @@
 package hu.schutz.curlycircleandroidapp.data
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "productCategories")
@@ -11,9 +10,7 @@ data class ProductCategory(
     var thumbnailImageUrl: String = "",
     var isAvailable: Boolean = true,
     @PrimaryKey var id: Int
-    ) {
-
-}
+    )
 
 data class ProductCategoriesViewModel(
     var productCategories: List<ProductCategory>
