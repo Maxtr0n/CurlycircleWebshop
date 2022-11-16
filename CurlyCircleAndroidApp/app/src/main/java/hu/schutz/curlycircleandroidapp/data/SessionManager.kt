@@ -27,7 +27,7 @@ class SessionManager @Inject constructor(
         }
     }
 
-    fun refreshToken(): String? {
+    fun refreshToken(): Result<String?> {
         return runBlocking {
             authRepository.refreshToken()
         }

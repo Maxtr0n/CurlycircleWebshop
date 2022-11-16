@@ -1,5 +1,6 @@
 package hu.schutz.curlycircleandroidapp.util
 
+import hu.schutz.curlycircleandroidapp.data.Result
 import hu.schutz.curlycircleandroidapp.data.SessionManager
 import hu.schutz.curlycircleandroidapp.data.TokenViewModel
 import kotlinx.coroutines.runBlocking
@@ -15,7 +16,10 @@ class TokenAuthenticator(
     override fun authenticate(route: Route?, response: Response): Request? {
         return runBlocking {
             when (val accessToken = getUpdatedToken()) {
-                null -> null
+                null -> {
+                    sessionManager.logout()
+                    null
+                }
                 else -> {
                     response.request.newBuilder()
                         .header("Authorization", "Bearer $accessToken")
@@ -28,7 +32,10 @@ class TokenAuthenticator(
     private suspend fun getUpdatedToken(): String? {
         val refreshToken = sessionManager.getRefreshToken()
         refreshToken?.let {
-            return sessionManager.refreshToken()
+            when(val result =  sessionManager.refreshToken()) {
+                is Result.Success -> return result.data
+                is Result.Error -> return null
+            }
         } ?: return null
     }
 

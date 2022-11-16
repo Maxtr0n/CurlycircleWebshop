@@ -16,5 +16,5 @@ interface AuthRepository {
 
     suspend fun register(registerDto: RegisterDto): Result<EntityCreatedViewModel>
 
-    suspend fun refreshToken(): String?
+    suspend fun refreshToken(): Result<String?>
 }

@@ -3,7 +3,6 @@ package hu.schutz.curlycircleandroidapp.data.repository
 import hu.schutz.curlycircleandroidapp.data.*
 import hu.schutz.curlycircleandroidapp.data.source.local.dao.UserDao
 import hu.schutz.curlycircleandroidapp.data.source.remote.AuthApi
-import hu.schutz.curlycircleandroidapp.data.source.remote.CurlyCircleApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -79,7 +78,7 @@ class DefaultAuthRepository(
             }
         }
 
-    override suspend fun refreshToken(): String? = withContext(ioDispatcher) {
+    override suspend fun refreshToken(): Result<String?> = withContext(ioDispatcher) {
         return@withContext try {
             val user = dao.getUser()
 
@@ -93,9 +92,9 @@ class DefaultAuthRepository(
             val tokenViewModel = api.refreshToken(refreshDto)
             setTokens(tokenViewModel)
 
-            tokenViewModel.accessToken
+            Result.Success(tokenViewModel.accessToken)
         } catch (e: Exception) {
-            null
+            Result.Error(e)
         }
     }
 }

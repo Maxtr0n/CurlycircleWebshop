@@ -35,10 +35,6 @@ class DefaultUserRepository(
         }
     }
 
-    override suspend fun logout() {
-        dao.deleteUser()
-    }
-
     override suspend fun updateUser(userUpdateDto: UserUpdateDto): Result<UserDataViewModel> =
         withContext(ioDispatcher) {
             return@withContext try {

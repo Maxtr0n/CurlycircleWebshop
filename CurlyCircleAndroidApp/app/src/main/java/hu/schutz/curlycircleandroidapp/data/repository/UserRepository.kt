@@ -9,8 +9,6 @@ interface UserRepository {
 
     suspend fun getUser(): Result<User>
 
-    suspend fun logout()
-
     suspend fun updateUser(userUpdateDto: UserUpdateDto): Result<UserDataViewModel>
 
     suspend fun changePassword(changePasswordDto: ChangePasswordDto): Result<Unit>
