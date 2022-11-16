@@ -93,14 +93,14 @@ fun ProductDetailsContent(
                     .padding(vertical = 8.dp)
                     .clip(MaterialTheme.shapes.medium)
             )
+            Text(
+                text = product.price.toInt().toString() + " Ft",
+                style = MaterialTheme.typography.h5
+            )
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    text = product.price.toInt().toString() + " Ft",
-                    style = MaterialTheme.typography.h5
-                )
                 Button(onClick = { /*TODO*/ }) {
                     Text(text = stringResource(R.string.to_cart_button_text))
                 }

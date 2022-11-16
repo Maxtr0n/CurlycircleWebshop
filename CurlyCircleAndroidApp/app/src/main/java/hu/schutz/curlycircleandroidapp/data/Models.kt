@@ -49,6 +49,23 @@ data class Material(
     var name: String = "",
 )
 
+@Entity(tableName = "user")
+data class User(
+    @PrimaryKey var id: Int,
+    var cartId: Int,
+    var email: String = "",
+    var firstName: String = "",
+    var lastName: String = "",
+    var city: String = "",
+    var zipCode: String = "",
+    var line1: String = "",
+    var line2: String?,
+    var phoneNumber: String = "",
+    var accessToken: String = "",
+    var refreshToken: String = "",
+    var role: Role
+)
+
 data class ProductViewModel(
     var id: Int,
     var name: String = "",
@@ -95,3 +112,86 @@ data class PatternsViewModel(
 data class MaterialsViewModel(
     var materials: List<Material>
 )
+
+data class LoginDto(
+    var email: String,
+    var password: String,
+    var cartId: Int?
+)
+
+data class RegisterDto(
+    var email: String,
+    var password: String,
+    var firstName: String,
+    var lastName: String,
+    var city: String,
+    var zipCode: String,
+    var line1: String,
+    var line2: String?,
+    var phoneNumber: String,
+    )
+
+data class RefreshDto(
+    var email: String,
+    var id: Int,
+    var accessToken: String,
+    var refreshToken: String
+)
+
+data class UserViewModel(
+    var id: Int,
+    var cartId: Int,
+    var email: String,
+    var firstName: String,
+    var lastName: String,
+    var city: String,
+    var zipCode: String,
+    var line1: String,
+    var line2: String?,
+    var phoneNumber: String,
+    var accessToken: String,
+    var refreshToken: String,
+    var role: Role
+)
+
+data class TokenViewModel(
+    var accessToken: String,
+    var refreshToken: String
+)
+
+data class UserUpdateDto(
+    var userId: Int,
+    var firstName: String,
+    var lastName: String,
+    var city: String,
+    var zipCode: String,
+    var line1: String,
+    var line2: String?,
+    var phoneNumber: String,
+)
+
+data class EntityCreatedViewModel(
+    var id: String
+)
+
+data class UserDataViewModel(
+    var email: String,
+    var firstName: String,
+    var lastName: String,
+    var city: String,
+    var zipCode: String,
+    var line1: String,
+    var line2: String?,
+    var phoneNumber: String,
+)
+
+data class ChangePasswordDto(
+    var email: String,
+    var oldPassword: String,
+    var newPassword: String
+)
+
+enum class Role {
+    User,
+    Admin
+}

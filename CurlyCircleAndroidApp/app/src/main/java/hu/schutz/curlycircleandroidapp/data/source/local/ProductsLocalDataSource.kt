@@ -18,7 +18,7 @@ class ProductsLocalDataSource internal constructor(
 
     override fun getProductsStream(productQueryParameters: ProductQueryParameters):
             Flow<Result<List<Product>>> {
-        return dao.getProductsStream().map {
+        return dao.getProductsStream(productQueryParameters.productCategoryId).map {
             Result.Success(it)
         }
     }
@@ -27,7 +27,7 @@ class ProductsLocalDataSource internal constructor(
         productQueryParameters: ProductQueryParameters
     ): Result<List<Product>> = withContext(ioDispatcher) {
         return@withContext try {
-            Result.Success(dao.getProducts())
+            Result.Success(dao.getProducts(productQueryParameters.productCategoryId))
         } catch (e: Exception) {
             Result.Error(e)
         }
@@ -51,8 +51,8 @@ class ProductsLocalDataSource internal constructor(
         dao.insertProduct(product)
     }
 
-    override suspend fun deleteAllProducts() {
-        dao.deleteProducts()
+    override suspend fun deleteProducts(productCategoryId: Int) {
+        dao.deleteProducts(productCategoryId)
     }
 
 }

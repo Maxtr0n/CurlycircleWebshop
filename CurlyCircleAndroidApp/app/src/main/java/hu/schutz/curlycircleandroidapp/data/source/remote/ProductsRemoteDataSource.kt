@@ -84,7 +84,7 @@ class ProductsRemoteDataSource(
         // NO-OP
     }
 
-    override suspend fun deleteAllProducts() {
+    override suspend fun deleteProducts(productCategoryId: Int) {
         // NO-OP
     }
 }

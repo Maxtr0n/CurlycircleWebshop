@@ -1,7 +1,10 @@
 package hu.schutz.curlycircleandroidapp.data.source.remote
 
 import hu.schutz.curlycircleandroidapp.data.*
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -46,4 +49,19 @@ interface CurlyCircleApi {
 
     @GET("material/{id}")
     suspend fun getMaterial(@Path("id") id: Int): Material
+
+    @POST("auth/login")
+    suspend fun login(@Body loginDto: LoginDto): UserViewModel
+
+    @POST("auth/register")
+    suspend fun register(@Body registerDto: RegisterDto): EntityCreatedViewModel
+
+    @POST("auth/refresh")
+    suspend fun refreshToken(@Body refreshDto: RefreshDto): TokenViewModel
+
+    @PUT("auth/update")
+    suspend fun updateUser(@Body userUpdateDto: UserUpdateDto): UserDataViewModel
+
+    @PUT("auth/change-password")
+    suspend fun changePassword(@Body changePasswordDto: ChangePasswordDto)
 }

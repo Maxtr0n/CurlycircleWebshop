@@ -33,17 +33,7 @@ class ProductsViewModel @Inject constructor(
     private val productCategoryId: Int = savedStateHandle[ShopDestinationArgs.PRODUCT_CATEGORY_ID_ARG]!!
     private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
     private  val _isLoading = MutableStateFlow(false)
-    /*
-    private val _colorsAsync = colorsRepository.getColorsStream()
-        .map { handleColorsResult(it) }
-        .onStart { emit(Async.Loading) }
-    private val _materialsAsync = materialsRepository.getMaterialsStream()
-        .map { handleMaterialsResult(it) }
-        .onStart { emit(Async.Loading) }
-    private val _patternsAsync = patternsRepository.getPatternsStream()
-        .map { handlePatternsResult(it) }
-        .onStart { emit(Async.Loading) }
-     */
+
     private val _productsAsync = productsRepository.getProductsStream(ProductQueryParameters(productCategoryId = productCategoryId))
         .map { handleProductsResult(it) }
         .onStart { emit(Async.Loading) }

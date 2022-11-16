@@ -49,7 +49,7 @@ class DefaultProductsRepository (
         val remoteProducts = productsRemoteDataSource.getProducts(productQueryParameters)
 
         if (remoteProducts is Result.Success) {
-            productsLocalDataSource.deleteAllProducts()
+            productsLocalDataSource.deleteProducts(productQueryParameters.productCategoryId)
             remoteProducts.data.forEach{ product ->
                 productsLocalDataSource.saveProduct(product)
             }

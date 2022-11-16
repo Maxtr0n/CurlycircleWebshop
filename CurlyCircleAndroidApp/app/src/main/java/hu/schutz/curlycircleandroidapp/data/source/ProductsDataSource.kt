@@ -17,5 +17,5 @@ interface ProductsDataSource {
 
     suspend fun saveProduct(product: Product)
 
-    suspend fun deleteAllProducts()
+    suspend fun deleteProducts(productCategoryId: Int)
 }
