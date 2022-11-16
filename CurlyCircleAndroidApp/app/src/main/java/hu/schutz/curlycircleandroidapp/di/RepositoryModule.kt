@@ -6,6 +6,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import hu.schutz.curlycircleandroidapp.data.repository.*
 import hu.schutz.curlycircleandroidapp.data.source.*
+import hu.schutz.curlycircleandroidapp.data.source.local.CurlyCircleDatabase
+import hu.schutz.curlycircleandroidapp.data.source.remote.AuthApi
+import hu.schutz.curlycircleandroidapp.data.source.remote.CurlyCircleApi
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
@@ -61,5 +64,25 @@ object RepositoryModule {
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ): PatternsRepository {
         return DefaultPatternsRepository(remoteDataSource, localDataSource, ioDispatcher)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserRepository(
+        database: CurlyCircleDatabase,
+        api: CurlyCircleApi,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ) : UserRepository {
+        return DefaultUserRepository(api, database.userDao(), ioDispatcher)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAuthRepository(
+        database: CurlyCircleDatabase,
+        api: AuthApi,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ) : AuthRepository {
+        return DefaultAuthRepository(api, database.userDao(), ioDispatcher)
     }
 }

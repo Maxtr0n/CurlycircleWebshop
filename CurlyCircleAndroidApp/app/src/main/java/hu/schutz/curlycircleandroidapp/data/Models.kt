@@ -2,6 +2,8 @@ package hu.schutz.curlycircleandroidapp.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import hu.schutz.curlycircleandroidapp.util.Converters
 
 @Entity(tableName = "productCategories")
 data class ProductCategory(
@@ -51,7 +53,8 @@ data class Material(
 
 @Entity(tableName = "user")
 data class User(
-    @PrimaryKey var id: Int,
+    @PrimaryKey var databaseId: Int,
+    var id: Int,
     var cartId: Int,
     var email: String = "",
     var firstName: String = "",
@@ -191,6 +194,7 @@ data class ChangePasswordDto(
     var newPassword: String
 )
 
+@TypeConverters(Converters::class)
 enum class Role {
     User,
     Admin

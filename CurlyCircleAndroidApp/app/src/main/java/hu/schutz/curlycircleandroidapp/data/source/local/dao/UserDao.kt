@@ -1,5 +1,6 @@
 package hu.schutz.curlycircleandroidapp.data.source.local.dao
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -7,12 +8,13 @@ import androidx.room.Update
 import hu.schutz.curlycircleandroidapp.data.User
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface UserDao {
 
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM user WHERE databaseId = 1")
     fun getUserStream(): Flow<User>
 
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM user WHERE databaseId = 1")
     fun getUser(): User
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -23,4 +25,6 @@ interface UserDao {
 
     @Update
     suspend fun updateUser(user: User)
+
+
 }
