@@ -2,19 +2,24 @@ package hu.schutz.curlycircleandroidapp
 
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import hu.schutz.curlycircleandroidapp.ui.AccountScreen
-import hu.schutz.curlycircleandroidapp.ui.CartScreen
+import hu.schutz.curlycircleandroidapp.ui.account.AccountScreen
+import hu.schutz.curlycircleandroidapp.ui.account.RegistrationScreen
+import hu.schutz.curlycircleandroidapp.ui.cart.CartScreen
 import hu.schutz.curlycircleandroidapp.ui.shop.ShopScreen
 
 @Composable
 fun CurlyCircleNavHost(
     navController: NavHostController,
     scaffoldState: ScaffoldState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navActions: CurlyCircleNavigationActions = remember(navController) {
+        CurlyCircleNavigationActions(navController)
+    }
 ) {
     NavHost(
         navController = navController,
@@ -27,10 +32,22 @@ fun CurlyCircleNavHost(
             )
         }
         composable(route = BottomNavScreen.Cart.route) {
-            CartScreen()
+            CartScreen(
+                scaffoldState = scaffoldState
+            )
         }
         composable(route = BottomNavScreen.Account.route) {
-            AccountScreen()
+            AccountScreen(
+                scaffoldState = scaffoldState,
+                onRegisterClick = { navActions.navigateToRegistrationScreen() }
+            )
+        }
+        composable(route = CurlyCircleDestinations.REGISTRATION_ROUTE) {
+            RegistrationScreen(
+                onBackClick = { navActions.navigateBackToAccountScreen() },
+                onSuccessfulRegistration = { navActions.navigateBackToAccountScreen() },
+                scaffoldState = scaffoldState
+            )
         }
     }
 }

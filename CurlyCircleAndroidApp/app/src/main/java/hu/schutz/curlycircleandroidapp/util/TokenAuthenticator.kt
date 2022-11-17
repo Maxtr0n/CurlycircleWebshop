@@ -29,7 +29,7 @@ class TokenAuthenticator(
         }
     }
 
-    private suspend fun getUpdatedToken(): String? {
+    private fun getUpdatedToken(): String? {
         val refreshToken = sessionManager.getRefreshToken()
         refreshToken?.let {
             when(val result =  sessionManager.refreshToken()) {
