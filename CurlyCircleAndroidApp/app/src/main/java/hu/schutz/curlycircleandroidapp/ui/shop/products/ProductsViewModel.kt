@@ -4,10 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.PRODUCT_CATEGORY_ID_ARG
 import hu.schutz.curlycircleandroidapp.R
 import hu.schutz.curlycircleandroidapp.data.*
 import hu.schutz.curlycircleandroidapp.data.repository.*
-import hu.schutz.curlycircleandroidapp.ui.shop.ShopDestinationArgs
 import hu.schutz.curlycircleandroidapp.util.Async
 import hu.schutz.curlycircleandroidapp.util.WhileUiSubscribed
 import kotlinx.coroutines.flow.*
@@ -30,7 +30,7 @@ class ProductsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val productCategoryId: Int = savedStateHandle[ShopDestinationArgs.PRODUCT_CATEGORY_ID_ARG]!!
+    private val productCategoryId: Int = savedStateHandle[PRODUCT_CATEGORY_ID_ARG]!!
     private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
     private  val _isLoading = MutableStateFlow(false)
 

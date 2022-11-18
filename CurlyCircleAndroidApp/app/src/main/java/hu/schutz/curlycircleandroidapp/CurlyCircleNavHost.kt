@@ -11,11 +11,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.ACCOUNT_ROUTE
+import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.PRODUCTS_ROUTE
+import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.PRODUCT_CATEGORIES_ROUTE
+import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.PRODUCT_DETAILS_ROUTE
+import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.PRODUCT_CATEGORY_ID_ARG
+import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.PRODUCT_ID_ARG
 import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.USER_MESSAGE_ARG
 import hu.schutz.curlycircleandroidapp.ui.account.AccountScreen
 import hu.schutz.curlycircleandroidapp.ui.account.RegistrationScreen
 import hu.schutz.curlycircleandroidapp.ui.cart.CartScreen
-import hu.schutz.curlycircleandroidapp.ui.shop.ShopScreen
+import hu.schutz.curlycircleandroidapp.ui.shop.productcategories.ProductCategoriesScreen
+import hu.schutz.curlycircleandroidapp.ui.shop.productdetails.ProductDetailsScreen
+import hu.schutz.curlycircleandroidapp.ui.shop.products.ProductsScreen
 
 @Composable
 fun CurlyCircleNavHost(
@@ -31,16 +38,50 @@ fun CurlyCircleNavHost(
         startDestination = BottomNavScreen.Shop.route,
         modifier = modifier
     ) {
-        composable(route = BottomNavScreen.Shop.route) {
-            ShopScreen(
-                scaffoldState = scaffoldState
-            )
+        navigation(
+            route = BottomNavScreen.Shop.route,
+            startDestination = PRODUCT_CATEGORIES_ROUTE
+        ) {
+
+            composable(
+                route = PRODUCT_CATEGORIES_ROUTE
+            ) {
+                ProductCategoriesScreen(
+                    scaffoldState = scaffoldState,
+                    onProductCategoryClick = { id -> navActions.navigateToProductsScreen(id) }
+                )
+            }
+
+            composable(
+                route = PRODUCTS_ROUTE,
+                arguments = listOf(
+                    navArgument(PRODUCT_CATEGORY_ID_ARG) { type = NavType.IntType }
+                )
+            ) { backStackEntry ->
+                ProductsScreen(
+                    scaffoldState = scaffoldState,
+                    onProductClick = { id -> navActions.navigateToProductDetailsScreen(id) }
+                )
+            }
+
+            composable(
+                route = PRODUCT_DETAILS_ROUTE,
+                arguments = listOf(
+                    navArgument(PRODUCT_ID_ARG) { type = NavType.IntType }
+                )
+            ) { backStackEntry ->
+                ProductDetailsScreen(
+                    scaffoldState = scaffoldState,
+                )
+            }
         }
+
         composable(route = BottomNavScreen.Cart.route) {
             CartScreen(
                 scaffoldState = scaffoldState
             )
         }
+
         navigation(
             route = BottomNavScreen.Profile.route,
             startDestination = ACCOUNT_ROUTE

@@ -8,13 +8,17 @@ import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.ACCOUNT_ROUTE
 import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.CART_ROUTE
 import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.PROFILE_NAVIGATION_ROUTE
 import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.SHOP_ROUTE
+import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.PRODUCT_CATEGORY_ID_ARG
+import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.PRODUCT_ID_ARG
 import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.USER_MESSAGE_ARG
 import hu.schutz.curlycircleandroidapp.Screens.ACCOUNT_SCREEN
 import hu.schutz.curlycircleandroidapp.Screens.CART_SCREEN
+import hu.schutz.curlycircleandroidapp.Screens.PRODUCTS_SCREEN
+import hu.schutz.curlycircleandroidapp.Screens.PRODUCT_CATEGORIES_SCREEN
+import hu.schutz.curlycircleandroidapp.Screens.PRODUCT_DETAILS_SCREEN
 import hu.schutz.curlycircleandroidapp.Screens.PROFILE_NAVIGATION
 import hu.schutz.curlycircleandroidapp.Screens.REGISTRATION_SCREEN
 import hu.schutz.curlycircleandroidapp.Screens.SHOP_SCREEN
@@ -31,11 +35,16 @@ private object Screens {
     const val SHOP_SCREEN = "shop"
     const val CART_SCREEN = "cart"
     const val REGISTRATION_SCREEN = "registration"
+    const val PRODUCT_CATEGORIES_SCREEN = "product-categories"
+    const val PRODUCTS_SCREEN = "products"
+    const val PRODUCT_DETAILS_SCREEN = "product"
 }
 
 
 object CurlyCircleNavigationArgs {
- const val USER_MESSAGE_ARG = "userMessage"
+    const val USER_MESSAGE_ARG = "userMessage"
+    const val PRODUCT_CATEGORY_ID_ARG = "productCategoryId"
+    const val PRODUCT_ID_ARG = "productId"
 }
 
 object CurlyCircleDestinations {
@@ -44,6 +53,11 @@ object CurlyCircleDestinations {
     const val SHOP_ROUTE = SHOP_SCREEN
     const val CART_ROUTE = CART_SCREEN
     const val REGISTRATION_ROUTE = REGISTRATION_SCREEN
+
+    // Shop destinations
+    const val PRODUCT_CATEGORIES_ROUTE = PRODUCT_CATEGORIES_SCREEN
+    const val PRODUCTS_ROUTE = "${PRODUCTS_SCREEN}/{${PRODUCT_CATEGORY_ID_ARG}}"
+    const val PRODUCT_DETAILS_ROUTE = "${PRODUCT_DETAILS_SCREEN}/{${PRODUCT_ID_ARG}}"
 }
 
 
@@ -55,8 +69,26 @@ val bottomNavScreens = listOf(
 
 class CurlyCircleNavigationActions(private val navController: NavController) {
 
+    fun navigateToProductCategoriesScreen() {
+        navController.navigate(PRODUCT_CATEGORIES_SCREEN) {
+            launchSingleTop = true
+        }
+    }
+
+    fun navigateToProductsScreen(productCategoryId: Int) {
+        navController.navigate("${PRODUCTS_SCREEN}/$productCategoryId") {
+            launchSingleTop = true
+        }
+    }
+
+    fun navigateToProductDetailsScreen(productId: Int) {
+        navController.navigate("${PRODUCT_DETAILS_SCREEN}/$productId") {
+            launchSingleTop = true
+        }
+    }
+
     fun navigateToRegistrationScreen() {
-        navController.navigate(Screens.REGISTRATION_SCREEN) {
+        navController.navigate(REGISTRATION_SCREEN) {
             launchSingleTop = true
         }
     }

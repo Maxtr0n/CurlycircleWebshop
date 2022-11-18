@@ -4,12 +4,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.PRODUCT_ID_ARG
 import hu.schutz.curlycircleandroidapp.R
 import hu.schutz.curlycircleandroidapp.data.Product
 import hu.schutz.curlycircleandroidapp.data.ProductQueryParameters
 import hu.schutz.curlycircleandroidapp.data.Result
 import hu.schutz.curlycircleandroidapp.data.repository.ProductsRepository
-import hu.schutz.curlycircleandroidapp.ui.shop.ShopDestinationArgs
 import hu.schutz.curlycircleandroidapp.ui.shop.products.ProductsUiState
 import hu.schutz.curlycircleandroidapp.util.Async
 import hu.schutz.curlycircleandroidapp.util.WhileUiSubscribed
@@ -28,7 +28,7 @@ class ProductDetailsViewModel @Inject constructor(
     private val productsRepository: ProductsRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val productId: Int = savedStateHandle[ShopDestinationArgs.PRODUCT_ID_ARG]!!
+    private val productId: Int = savedStateHandle[PRODUCT_ID_ARG]!!
     private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
     private  val _isLoading = MutableStateFlow(false)
     private val _productAsync = productsRepository.getProductStream(productId)
