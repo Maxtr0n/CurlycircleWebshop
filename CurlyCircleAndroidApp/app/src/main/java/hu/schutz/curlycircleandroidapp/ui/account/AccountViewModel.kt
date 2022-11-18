@@ -216,5 +216,11 @@ class AccountViewModel @Inject constructor(
             it.copy(userMessage = null)
         }
     }
+
+    fun showRegistrationResultUserMessage(userMessage: Int) {
+        viewModelState.update {
+            it.copy(userMessage = userMessage)
+        }
+    }
 }
 

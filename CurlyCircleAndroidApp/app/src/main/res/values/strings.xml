@@ -33,4 +33,5 @@
     <string name="logout_button_label">Kijelentkezés</string>
     <string name="login_invalid_credentials">Helytelen email cím vagy jelszó!</string>
     <string name="login_successful">Sikeresen bejelentkeztél!</string>
+    <string name="my_orders_button_label">Rendeléseim</string>
 </resources>

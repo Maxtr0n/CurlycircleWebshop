@@ -139,7 +139,6 @@ class RegistrationViewModel @Inject constructor(
 
             when (authRepository.register(registerDto)) {
                 is Success -> {
-                    showSnackBar(R.string.registration_successful)
 
                     //navigáljunk át az account screenre
                     _uiState.update {

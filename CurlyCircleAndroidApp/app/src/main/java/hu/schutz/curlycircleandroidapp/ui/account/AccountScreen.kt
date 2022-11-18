@@ -1,5 +1,6 @@
 package hu.schutz.curlycircleandroidapp.ui.account
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
@@ -26,6 +27,8 @@ import hu.schutz.curlycircleandroidapp.ui.theme.CurlyCircleAndroidAppTheme
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun AccountScreen(
+    @StringRes userMessage: Int,
+    onUserMessageDisplayed: () -> Unit,
     scaffoldState: ScaffoldState,
     viewModel: AccountViewModel = hiltViewModel(),
     onRegisterClick: () -> Unit,
@@ -41,11 +44,20 @@ fun AccountScreen(
         onRegisterClick = onRegisterClick,
     )
 
+    // Check for user messages to display on screen
     uiState.userMessage?.let { message ->
         val snackBarText = stringResource(id = message)
         LaunchedEffect(scaffoldState, viewModel, message, snackBarText) {
             scaffoldState.snackbarHostState.showSnackbar(snackBarText)
             viewModel.snackBarMessageShown()
+        }
+    }
+
+    val currentOnUserMessageDisplayed by rememberUpdatedState(onUserMessageDisplayed)
+    LaunchedEffect(userMessage) {
+        if (userMessage != 0) {
+            viewModel.showRegistrationResultUserMessage(userMessage)
+            currentOnUserMessageDisplayed()
         }
     }
 }
@@ -99,10 +111,41 @@ fun LoggedInContent(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = user.email)
-        Button(onClick = onLogoutClick) {
-            Text(text = stringResource(R.string.logout_button_label))
+        Text(
+            text = "Szia, ${user.firstName}!",
+            style = MaterialTheme.typography.h5
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(text = "Email: " + user.email,
+            modifier = Modifier.padding(bottom = 8.dp))
+        Text(text = "Név: ${user.lastName} ${user.firstName}",
+            modifier = Modifier.padding(bottom = 8.dp))
+        Text(text = "Telefonszám: " + user.phoneNumber,
+            modifier = Modifier.padding(bottom = 8.dp))
+        Text(text = "Város: " + user.city,
+            modifier = Modifier.padding(bottom = 8.dp))
+        Text(text = "Irányítószám: " + user.zipCode,
+            modifier = Modifier.padding(bottom = 8.dp))
+        Text(text = "Cím első sora: " + user.line1,
+            modifier = Modifier.padding(bottom = 8.dp))
+        Text(text = "Cím második sora: " + user.line2,
+            modifier = Modifier.padding(bottom = 8.dp))
+
+        Row {
+            OutlinedButton(
+                onClick = onLogoutClick,
+                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.error)
+            ) {
+                Text(text = stringResource(R.string.logout_button_label))
+            }
+            Button(
+                onClick = onLogoutClick,
+                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+            ) {
+                Text(text = stringResource(R.string.my_orders_button_label))
+            }
         }
+
     }
 }
 
@@ -186,7 +229,9 @@ fun LoggedInPreview() {
         Surface {
             LoggedInContent(
                 user = User(id = 1, firstName = "Máté", lastName = "Kovács", cartId = 1,
-                        databaseId = 1, email = "example@gmail.com"),
+                        databaseId = 1, email = "example@gmail.com", city = "Göd",
+                zipCode = "2131", line1 = "Példa utca 15.", line2 = "2. emelet",
+                phoneNumber = "066032432"),
                 onLogoutClick = {}
             )
         }
