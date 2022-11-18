@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import hu.schutz.curlycircleandroidapp.util.Converters
+import java.util.Date
 
 @Entity(tableName = "productCategories")
 data class ProductCategory(
@@ -68,6 +69,55 @@ data class User(
     var refreshToken: String = "",
     var role: Role = Role.User
 )
+
+@Entity(tableName = "orders")
+data class Order(
+    @PrimaryKey var id: Int,
+    var orderDateTime: Date,
+    var total: Double,
+    var note: String? = null,
+    var email: String = "",
+    var firstName: String = "",
+    var lastName: String = "",
+    var city: String = "",
+    var zipCode: String = "",
+    var line1: String = "",
+    var line2: String? = null,
+    var phoneNumber: String = "",
+    var shippingMethod: ShippingMethod = ShippingMethod.Foxpost,
+    var paymentMethod: PaymentMethod = PaymentMethod.CashOnDelivery
+)
+
+@Entity(tableName = "cart")
+data class Cart(
+    @PrimaryKey var databaseId: Int,
+    var id: Int
+)
+
+@Entity(tableName = "cartItems")
+data class CartItem(
+    @PrimaryKey var id: Int,
+    var cartId: Int,
+    var productId: Int,
+    var price: Double,
+    var quantity: Int
+)
+
+data class CartViewModel(
+    var id: Int,
+    var cartItems: List<CartItem>
+)
+
+/*
+data class OrderItem(
+    @PrimaryKey var id: Int,
+    var orderId: Int,
+    var productId: Int,
+    var price: Double,
+    var quantity: Int
+)
+
+ */
 
 data class ProductViewModel(
     var id: Int,
@@ -194,10 +244,46 @@ data class ChangePasswordDto(
     var newPassword: String
 )
 
+data class OrdersViewModel(
+    var orders: List<Order>
+)
+
+data class OrderUpsertDto(
+    var cartId: Int,
+    var applicationUserId: Int? = null,
+    var note: String? = null,
+    var email: String,
+    var firstName: String ,
+    var lastName: String,
+    var city: String,
+    var zipCode: String,
+    var line1: String,
+    var line2: String? = null,
+    var phoneNumber: String,
+    var shippingMethod: ShippingMethod,
+    var paymentMethod: PaymentMethod
+)
+
 @TypeConverters(Converters::class)
 enum class Role {
     User,
     Admin
+}
+
+@TypeConverters(Converters::class)
+enum class ShippingMethod {
+    Foxpost,
+    MagyarPostaPont,
+    MagyarPostaCsomagPont,
+    HomeDelivery,
+    PersonalDelivery
+}
+
+@TypeConverters(Converters::class)
+enum class PaymentMethod {
+    MoneyTransfer,
+    CashOnDelivery,
+    WebPayment
 }
 
 data class ErrorViewModel(

@@ -131,21 +131,18 @@ fun LoggedInContent(
         Text(text = "Cím második sora: " + user.line2,
             modifier = Modifier.padding(bottom = 8.dp))
 
-        Row {
-            OutlinedButton(
-                onClick = onLogoutClick,
-                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.error)
-            ) {
-                Text(text = stringResource(R.string.logout_button_label))
-            }
-            Button(
-                onClick = onLogoutClick,
-                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
-            ) {
-                Text(text = stringResource(R.string.my_orders_button_label))
-            }
+        Button(
+            onClick = onLogoutClick,
+            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+        ) {
+            Text(text = stringResource(R.string.my_orders_button_label))
         }
 
+        OutlinedButton(
+            onClick = onLogoutClick,
+        ) {
+            Text(text = stringResource(R.string.logout_button_label))
+        }
     }
 }
 

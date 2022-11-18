@@ -64,4 +64,13 @@ interface CurlyCircleApi {
 
     @PUT("auth/change-password")
     suspend fun changePassword(@Body changePasswordDto: ChangePasswordDto)
+
+    @GET("user/{userId}/orders")
+    suspend fun getUserOrders(@Path("userId") userId: Int): OrdersViewModel
+
+    @GET("user/{userId}/user-data")
+    suspend fun getUserData(@Path("userId") userId: Int): UserDataViewModel
+
+    @POST("order")
+    suspend fun placeOrder(@Body orderUpsertDto: OrderUpsertDto): EntityCreatedViewModel
 }

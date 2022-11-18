@@ -12,7 +12,7 @@ import okhttp3.Route
 class TokenAuthenticator(
     private val sessionManager: SessionManager
 ) : Authenticator {
-
+    // Automatically tries to refresh token, when 401 response from backend
     override fun authenticate(route: Route?, response: Response): Request? {
         return runBlocking {
             when (val accessToken = getUpdatedToken()) {

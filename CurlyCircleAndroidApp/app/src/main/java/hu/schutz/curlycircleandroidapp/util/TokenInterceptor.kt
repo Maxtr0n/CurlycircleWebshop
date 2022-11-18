@@ -13,7 +13,11 @@ class TokenInterceptor(
         val request = chain.request()
         val accessToken = sessionManager.getAccessToken()
 
-        return chain.proceed(newRequestWithAccessToken(accessToken, request))
+        return if (accessToken == null) {
+            chain.proceed(request)
+        } else {
+            chain.proceed(newRequestWithAccessToken(accessToken, request))
+        }
     }
 
     private fun newRequestWithAccessToken(accessToken: String?, request: Request): Request =
