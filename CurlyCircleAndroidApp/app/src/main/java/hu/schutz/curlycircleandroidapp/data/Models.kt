@@ -62,11 +62,11 @@ data class User(
     var city: String = "",
     var zipCode: String = "",
     var line1: String = "",
-    var line2: String?,
+    var line2: String? = null,
     var phoneNumber: String = "",
     var accessToken: String = "",
     var refreshToken: String = "",
-    var role: Role
+    var role: Role = Role.User
 )
 
 data class ProductViewModel(
@@ -199,3 +199,7 @@ enum class Role {
     User,
     Admin
 }
+
+data class ErrorViewModel(
+    var message: String
+)

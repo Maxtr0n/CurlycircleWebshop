@@ -47,3 +47,9 @@ class CurlyCircleNavigationActions(private val navController: NavController) {
         navController.navigateUp()
     }
 }
+
+
+
+
+
+

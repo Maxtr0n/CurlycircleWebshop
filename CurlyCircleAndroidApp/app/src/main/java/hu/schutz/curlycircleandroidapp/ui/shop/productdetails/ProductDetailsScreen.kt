@@ -19,9 +19,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import hu.schutz.curlycircleandroidapp.R
 import hu.schutz.curlycircleandroidapp.data.Product
+import hu.schutz.curlycircleandroidapp.ui.components.LoadingContent
 import hu.schutz.curlycircleandroidapp.ui.theme.CurlyCircleAndroidAppTheme
 import hu.schutz.curlycircleandroidapp.util.Constants
-import hu.schutz.curlycircleandroidapp.util.LoadingContent
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable

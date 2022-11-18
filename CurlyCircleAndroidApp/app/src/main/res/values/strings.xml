@@ -30,4 +30,7 @@
     <string name="form_not_valid">Nem töltötted ki helyesen az űrlapot.</string>
     <string name="registration_successful">Sikeresen regisztráltál!</string>
     <string name="registration_failed">Sikertelen regisztráció!</string>
+    <string name="logout_button_label">Kijelentkezés</string>
+    <string name="login_invalid_credentials">Helytelen email cím vagy jelszó!</string>
+    <string name="login_successful">Sikeresen bejelentkeztél!</string>
 </resources>

@@ -1,24 +1,19 @@
 package hu.schutz.curlycircleandroidapp.ui.account
 
-import android.widget.Space
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import hu.schutz.curlycircleandroidapp.R
-import hu.schutz.curlycircleandroidapp.ui.theme.CurlyCircleAndroidAppTheme
+import hu.schutz.curlycircleandroidapp.ui.components.PasswordTextField
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -50,7 +45,9 @@ fun RegistrationScreen(
         onZipCodeChanged = viewModel::updateZipCode,
         onLine1Changed = viewModel::updateLine1,
         onLine2Changed = viewModel::updateLine2,
-        onPhoneNumberChanged = viewModel::updatePhoneNumber
+        onPhoneNumberChanged = viewModel::updatePhoneNumber,
+        onRegisterClick = onRegisterClick,
+        onBackClick = onBackClick
     )
 
     LaunchedEffect(uiState.registrationSuccessful) {
@@ -91,15 +88,22 @@ fun RegistrationContent(
     onLine1Changed: (String) -> Unit,
     onLine2Changed: (String) -> Unit,
     onPhoneNumberChanged: (String) -> Unit,
+    onBackClick: () -> Unit,
+    onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (loading) {
-
+        Box(
+            modifier = modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
     } else {
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 0.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -165,12 +169,12 @@ fun RegistrationContent(
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 OutlinedButton(
-                    onClick = { /*TODO*/ }
+                    onClick = onBackClick
                 ) {
                     Text(text = "Vissza")
                 }
                 Button(
-                    onClick = { /*TODO*/ }
+                    onClick = onRegisterClick
                 ) {
                     Text(text = "Regisztrálok")
                 }
