@@ -105,7 +105,22 @@ data class CartItem(
 
 data class CartViewModel(
     var id: Int,
-    var cartItems: List<CartItem>
+    var cartItems: List<CartItemViewModel>
+)
+
+data class CartItemViewModel(
+    var id: Int,
+    var cartId: Int,
+    var productId: Int,
+    var product: ProductViewModel,
+    var price: Double,
+    var quantity: Int
+)
+
+data class CartItemUpsertDto(
+    var productId: Int,
+    var price: Double,
+    var quantity: Int
 )
 
 /*

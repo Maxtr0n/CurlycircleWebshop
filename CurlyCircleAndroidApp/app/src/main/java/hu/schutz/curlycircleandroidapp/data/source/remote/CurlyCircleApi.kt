@@ -1,7 +1,9 @@
 package hu.schutz.curlycircleandroidapp.data.source.remote
 
+import androidx.room.Delete
 import hu.schutz.curlycircleandroidapp.data.*
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -73,4 +75,22 @@ interface CurlyCircleApi {
 
     @POST("order")
     suspend fun placeOrder(@Body orderUpsertDto: OrderUpsertDto): EntityCreatedViewModel
+
+    @DELETE("cart/{cartId}/clear")
+    suspend fun clearCart(@Path("cartId") cartId: Int)
+
+    @DELETE("cart/{cartId}/cartItems/{cartItemId}")
+    suspend fun removeCartItem(@Path("cartId") cartId: Int, @Path("cartItemId") cartItemId: Int)
+
+    @GET("cart/{cartId}")
+    suspend fun getCartById(@Path("cartId") cartId: Int): CartViewModel
+
+    @GET("cart")
+    suspend fun createCart(): EntityCreatedViewModel
+
+    @POST("cart/{cartId}/cartItems")
+    suspend fun addCartItem(@Path("cartId") cartId: Int, cartItemUpsertDto: CartItemUpsertDto)
+
+    @PUT("cart/{cartId}/cartItems/{cartItemId}")
+    suspend fun updateCartItem(@Path("cartId") cartId: Int, @Path("cartItemId") cartItemId: Int, @Body quantity: Int)
 }

@@ -160,8 +160,6 @@ export class CartService {
         );
     }
 
-    //ha a user nem null, akkor bejelentkezett -> a mostani cart ból vegyük ki az elemeket,
-    //töröljük a cartot, és tegyük át az elemeket a user cartjába
     private handleUserChanged(user: UserViewModel | null): Observable<CartViewModel | null> {
         const localCart = this.getCurrentLocalCart();
 
