@@ -13,15 +13,17 @@ import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.PROFILE_NAVIGATIO
 import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.SHOP_ROUTE
 import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.PRODUCT_CATEGORY_ID_ARG
 import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.PRODUCT_ID_ARG
+import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.USER_ID_ARG
 import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.USER_MESSAGE_ARG
 import hu.schutz.curlycircleandroidapp.Screens.ACCOUNT_SCREEN
 import hu.schutz.curlycircleandroidapp.Screens.CART_SCREEN
+import hu.schutz.curlycircleandroidapp.Screens.ORDERS_SCREEN
 import hu.schutz.curlycircleandroidapp.Screens.PRODUCTS_SCREEN
 import hu.schutz.curlycircleandroidapp.Screens.PRODUCT_CATEGORIES_SCREEN
 import hu.schutz.curlycircleandroidapp.Screens.PRODUCT_DETAILS_SCREEN
 import hu.schutz.curlycircleandroidapp.Screens.PROFILE_NAVIGATION
 import hu.schutz.curlycircleandroidapp.Screens.REGISTRATION_SCREEN
-import hu.schutz.curlycircleandroidapp.Screens.SHOP_SCREEN
+import hu.schutz.curlycircleandroidapp.Screens.SHOP_NAVIGATION
 
 sealed class BottomNavScreen(val route: String, @StringRes val resourceId: Int, val icon: ImageVector) {
     object Shop : BottomNavScreen(SHOP_ROUTE, R.string.bottom_navigation_shop, Icons.Default.Shop)
@@ -32,12 +34,13 @@ sealed class BottomNavScreen(val route: String, @StringRes val resourceId: Int, 
 private object Screens {
     const val PROFILE_NAVIGATION = "profile"
     const val ACCOUNT_SCREEN = "account"
-    const val SHOP_SCREEN = "shop"
+    const val SHOP_NAVIGATION = "shop"
     const val CART_SCREEN = "cart"
     const val REGISTRATION_SCREEN = "registration"
     const val PRODUCT_CATEGORIES_SCREEN = "product-categories"
     const val PRODUCTS_SCREEN = "products"
     const val PRODUCT_DETAILS_SCREEN = "product"
+    const val ORDERS_SCREEN = "orders"
 }
 
 
@@ -45,14 +48,19 @@ object CurlyCircleNavigationArgs {
     const val USER_MESSAGE_ARG = "userMessage"
     const val PRODUCT_CATEGORY_ID_ARG = "productCategoryId"
     const val PRODUCT_ID_ARG = "productId"
+    const val USER_ID_ARG = "userId"
 }
 
 object CurlyCircleDestinations {
     const val PROFILE_NAVIGATION_ROUTE = PROFILE_NAVIGATION
-    const val ACCOUNT_ROUTE = "$ACCOUNT_SCREEN?$USER_MESSAGE_ARG={$USER_MESSAGE_ARG}"
-    const val SHOP_ROUTE = SHOP_SCREEN
+    const val SHOP_ROUTE = SHOP_NAVIGATION
     const val CART_ROUTE = CART_SCREEN
+
+    // Profile destinations
     const val REGISTRATION_ROUTE = REGISTRATION_SCREEN
+    const val ACCOUNT_ROUTE = "$ACCOUNT_SCREEN?$USER_MESSAGE_ARG={$USER_MESSAGE_ARG}"
+    const val ORDERS_ROUTE = "${ORDERS_SCREEN}/{${USER_ID_ARG}}"
+
 
     // Shop destinations
     const val PRODUCT_CATEGORIES_ROUTE = PRODUCT_CATEGORIES_SCREEN
@@ -101,6 +109,12 @@ class CurlyCircleNavigationActions(private val navController: NavController) {
         ) {
             popUpTo(navController.graph.findStartDestination().id)
         }
+    }
+
+    fun navigateToOrdersScreen(userId: Int) {
+        navController.navigate(
+            route = "${ORDERS_SCREEN}/$userId"
+        )
     }
 }
 

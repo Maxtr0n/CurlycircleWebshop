@@ -123,5 +123,25 @@ object DataSourceModule {
     ): PatternsDataSource {
         return PatternsLocalDataSource(database.patternsDao(), ioDispatcher)
     }
+
+    @Singleton
+    @RemoteDataSource
+    @Provides
+    fun provideRemoteOrdersDataSource(
+        api: CurlyCircleApi,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ): OrdersDataSource {
+        return OrdersRemoteDataSource(api, ioDispatcher)
+    }
+
+    @Singleton
+    @LocalDataSource
+    @Provides
+    fun provideLocalOrdersDataSource(
+        database: CurlyCircleDatabase,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ): OrdersDataSource {
+        return OrdersLocalDataSource(database.ordersDao(), ioDispatcher)
+    }
 }
 

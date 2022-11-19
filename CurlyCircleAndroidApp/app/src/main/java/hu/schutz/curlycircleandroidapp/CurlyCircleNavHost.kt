@@ -16,8 +16,10 @@ import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.PRODUCT_CATEGORIE
 import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.PRODUCT_DETAILS_ROUTE
 import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.PRODUCT_CATEGORY_ID_ARG
 import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.PRODUCT_ID_ARG
+import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.USER_ID_ARG
 import hu.schutz.curlycircleandroidapp.CurlyCircleNavigationArgs.USER_MESSAGE_ARG
 import hu.schutz.curlycircleandroidapp.ui.account.AccountScreen
+import hu.schutz.curlycircleandroidapp.ui.account.OrdersScreen
 import hu.schutz.curlycircleandroidapp.ui.account.RegistrationScreen
 import hu.schutz.curlycircleandroidapp.ui.cart.CartScreen
 import hu.schutz.curlycircleandroidapp.ui.shop.productcategories.ProductCategoriesScreen
@@ -96,7 +98,8 @@ fun CurlyCircleNavHost(
                     userMessage = entry.arguments?.getInt(USER_MESSAGE_ARG)!!,
                     onUserMessageDisplayed = { entry.arguments?.putInt(USER_MESSAGE_ARG, 0) },
                     scaffoldState = scaffoldState,
-                    onRegisterClick = { navActions.navigateToRegistrationScreen() }
+                    onRegisterClick = { navActions.navigateToRegistrationScreen() },
+                    onOrdersClicked = { userId -> navActions.navigateToOrdersScreen(userId)}
                 )
             }
             composable(route = CurlyCircleDestinations.REGISTRATION_ROUTE) {
@@ -105,6 +108,14 @@ fun CurlyCircleNavHost(
                     onSuccessfulRegistration = { navActions.navigateBackToAccountScreen(R.string.registration_successful) },
                     scaffoldState = scaffoldState
                 )
+            }
+            composable(
+                route = CurlyCircleDestinations.ORDERS_ROUTE,
+                arguments = listOf(
+                    navArgument(USER_ID_ARG) { type = NavType.IntType }
+                )
+            ) {
+                OrdersScreen(scaffoldState = scaffoldState)
             }
         }
     }

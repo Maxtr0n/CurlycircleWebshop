@@ -15,11 +15,16 @@ class DefaultProductsRepository (
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ProductsRepository {
 
-    override fun getProductsStream(productQueryParameters: ProductQueryParameters): Flow<Result<List<Product>>> {
+    override fun getProductsStream(
+        productQueryParameters: ProductQueryParameters
+    ): Flow<Result<List<Product>>> {
         return productsLocalDataSource.getProductsStream(productQueryParameters)
     }
 
-    override suspend fun getProducts(productQueryParameters: ProductQueryParameters, forceUpdate: Boolean): Result<List<Product>> {
+    override suspend fun getProducts(
+        productQueryParameters: ProductQueryParameters,
+        forceUpdate: Boolean
+    ): Result<List<Product>> {
         if (forceUpdate) {
             try {
                 updateProductsFromRemoteDataSource(productQueryParameters)
@@ -45,7 +50,9 @@ class DefaultProductsRepository (
         return productsLocalDataSource.getProduct(productId)
     }
 
-    private suspend fun updateProductsFromRemoteDataSource(productQueryParameters: ProductQueryParameters) {
+    private suspend fun updateProductsFromRemoteDataSource(
+        productQueryParameters: ProductQueryParameters
+    ) {
         val remoteProducts = productsRemoteDataSource.getProducts(productQueryParameters)
 
         if (remoteProducts is Result.Success) {

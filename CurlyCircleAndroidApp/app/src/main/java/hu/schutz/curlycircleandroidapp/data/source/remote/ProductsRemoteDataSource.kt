@@ -16,7 +16,8 @@ class ProductsRemoteDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
     ) : ProductsDataSource {
 
-    override fun getProductsStream(productQueryParameters: ProductQueryParameters): Flow<Result<List<Product>>> {
+    override fun getProductsStream(productQueryParameters: ProductQueryParameters):
+            Flow<Result<List<Product>>> {
         return MutableStateFlow(
             runBlocking {
                 getProducts(productQueryParameters)
@@ -24,7 +25,8 @@ class ProductsRemoteDataSource(
         )
     }
 
-    override suspend fun getProducts(productQueryParameters: ProductQueryParameters): Result<List<Product>> = withContext(ioDispatcher) {
+    override suspend fun getProducts(productQueryParameters: ProductQueryParameters):
+            Result<List<Product>> = withContext(ioDispatcher) {
         return@withContext try {
             val productViewModels = api.getProducts(
                 productQueryParameters.productCategoryId

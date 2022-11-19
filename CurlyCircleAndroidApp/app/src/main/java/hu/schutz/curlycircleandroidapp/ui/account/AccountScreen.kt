@@ -32,7 +32,8 @@ fun AccountScreen(
     scaffoldState: ScaffoldState,
     viewModel: AccountViewModel = hiltViewModel(),
     onRegisterClick: () -> Unit,
-) {
+    onOrdersClicked: (Int) -> Unit,
+    ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     AccountContent(
@@ -42,6 +43,7 @@ fun AccountScreen(
         onEmailChanged = { viewModel.updateEmail(it) },
         onPasswordChanged = { viewModel.updatePassword(it) },
         onRegisterClick = onRegisterClick,
+        onOrdersClicked = onOrdersClicked
     )
 
     // Check for user messages to display on screen
@@ -71,6 +73,7 @@ fun AccountContent(
     onLogoutClick: () -> Unit,
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
+    onOrdersClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
     ) {
 
@@ -82,6 +85,7 @@ fun AccountContent(
             is AccountUiState.HasUser -> LoggedInContent(
                 user = uiState.user,
                 onLogoutClick = onLogoutClick,
+                onOrdersClicked = onOrdersClicked,
                 modifier = modifier
             )
             is AccountUiState.NoUser -> AnonymousContent(
@@ -102,6 +106,7 @@ fun AccountContent(
 fun LoggedInContent(
     user: User,
     onLogoutClick: () -> Unit,
+    onOrdersClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
     ) {
     Column(
@@ -132,7 +137,7 @@ fun LoggedInContent(
             modifier = Modifier.padding(bottom = 8.dp))
 
         Button(
-            onClick = onLogoutClick,
+            onClick = { onOrdersClicked(user.id) },
             colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
         ) {
             Text(text = stringResource(R.string.my_orders_button_label))
@@ -229,7 +234,8 @@ fun LoggedInPreview() {
                         databaseId = 1, email = "example@gmail.com", city = "Göd",
                 zipCode = "2131", line1 = "Példa utca 15.", line2 = "2. emelet",
                 phoneNumber = "066032432"),
-                onLogoutClick = {}
+                onLogoutClick = {},
+                onOrdersClicked = {}
             )
         }
     }

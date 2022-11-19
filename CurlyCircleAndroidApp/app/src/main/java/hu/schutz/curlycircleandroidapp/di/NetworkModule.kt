@@ -1,5 +1,6 @@
 package hu.schutz.curlycircleandroidapp.di
 
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,7 +39,10 @@ object NetworkModule {
         return Retrofit.Builder()
             .baseUrl(CurlyCircleApi.BASE_URL)
             .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(
+                GsonConverterFactory
+                    .create(GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create())
+            )
             .build()
             .create(CurlyCircleApi::class.java)
     }
@@ -48,7 +52,10 @@ object NetworkModule {
     fun provideAuthApi(): AuthApi {
         return Retrofit.Builder()
             .baseUrl(CurlyCircleApi.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(
+                GsonConverterFactory
+                    .create(GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create())
+            )
             .build()
             .create(AuthApi::class.java)
     }

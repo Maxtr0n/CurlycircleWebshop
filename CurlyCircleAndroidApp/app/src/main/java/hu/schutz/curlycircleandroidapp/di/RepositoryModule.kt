@@ -85,4 +85,14 @@ object RepositoryModule {
     ) : AuthRepository {
         return DefaultAuthRepository(api, database.userDao(), ioDispatcher)
     }
+
+    @Singleton
+    @Provides
+    fun providesOrdersRepository(
+        @RemoteDataSource remoteDataSource: OrdersDataSource,
+        @LocalDataSource localDataSource: OrdersDataSource,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ) : OrdersRepository {
+        return DefaultOrdersRepository(remoteDataSource, localDataSource, ioDispatcher)
+    }
 }
