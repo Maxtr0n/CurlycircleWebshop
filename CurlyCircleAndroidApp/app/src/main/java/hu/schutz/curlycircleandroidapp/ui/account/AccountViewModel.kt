@@ -112,41 +112,6 @@ class AccountViewModel @Inject constructor(
         }
     }
 
-    /*
-    val uiState: StateFlow<AccountUiState> = combine(
-        _userMessage, _isLoading, _userAsync, _email, _password
-    ) { userMessage, isLoading, userAsync, email, password ->
-        when (userAsync) {
-            Async.Loading -> {
-                AccountUiState(
-                    isLoading = true,
-                )
-            }
-            is Async.Success -> {
-                AccountUiState(
-                    user = userAsync.data,
-                    isLoading = isLoading,
-                    userMessage = userMessage
-                )
-            }
-        }
-    }
-        .stateIn(
-            scope = viewModelScope,
-            started = WhileUiSubscribed,
-            initialValue = AccountUiState(isLoading = true)
-        )
-
-    private fun handleResult(userResult: Result<User>): Async<User?> =
-        if (userResult is Result.Success) {
-            Async.Success(userResult.data)
-        } else {
-            showSnackBarMessage(R.string.user_loading_error)
-            Async.Success(null)
-        }
-     */
-
-
     private fun getUser() {
         viewModelState.update { it.copy(isLoading = true) }
 
@@ -155,9 +120,7 @@ class AccountViewModel @Inject constructor(
             viewModelState.update {
                 when(result) {
                     is Result.Success -> it.copy(user = result.data, isLoading = false)
-                    is Result.Error -> {
-                        it.copy(user = null, isLoading = false)
-                    }
+                    is Result.Error -> it.copy(user = null, isLoading = false)
                 }
             }
         }

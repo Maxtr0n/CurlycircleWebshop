@@ -12,7 +12,7 @@ class DefaultAuthRepository(
     private val api: AuthApi,
     private val dao: UserDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    private val cartRepository: CartRepository
+    private val sharedPreferences: AppSharedPreferences
 ) : AuthRepository {
 
     override suspend fun getAccessToken(): Result<String?> = withContext(ioDispatcher) {
@@ -43,7 +43,7 @@ class DefaultAuthRepository(
     override suspend fun login(email: String, password: String): Result<User> =
         withContext(ioDispatcher) {
             return@withContext try {
-                val cartId = cartRepository.getCurrentCartId()
+                val cartId = sharedPreferences.getCardId()
                 val userViewModel = api.login(LoginDto(email, password, if (cartId != 0) cartId else null))
 
                 val user = User(
@@ -64,7 +64,6 @@ class DefaultAuthRepository(
                 )
 
                 dao.insertUser(user)
-                cartRepository.handleUserChanged(user)
 
                 Result.Success(user)
             } catch (e: Exception) {
@@ -74,7 +73,6 @@ class DefaultAuthRepository(
 
     override suspend fun logout() {
         dao.deleteUser()
-        cartRepository.handleUserChanged(null)
     }
 
     override suspend fun register(registerDto: RegisterDto): Result<EntityCreatedViewModel>  =

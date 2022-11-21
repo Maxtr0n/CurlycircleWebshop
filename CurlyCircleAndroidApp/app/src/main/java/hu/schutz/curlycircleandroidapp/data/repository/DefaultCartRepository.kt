@@ -11,8 +11,22 @@ class DefaultCartRepository(
     private val api: CurlyCircleApi,
     private val dao: CartItemsDao,
     private val sharedPreferences: AppSharedPreferences,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val externalScope: CoroutineScope,
+    private val userRepository: UserRepository
 ) : CartRepository {
+
+    init {
+        externalScope.launch {
+            userRepository.getUserStream().collect { result ->
+                if (result is Result.Success) {
+                    handleUserChanged(result.data)
+                } else {
+                    handleUserChanged(null)
+                }
+            }
+        }
+    }
 
     override fun getCartItemsStream(): Flow<Result<List<CartItem>>> {
         return dao.getCartItemsStream().map {

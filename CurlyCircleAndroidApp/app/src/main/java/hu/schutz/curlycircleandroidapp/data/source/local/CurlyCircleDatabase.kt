@@ -34,4 +34,6 @@ abstract class CurlyCircleDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 
     abstract fun ordersDao(): OrdersDao
+
+    abstract fun cartItemsDao(): CartItemsDao
 }

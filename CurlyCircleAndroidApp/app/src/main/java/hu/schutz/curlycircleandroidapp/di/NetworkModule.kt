@@ -60,7 +60,7 @@ object NetworkModule {
             .create(AuthApi::class.java)
     }
 
-
+    /*
     @Singleton
     @Provides
     fun provideSessionManager(
@@ -68,6 +68,8 @@ object NetworkModule {
     ): SessionManager = SessionManager(
         authRepository = authRepository
     )
+
+     */
 
 
     @Singleton

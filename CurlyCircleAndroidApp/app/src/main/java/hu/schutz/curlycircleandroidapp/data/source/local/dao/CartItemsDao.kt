@@ -1,11 +1,13 @@
 package hu.schutz.curlycircleandroidapp.data.source.local.dao
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import hu.schutz.curlycircleandroidapp.data.CartItem
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface CartItemsDao {
 
     @Query("SELECT * FROM cartItems")

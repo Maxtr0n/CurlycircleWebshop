@@ -6,10 +6,12 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import hu.schutz.curlycircleandroidapp.data.repository.*
 import hu.schutz.curlycircleandroidapp.data.source.*
+import hu.schutz.curlycircleandroidapp.data.source.local.AppSharedPreferences
 import hu.schutz.curlycircleandroidapp.data.source.local.CurlyCircleDatabase
 import hu.schutz.curlycircleandroidapp.data.source.remote.AuthApi
 import hu.schutz.curlycircleandroidapp.data.source.remote.CurlyCircleApi
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import javax.inject.Singleton
 
 @Module
@@ -81,9 +83,10 @@ object RepositoryModule {
     fun provideAuthRepository(
         database: CurlyCircleDatabase,
         api: AuthApi,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+        sharedPreferences: AppSharedPreferences
     ) : AuthRepository {
-        return DefaultAuthRepository(api, database.userDao(), ioDispatcher)
+        return DefaultAuthRepository(api, database.userDao(), ioDispatcher, sharedPreferences)
     }
 
     @Singleton
@@ -94,5 +97,19 @@ object RepositoryModule {
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) : OrdersRepository {
         return DefaultOrdersRepository(remoteDataSource, localDataSource, ioDispatcher)
+    }
+
+    @Singleton
+    @Provides
+    fun providesCartRepository(
+        database: CurlyCircleDatabase,
+        api: CurlyCircleApi,
+        sharedPreferences: AppSharedPreferences,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+        @ExternalScope externalScope: CoroutineScope,
+        userRepository: UserRepository
+    ) : CartRepository {
+        return DefaultCartRepository(api, database.cartItemsDao(), sharedPreferences, ioDispatcher,
+            externalScope, userRepository)
     }
 }

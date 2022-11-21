@@ -35,4 +35,7 @@
     <string name="login_successful">Sikeresen bejelentkeztél!</string>
     <string name="my_orders_button_label">Rendeléseim</string>
     <string name="no_data_orders">Nincsenek korábbi rendeléseid.</string>
+    <string name="error_cart_empty">A kosarad üres.</string>
+    <string name="error_try_again">A művelet nem sikerült, kérlek próbáld újra.</string>
+    <string name="error_quantity_maximum_reached">Elérted a maximális mennyiséget.</string>
 </resources>

@@ -1,8 +1,11 @@
 package hu.schutz.curlycircleandroidapp.di
 
+import android.content.Context
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import hu.schutz.curlycircleandroidapp.data.source.*
 import hu.schutz.curlycircleandroidapp.data.source.local.*
@@ -23,6 +26,13 @@ annotation class LocalDataSource
 @Module
 @InstallIn(SingletonComponent::class)
 object DataSourceModule {
+
+    @Singleton
+    @Provides
+    fun provideSharedPreferences(
+        @ApplicationContext context: Context,
+    ): SharedPreferences =
+        context.getSharedPreferences(AppSharedPreferences.SHARED_PREFS, Context.MODE_PRIVATE)
 
     @Singleton
     @RemoteDataSource
