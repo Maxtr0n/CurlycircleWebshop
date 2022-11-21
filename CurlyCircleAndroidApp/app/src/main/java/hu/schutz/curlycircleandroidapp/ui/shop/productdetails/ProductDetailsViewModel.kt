@@ -1,5 +1,6 @@
 package hu.schutz.curlycircleandroidapp.ui.shop.productdetails
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,6 +10,7 @@ import hu.schutz.curlycircleandroidapp.R
 import hu.schutz.curlycircleandroidapp.data.Product
 import hu.schutz.curlycircleandroidapp.data.ProductQueryParameters
 import hu.schutz.curlycircleandroidapp.data.Result
+import hu.schutz.curlycircleandroidapp.data.repository.CartRepository
 import hu.schutz.curlycircleandroidapp.data.repository.ProductsRepository
 import hu.schutz.curlycircleandroidapp.ui.shop.products.ProductsUiState
 import hu.schutz.curlycircleandroidapp.util.Async
@@ -20,12 +22,14 @@ import javax.inject.Inject
 data class ProductDetailsUiState(
     val product: Product? = null,
     val isLoading: Boolean = false,
-    val userMessage: Int? = null
+    val userMessage: Int? = null,
+    val quantity: Int = 1
     )
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
     private val productsRepository: ProductsRepository,
+    private val cartRepository: CartRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val productId: Int = savedStateHandle[PRODUCT_ID_ARG]!!
@@ -34,6 +38,7 @@ class ProductDetailsViewModel @Inject constructor(
     private val _productAsync = productsRepository.getProductStream(productId)
         .map { handleProductResult(it) }
         .onStart { emit(Async.Loading) }
+    private val _quantity = mutableStateOf(1)
 
     init {
         getProduct(productId)
@@ -60,6 +65,14 @@ class ProductDetailsViewModel @Inject constructor(
             started = WhileUiSubscribed,
             initialValue = ProductDetailsUiState(isLoading = true)
         )
+
+    fun addProductToCart(product: Product) {
+        _isLoading.value = true
+        viewModelScope.launch {
+            cartRepository.addItemToCart(product, 1)
+            _isLoading.value = false
+        }
+    }
 
     fun snackBarMessageShown() {
         _userMessage.value = null

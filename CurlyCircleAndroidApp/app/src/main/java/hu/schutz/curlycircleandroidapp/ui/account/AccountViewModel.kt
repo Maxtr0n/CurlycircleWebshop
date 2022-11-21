@@ -148,7 +148,6 @@ class AccountViewModel @Inject constructor(
 
         viewModelState.update { it.copy(isLoading = true) }
 
-        // TODO: cartId-t megadni
         viewModelScope.launch {
             when (authRepository.login(viewModelState.value.email, viewModelState.value.password)) {
                 is Result.Success -> {

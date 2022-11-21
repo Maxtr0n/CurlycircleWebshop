@@ -33,7 +33,10 @@ fun ProductDetailsScreen(
 
     ProductDetailsContent(
         loading = uiState.isLoading,
-        product = uiState.product
+        product = uiState.product,
+        addProductToCart = { product -> viewModel.addProductToCart(product) },
+        increaseQuantity = { viewModel.increaseQuantity() },
+        decreaseQuantity = { viewModel.decreaseQuantity() },
     )
 
     uiState.userMessage?.let { message ->
@@ -49,6 +52,9 @@ fun ProductDetailsScreen(
 fun ProductDetailsContent(
     loading: Boolean,
     product: Product?,
+    increaseQuantity: () -> Unit,
+    decreaseQuantity: () -> Unit,
+    addProductToCart: (Product) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val screenPadding = Modifier.padding(
@@ -101,7 +107,9 @@ fun ProductDetailsContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Button(onClick = { /*TODO*/ }) {
+
+
+                Button(onClick = { addProductToCart(product) }) {
                     Text(text = stringResource(R.string.to_cart_button_text))
                 }
             }
@@ -121,7 +129,8 @@ fun ProductDetailsPreview() {
             ProductDetailsContent(
                 loading = false,
                 product = Product(id = 1, name = "Curly1", description = "Lorem ipsum 1",
-                productCategoryId = 1, price = 2500.0)
+                productCategoryId = 1, price = 2500.0),
+                addProductToCart = {}
             )
         }
     }
