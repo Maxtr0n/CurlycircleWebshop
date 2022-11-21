@@ -14,7 +14,7 @@ interface ProductCategoriesDao {
     fun getProductCategoriesStream(): Flow<List<ProductCategory>>
 
     @Query("SELECT * FROM productCategories")
-    fun getProductCategories(): List<ProductCategory>
+    suspend fun getProductCategories(): List<ProductCategory>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProductCategory(productCategory: ProductCategory)

@@ -14,13 +14,13 @@ interface MaterialsDao {
     fun getMaterialsStream(): Flow<List<Material>>
 
     @Query("SELECT * FROM materials")
-    fun getMaterials(): List<Material>
+    suspend fun getMaterials(): List<Material>
 
     @Query("SELECT * FROM materials WHERE id = :id")
     fun getMaterialStream(id: Int): Flow<Material>
 
     @Query("SELECT * FROM materials WHERE id = :id")
-    fun getMaterial(id: Int): Material
+    suspend fun getMaterial(id: Int): Material
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMaterial(material: Material)

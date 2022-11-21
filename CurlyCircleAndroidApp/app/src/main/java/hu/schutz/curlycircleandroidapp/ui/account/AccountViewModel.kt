@@ -187,7 +187,7 @@ class AccountViewModel @Inject constructor(
 
         // TODO: cartId-t megadni
         viewModelScope.launch {
-            when (authRepository.login(LoginDto(viewModelState.value.email, viewModelState.value.password, null))) {
+            when (authRepository.login(viewModelState.value.email, viewModelState.value.password)) {
                 is Result.Success -> {
                     viewModelState.update {
                         it.copy(userMessage = R.string.login_successful, isLoading = false)

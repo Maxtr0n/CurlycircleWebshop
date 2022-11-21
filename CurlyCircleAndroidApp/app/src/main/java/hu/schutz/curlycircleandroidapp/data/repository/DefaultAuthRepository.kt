@@ -1,6 +1,7 @@
 package hu.schutz.curlycircleandroidapp.data.repository
 
 import hu.schutz.curlycircleandroidapp.data.*
+import hu.schutz.curlycircleandroidapp.data.source.local.AppSharedPreferences
 import hu.schutz.curlycircleandroidapp.data.source.local.dao.UserDao
 import hu.schutz.curlycircleandroidapp.data.source.remote.AuthApi
 import kotlinx.coroutines.CoroutineDispatcher
@@ -10,22 +11,26 @@ import kotlinx.coroutines.withContext
 class DefaultAuthRepository(
     private val api: AuthApi,
     private val dao: UserDao,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val cartRepository: CartRepository
 ) : AuthRepository {
 
-    override fun getAccessToken(): Result<String?> =
-        try {
+    override suspend fun getAccessToken(): Result<String?> = withContext(ioDispatcher) {
+        return@withContext try {
             Result.Success(dao.getUser().accessToken)
         } catch (e: Exception) {
             Result.Error(e)
         }
+    }
 
-    override fun getRefreshToken(): Result<String?> =
-        try {
+
+    override suspend fun getRefreshToken(): Result<String?> = withContext(ioDispatcher) {
+        return@withContext try {
             Result.Success(dao.getUser().refreshToken)
         } catch (e: Exception) {
             Result.Error(e)
         }
+    }
 
     override suspend fun setTokens(tokenViewModel: TokenViewModel) {
         val user = dao.getUser()
@@ -35,10 +40,11 @@ class DefaultAuthRepository(
         dao.updateUser(user)
     }
 
-    override suspend fun login(loginDto: LoginDto): Result<User> =
+    override suspend fun login(email: String, password: String): Result<User> =
         withContext(ioDispatcher) {
             return@withContext try {
-                val userViewModel = api.login(loginDto)
+                val cartId = cartRepository.getCurrentCartId()
+                val userViewModel = api.login(LoginDto(email, password, if (cartId != 0) cartId else null))
 
                 val user = User(
                     databaseId = 1,
@@ -58,6 +64,7 @@ class DefaultAuthRepository(
                 )
 
                 dao.insertUser(user)
+                cartRepository.handleUserChanged(user)
 
                 Result.Success(user)
             } catch (e: Exception) {
@@ -67,6 +74,7 @@ class DefaultAuthRepository(
 
     override suspend fun logout() {
         dao.deleteUser()
+        cartRepository.handleUserChanged(null)
     }
 
     override suspend fun register(registerDto: RegisterDto): Result<EntityCreatedViewModel>  =

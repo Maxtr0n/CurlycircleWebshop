@@ -14,10 +14,10 @@ interface OrdersDao {
     fun getOrdersStream(): Flow<List<Order>>
 
     @Query("SELECT * FROM orders ORDER BY orderDateTime DESC")
-    fun getOrders(): List<Order>
+    suspend fun getOrders(): List<Order>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun instertOrder(order: Order)
+    suspend fun insertOrder(order: Order)
 
     @Query("DELETE FROM orders")
     suspend fun deleteOrders()

@@ -4,13 +4,13 @@ import hu.schutz.curlycircleandroidapp.data.*
 
 interface AuthRepository {
 
-    fun getAccessToken(): Result<String?>
+    suspend fun getAccessToken(): Result<String?>
 
-    fun getRefreshToken(): Result<String?>
+    suspend fun getRefreshToken(): Result<String?>
 
     suspend fun setTokens(tokenViewModel: TokenViewModel)
 
-    suspend fun login(loginDto: LoginDto): Result<User>
+    suspend fun login(email: String, password: String): Result<User>
 
     suspend fun logout()
 

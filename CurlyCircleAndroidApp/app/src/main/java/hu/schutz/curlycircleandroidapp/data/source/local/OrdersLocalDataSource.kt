@@ -38,7 +38,7 @@ class OrdersLocalDataSource(
     }
 
     override suspend fun saveOrder(order: Order) {
-        dao.instertOrder(order)
+        dao.insertOrder(order)
     }
 
     override suspend fun deleteOrders() {

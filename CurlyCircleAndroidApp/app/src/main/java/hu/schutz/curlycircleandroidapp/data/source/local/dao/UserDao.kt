@@ -15,7 +15,7 @@ interface UserDao {
     fun getUserStream(): Flow<User>
 
     @Query("SELECT * FROM user WHERE databaseId = 1")
-    fun getUser(): User
+    suspend fun getUser(): User
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: User)

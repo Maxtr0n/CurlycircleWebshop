@@ -14,13 +14,13 @@ interface ColorsDao {
     fun getColorsStream(): Flow<List<Color>>
 
     @Query("SELECT * FROM colors")
-    fun getColors(): List<Color>
+    suspend fun getColors(): List<Color>
 
     @Query("SELECT * FROM colors WHERE id IN (:ids)")
     fun getColorsStream(ids: Set<Int>): Flow<List<Color>>
 
     @Query("SELECT * FROM colors WHERE id IN (:ids)")
-    fun getColors(ids: Set<Int>): List<Color>
+    suspend fun getColors(ids: Set<Int>): List<Color>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertColor(color: Color)

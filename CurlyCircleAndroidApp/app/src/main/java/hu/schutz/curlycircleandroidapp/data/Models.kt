@@ -88,12 +88,6 @@ data class Order(
     var paymentMethod: PaymentMethod = PaymentMethod.CashOnDelivery
 )
 
-@Entity(tableName = "cart")
-data class Cart(
-    @PrimaryKey var databaseId: Int,
-    var id: Int
-)
-
 @Entity(tableName = "cartItems")
 data class CartItem(
     @PrimaryKey var id: Int,
@@ -239,7 +233,7 @@ data class UserUpdateDto(
 )
 
 data class EntityCreatedViewModel(
-    var id: String
+    var id: Int
 )
 
 data class UserDataViewModel(

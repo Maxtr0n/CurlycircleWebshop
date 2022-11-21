@@ -13,13 +13,13 @@ interface PatternsDao {
     fun getPatternsStream(): Flow<List<Pattern>>
 
     @Query("SELECT * FROM patterns")
-    fun getPatterns(): List<Pattern>
+    suspend fun getPatterns(): List<Pattern>
 
     @Query("SELECT * FROM patterns WHERE id = :id")
     fun getPatternStream(id: Int): Flow<Pattern>
 
     @Query("SELECT * FROM patterns WHERE id = :id")
-    fun getPattern(id: Int): Pattern
+    suspend fun getPattern(id: Int): Pattern
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPattern(pattern: Pattern)

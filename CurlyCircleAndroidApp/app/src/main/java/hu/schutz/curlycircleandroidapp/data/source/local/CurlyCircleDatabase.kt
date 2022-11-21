@@ -15,8 +15,9 @@ import hu.schutz.curlycircleandroidapp.util.Converters
     Material::class,
     Pattern::class,
     User::class,
-    Order::class
-], version = 3, exportSchema = false)
+    Order::class,
+    CartItem::class
+], version = 4, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class CurlyCircleDatabase : RoomDatabase() {
 

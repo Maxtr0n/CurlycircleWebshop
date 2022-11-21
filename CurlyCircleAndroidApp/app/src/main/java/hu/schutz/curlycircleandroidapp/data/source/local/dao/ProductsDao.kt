@@ -14,13 +14,13 @@ interface ProductsDao {
     fun getProductsStream(productCategoryId: Int): Flow<List<Product>>
 
     @Query("SELECT * FROM products WHERE productCategoryId = :productCategoryId")
-    fun getProducts(productCategoryId: Int): List<Product>
+    suspend fun getProducts(productCategoryId: Int): List<Product>
 
     @Query("SELECT * FROM products WHERE id = :id")
     fun getProductStream(id: Int): Flow<Product>
 
     @Query("SELECT * FROM products WHERE id = :id")
-    fun getProduct(id: Int): Product
+    suspend fun getProduct(id: Int): Product
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProduct(product: Product)

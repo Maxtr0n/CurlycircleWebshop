@@ -10,20 +10,24 @@ class SessionManager @Inject constructor(
 ) {
 
     fun getAccessToken(): String? {
-        val token = authRepository.getAccessToken()
-        return if (token is Result.Success) {
-            token.data
-        } else {
-            null
+        return runBlocking {
+            val token = authRepository.getAccessToken()
+            if (token is Result.Success) {
+                token.data
+            } else {
+                null
+            }
         }
     }
 
     fun getRefreshToken(): String? {
-        val token = authRepository.getRefreshToken()
-        return if (token is Result.Success) {
-            token.data
-        } else {
-            null
+        return runBlocking {
+            val token = authRepository.getRefreshToken()
+            if (token is Result.Success) {
+                token.data
+            } else {
+                null
+            }
         }
     }
 
