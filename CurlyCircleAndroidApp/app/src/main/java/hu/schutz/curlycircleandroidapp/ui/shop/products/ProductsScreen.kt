@@ -136,7 +136,7 @@ fun ProductItem(
                         + Constants.NO_IMAGE_URL
                     else Constants.API_BASE_URL + Constants.PRODUCT_THUMBNAILS_URL +
                         product.thumbnailImageUrl,
-                contentDescription = "${product.name} termék kategória képe.",
+                contentDescription = "${product.name} termék képe.",
                 placeholder = painterResource(id = R.drawable.placeholder3),
                 error = painterResource(id = R.drawable.placeholder3),
                 fallback = painterResource(id = R.drawable.placeholder3),

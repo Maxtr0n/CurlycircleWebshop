@@ -1,7 +1,9 @@
 package hu.schutz.curlycircleandroidapp.data
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Relation
 import androidx.room.TypeConverters
 import hu.schutz.curlycircleandroidapp.util.Converters
 import java.util.Date

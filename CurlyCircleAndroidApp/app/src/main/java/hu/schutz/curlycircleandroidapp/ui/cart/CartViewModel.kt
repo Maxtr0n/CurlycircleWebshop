@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hu.schutz.curlycircleandroidapp.R
 import hu.schutz.curlycircleandroidapp.data.CartItem
+import hu.schutz.curlycircleandroidapp.data.Product
 import hu.schutz.curlycircleandroidapp.data.Result
 import hu.schutz.curlycircleandroidapp.data.repository.CartRepository
+import hu.schutz.curlycircleandroidapp.data.repository.ProductsRepository
 import hu.schutz.curlycircleandroidapp.util.WhileUiSubscribed
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -16,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class CartUiState(
-    val cartItems: List<CartItem> = emptyList(),
+    val cartItems: Map<CartItem, Product> = emptyMap(),
     val isLoading: Boolean = false,
     val readyToCheckout: Boolean = false,
     val userMessage: Int? = null
@@ -25,7 +27,7 @@ data class CartUiState(
 @HiltViewModel
 class CartViewModel @Inject constructor(
     private val cartRepository: CartRepository,
-
+    private val productsRepository: ProductsRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CartUiState(isLoading = true))
@@ -47,7 +49,7 @@ class CartViewModel @Inject constructor(
                         _uiState.update { it.copy(cartItems = result.data) }
                     }
                     is Result.Error -> {
-                        _uiState.update { it.copy(cartItems = emptyList()) }
+                        _uiState.update { it.copy(cartItems = emptyMap()) }
                     }
                 }
             }
@@ -62,7 +64,7 @@ class CartViewModel @Inject constructor(
             _uiState.update {
                 when (result) {
                     is Result.Success -> it.copy(cartItems = result.data, isLoading = false)
-                    is Result.Error -> it.copy(cartItems = emptyList(), isLoading = false)
+                    is Result.Error -> it.copy(cartItems = emptyMap(), isLoading = false)
                 }
             }
         }
