@@ -12,8 +12,15 @@ class AppSharedPreferences @Inject constructor(
         sharedPreferences.edit().putInt(CART_ID_KEY, cartId).apply()
     }
 
+    fun getIsCartAnonymous(): Boolean = sharedPreferences.getBoolean(IS_CART_ANONYMOUS, true)
+
+    fun setIsCartAnonymous(isCartAnonymous: Boolean) {
+        sharedPreferences.edit().putBoolean(IS_CART_ANONYMOUS, isCartAnonymous).apply()
+    }
+
     companion object {
         const val SHARED_PREFS = "APP_SHARED_PREFS"
         const val CART_ID_KEY = "cartId"
+        const val IS_CART_ANONYMOUS = "isCartAnonymous"
     }
 }

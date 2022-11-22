@@ -65,7 +65,8 @@ class ProductDetailsViewModel @Inject constructor(
             val result = cartRepository.addItemToCart(product, quantity)
             _uiState.update {
                 when(result) {
-                    is Result.Success -> it.copy(isLoading = false)
+                    is Result.Success -> it.copy(isLoading = false,
+                        userMessage = R.string.item_added_to_cart)
                     is Result.Error -> it.copy(isLoading = false,
                         userMessage = R.string.error_try_again)
                 }

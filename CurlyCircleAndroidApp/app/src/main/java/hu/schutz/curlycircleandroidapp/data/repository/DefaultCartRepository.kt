@@ -123,13 +123,18 @@ class DefaultCartRepository(
     override suspend fun handleUserChanged(user: User?): Result<Unit> = withContext(ioDispatcher) {
         return@withContext try {
             if (user != null) {
-                // user logged in
+                // user logged in - or at app start - either way refresh cart content from backend
+                sharedPreferences.setIsCartAnonymous(false)
                 sharedPreferences.setCartId(user.cartId)
                 updateCartItemsFromRemoteDataSource(user.cartId)
             } else {
-                // user logged out
-                sharedPreferences.setCartId(0)
-                dao.deleteCartItems()
+                // if cart is anonymous, it means we are at app start - we get the first
+                // null value for user - we do nothing
+                if (!sharedPreferences.getIsCartAnonymous()) {
+                    // user logged out - remove cart
+                    sharedPreferences.setCartId(0)
+                    dao.deleteCartItems()
+                }
             }
             Result.Success(Unit)
         } catch (e: Exception) {

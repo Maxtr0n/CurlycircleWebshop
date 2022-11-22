@@ -28,11 +28,11 @@ fun QuantityPicker(
         modifier = modifier
     ) {
         IconButton(onClick = decreaseQuantity, modifier = Modifier.padding(4.dp).weight(1f),
-            quantity >= 1) {
+            quantity > 1) {
             Icon(
                 imageVector = Icons.Default.Remove,
                 contentDescription = "Mennyiség csökkentése.",
-                tint = MaterialTheme.colors.primary
+                //tint = MaterialTheme.colors.primary
             )
         }
 
@@ -40,11 +40,11 @@ fun QuantityPicker(
             textAlign = TextAlign.Center, style = MaterialTheme.typography.body1)
 
         IconButton(onClick = increaseQuantity, modifier = Modifier.padding(4.dp).weight(1f),
-            enabled = quantity <= 10) {
+            enabled = quantity < 10) {
             Icon(
                 imageVector = Icons.Default.Add,
                 contentDescription = "Mennyiség növelése.",
-                tint = MaterialTheme.colors.primary
+                //tint = MaterialTheme.colors.primary
             )
         }
     }

@@ -42,4 +42,5 @@
     <string name="cart_label">Kosár</string>
     <string name="error_quantity_minimum_reached">Egynél nem lehet kevesebb a mennyiség.</string>
     <string name="order_button_label">Rendelés</string>
+    <string name="item_added_to_cart">A terméket sikeresen hozzáadtad a kosaradhoz.</string>
 </resources>

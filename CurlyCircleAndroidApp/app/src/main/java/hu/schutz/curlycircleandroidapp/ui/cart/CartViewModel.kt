@@ -128,19 +128,16 @@ class CartViewModel @Inject constructor(
         _uiState.update { it.copy(isLoading = true) }
 
         viewModelScope.launch{
-            val result:Result<Unit> = if (cartItem.quantity == 1) {
-                cartRepository.removeCartItem(cartItemId = cartItem.id)
-            } else {
-                cartRepository.updateCartItem(
+            val result:Result<Unit> = cartRepository.updateCartItem(
                     cartItemId = cartItem.id,
                     quantity = cartItem.quantity - 1
                 )
-            }
 
             _uiState.update {
                 when (result) {
                     is Result.Success -> it.copy(isLoading = false)
-                    is Result.Error -> it.copy(isLoading = false, userMessage = R.string.error_try_again)
+                    is Result.Error -> it.copy(isLoading = false,
+                        userMessage = R.string.error_try_again)
                 }
             }
         }
