@@ -2,6 +2,7 @@ package hu.schutz.curlycircleandroidapp.data.source.remote
 
 import androidx.room.Delete
 import hu.schutz.curlycircleandroidapp.data.*
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -77,10 +78,12 @@ interface CurlyCircleApi {
     suspend fun placeOrder(@Body orderUpsertDto: OrderUpsertDto): EntityCreatedViewModel
 
     @DELETE("cart/{cartId}/clear")
-    suspend fun clearCart(@Path("cartId") cartId: Int)
+    suspend fun clearCart(@Path("cartId") cartId: Int): Response<Unit>
 
     @DELETE("cart/{cartId}/cartItems/{cartItemId}")
-    suspend fun removeCartItem(@Path("cartId") cartId: Int, @Path("cartItemId") cartItemId: Int)
+    suspend fun removeCartItem(
+        @Path("cartId") cartId: Int,
+        @Path("cartItemId") cartItemId: Int): Response<Unit>
 
     @GET("cart/{cartId}")
     suspend fun getCartById(@Path("cartId") cartId: Int): CartViewModel
@@ -89,8 +92,13 @@ interface CurlyCircleApi {
     suspend fun createCart(): EntityCreatedViewModel
 
     @POST("cart/{cartId}/cartItems")
-    suspend fun addCartItem(@Path("cartId") cartId: Int, @Body cartItemUpsertDto: CartItemUpsertDto)
+    suspend fun addCartItem(
+        @Path("cartId") cartId: Int,
+        @Body cartItemUpsertDto: CartItemUpsertDto): EntityCreatedViewModel
 
     @PUT("cart/{cartId}/cartItems/{cartItemId}")
-    suspend fun updateCartItem(@Path("cartId") cartId: Int, @Path("cartItemId") cartItemId: Int, @Body quantity: Int)
+    suspend fun updateCartItem(
+        @Path("cartId") cartId: Int,
+        @Path("cartItemId") cartItemId: Int,
+        @Body quantity: Int)
 }

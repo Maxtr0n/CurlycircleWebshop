@@ -99,6 +99,15 @@ data class CartItem(
     var quantity: Int
 )
 
+data class CartItemAndProduct(
+    @Embedded val product: Product,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "productId"
+    )
+    val cartItem: CartItem
+)
+
 data class CartViewModel(
     var id: Int,
     var cartItems: List<CartItemViewModel>

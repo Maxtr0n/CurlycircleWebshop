@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import hu.schutz.curlycircleandroidapp.R
 import hu.schutz.curlycircleandroidapp.data.CartItem
+import hu.schutz.curlycircleandroidapp.data.CartItemAndProduct
 import hu.schutz.curlycircleandroidapp.data.Product
 import hu.schutz.curlycircleandroidapp.ui.components.LoadingContent
 import hu.schutz.curlycircleandroidapp.ui.components.QuantityPicker
@@ -61,7 +62,7 @@ fun CartScreen(
 fun CartContent(
     loading: Boolean,
     empty: Boolean,
-    cartItems: Map<CartItem, Product>,
+    cartItems: List<CartItemAndProduct>,
     clearCart: () -> Unit,
     increaseQuantity: (CartItem) -> Unit,
     decreaseQuantity: (CartItem) -> Unit,
@@ -121,8 +122,8 @@ fun CartContent(
             ) {
                 items(cartItems.toList()) { cartItemAndProduct ->
                     CartItemListItem(
-                        cartItem = cartItemAndProduct.first,
-                        product = cartItemAndProduct.second,
+                        cartItem = cartItemAndProduct.cartItem,
+                        product = cartItemAndProduct.product,
                         removeCartItem = removeCartItem,
                         increaseQuantity = increaseQuantity,
                         decreaseQuantity = decreaseQuantity
@@ -209,11 +210,14 @@ fun CartContentPreview() {
             CartContent(
                 loading = false,
                 empty = false,
-                cartItems = mapOf(
-                   pair = Pair(CartItem(id = 1, cartId = 1, productId = 1, quantity = 2, price = 2000.0), Product(
-                       id = 1, name = "Name1", description = "Lorem ipsum 1", price = 2000.0,
-                       productCategoryId = 1
-                   ))
+                cartItems = listOf(
+                    CartItemAndProduct(
+                        cartItem = CartItem(id = 1, cartId = 1, productId = 1, quantity = 2, price = 2000.0),
+                        product = Product(
+                            id = 1, name = "Name1", description = "Lorem ipsum 1", price = 2000.0,
+                            productCategoryId = 1
+                        )
+                    )
                 ),
                 clearCart = { },
                 increaseQuantity = {},

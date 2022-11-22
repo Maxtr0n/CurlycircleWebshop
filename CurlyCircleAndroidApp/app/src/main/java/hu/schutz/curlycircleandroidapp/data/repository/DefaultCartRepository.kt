@@ -29,13 +29,13 @@ class DefaultCartRepository(
         }
     }
 
-    override fun getCartItemsStream(): Flow<Result<Map<CartItem, Product>>> {
+    override fun getCartItemsStream(): Flow<Result<List<CartItemAndProduct>>> {
         return dao.getCartItemsStream().map {
             Result.Success(it)
         }
     }
 
-    override suspend fun getCartItems(): Result<Map<CartItem, Product>> = withContext(ioDispatcher) {
+    override suspend fun getCartItems(): Result<List<CartItemAndProduct>> = withContext(ioDispatcher) {
         return@withContext try {
             Result.Success(dao.getCartItems())
         } catch (e: Exception) {

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hu.schutz.curlycircleandroidapp.R
 import hu.schutz.curlycircleandroidapp.data.CartItem
+import hu.schutz.curlycircleandroidapp.data.CartItemAndProduct
 import hu.schutz.curlycircleandroidapp.data.Product
 import hu.schutz.curlycircleandroidapp.data.Result
 import hu.schutz.curlycircleandroidapp.data.repository.CartRepository
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class CartUiState(
-    val cartItems: Map<CartItem, Product> = emptyMap(),
+    val cartItems: List<CartItemAndProduct> = emptyList(),
     val isLoading: Boolean = false,
     val readyToCheckout: Boolean = false,
     val userMessage: Int? = null
@@ -49,7 +50,7 @@ class CartViewModel @Inject constructor(
                         _uiState.update { it.copy(cartItems = result.data) }
                     }
                     is Result.Error -> {
-                        _uiState.update { it.copy(cartItems = emptyMap()) }
+                        _uiState.update { it.copy(cartItems = emptyList()) }
                     }
                 }
             }

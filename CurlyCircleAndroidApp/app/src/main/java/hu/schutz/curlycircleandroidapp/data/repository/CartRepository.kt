@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface CartRepository {
 
-    fun getCartItemsStream(): Flow<Result<Map<CartItem, Product>>>
+    fun getCartItemsStream(): Flow<Result<List<CartItemAndProduct>>>
 
-    suspend fun getCartItems(): Result<Map<CartItem, Product>>
+    suspend fun getCartItems(): Result<List<CartItemAndProduct>>
 
     suspend fun updateCartItem(cartItemId: Int, quantity: Int): Result<Unit>
 
