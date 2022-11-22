@@ -2,6 +2,9 @@ package hu.schutz.curlycircleandroidapp.ui.shop.productdetails
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -20,6 +23,7 @@ import coil.compose.AsyncImage
 import hu.schutz.curlycircleandroidapp.R
 import hu.schutz.curlycircleandroidapp.data.Product
 import hu.schutz.curlycircleandroidapp.ui.components.LoadingContent
+import hu.schutz.curlycircleandroidapp.ui.components.QuantityPicker
 import hu.schutz.curlycircleandroidapp.ui.theme.CurlyCircleAndroidAppTheme
 import hu.schutz.curlycircleandroidapp.util.Constants
 
@@ -34,9 +38,10 @@ fun ProductDetailsScreen(
     ProductDetailsContent(
         loading = uiState.isLoading,
         product = uiState.product,
-        addProductToCart = { product -> viewModel.addProductToCart(product) },
+        addProductToCart = { product -> viewModel.addProductToCart(product, uiState.quantity) },
         increaseQuantity = { viewModel.increaseQuantity() },
         decreaseQuantity = { viewModel.decreaseQuantity() },
+        quantity = uiState.quantity
     )
 
     uiState.userMessage?.let { message ->
@@ -54,6 +59,7 @@ fun ProductDetailsContent(
     product: Product?,
     increaseQuantity: () -> Unit,
     decreaseQuantity: () -> Unit,
+    quantity: Int,
     addProductToCart: (Product) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -105,11 +111,19 @@ fun ProductDetailsContent(
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
+               QuantityPicker(
+                   quantity = quantity,
+                   increaseQuantity = increaseQuantity,
+                   decreaseQuantity = decreaseQuantity,
+                   modifier = Modifier.weight(1f)
+               )
 
-                Button(onClick = { addProductToCart(product) }) {
+                Button(onClick = { addProductToCart(product) },
+                    modifier = Modifier.weight(1f)) {
                     Text(text = stringResource(R.string.to_cart_button_text))
                 }
             }
@@ -130,7 +144,10 @@ fun ProductDetailsPreview() {
                 loading = false,
                 product = Product(id = 1, name = "Curly1", description = "Lorem ipsum 1",
                 productCategoryId = 1, price = 2500.0),
-                addProductToCart = {}
+                addProductToCart = {},
+                increaseQuantity = {},
+                decreaseQuantity = {},
+                quantity = 1
             )
         }
     }

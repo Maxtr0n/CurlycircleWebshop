@@ -60,11 +60,11 @@ class CartViewModel @Inject constructor(
         _uiState.update { it.copy(isLoading = true) }
 
         viewModelScope.launch{
-            val result = cartRepository.getCartItems()
+            val result = cartRepository.refreshCurrentCart()
             _uiState.update {
                 when (result) {
-                    is Result.Success -> it.copy(cartItems = result.data, isLoading = false)
-                    is Result.Error -> it.copy(cartItems = emptyMap(), isLoading = false)
+                    is Result.Success -> it.copy(isLoading = false)
+                    is Result.Error -> it.copy(isLoading = false)
                 }
             }
         }

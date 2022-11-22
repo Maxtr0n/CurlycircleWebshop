@@ -89,7 +89,7 @@ interface CurlyCircleApi {
     suspend fun createCart(): EntityCreatedViewModel
 
     @POST("cart/{cartId}/cartItems")
-    suspend fun addCartItem(@Path("cartId") cartId: Int, cartItemUpsertDto: CartItemUpsertDto)
+    suspend fun addCartItem(@Path("cartId") cartId: Int, @Body cartItemUpsertDto: CartItemUpsertDto)
 
     @PUT("cart/{cartId}/cartItems/{cartItemId}")
     suspend fun updateCartItem(@Path("cartId") cartId: Int, @Path("cartItemId") cartItemId: Int, @Body quantity: Int)

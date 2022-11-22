@@ -33,53 +33,80 @@ class ProductDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val productId: Int = savedStateHandle[PRODUCT_ID_ARG]!!
-    private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
-    private  val _isLoading = MutableStateFlow(false)
-    private val _productAsync = productsRepository.getProductStream(productId)
-        .map { handleProductResult(it) }
-        .onStart { emit(Async.Loading) }
-    private val _quantity = mutableStateOf(1)
+    private val _uiState = MutableStateFlow(ProductDetailsUiState(isLoading = true))
 
-    init {
-        getProduct(productId)
-    }
-
-    val uiState: StateFlow<ProductDetailsUiState> = combine(
-        _userMessage, _isLoading, _productAsync
-    ) { userMessage, isLoading, productAsync ->
-        when(productAsync) {
-            Async.Loading -> {
-                ProductDetailsUiState(isLoading = true)
-            }
-            is Async.Success -> {
-                ProductDetailsUiState(
-                    product = productAsync.data,
-                    isLoading = isLoading,
-                    userMessage = userMessage
-                )
-            }
-        }
-    }
+    val uiState: StateFlow<ProductDetailsUiState> = _uiState
         .stateIn(
             scope = viewModelScope,
             started = WhileUiSubscribed,
-            initialValue = ProductDetailsUiState(isLoading = true)
+            initialValue = _uiState.value
         )
 
-    fun addProductToCart(product: Product) {
-        _isLoading.value = true
+    init {
+        getProduct(productId)
+
         viewModelScope.launch {
-            cartRepository.addItemToCart(product, 1)
-            _isLoading.value = false
+            productsRepository.getProductStream(productId).collect() { result ->
+                when(result) {
+                    is Result.Success -> {
+                        _uiState.update { it.copy(product = result.data) }
+                    }
+                    is Result.Error -> {
+                        _uiState.update { it.copy(product = null) }
+                    }
+                }
+            }
+        }
+    }
+
+    fun addProductToCart(product: Product, quantity: Int) {
+        _uiState.update { it.copy(isLoading = true) }
+        viewModelScope.launch {
+            val result = cartRepository.addItemToCart(product, quantity)
+            _uiState.update {
+                when(result) {
+                    is Result.Success -> it.copy(isLoading = false)
+                    is Result.Error -> it.copy(isLoading = false,
+                        userMessage = R.string.error_try_again)
+                }
+            }
+        }
+    }
+
+    fun increaseQuantity() {
+        if (_uiState.value.quantity >= 10) {
+            _uiState.update {
+                it.copy(userMessage = R.string.error_quantity_maximum_reached)
+            }
+        }
+
+        _uiState.update {
+            it.copy(quantity = _uiState.value.quantity + 1)
+        }
+    }
+
+    fun decreaseQuantity() {
+        if (_uiState.value.quantity <= 1) {
+            _uiState.update {
+                it.copy(userMessage = R.string.error_quantity_minimum_reached)
+            }
+        }
+
+        _uiState.update {
+            it.copy(quantity = _uiState.value.quantity - 1)
         }
     }
 
     fun snackBarMessageShown() {
-        _userMessage.value = null
+        _uiState.update {
+            it.copy(userMessage = null)
+        }
     }
 
     private fun showSnackBarMessage(message: Int) {
-        _userMessage.value = message
+        _uiState.update {
+            it.copy(userMessage = message)
+        }
     }
 
     private fun handleProductResult(productResult: Result<Product>): Async<Product?> =
@@ -91,10 +118,15 @@ class ProductDetailsViewModel @Inject constructor(
         }
 
     private fun getProduct(id: Int) {
-        _isLoading.value = true
+        _uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            productsRepository.getProduct(id, true)
-            _isLoading.value = false
+            val result = productsRepository.getProduct(id, true)
+            _uiState.update {
+                when(result) {
+                    is Result.Success -> it.copy(product = result.data, isLoading = false)
+                    is Result.Error -> it.copy(product = null, isLoading = false)
+                }
+            }
         }
     }
 }

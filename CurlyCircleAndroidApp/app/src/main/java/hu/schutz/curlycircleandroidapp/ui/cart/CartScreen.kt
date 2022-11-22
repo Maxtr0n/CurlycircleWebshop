@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,6 +26,7 @@ import hu.schutz.curlycircleandroidapp.R
 import hu.schutz.curlycircleandroidapp.data.CartItem
 import hu.schutz.curlycircleandroidapp.data.Product
 import hu.schutz.curlycircleandroidapp.ui.components.LoadingContent
+import hu.schutz.curlycircleandroidapp.ui.components.QuantityPicker
 import hu.schutz.curlycircleandroidapp.ui.theme.CurlyCircleAndroidAppTheme
 import hu.schutz.curlycircleandroidapp.util.Constants
 
@@ -38,7 +41,11 @@ fun CartScreen(
     CartContent(
         loading = uiState.isLoading,
         empty = uiState.cartItems.isEmpty() && !uiState.isLoading,
-        cartItems = uiState.cartItems
+        cartItems = uiState.cartItems,
+        clearCart = { viewModel.clearCart() },
+        increaseQuantity = { cartItem -> viewModel.increaseQuantity(cartItem) },
+        decreaseQuantity = { cartItem -> viewModel.decreaseQuantity(cartItem) },
+        removeCartItem = { cartItem -> viewModel.removeCartItem(cartItem) },
     )
 
     uiState.userMessage?.let { message ->
@@ -55,6 +62,10 @@ fun CartContent(
     loading: Boolean,
     empty: Boolean,
     cartItems: Map<CartItem, Product>,
+    clearCart: () -> Unit,
+    increaseQuantity: (CartItem) -> Unit,
+    decreaseQuantity: (CartItem) -> Unit,
+    removeCartItem: (CartItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val screenPadding = Modifier.padding(
@@ -80,16 +91,28 @@ fun CartContent(
             }
         }) {
         Column(modifier = commonModifier) {
-            Text(
-                text = stringResource(id = R.string.cart_label),
-                modifier = Modifier.padding(
-                    top = 16.dp,
-                    bottom = 8.dp,
-                    start = 8.dp,
-                    end = 8.dp
-                ),
-                style = MaterialTheme.typography.h5
-            )
+            Row(
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = stringResource(id = R.string.cart_label),
+                    modifier = Modifier.padding(
+                        top = 16.dp,
+                        bottom = 8.dp,
+                        start = 8.dp,
+                        end = 8.dp
+                    ),
+                    style = MaterialTheme.typography.h5
+                )
+                
+                Button(onClick = { clearCart() }, colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.error)) {
+                    Icon(imageVector = Icons.Default.Delete, contentDescription = "Kosár ürítése.")
+                    Text(text = "Kosár ürítése")
+                }
+            }
+            
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -99,8 +122,18 @@ fun CartContent(
                 items(cartItems.toList()) { cartItemAndProduct ->
                     CartItemListItem(
                         cartItem = cartItemAndProduct.first,
-                        product = cartItemAndProduct.second
+                        product = cartItemAndProduct.second,
+                        removeCartItem = removeCartItem,
+                        increaseQuantity = increaseQuantity,
+                        decreaseQuantity = decreaseQuantity
                     )
+                }
+            }
+
+            Row(horizontalArrangement = Arrangement.End,
+                modifier = Modifier.fillMaxWidth().height(30.dp).padding(8.dp)) {
+                Button(onClick = { /*TODO*/ }) {
+                    Text(text = stringResource(R.string.order_button_label))
                 }
             }
         }
@@ -111,7 +144,10 @@ fun CartContent(
 @Composable
 fun CartItemListItem(
     cartItem: CartItem,
-    product: Product
+    product: Product,
+    removeCartItem: (CartItem) -> Unit,
+    increaseQuantity: (CartItem) -> Unit,
+    decreaseQuantity: (CartItem) -> Unit
 ) {
     Card{
         Row(
@@ -120,31 +156,28 @@ fun CartItemListItem(
                     horizontal = 16.dp,
                     vertical = 8.dp
                 ),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
-            AsyncImage(
-                model = if (product.thumbnailImageUrl == "") Constants.API_BASE_URL
-                        + Constants.NO_IMAGE_URL
-                else Constants.API_BASE_URL + Constants.PRODUCT_THUMBNAILS_URL +
-                        product.thumbnailImageUrl,
-                contentDescription = "${product.name} termék képe.",
-                placeholder = painterResource(id = R.drawable.placeholder3),
-                error = painterResource(id = R.drawable.placeholder3),
-                fallback = painterResource(id = R.drawable.placeholder3),
-                modifier = Modifier
-                    .padding(vertical = 8.dp)
-                    .clip(MaterialTheme.shapes.medium)
-                    .weight(1f)
-            )
-            Text(text = product.name, style = MaterialTheme.typography.h5,
+            Text(text = product.name, style = MaterialTheme.typography.body1,
                 modifier = Modifier
                     .weight(1f)
                     .padding(4.dp), textAlign = TextAlign.Center)
-            Text(text = "${cartItem.quantity} x ${cartItem.price.toInt()} Ft",
-                style = MaterialTheme.typography.h5,
+
+            QuantityPicker(quantity = cartItem.quantity, increaseQuantity = { increaseQuantity(cartItem) },
+             decreaseQuantity = { decreaseQuantity(cartItem) }, modifier = Modifier.weight(1.5f))
+            Text(text = "${cartItem.price.toInt()*cartItem.quantity} Ft",
+                style = MaterialTheme.typography.body1,
                 modifier = Modifier
-                    .weight(1.8f)
+                    .weight(1f)
                     .padding(4.dp), textAlign = TextAlign.Center)
+            IconButton(onClick = { removeCartItem(cartItem) }, modifier = Modifier.weight(0.3f)) {
+                Icon(
+                    imageVector = Icons.Default.RemoveShoppingCart,
+                    contentDescription = "Termék eltávolítása a kosárból",
+                    tint = MaterialTheme.colors.error
+                )
+            }
         }
     }
 }
@@ -160,6 +193,32 @@ fun CartItemListItemPreview() {
                     id = 1, name = "Name1", description = "Lorem ipsum 1", price = 2000.0,
                     productCategoryId = 1
                 ),
+                removeCartItem = {},
+                increaseQuantity = {},
+                decreaseQuantity = {}
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun CartContentPreview() {
+    CurlyCircleAndroidAppTheme {
+        Surface {
+            CartContent(
+                loading = false,
+                empty = false,
+                cartItems = mapOf(
+                   pair = Pair(CartItem(id = 1, cartId = 1, productId = 1, quantity = 2, price = 2000.0), Product(
+                       id = 1, name = "Name1", description = "Lorem ipsum 1", price = 2000.0,
+                       productCategoryId = 1
+                   ))
+                ),
+                clearCart = { },
+                increaseQuantity = {},
+                decreaseQuantity = {},
+                removeCartItem = {}
             )
         }
     }
