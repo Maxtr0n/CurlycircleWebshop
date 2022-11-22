@@ -50,6 +50,15 @@ class DefaultProductsRepository (
         return productsLocalDataSource.getProduct(productId)
     }
 
+    override suspend fun saveProduct(product: Product): Result<Unit> {
+        return try {
+            productsLocalDataSource.saveProduct(product)
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
     private suspend fun updateProductsFromRemoteDataSource(
         productQueryParameters: ProductQueryParameters
     ) {

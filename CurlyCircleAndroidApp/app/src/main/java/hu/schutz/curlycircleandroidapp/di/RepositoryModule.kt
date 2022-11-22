@@ -107,9 +107,10 @@ object RepositoryModule {
         sharedPreferences: AppSharedPreferences,
         @IoDispatcher ioDispatcher: CoroutineDispatcher,
         @ExternalScope externalScope: CoroutineScope,
-        userRepository: UserRepository
+        userRepository: UserRepository,
+        productsRepository: ProductsRepository
     ) : CartRepository {
         return DefaultCartRepository(api, database.cartItemsDao(), sharedPreferences, ioDispatcher,
-            externalScope, userRepository)
+            externalScope, userRepository, productsRepository)
     }
 }

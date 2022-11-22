@@ -13,7 +13,8 @@ class DefaultCartRepository(
     private val sharedPreferences: AppSharedPreferences,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val externalScope: CoroutineScope,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val productsRepository: ProductsRepository
 ) : CartRepository {
 
     init {
@@ -145,6 +146,22 @@ class DefaultCartRepository(
                     id = item.id, cartId = item.cartId, productId = item.productId,
                     price = item.price, quantity = item.quantity)
             )
+
+            val productViewModel = item.product
+            val product = Product(
+                id = productViewModel.id,
+                name = productViewModel.name,
+                description = productViewModel.description,
+                material = productViewModel.material?.name ?: "",
+                pattern = productViewModel.pattern?.name ?: "",
+                colors = productViewModel.colors.map { it.name },
+                thumbnailImageUrl = productViewModel.thumbnailImageUrl,
+                imageUrls = productViewModel.imageUrls,
+                price = productViewModel.price,
+                productCategoryId = productViewModel.productCategoryId,
+                isAvailable = productViewModel.isAvailable
+            )
+            productsRepository.saveProduct(product)
         }
     }
 

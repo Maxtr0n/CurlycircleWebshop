@@ -14,4 +14,6 @@ interface ProductsRepository {
     fun getProductStream(productId: Int): Flow<Result<Product>>
 
     suspend fun getProduct(productId: Int, forceUpdate: Boolean = false): Result<Product>
+
+    suspend fun saveProduct(product: Product): Result<Unit>
 }
