@@ -85,15 +85,26 @@ fun CurlyCircleNavHost(
             route = BottomNavScreen.CartAndOrder.route,
             startDestination = CART_ROUTE
         ) {
-            composable(route = CART_ROUTE) {
+            composable(
+                route = CART_ROUTE,
+                arguments = listOf(
+                    navArgument(USER_MESSAGE_ARG) { type = NavType.IntType; defaultValue = 0}
+                )
+            ) { entry ->
                 CartScreen(
                     scaffoldState = scaffoldState,
-                    onCheckout = { navActions.navigateToOrderScreen() }
+                    onCheckout = { navActions.navigateToOrderScreen() },
+                    userMessage = entry.arguments?.getInt(USER_MESSAGE_ARG)!!,
+                    onUserMessageDisplayed = { entry.arguments?.putInt(USER_MESSAGE_ARG, 0) },
                 )
             }
 
             composable(route = ORDER_ROUTE) {
-                OrderScreen()
+                OrderScreen(
+                    scaffoldState = scaffoldState,
+                    onSuccessfulOrder =
+                    { navActions.navigateBackToCartScreen(R.string.order_successful) }
+                )
             }
         }
 

@@ -21,7 +21,7 @@ data class OrderUiState(
     val line1: String = "",
     val line2: String = "",
     val phoneNumber: String = "",
-    val note: String? = null,
+    val note: String = "",
     val shippingMethod: ShippingMethod? = null,
     val paymentMethod: PaymentMethod? = null,
     val isLoading: Boolean = false,

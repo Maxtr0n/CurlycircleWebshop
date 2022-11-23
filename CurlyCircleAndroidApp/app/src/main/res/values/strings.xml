@@ -43,4 +43,9 @@
     <string name="error_quantity_minimum_reached">Egynél nem lehet kevesebb a mennyiség.</string>
     <string name="order_button_label">Rendelés</string>
     <string name="item_added_to_cart">A terméket sikeresen hozzáadtad a kosaradhoz.</string>
+    <string name="personal_data">Személyes adatok</string>
+    <string name="shipping_method">Szállítási mód</string>
+    <string name="payment_method">Fizetési mód</string>
+    <string name="note">Megjegyzés</string>
+    <string name="order_successful">Sikeresen leadtad a rendelésed.</string>
 </resources>

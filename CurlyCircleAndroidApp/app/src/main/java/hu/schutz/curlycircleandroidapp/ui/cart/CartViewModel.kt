@@ -21,7 +21,6 @@ import javax.inject.Inject
 data class CartUiState(
     val cartItems: List<CartItemAndProduct> = emptyList(),
     val isLoading: Boolean = false,
-    val readyToCheckout: Boolean = false,
     val userMessage: Int? = null
 )
 
@@ -143,16 +142,9 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    fun checkout() {
-        if (_uiState.value.cartItems.isEmpty()) {
-            _uiState.update {
-                it.copy(userMessage = R.string.error_cart_empty)
-            }
-            return
-        }
-
+    fun showSnackBarMessage(message: Int) {
         _uiState.update {
-            it.copy(readyToCheckout = true)
+            it.copy(userMessage = message)
         }
     }
 

@@ -1,5 +1,6 @@
 package hu.schutz.curlycircleandroidapp.ui.cart
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -9,6 +10,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +36,8 @@ import hu.schutz.curlycircleandroidapp.util.Constants
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun CartScreen(
+    @StringRes userMessage: Int,
+    onUserMessageDisplayed: () -> Unit,
     scaffoldState : ScaffoldState,
     viewModel: CartViewModel = hiltViewModel(),
     onCheckout: () -> Unit,
@@ -48,20 +52,22 @@ fun CartScreen(
         increaseQuantity = { cartItem -> viewModel.increaseQuantity(cartItem) },
         decreaseQuantity = { cartItem -> viewModel.decreaseQuantity(cartItem) },
         removeCartItem = { cartItem -> viewModel.removeCartItem(cartItem) },
-        checkoutClick = { viewModel.checkout() }
+        checkoutClick = { onCheckout() }
     )
-
-    LaunchedEffect(uiState.readyToCheckout) {
-        if (uiState.readyToCheckout) {
-            onCheckout()
-        }
-    }
 
     uiState.userMessage?.let { message ->
         val snackBarText = stringResource(id = message)
         LaunchedEffect(scaffoldState, viewModel, message, snackBarText) {
             scaffoldState.snackbarHostState.showSnackbar(snackBarText)
             viewModel.snackBarMessageShown()
+        }
+    }
+
+    val currentOnUserMessageDisplayed by rememberUpdatedState(onUserMessageDisplayed)
+    LaunchedEffect(userMessage) {
+        if (userMessage != 0) {
+            viewModel.showSnackBarMessage(userMessage)
+            currentOnUserMessageDisplayed()
         }
     }
 }

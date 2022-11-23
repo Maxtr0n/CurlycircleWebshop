@@ -53,7 +53,6 @@ private object Screens {
 
 }
 
-
 object CurlyCircleNavigationArgs {
     const val USER_MESSAGE_ARG = "userMessage"
     const val PRODUCT_CATEGORY_ID_ARG = "productCategoryId"
@@ -67,7 +66,7 @@ object CurlyCircleDestinations {
     const val CART_AND_ORDER_ROUTE = CART_AND_ORDER_NAVIGATION
 
     //CartAndOrder destinations
-    const val CART_ROUTE = CART_SCREEN
+    const val CART_ROUTE = "$CART_SCREEN?$USER_MESSAGE_ARG={$USER_MESSAGE_ARG}"
     const val ORDER_ROUTE = ORDER_SCREEN
 
     // Profile destinations
@@ -134,7 +133,19 @@ class CurlyCircleNavigationActions(private val navController: NavController) {
     fun navigateToOrderScreen() {
         navController.navigate(
             route = ORDER_SCREEN
-        )
+        ) {
+            launchSingleTop = true
+        }
+    }
+
+    fun navigateBackToCartScreen(userMessage: Int = 0) {
+        navController.navigate(
+            CART_SCREEN.let {
+                if (userMessage != 0) "$it?$USER_MESSAGE_ARG=$userMessage" else it
+            }
+        ) {
+            popUpTo(navController.graph.findStartDestination().id)
+        }
     }
 }
 
