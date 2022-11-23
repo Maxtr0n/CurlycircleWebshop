@@ -20,6 +20,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import hu.schutz.curlycircleandroidapp.R
 import hu.schutz.curlycircleandroidapp.data.PaymentMethod
 import hu.schutz.curlycircleandroidapp.data.ShippingMethod
+import hu.schutz.curlycircleandroidapp.util.convertPaymentMethod
+import hu.schutz.curlycircleandroidapp.util.convertShippingMethod
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -201,7 +203,7 @@ fun OrderContent(
                             onClick = null // null recommended for accessibility with screenreaders
                         )
                         Text(
-                            text = paymentMethod.name,
+                            text = convertPaymentMethod(paymentMethod),
                             style = MaterialTheme.typography.body1,
                             modifier = Modifier.padding(start = 16.dp)
                         )
@@ -234,7 +236,7 @@ fun OrderContent(
                             onClick = null // null recommended for accessibility with screenreaders
                         )
                         Text(
-                            text = shippingMethod.name,
+                            text = convertShippingMethod(shippingMethod),
                             style = MaterialTheme.typography.body1,
                             modifier = Modifier.padding(start = 16.dp)
                         )
