@@ -35,7 +35,8 @@ import hu.schutz.curlycircleandroidapp.util.Constants
 @Composable
 fun CartScreen(
     scaffoldState : ScaffoldState,
-    viewModel: CartViewModel = hiltViewModel()
+    viewModel: CartViewModel = hiltViewModel(),
+    onCheckout: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -47,7 +48,14 @@ fun CartScreen(
         increaseQuantity = { cartItem -> viewModel.increaseQuantity(cartItem) },
         decreaseQuantity = { cartItem -> viewModel.decreaseQuantity(cartItem) },
         removeCartItem = { cartItem -> viewModel.removeCartItem(cartItem) },
+        checkoutClick = { viewModel.checkout() }
     )
+
+    LaunchedEffect(uiState.readyToCheckout) {
+        if (uiState.readyToCheckout) {
+            onCheckout()
+        }
+    }
 
     uiState.userMessage?.let { message ->
         val snackBarText = stringResource(id = message)
@@ -67,6 +75,7 @@ fun CartContent(
     increaseQuantity: (CartItem) -> Unit,
     decreaseQuantity: (CartItem) -> Unit,
     removeCartItem: (CartItem) -> Unit,
+    checkoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val screenPadding = Modifier.padding(
@@ -91,7 +100,7 @@ fun CartContent(
                 )
             }
         }) {
-        Column(modifier = commonModifier) {
+        Column(modifier = commonModifier.fillMaxSize()) {
             Row(
                 verticalAlignment = Alignment.Bottom,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -118,7 +127,7 @@ fun CartContent(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(vertical = 8.dp),
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.weight(1f)
             ) {
                 items(cartItems.toList()) { cartItemAndProduct ->
                     CartItemListItem(
@@ -131,9 +140,9 @@ fun CartContent(
                 }
             }
 
-            Row(horizontalArrangement = Arrangement.End,
-                modifier = Modifier.fillMaxWidth().height(30.dp).padding(8.dp)) {
-                Button(onClick = { /*TODO*/ }) {
+            Row(horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.Bottom,
+                modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+                Button(onClick = { checkoutClick() }) {
                     Text(text = stringResource(R.string.order_button_label))
                 }
             }
@@ -222,7 +231,8 @@ fun CartContentPreview() {
                 clearCart = { },
                 increaseQuantity = {},
                 decreaseQuantity = {},
-                removeCartItem = {}
+                removeCartItem = {},
+                checkoutClick = {}
             )
         }
     }

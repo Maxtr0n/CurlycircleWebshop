@@ -132,6 +132,7 @@ class DefaultCartRepository(
                 // null value for user - we do nothing
                 if (!sharedPreferences.getIsCartAnonymous()) {
                     // user logged out - remove cart
+                    sharedPreferences.setIsCartAnonymous(true)
                     sharedPreferences.setCartId(0)
                     dao.deleteCartItems()
                 }

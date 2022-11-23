@@ -11,6 +11,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.ACCOUNT_ROUTE
+import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.CART_ROUTE
+import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.ORDER_ROUTE
 import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.PRODUCTS_ROUTE
 import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.PRODUCT_CATEGORIES_ROUTE
 import hu.schutz.curlycircleandroidapp.CurlyCircleDestinations.PRODUCT_DETAILS_ROUTE
@@ -22,6 +24,7 @@ import hu.schutz.curlycircleandroidapp.ui.account.AccountScreen
 import hu.schutz.curlycircleandroidapp.ui.account.OrdersScreen
 import hu.schutz.curlycircleandroidapp.ui.account.RegistrationScreen
 import hu.schutz.curlycircleandroidapp.ui.cart.CartScreen
+import hu.schutz.curlycircleandroidapp.ui.cart.OrderScreen
 import hu.schutz.curlycircleandroidapp.ui.shop.productcategories.ProductCategoriesScreen
 import hu.schutz.curlycircleandroidapp.ui.shop.productdetails.ProductDetailsScreen
 import hu.schutz.curlycircleandroidapp.ui.shop.products.ProductsScreen
@@ -78,11 +81,22 @@ fun CurlyCircleNavHost(
             }
         }
 
-        composable(route = BottomNavScreen.Cart.route) {
-            CartScreen(
-                scaffoldState = scaffoldState
-            )
+        navigation(
+            route = BottomNavScreen.CartAndOrder.route,
+            startDestination = CART_ROUTE
+        ) {
+            composable(route = CART_ROUTE) {
+                CartScreen(
+                    scaffoldState = scaffoldState,
+                    onCheckout = { navActions.navigateToOrderScreen() }
+                )
+            }
+
+            composable(route = ORDER_ROUTE) {
+                OrderScreen()
+            }
         }
+
 
         navigation(
             route = BottomNavScreen.Profile.route,
