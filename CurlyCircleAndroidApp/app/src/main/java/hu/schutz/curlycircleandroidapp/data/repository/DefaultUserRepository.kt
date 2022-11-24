@@ -21,13 +21,13 @@ class DefaultUserRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : UserRepository {
 
-    override fun getUserStream(): Flow<Result<User>> {
+    override fun getUserStream(): Flow<Result<User?>> {
        return dao.getUserStream().map {
            Result.Success(it)
        }
     }
 
-    override suspend fun getUser(): Result<User> = withContext(ioDispatcher) {
+    override suspend fun getUser(): Result<User?> = withContext(ioDispatcher) {
         return@withContext try {
             Result.Success(dao.getUser())
         } catch (e: Exception) {
@@ -35,6 +35,7 @@ class DefaultUserRepository(
         }
     }
 
+    /*
     override suspend fun updateUser(userUpdateDto: UserUpdateDto): Result<UserDataViewModel> =
         withContext(ioDispatcher) {
             return@withContext try {
@@ -67,4 +68,5 @@ class DefaultUserRepository(
                 Result.Error(e)
             }
         }
+     */
 }

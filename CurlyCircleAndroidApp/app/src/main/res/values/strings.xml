@@ -46,6 +46,7 @@
     <string name="personal_data">Személyes adatok</string>
     <string name="shipping_method">Szállítási mód</string>
     <string name="payment_method">Fizetési mód</string>
-    <string name="note">Megjegyzés</string>
+    <string name="note">Megjegyzés (opcionális)</string>
     <string name="order_successful">Sikeresen leadtad a rendelésed.</string>
+    <string name="order_unsuccessful">Sikertelen rendelés, kérlek próbáld újra!</string>
 </resources>

@@ -5,11 +5,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
 
-    fun getUserStream(): Flow<Result<User>>
+    fun getUserStream(): Flow<Result<User?>>
 
-    suspend fun getUser(): Result<User>
+    suspend fun getUser(): Result<User?>
 
-    suspend fun updateUser(userUpdateDto: UserUpdateDto): Result<UserDataViewModel>
+    //suspend fun updateUser(userUpdateDto: UserUpdateDto): Result<UserDataViewModel>
 
-    suspend fun changePassword(changePasswordDto: ChangePasswordDto): Result<Unit>
+    //suspend fun changePassword(changePasswordDto: ChangePasswordDto): Result<Unit>
 }

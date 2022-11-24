@@ -17,7 +17,7 @@ class DefaultAuthRepository(
 
     override suspend fun getAccessToken(): Result<String?> = withContext(ioDispatcher) {
         return@withContext try {
-            Result.Success(dao.getUser().accessToken)
+            Result.Success(dao.getUser()?.accessToken)
         } catch (e: Exception) {
             Result.Error(e)
         }
@@ -26,7 +26,7 @@ class DefaultAuthRepository(
 
     override suspend fun getRefreshToken(): Result<String?> = withContext(ioDispatcher) {
         return@withContext try {
-            Result.Success(dao.getUser().refreshToken)
+            Result.Success(dao.getUser()?.refreshToken)
         } catch (e: Exception) {
             Result.Error(e)
         }
@@ -34,10 +34,13 @@ class DefaultAuthRepository(
 
     override suspend fun setTokens(tokenViewModel: TokenViewModel) {
         val user = dao.getUser()
-        user.accessToken = tokenViewModel.accessToken
-        user.refreshToken = tokenViewModel.refreshToken
+        user?.accessToken = tokenViewModel.accessToken
+        user?.refreshToken = tokenViewModel.refreshToken
 
-        dao.updateUser(user)
+        if (user != null) {
+            dao.updateUser(user)
+
+        }
     }
 
     override suspend fun login(email: String, password: String): Result<User> =
@@ -85,10 +88,10 @@ class DefaultAuthRepository(
         }
 
     override suspend fun refreshToken(): Result<String?> = withContext(ioDispatcher) {
-        return@withContext try {
-            val user = dao.getUser()
+         try {
+            val user = dao.getUser() ?: return@withContext Result.Success(null)
 
-            val refreshDto = RefreshDto(
+             val refreshDto = RefreshDto(
                 email = user.email,
                 accessToken = user.accessToken,
                 refreshToken = user.refreshToken,
@@ -98,7 +101,7 @@ class DefaultAuthRepository(
             val tokenViewModel = api.refreshToken(refreshDto)
             setTokens(tokenViewModel)
 
-            Result.Success(tokenViewModel.accessToken)
+            return@withContext Result.Success(tokenViewModel.accessToken)
         } catch (e: Exception) {
             Result.Error(e)
         }

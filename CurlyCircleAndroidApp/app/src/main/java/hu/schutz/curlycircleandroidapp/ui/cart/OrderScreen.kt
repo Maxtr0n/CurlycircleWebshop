@@ -246,7 +246,7 @@ fun OrderContent(
 
             Row(horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.Bottom,
                 modifier = Modifier.fillMaxWidth().padding(8.dp)) {
-                Button(onClick = { /* TODO */ }) {
+                Button(onClick = { onOrderClick() }) {
                     Text(text = stringResource(R.string.order_button_label))
                 }
             }
