@@ -24,8 +24,8 @@
                 <h3>Termékek</h3>
                 <ng-container *ngFor="let item of order.orderItems">
                     <div fxlLayout="row" fxLayoutAlign="space-between" fxLayoutGap="1em">
-                        <img *ngIf="item.product.imageUrls.length > 0; else noImageBlock"
-                            [src]="imagesBaseUrl + item.product.imageUrls[0]" class="product-image">
+                        <img *ngIf="item.product.thumbnailImageUrl; else noImageBlock"
+                            [src]="imagesBaseUrl + item.product.thumbnailImageUrl" class="product-image">
                         <ng-template #noImageBlock>
                             <img [src]="noImageUrl" class="product-image">
                         </ng-template>
