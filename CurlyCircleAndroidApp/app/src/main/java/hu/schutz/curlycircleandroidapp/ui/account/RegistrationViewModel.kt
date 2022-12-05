@@ -36,9 +36,9 @@ class RegistrationViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    // A MutableStateFlow needs to be created in this ViewModel. The source of truth of the current
-    // editable Task is the ViewModel, we need to mutate the UI state directly in methods such as
-    // `updateTitle` or `updateDescription`
+    // A MutableStateFlow needs to be created in this ViewModel. The source of truth of the
+    // registration form is the ViewModel, we need to mutate the UI state directly in methods
+    // such as `updateEmail` or `updatePassword`
     private val _uiState = MutableStateFlow(RegistrationUiState())
     val uiState: StateFlow<RegistrationUiState> = _uiState.asStateFlow()
 

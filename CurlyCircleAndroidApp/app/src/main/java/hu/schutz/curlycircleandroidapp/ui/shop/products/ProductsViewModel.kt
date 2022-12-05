@@ -23,10 +23,6 @@ data class ProductsUiState(
 @HiltViewModel
 class ProductsViewModel @Inject constructor(
     private val productsRepository: ProductsRepository,
-    private val productCategoriesRepository: ProductCategoriesRepository,
-    private val colorsRepository: ColorsRepository,
-    private val materialsRepository: MaterialsRepository,
-    private val patternsRepository: PatternsRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 

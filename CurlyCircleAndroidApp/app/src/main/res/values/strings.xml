@@ -49,4 +49,5 @@
     <string name="note">Megjegyzés (opcionális)</string>
     <string name="order_successful">Sikeresen leadtad a rendelésed.</string>
     <string name="order_unsuccessful">Sikertelen rendelés, kérlek próbáld újra!</string>
+    <string name="orders_loading_error">A rendelések betöltése sikertelen!</string>
 </resources>

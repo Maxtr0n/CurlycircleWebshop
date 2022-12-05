@@ -81,7 +81,7 @@ class OrdersViewModel @Inject constructor(
         if (ordersResult is Result.Success) {
             Async.Success(ordersResult.data)
         } else {
-            showSnackBarMessage(R.string.products_loading_error)
+            showSnackBarMessage(R.string.orders_loading_error)
             Async.Success(emptyList())
         }
 }

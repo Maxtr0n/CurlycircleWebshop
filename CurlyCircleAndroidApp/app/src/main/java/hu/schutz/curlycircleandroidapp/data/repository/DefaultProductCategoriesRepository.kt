@@ -35,8 +35,6 @@ class DefaultProductCategoriesRepository(
         val remoteProductCategories = productCategoriesRemoteDataSource.getProductCategories()
 
         if (remoteProductCategories is Result.Success) {
-            // Itt lehet szükség lenne egy proper sync-re ahelyett hogy kitörlök mindent
-            // lehet elég ha instertelek mindent mivel REPLACE az instert strategy? Test it!
             productCategoriesLocalDataSource.deleteAllProductCategories()
             remoteProductCategories.data.forEach{ productCategory ->
                 productCategoriesLocalDataSource.saveProductCategory(productCategory)
