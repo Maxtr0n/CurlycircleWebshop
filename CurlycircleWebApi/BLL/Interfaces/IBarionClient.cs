@@ -1,4 +1,5 @@
-﻿using Domain.QueryParameters.Barion;
+﻿using BLL.Dtos.Barion;
+using BLL.ViewModels.Barion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace BLL.Interfaces
 {
     public interface IBarionClient
     {
-        Task<StartPaymentResponse> StartPayment(StartPaymentRequest startPaymentRequest);
+        Task<StartPaymentDto> StartPayment(StartPaymentRequestViewModel startPaymentRequest);
 
-        Task<GetPaymentStateResponse> GetPaymentState(GetPaymentStateRequest getPaymentStateRequest);
+        Task<GetPaymentStateDto> GetPaymentState(GetPaymentStateRequestViewModel getPaymentStateRequest);
     }
 }

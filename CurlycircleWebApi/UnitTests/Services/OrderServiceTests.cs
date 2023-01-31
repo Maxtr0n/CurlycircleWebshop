@@ -1,15 +1,16 @@
 ﻿using AutoMapper;
 using BLL.Dtos;
+using BLL.Dtos.Barion;
 using BLL.Exceptions;
 using BLL.Interfaces;
 using BLL.Services;
 using BLL.ViewModels;
+using BLL.ViewModels.Barion;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Interfaces;
 using Domain.QueryParameters;
-using Domain.QueryParameters.Barion;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using System;
@@ -226,7 +227,7 @@ namespace UnitTests.Services
                 }
             };
 
-            var startPaymentResponse = new StartPaymentResponse()
+            var startPaymentResponse = new StartPaymentDto()
             {
                 PaymentId = "1",
                 PaymentRequestId = "1",
@@ -240,7 +241,7 @@ namespace UnitTests.Services
                 .Returns(userCart);
             _orderRepositoryMock.Setup(c => c.AddOrder(order))
                 .Returns(1);
-            _barionClientMock.Setup(b => b.StartPayment(It.IsAny<StartPaymentRequest>()).Result)
+            _barionClientMock.Setup(b => b.StartPayment(It.IsAny<StartPaymentRequestViewModel>()).Result)
                 .Returns(startPaymentResponse);
 
             var result = await _orderService.CreateWebPaymentRequestAsync(dto);
@@ -289,7 +290,7 @@ namespace UnitTests.Services
                 CartItems = new List<CartItem>() { }
             };
 
-            var startPaymentResponse = new StartPaymentResponse()
+            var startPaymentResponse = new StartPaymentDto()
             {
                 Errors = new List<BarionError>()
                 {
@@ -306,7 +307,7 @@ namespace UnitTests.Services
                 .Returns(userCart);
             _orderRepositoryMock.Setup(c => c.AddOrder(order))
                 .Returns(1);
-            _barionClientMock.Setup(b => b.StartPayment(It.IsAny<StartPaymentRequest>()).Result)
+            _barionClientMock.Setup(b => b.StartPayment(It.IsAny<StartPaymentRequestViewModel>()).Result)
                .Returns(startPaymentResponse);
 
             await Assert.ThrowsAsync<WebPaymentException>(() => _orderService.CreateWebPaymentRequestAsync(dto));
@@ -315,7 +316,7 @@ namespace UnitTests.Services
         [Fact]
         public async Task HandleWebPaymentStatusChangedAsync_WithValidPaymentId_HandlesRequest()
         {
-            var paymentStateResponse = new GetPaymentStateResponse()
+            var paymentStateResponse = new GetPaymentStateDto()
             {
                 PaymentId = "1",
                 Status = "Completed"
@@ -329,7 +330,7 @@ namespace UnitTests.Services
 
             _configurationStub.Setup(c => c["Barion:SecretKey"])
                 .Returns("TestSecretKey");
-            _barionClientMock.Setup(b => b.GetPaymentState(It.IsAny<GetPaymentStateRequest>()).Result)
+            _barionClientMock.Setup(b => b.GetPaymentState(It.IsAny<GetPaymentStateRequestViewModel>()).Result)
                 .Returns(paymentStateResponse);
             _webPaymentRepositoryMock.Setup(w => w.GetWebPaymentByBarionPaymentIdAsync("1").Result)
                 .Returns(webPayment);
@@ -343,7 +344,7 @@ namespace UnitTests.Services
         [Fact]
         public async Task HandleWebPaymentStatusChangedAsync_WithBarionError_ThrowsWebPaymentException()
         {
-            var paymentStateResponse = new GetPaymentStateResponse()
+            var paymentStateResponse = new GetPaymentStateDto()
             {
                 Errors = new List<BarionError>()
                {
@@ -362,7 +363,7 @@ namespace UnitTests.Services
 
             _configurationStub.Setup(c => c["Barion:SecretKey"])
                 .Returns("TestSecretKey");
-            _barionClientMock.Setup(b => b.GetPaymentState(It.IsAny<GetPaymentStateRequest>()).Result)
+            _barionClientMock.Setup(b => b.GetPaymentState(It.IsAny<GetPaymentStateRequestViewModel>()).Result)
                 .Returns(paymentStateResponse);
 
             await Assert.ThrowsAsync<WebPaymentException>(() => _orderService.HandleWebPaymentStatusChangedAsync("1"));

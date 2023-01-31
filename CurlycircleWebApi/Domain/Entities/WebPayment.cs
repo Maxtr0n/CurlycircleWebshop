@@ -1,5 +1,4 @@
 ﻿using Domain.Entities.Abstractions;
-using Domain.QueryParameters.Barion;
 using System;
 using System.Collections.Generic;
 using System.Linq;

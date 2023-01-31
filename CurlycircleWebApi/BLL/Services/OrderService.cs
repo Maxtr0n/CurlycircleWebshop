@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using BLL.Dtos;
+using BLL.Dtos.Barion;
 using BLL.Exceptions;
 using BLL.Interfaces;
 using BLL.ViewModels;
+using BLL.ViewModels.Barion;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Interfaces;
 using Domain.QueryParameters;
-using Domain.QueryParameters.Barion;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -83,7 +84,7 @@ namespace BLL.Services
             var orderId = _orderRepository.AddOrder(order);
             var request = PrepareWebPaymentRequest(order);
 
-            StartPaymentResponse? startPaymentResponse = await _barionClient.StartPayment(request);
+            StartPaymentDto? startPaymentResponse = await _barionClient.StartPayment(request);
 
             if (startPaymentResponse == null)
             {
@@ -126,7 +127,7 @@ namespace BLL.Services
 
         public async Task HandleWebPaymentStatusChangedAsync(string paymentId)
         {
-            GetPaymentStateRequest getPaymentStateRequest = new()
+            GetPaymentStateRequestViewModel getPaymentStateRequest = new()
             {
                 POSKey = Configuration["Barion:SecretKey"],
                 PaymentId = paymentId
@@ -228,7 +229,7 @@ namespace BLL.Services
             }
         }
 
-        private StartPaymentRequest PrepareWebPaymentRequest(Order order)
+        private StartPaymentRequestViewModel PrepareWebPaymentRequest(Order order)
         {
             List<Item> items = new();
 
@@ -253,7 +254,7 @@ namespace BLL.Services
                 Items = items
             };
 
-            StartPaymentRequest request = new()
+            StartPaymentRequestViewModel request = new()
             {
                 POSKey = Configuration["Barion:SecretKey"],
                 PaymentRequestId = order.WebPayment?.Id.ToString() ?? string.Empty,

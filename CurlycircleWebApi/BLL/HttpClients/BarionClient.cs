@@ -1,6 +1,7 @@
-﻿using BLL.Exceptions;
+﻿using BLL.Dtos.Barion;
+using BLL.Exceptions;
 using BLL.Interfaces;
-using Domain.QueryParameters.Barion;
+using BLL.ViewModels.Barion;
 using Microsoft.Extensions.Configuration;
 using RestSharp;
 using RestSharp.Serializers.Json;
@@ -26,12 +27,12 @@ namespace BLL.HttpClients
             _client = new RestClient(options);
         }
 
-        public async Task<StartPaymentResponse> StartPayment(StartPaymentRequest startPaymentRequest)
+        public async Task<StartPaymentDto> StartPayment(StartPaymentRequestViewModel startPaymentRequest)
         {
             var request = new RestRequest("/v2/Payment/Start", Method.Post)
                 .AddJsonBody(startPaymentRequest);
 
-            var response = await _client.ExecuteAsync<StartPaymentResponse>(request);
+            var response = await _client.ExecuteAsync<StartPaymentDto>(request);
 
             if (!response.IsSuccessful)
             {
@@ -44,13 +45,13 @@ namespace BLL.HttpClients
             return response.Data!;
         }
 
-        public async Task<GetPaymentStateResponse> GetPaymentState(GetPaymentStateRequest getPaymentStateRequest)
+        public async Task<GetPaymentStateDto> GetPaymentState(GetPaymentStateRequestViewModel getPaymentStateRequest)
         {
             var request = new RestRequest("/v2/Payment/GetPaymentState", Method.Get)
                 .AddParameter("POSKey", getPaymentStateRequest.POSKey)
                 .AddParameter("PaymentId", getPaymentStateRequest.PaymentId);
 
-            var response = await _client.ExecuteAsync<GetPaymentStateResponse>(request);
+            var response = await _client.ExecuteAsync<GetPaymentStateDto>(request);
 
             if (!response.IsSuccessful)
             {

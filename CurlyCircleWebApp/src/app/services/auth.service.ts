@@ -31,6 +31,7 @@ export class AuthService {
         this.currentUserSubject = new BehaviorSubject<UserViewModel | null>(
             this.getCurrentUser()
         );
+
         this.currentUser$ = this.currentUserSubject.asObservable();
 
         this.isAdminSubject = new BehaviorSubject<boolean>(false);
@@ -146,11 +147,8 @@ export class AuthService {
             return;
         }
 
-        console.log(`Régi token: ${user.refreshToken}`);
         user.accessToken = tokenViewModel.accessToken;
         user.refreshToken = tokenViewModel.refreshToken;
-        console.log(`Új token: ${user.refreshToken}`);
-
         this.setCurrentUser(user);
         this.currentUserSubject.next(user);
     }

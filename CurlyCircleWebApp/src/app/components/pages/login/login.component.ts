@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit {
 
         this.authService.login(loginDto).subscribe({
             next: (token) => {
-                console.log(token);
                 this.snackBar.open("Sikeres bejelentkezés.", '', { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'] });
                 this.router.navigate(['']);
             },
